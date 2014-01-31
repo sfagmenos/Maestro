@@ -9,3 +9,13 @@ Ideas
 Name
 ====
 - if you only have a name, it's already a good start
+
+
+Comments
+========
+The idea of creating a language for creating school scheduls seems an interesting one.
+It is clear what types we will use to create it, what restrictions should be supported,
+and what kind of outputs users would expect. I am into this idea!
+
+--
+Vaggelis
