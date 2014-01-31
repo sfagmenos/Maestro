@@ -5,6 +5,13 @@ Ideas
 =====
 - A language to create schedules for schools, universities,... (professor,classes,hours,...)
 - A language for scheduling jobs in a data center (distribute a list of jobs in a datacenter).
+- A probabilistic programming language to easily specify and perform operations on graphical models 
+  - http://mlg.eng.cam.ac.uk/duvenaud/talks/probabilistic-programming-introduction.pdf
+  - existing probabilistic languages:
+    - stan
+    - infer.net
+    - church
+
 
 Name
 ====
