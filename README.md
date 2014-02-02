@@ -23,6 +23,7 @@ generator User {
 }
 generator Action {
   field :type
+  distributions type: Normal(1,1)
 }
 
 user_generator = User.new
