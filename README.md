@@ -71,6 +71,29 @@ when_available('low_priority.py')
 
 Class Scheduling:
 -----------------
+- The language will load the courses, teachers, and classes for the school
+- Then for each class will have to fill their days with the courses
+- There should be a standard of haw many hours the kids can be in classes
+  and how many days the week has for teaching. This could be in an init 
+  function or loaded by the user.
+```
+generator course{
+  field :name
+}
+generator professor{
+  field :name
+  teaches :courses --a list of courses
+}
+generator class{
+  field :year
+  teached :courses --a list of courses to be teached
+  week :array --an array with the five days with the courses of the class
+}
+generator day{
+  field :array --an array with each cell will be a tuple with th course and the professor
+}
+
+```
 
 Ingredients to recipes:
 -----------------------
