@@ -97,6 +97,58 @@ generator day{
 
 Ingredients to recipes:
 -----------------------
+####Arun
+-The language will load all the available ingredients
+-The kind of recipe that is expected has to be mentioned (breakfast, dessert, etc.)
+-There are more details that will need to be discussed. This is just a rough sketch.
+
+Arun wants to decide what to make for breakfast. He gives the program the ingredients currently present in his pantry. 
+
+```
+create pantry arunPantry
+{
+	{	partySize = 1;
+		mealType = breakfast;
+		mealWeight = light;
+	}
+
+	{	item = tomato;
+		quantity = 3L;
+		class = general;
+	}
+
+	{	item = eggs;
+		quantity = 1D;
+		class = breakfast;
+	}
+
+	{	item = onions;
+		quantity = 0.5L;
+		class = general;
+	}
+
+	{	item = whiteRice;
+		quantity = 4L;
+		class = rice;
+	}
+
+}
+
+
+use pantry arunPantry
+void main()
+{
+	for each ingredient in pantry
+		{
+			if class == ‘breakfast’ 
+				{ include ; }
+			else if class == ‘general’
+				{include ; }
+		}
+
+	generateRecipe();
+}
+```			
 
 
 Name
