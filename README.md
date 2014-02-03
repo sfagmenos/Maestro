@@ -69,6 +69,22 @@ end
 when_available('low_priority.py')
 ```
 
+#### Vaggelis 
+- Summary: A language to run a script/operation or a function in a poll of workers.
+- Pros and cons: It seems to me the most interesting scenario to implement.
+- programming languages: Python is ok, but c should be easy too.
+- Example:
+```
+worker *workers = {A, B, C};    
+worker D;    
+int pool_id;    
+pool_id = initialize(workers);        /* initialize a poll of workers */    
+broadcast(pool_id, operation1);  /* this should be non-blocking operation/    
+pool_id = ammend(pool_id, D);      /* increase pool of workers */    
+execute(pool_id, operation2);    /* non-blocking operation */ 
+```
+
+
 Class Scheduling:
 -----------------
 - The language will load the courses, teachers, and classes for the school
@@ -149,6 +165,25 @@ void main()
 	generateRecipe();
 }
 ```			
+
+#### Vaggelis 
+- Summary: A language to come up with recipies given some ingredients.
+- Pros and cons: On the one hand, this one seems the most childish one. 
+On the other hand, it  will be the easiest to do, and also Aho gonna like it.
+- programming languages: C is perfect for this one.
+- Example:
+```
+vegetable v1 = {onions: 2, tomato: 7, spinach: 1, lettuce: 1, cucumber: 3}    
+frout f1 = {orange: 3, mandarin: 10, babana: 5, apple: 5, apricot: 1, grape:2}    
+meet  m1 ={pork_chops: 1, beef_steak: 3}    
+    
+    make_salad(v1, f1, m1)    
+    make_lunch(v1, f1, m1)    
+    make_lunch(v1, f1, m1, vegetrerian)    
+    make_dinner(v1, f1, m1)    
+    make_dinner(v1, f1, m1, vegetrerian
+```
+
 
 
 Name
