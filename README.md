@@ -102,6 +102,7 @@ Class Scheduling:
 - I am not sure how much functionality we need to have. Because the actual
   program for scheduling is really long.
 - Hours per week for the courses can be added for a better feeling.
+- There is a similar/same idea :/ http://www1.cs.columbia.edu/~aho/cs4115_Spring-2012/lectures/12-05-09_Team20_Chronos.pdf
 ```
 generator course{
   field :name
