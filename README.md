@@ -135,6 +135,9 @@ Ingredients to recipes:
 -The language will load all the available ingredients
 -The kind of recipe that is expected has to be mentioned (breakfast, dessert, etc.)
 -There are more details that will need to be discussed. This is just a rough sketch.
+-Personally, I believe this language would be a good choice. Its got the 'fun' aspect to it, just like the wardrobe project of the previous year.
+- Language to be used is fairly flexible. Depending on the comfort level and proficiency of the members we can implement it in C/C++ or Python.
+
 
 Arun wants to decide what to make for breakfast. He gives the program the ingredients currently present in his pantry. 
 
