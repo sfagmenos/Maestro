@@ -83,15 +83,25 @@ broadcast(pool_id, operation1);  /* this should be non-blocking operation/
 pool_id = ammend(pool_id, D);      /* increase pool of workers */    
 execute(pool_id, operation2);    /* non-blocking operation */ 
 ```
-
+####George
+- Summary: A language to distribute jobs/scripts in a datacentre
+- We can add function such as run in different architectures or os
+  for having our job tested for every machine.
+- My +1 to Mathias example.
+- We can also say that this could mean the datacenter can spawn machines
+  with the architecture ww want (cloud base datacenter).
 
 Class Scheduling:
 -----------------
+#George
 - The language will load the courses, teachers, and classes for the school
 - Then for each class will have to fill their days with the courses
 - There should be a standard of haw many hours the kids can be in classes
   and how many days the week has for teaching. This could be in an init 
   function or loaded by the user.
+- I am not sure how much functionality we need to have. Because the actual
+  program for scheduling is really long.
+- Hours per week for the courses can be added for a better feeling.
 ```
 generator course{
   field :name
