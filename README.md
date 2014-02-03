@@ -39,12 +39,34 @@ end
 ```
 
 #### Yiren
-- A probabilistic programming language to easily specify and perform operations on graphical models 
+- A probabilistic programming language to easily draw samples from joint distributions, generate matrices, do marginalization, and recognize priors 
   - http://mlg.eng.cam.ac.uk/duvenaud/talks/probabilistic-programming-introduction.pdf
   - existing probabilistic languages:
     - stan
     - infer.net
     - church
+  - pros and cons - project size could be scaled up or down; could be very easy or very hard
+  - programming languages: python, probably 
+
+
+drawing sets of points from joint distribution P(x,y) specified example:
+
+```
+# specify the two components of a joint distribution
+P(x|y) func1  = gauss(mu, sigma) 
+P(y) func2 = gauss(mu2, sigma2)
+
+distObject = new dist(func1, func2, 'joint')
+points = distObject.points(400)
+
+pointsMatrix = distObject.points(400, 'arrayForm')
+
+# declare total probability, then want to marginalize
+P(x,y) func3 = unif(0,5)
+
+distObject2 = new dist(func3, y, 'marginalize')
+
+```
 
 Distributed Job assignment:
 ---------------------------
@@ -205,7 +227,13 @@ meet  m1 ={pork_chops: 1, beef_steak: 3}
     make_dinner(v1, f1, m1, vegetrerian
 ```
 
+### Yiren
+- Example with softened constraints:
+- input available ingredients and what kind of cuisine you want; output list of ingredients missing also 
 
+veg v1 = {onions: 2, tomato:8, lettuce: 8}
+meat m1 = {chicken_breasts: '9'}
+ingredients_to_buy = recipe(veg, meat,'chinese')
 
 Name
 ====
