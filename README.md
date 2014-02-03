@@ -108,7 +108,14 @@ generator class{
 generator day{
   field :array --an array with each cell will be a tuple with th course and the professor
 }
-
+course(tlp)
+course(os)
+course(aos)
+professor(aho,[tlp])
+professor(yang,[os,aos])
+class(2014,[tlp,os],devil_week)
+schedule(class)
+print devil_week;
 ```
 
 Ingredients to recipes:
