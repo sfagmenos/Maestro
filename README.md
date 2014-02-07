@@ -1,6 +1,3 @@
-plt
-===
-
 Idea
 ====
 A language to express dependencies between jobs and distribute them on many
