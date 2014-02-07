@@ -95,15 +95,35 @@ when_available('low_priority.py')
 - Summary: A language to run a script/operation or a function in a poll of workers.
 - Pros and cons: It seems to me the most interesting scenario to implement.
 - programming languages: Python is ok, but c should be easy too.
-- Example:
+- Example: A puppet example to create a pool of worker nodes along with an
+ haproxy loadbalancer as an entry point for the infrastructure.
+
 ```
-worker *workers = {A, B, C};    
-worker D;    
-int pool_id;    
-pool_id = initialize(workers);        /* initialize a poll of workers */    
-broadcast(pool_id, operation1);  /* this should be non-blocking operation/    
-pool_id = ammend(pool_id, D);      /* increase pool of workers */    
-execute(pool_id, operation2);    /* non-blocking operation */ 
+
+workers = {ip1, ip2, ip3}
+master = {ip4}
+
+script1{
+    haproxy::balancermember {
+        listening_service => 'service_name1',
+        server_names      => $::hostname,
+        ipaddresses       => $::ipaddress,
+        ports             => 443,
+        restart           => httpd
+    }
+}
+
+script2{
+    haproxy::listen { service_name1':
+       ipaddress 	=> $::ipaddress,
+       ports     	=> 443,
+       options		=> {'balance' => 'roundrobin'},
+    }
+}
+
+exec(script1, workers): requires: exec(script2, master)
+
+
 ```
 ####George
 - Summary: A language to distribute jobs/scripts in a datacentre
