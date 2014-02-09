@@ -112,3 +112,26 @@ b.on_success = func (Job j) {
 
 run_jobs_async([a, b, c])
 ```
+
+```
+// want to make measurement that are in 3 steps: populate, collect
+// data and analyse.
+// This on is actually pretty complex logic but not that hard to express
+
+func an_hour_after(Job j) {
+  return func () {
+    j.finish_time && j.finish_time - Time.now > Time.hour(1)
+  }
+}
+
+Job b = nil
+for i in range(0,10) {
+  a = Job.new('send_email_batch_'+i+'.rb', number = 1)
+  if b { a.add_dependencies([old_b]) }
+  b = Job.new('collect_data.rb', number = 1)
+  b.add_func_dependency( an_hour_after(a) )
+  Job c = Job.new('anaoyse.py', number = :all)
+  c.add_dependecies([b])
+  run_jobs_async([a, b, c])
+}
+```
