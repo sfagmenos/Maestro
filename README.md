@@ -127,7 +127,7 @@ func an_hour_after(Job j) {
 Job b = nil
 for i in range(0,10) {
   a = Job.new('send_email_batch_'+i+'.rb', number = 1)
-  if b { a.add_dependencies([old_b]) }
+  if b { a.add_dependencies([b]) }
   b = Job.new('collect_data.rb', number = 1)
   b.add_func_dependency( an_hour_after(a) )
   Job c = Job.new('anaoyse.py', number = :all)
