@@ -255,3 +255,63 @@ Try:
 Except:
 	raiseError(job_1, job_2, job_3)
 	 
+#### Arun
+
+-- Ren's idea seems intuitive. 
+-- I had thought of single arrow (-->) and double arrow (-->>)
+-- But using uni-directional and bi-directional arrows would make it easily understandable. 
+-- I don't see the requirements for closures. They might make it complicated.
+-- Maybe include the priority along with the program?
+
+```
+
+Scenario 1. Equal priorities.
+
+def raiseError():
+	 killjobs(job)
+	 sendEmail()
+
+
+ Try: 
+      Job job = Job.new([('program_a.py', priority = 0 <--> 'program_b.py', priority = 0)--> 'program_c.py', priority = 0])
+ Catch:
+	raiseError(job)
+	
+```
+
+```
+Scenario 2
+
+def currHour():					/* return current hour of the day in float*/
+	return current_hour_of_the_day
+	
+def scanMachines():				/*return number of machines not executing any job*/
+	return no_of_idle_machines
+		
+def status(job):				/*return the status of a job*/
+	return 0 if job is not running
+	return 1 if job is running
+	
+count = 0
+	
+Workers w = Workers.new ("xxx.xxx.xxx.xx", "xxx.xxx.xxx.xx", "xxx.xxx.xxx.xx", .....)    /*declare all worker machines*/
+
+try:
+
+	time_now = currHour()
+
+	Loop:
+		if time_now between 15 and 16:
+			Job job1 = job.new ("1.py", priority = 3)
+		
+		if status("2.py") == 0
+			Job job2 = job.new ("2.py")
+	
+		while count < 1000:
+			Job job3 = job.new ("3.py", number = scan_Machines())
+			c++
+	
+catch:
+	raiseError(job1, job2, job3)
+
+```
