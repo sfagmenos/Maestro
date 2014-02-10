@@ -215,3 +215,43 @@ c.exit_handler(run_1000)
 p.run([a, b, c]) 
 
 ```
+
+### Ren
+
+// input a list of programs in order, using right arrows to indicate dependencies and and bidirectional arrows to indicate programs to run in parallel.
+// should have something that allows us to specify "on available machines" - and use that to show priorities
+// my intuition is to handle with more logic
+
+Scenario 1
+
+def raiseError():
+	 killjobs(job)
+	 sendEmail()
+
+
+ Try: 
+      Job job = Job.new([('program_a.py'<-->'program_b.py')--> 'program_c.py'])
+ Except:
+	raiseError(job)
+	
+
+Scenario 2:
+
+def currentTime():
+	 return Time.now.hour
+
+
+Try:
+	While True:
+	      ct = currentTime
+	      If 15 < ct < 16:
+	      	 Job job_1 = Job.new('program_a.py')
+	      
+		While availableMachines > 0:
+	      	   Job job_2 = Job.new('program_b.py', number=availableMachines)
+		
+		For i=1:1000:
+		    Job job_3 = Job.new('program_c.py', number=availableMachines)
+Except:
+	raiseError(job_1, job_2, job_3)
+	 
