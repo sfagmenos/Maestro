@@ -308,7 +308,7 @@ try:
 			Job job2 = job.new ("2.py")
 	
 		while count < 1000:
-			Job job3 = job.new ("3.py", number = scan_Machines())
+			Job job3 = job.new ("3.py", number = scan_Machines()) /*number defines number of machines to execute the job on*/
 			c++
 	
 catch:
