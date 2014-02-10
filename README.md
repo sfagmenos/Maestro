@@ -135,3 +135,83 @@ for i in range(0,10) {
   run_jobs_async([a, b, c])
 }
 ```
+
+
+####Vaggelis
+* I see the need to define actions taken when a job starts and completes execution.
+*Couldn't we exppress it with handlers?
+* callbacks are helpfull; would be nice to support.
+* I don't realy see  the need for closures.
+
+
+```
+/* defines how you kill a job */
+function callback_killer(Job j){	   
+	kill j
+}
+
+/* callback for items in second argument */
+function kill_all(function killer, Job[] jobs) {
+	for j in jobs:
+		killer(j)		 
+}
+
+/* exit-handler for Jobs */
+function kill_all_if_fail(Job[] jobs){  
+	if Job.exit_code != NULL:
+		kill_all(callback_killer, jobs) 
+		exit -1
+}
+
+
+Pool p = Pool.new("128.33.33.1", "128.33.33.2", "128.33.33.3")	/* initialize and update pool of workers*/
+p.append("128.33.33.4")				
+p.delete("128.33.33.1")					
+
+Job a = Job.new("abc.pl")		      /* scripts corresponding to jobs */ 
+Job b = Job.new("xRay.rb")		
+Job c = Job.new("telesphorus.py")	
+
+a.exit_handler(kill_all_if_fail)	/* handler executed when Job terminates */
+b.exit_handler(kill_all_if_fail)	
+c.dependency([a,b])			          /* indicate that c runs after a, b successful execution */
+
+p.run([a, b, c]) /*run is ok; run_async is wrong because we have dependency, thus it isn't async */
+
+```
+
+
+
+
+```
+
+function is_time(Job j){	 
+	return Time.now.hour > 15 && Time.now.hour < 16
+}
+
+function relaunch_on_sucess(){
+	if Job.exit_code == NULL
+		p.run(Job)
+}
+
+function run_1000(Job j){
+	counter = 0
+	return function run(){
+		if ++counter < 1000:
+			return p.run(j)
+	}
+	
+
+Pool p = Pool.new("128.3.3.1", "128.3.3.2")	/* initialize pool of workers*/
+
+Job a = Job.new("abc.pl", priority=0)		    /* zero is lowest priority */
+Job b = Job.new("xRay.rb", priority=1)		
+Job c = Job.new("telesphorus.py", priority=2)	
+
+a.start_handler(is_time)		                /* job starts executing when start_handler returns 1 */
+b.exit_handler(relaunch_on_success)	        /* exit_handler is executed when job terminate */
+c.exit_handler(run_1000)
+
+p.run([a, b, c]) 
+
+```
