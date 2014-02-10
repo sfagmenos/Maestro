@@ -257,11 +257,11 @@ Except:
 	 
 #### Arun
 
--- Ren's idea seems intuitive. 
--- I had thought of single arrow (-->) and double arrow (-->>)
--- But using uni-directional and bi-directional arrows would make it easily understandable. 
--- I don't see the requirements for closures. They might make it complicated.
--- Maybe include the priority along with the program?
+- Ren's idea seems intuitive. 
+- I had thought of single arrow (-->) and double arrow (-->>)
+- But using uni-directional and bi-directional arrows would make it easily understandable. 
+- I don't see the requirements for closures. They might make it complicated.
+- Maybe include the priority along with the program?
 
 ```
 
