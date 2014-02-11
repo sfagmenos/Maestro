@@ -17,6 +17,7 @@ fail you want to stop everything and send an email
 only between 3 and 4 pm. Job b is a bit less important, there is only 1 running, and when it
 is done you want to launch a new one. Job c is the least important but you need to launch it
 1000 times so it should run on any available machine not taken by a or b
+- you want to check that the new release of your program will be compatible with all the architectures
 
 Primitives:
 -----------
@@ -25,12 +26,14 @@ Primitives:
 - have callbacks
 - kill remote or local jobs
 - launch instances on amazon?
+- compile the source code
 
 Questions:
 ----------
 - what is the language type? (functional, declarative, imperative) -> imperative
   and functional (lambdas and closures) ?
 - is it OO? -> no?
+  - this could be yes for adding jobs with certain functionality for some languages (is it C,C++? compile the source first)
 - what kind of types do we want? (hidden or explicit, can a user define new
   types)?
 - is data mutable? -> I think no, we duplicate to add stuff (because when we run
@@ -254,4 +257,27 @@ Try:
 		    Job job_3 = Job.new('program_c.py', number=availableMachines)
 Except:
 	raiseError(job_1, job_2, job_3)
-	 
+
+### Georgios
+
+// Create the jobs you want to run.
+// Check if all are syntactically correct/compiling (this could be done in initialization)
+// Create dependencies (Ren's idea with arrows is nice)
+// Run jobs in the datacenter/cloud
+
+```
+def run(time,architecure,datacentre):
+
+Job a = Job.new("my_program","C")
+Job b = Job.new("new_feauture","C")
+if a.compiles() and b.compiles():
+	Job c = a.link(b)
+	c.run("15:00","x86_64","amazon")
+
+Job c = Job.new("new_feature2.py","Python")
+Job d = Job.new("program_d.py","Python")
+Job e = Job.new("program_e.py","Python")
+if not c.sompile() or not d.sompile() or not e.sompile():
+	exit("Compilation errors")
+Batch all = Batch.new([(d<->e)->c])
+```
