@@ -257,6 +257,7 @@ Try:
 		    Job job_3 = Job.new('program_c.py', number=availableMachines)
 Except:
 	raiseError(job_1, job_2, job_3)
+<<<<<<< HEAD
 	 
 #### Arun
 
@@ -318,6 +319,8 @@ catch:
 	raiseError(job1, job2, job3)
 
 =======
+=======
+>>>>>>> master
 
 ### Georgios
 
