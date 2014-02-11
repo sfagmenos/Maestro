@@ -226,7 +226,7 @@ p.run([a, b, c])
 // my intuition is to handle with more logic
 
 Scenario 1
-
+```
 def raiseError():
 	 killjobs(job)
 	 sendEmail()
@@ -236,10 +236,10 @@ def raiseError():
       Job job = Job.new([('program_a.py'<-->'program_b.py')--> 'program_c.py'])
  Except:
 	raiseError(job)
-	
+```	
 
 Scenario 2:
-
+```
 def currentTime():
 	 return Time.now.hour
 
@@ -257,8 +257,8 @@ Try:
 		    Job job_3 = Job.new('program_c.py', number=availableMachines)
 Except:
 	raiseError(job_1, job_2, job_3)
-<<<<<<< HEAD
-	 
+```
+
 #### Arun
 
 - Ren's idea seems intuitive. 
@@ -283,9 +283,9 @@ def raiseError():
 	
 ```
 
-```
 Scenario 2
 
+```
 def currHour():					/* return current hour of the day in float*/
 	return current_hour_of_the_day
 	
@@ -317,10 +317,7 @@ try:
 	
 catch:
 	raiseError(job1, job2, job3)
-
-=======
-=======
->>>>>>> master
+```
 
 ### Georgios
 
