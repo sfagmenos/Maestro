@@ -338,7 +338,7 @@ if a.compiles() and b.compiles():
 Job c = Job.new("new_feature2.py","Python")
 Job d = Job.new("program_d.py","Python")
 Job e = Job.new("program_e.py","Python")
-if not c.compile() or not d.compile() or not e.compile():
+if not c.compile() or not d.compile() or not e.compile(): //This searches for syntax errors. Not compiling python
 	exit("Compilation errors")
 Batch all = Batch.new([(d<->e)->c])
 ```
