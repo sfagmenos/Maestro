@@ -1,17 +1,32 @@
 \section{Introduction}
 \label{sect:intro}
-\subsection{Motivation}
-Short description on how we come up with the language and which its
-domain will be. What class of problems is the language designed to
-solve? interprented or not?
+It is common for a user to allocate a pool of machines and utilize
+them to execute experimental evaluation represeted in the format of
+a written program. In the broad sense, a user would like to use a
+pool of machines to run some jobs represented in any programming
+language (scripted, interprented, or compiled). Our purpose is to
+build a well-defined, easy-to-use, and agile programming language
+serving this purpose. The need for such a language is not clear at
+fisrt sight, and may seem that our intuition is the equvalent of an
+"ssh-like" loop. However, our purpose is to enhance user's potential
+to express semantics amongst jobs to be executed, and schedule
+execution based on well defined conditions.
 
-\subsection{Language Design}
-\begin{itemize}
-\item Programming model: What is the programming model of
-computation encapsulated into the programming language?
-\item Program structure: What is the basic translation unit for a
-program?
-\item Character set and lexical conventions: What are the source
-and target character sets? What are the lexical units of a source
-program?
-\end{itemize}
+To gain a perspective
+on semantics when  defining job  execution, we will present some
+indicative posible dependencies amongst jobs. Dependencies may
+occur amongst jobs (eg., job A should execute if job B return 0,
+or job A  should execute if job B fails), or may be amongst jobs
+and external parameters such as time or cpu load (e.g., job A should
+execute after 6.00 PM, job B should execute in machines with CPU
+load less than 0.5). For the afforementioned nature of problems, we
+believe it is fruitful to provide users with an agile REPL
+environment to collectively express, distribute, and execute job
+tasks.
+
+The rest of our document is structured as follows. In
+section~\ref{sect:desg} we present the design of our language, in
+section~\ref{sect:spec} we underline specifications and main
+features of our language. In section~\ref{sect:tech} we describe
+the environmet of our languare, in  section~\ref{sect:conc} we
+give our concluding remarks.
