@@ -1,41 +1,18 @@
-FILE = Whitepaper
+INPUT=example
+LEXER=lex.yy.c
+PARSER=y.tab.c
+HEADER=y.tab.h
+CC=gcc
+OUT=lex_yacc
 
-PRINTER = lp
+all:$(LEXER) $(PARSER) $(HEADER)
+	$(CC) -o $(OUT)  $(LEXER) $(PARSER)
 
-all:	$(FILE).tex
-	rm -f $(FILE).ps
-	latex $(FILE)
-	dvips $(FILE).dvi -o $(FILE).ps
-	evince $(FILE).ps
+$(LEXER): $(INPUT).l
+	flex $(INPUT).l
+
+$(PARSER): $(INPUT).y
+	yacc -d $(INPUT).y
 
 clean:
-	rm -f $(FILE).ps $(FILE).pdf $(FILE).log $(FILE).dvi $(FILE).bbl $(FILE).blg $(FILE).aux
-	rm -f *~
-	rm -f *.bak
-	rm -f *.backup
-	rm -f *.log
-
-pdf:
-	gs -q -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=$(FILE).pdf $(FILE).ps -c quit
-
-bib:	$(FILE).tex
-	latex $(FILE)
-	bibtex $(FILE)
-	latex $(FILE)
-	latex $(FILE)
-	dvips $(FILE).dvi -o $(FILE).ps
-	rm $(FILE).dvi $(FILE).log $(FILE).blg
-
-s:	$(FILE).tex
-	latex $(FILE)
-	dvips $(FILE).dvi -o $(FILE).ps
-
-f:	s
-	ps2pdf $(FILE).ps
-
-p:	
-	lpr -P$(PRINTER) $(FILE).ps; 
-	lpq -P$(PRINTER)
-
-dist:
-	tar cfj ../$(FILE)-`date +%F`.tar.bz2 .
+	rm -f $(LEXER) $(PARSER) $(HEADER) $(OUT)
