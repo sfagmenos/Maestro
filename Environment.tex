@@ -2,21 +2,15 @@
 \label{sect:tech}
 The language environment will have four major characteristics:
 \begin{description}
-\item[Workers list] The user shouldn't have to manager their workers after
-they are launched. The only thing needed will be to call a very basic program
-to register the worker. The language will then transparently assign workers
+\item[Workers list] The user shouldn't have to manage their workers after
+they are launched. The only thing needed is to call a very basic program
+to register the worker. \lang will then transparently assign workers
 to jobs while managing dependencies.
-\item[Job queue] Under the wood, jobs will be put in a priority queue. When a
-worker becomes available, we will search the job queue in order of highest
-priority first until we find a job with all dependencies fulfilled. This job
+\item[Job queue] Under the wood, jobs are stored in a priority queue. When a
+worker becomes available, \lang will search the job queue in order of highest
+priority first until it finds a job with all dependencies fulfilled. This job
 will be assigned to the available worker.
-\item[Interpreter and REPL] The language will be interpreted with a REPL to be able to
+\item[Interpreter and REPL] \lang is interpreted and has with a REPL to be able to
 quickly try things out and iterate. For really basic job launching, users shouldn't
 even need to open a text editor.
 \end{description}
-
-
-After having talked with Mathias, assigned this section also to him.
-George can do something later to compensate!
-Small description of gc and priority queue for jobs
-this is for George

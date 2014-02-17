@@ -6,16 +6,16 @@
 declare dependencies. The language then figures out how to run the jobs and in
 what order.
 \item[Callbacks \& lambdas] \lang will also support before and after callbacks
-with a more imperative model to express any logic needed. \lang will support
+with a more imperative model to express any logic needed. \lang supports
 lambdas to make callbacks easier to write.
 \item[Strongly typed] \lang is strongly typed so that errors can be check
-before jobs are sent. On top of classic types it will support a job type.
-\item[Garbage collected] Memory will be handled by the language with a simple
-garbage collector. Users should have to manage their memory is such a high
+before jobs are sent. On top of classic types it supports a job type.
+\item[Garbage collected] Memory is handled by the language with a simple
+garbage collector. Users should not have to manage their memory is such a high
 level and domain specific language, where performance is not a critical issue.
-\item[No exceptions] Error checking will be handled on the spot, no exceptions
+\item[No exceptions] Error checking are be handled on the spot, no exceptions
 will be thrown to avoid hard to debug situations from asynchronous callbacks.
-\item[Program structure] Programs will be written a sequence of function
+\item[Program structure] Programs are written as sequence of function
 definitions and declarations stored in a file or written in the REPL command line
 interface.
 \end{description}
