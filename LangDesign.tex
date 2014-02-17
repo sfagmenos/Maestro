@@ -13,6 +13,8 @@ before jobs are sent. On top of classic types it will support a job type.
 \item[Garbage collected] Memory will be handled by the language with a simple
 garbage collector. Users should have to manage their memory is such a high
 level and domain specific language, where performance is not a critical issue.
+\item[No exceptions] Error checking will be handled on the spot, no exceptions
+will be thrown to avoid hard to debug situations from asynchronous callbacks.
 \item[Program structure] Programs will be written a sequence of function
 definitions and declarations stored in a file or written in the REPL command line
 interface.
