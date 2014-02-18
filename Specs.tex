@@ -43,6 +43,9 @@ Val = Dict ['Bob']
 
 \subsection{Datatypes}
 
+All variables have to be declared before they can be used. The datatype of the variable has to be specifies at declaration time.
+
+
 - INT
 
 Integer datatypes are declared using the 'Int' keyword. Integer variables can store whole number values like 0, 7, -1024
@@ -51,7 +54,7 @@ Variable names have to begin with an alphabet. Int support both signed and unsig
 Integer variables are declared as:
 
 Int <var>, <var>, ...
-Int <var> = <var_name>
+Int <var> = <value>
 
 Int a, b, c
 Int a = 234
@@ -59,40 +62,47 @@ Int a = 234
 
 - FLOAT
 
-Float integer types can store real values like 1.03, -23.56. Floating Point datatypes are declared using the 'Float' keyword. Variable names have to begin with an alphabet.
+Floating point datatypes can store real values like 1.03, -23.56. Floating Point variables are declared using the 'Float' keyword. Variable names have to begin with an alphabet.
 
-Integer variables are declared as:
+Float variables are declared as:
 
-Int <var>, <var>, ...
-Int <var> = <var_name>
+Float <var>, <var>, ...
+Float <var> = <value>
 
-Int a, b, c
-Int a = 234
+Float a, b, c
+Float a = 23.78
 
 
+- BOOL
+
+Boolean datatypes can only hold one of two possible values: True or False. Boolean variables are declared using the 'Bool' keyword. Variable names have to begin with an alphabet.
+
+Boolean variables are declared as :
+
+Bool <var>, <var>, ...
+Bool <var> = [<True> OR <False>]
+
+Bool a, b, c
+Bool a = True
+
+
+
+- STRING
+
+String datatypes represent a sequence of characters. String type variables are declared using the 'String' keyword. Variable names have to begin with an alphabet. String values are declared within single quotation marks.
+
+String variables are declared as:
+
+String <var>, <var>, ...
+String <var> = ' <value> '
+
+String a, b, c
+String a = 'test'
 
 
 \subsection{Dependences}
-Dependencies between programs can be specified in the language using single $-->$ arrows. Bidirectional $<-->$ arrows indicate that programs should be run in parallel. This provides a clean easy syntax for straightforward job dependencies, in the spirit of Python's list comprehensions. For grouping, use parentheses.
+Maybe one-two example here? (bidirectional and single arrow?)
 
-Example 1:
-Job B takes as input a file that Job A outputs. 'program_a --> program_b'
-
-Example 2: 
-Jobs $A$, $B$, and $C$ should be run in parallel. 'program_a <--> program_b <--> program_c'
-
-Example 3:
-Jobs $A$ and $B$ to be run in parallel, with Job $C$ dependent. ('program_a'<-->'program_b')--> 'program_c'
-Dependencies between programs can be specified in the language using single $-->$ arrows. Bidirectional $<-->$ arrows indicate that programs should be run in parallel. This provides a clean easy syntax for straightforward job dependencies, in the spirit of Python's list comprehensions. For grouping, use parentheses.
-
-Example 1:
-Job B takes as input a file that Job A outputs. 'program_a --> program_b'
-
-Example 2: 
-Jobs $A$, $B$, and $C$ should be run in parallel. 'program_a <--> program_b <--> program_c'
-
-Example 3:
-Jobs $A$ and $B$ to be run in parallel, with Job $C$ dependent. ('program_a'<-->'program_b')--> 'program_c'
 \subsection{Conditional Statments and Errors - Mathias}
 
 \subsection{Function definition and lambdas - Mathis}
