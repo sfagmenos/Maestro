@@ -193,12 +193,57 @@ else{}
 
 
 \subsection{Loops}
-for i in [1:2:10]{}
 
-while(){}
+- FOR loop
 
-do{}
-while()
+The For loop is designed to iterate a fixed number of times. 
+
+The For loop is declared as:
+
+For <var> IN [<initialization> : <increment> : <termination>]
+{
+     <statements>
+}
+
+For example:
+
+For i IN [ 1 : 2 : 10] loops as 1, 3, 5, 7 and 9.
+
+
+- WHILE loop
+
+The while loop simply repeats the <statements> as long as the <condition> is true.
+
+The While loop is declared as:
+
+While (<condition>)
+{
+   <statement>
+}
+
+For example:
+
+int x = 5
+
+while ( x < 10 )
+{
+    print "Hello World"
+    x++
+}
+
+This program prints Hello World as long as the value of the variable x is less than 10. Therefore, it loops 5 times.
+
+- DO...WHILE loop
+
+It behaves like a while-loop, except that <condition> is evaluated after the execution of <statement> instead of before, guaranteeing at least one execution of <statement>, even if <condition> is never fulfilled. 
+
+The Do..While loop is declared as:
+
+do
+{
+    <statement>
+}
+while( <condition>)
 
 
 
