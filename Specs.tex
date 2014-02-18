@@ -2,7 +2,7 @@
 \label{sect:spec}
 
 \subsection{Operators}
-perators essentially match those provided in python:
+Operators essentially match those provided in python:
 
 \begin{center}
     \begin{tabular}{| l | l | l |}
@@ -17,7 +17,59 @@ perators essentially match those provided in python:
     \end{tabular}
 \end{center}
 
-Arithmetic operators respects traditional order of operations, that is multiplication and division 
+\begin{center}
+    \begin{tabular}{| l | l | l |}
+    \hline
+    Comparison Operator & Description & Example where a = 4, b = 2 \\ \hline
+    == & If values on both sides of operand are equal, condition becomes true & a == b is not true \\ \hline
+    != & If values on both sides of operand are not equal, condition becomes true & a != b is true \\ \hline
+    < & If value on left side of operand is strictly less than value on right side, condition becomes true \\ a < b is false \\ \hline
+    > & If value on left side of operand is strictly greater than value on right side, condition becomes true & a > b is true \\ \hline
+    <= & If value on left side of operand is less than or equal to value on right side, condition becomes true \\ a <= b is not true \hline
+    >= & If value on right side of operand is greater than or equal to value on right side, condition becomes true & a >= b is true \\ \hline
+    \end{tabular}
+\end{center}
+
+\begin{center}
+    \begin{tabular}{| l | l | l |}
+    \hline
+    Assignment Operator & Description & Example where a = 4, b = 2 \\ \hline
+    = & Assigns values from right side of the operator to left side operand & a = b means a has taken on the value of 2 \\ \hline
+    += & Adds right operand to left operand and assigns result to left operand & a += b is equivalent to a = a + b\\ \hline
+    -= & Subtracts right operand from left operand and assigns result to left operand \\ a -= b is equivalent to a = a - b \\ \hline
+    += * Multiplies right operand and left operand and assigns result to left operand & a *= b is equivalent to a = a * b\\ \hline
+    /= * Divides left operand by right operand and assigns result to left operand & a /= b is equivalent to a = a / b\\ \hline
+    \end{tabular}
+\end{center}
+
+\begin{center}
+    \begin{tabular}{| l | l | l |}
+    \hline
+    Logical Operator & Description & Example where a = true, b = false \\ \hline
+    and & if both operands are true, then condition becomes true & a and b is false \\ \hline
+    or & if either operand is true, then condition becomes true & a or b is true\\ \hline
+    not & if condition is true, this operator will make it false. \\ not b is true \\ \hline
+    \end{tabular}
+\end{center}
+
+\begin{center}
+    \begin{tabular}{| l | l | l |}
+    \hline
+   	Membership operator & Description & Example where a = 'sam', b = ['sam', 'james', 'robert'] \\ \hline
+    in & true if variable in specified sequence, false otherwise &  \\ a in b is true \hline
+    not in & true if variable is absent from specified sequence, false otherwise & a not in b is false\\ \hline
+    \end{tabular}
+\end{center}
+
+Order of operations is as follows 
+\begin{enumerate}
+\item \\ Exponentiation
+\item \\ Multiply, divide, modulo
+\item \\ Addition, Subtraction
+\item \\ Comparison
+\item \\ Assignment
+\item \\ Membership
+\item \\ Logical
 
 +, -, /, \%, *, >, <, >=, <=, <>, +=, -=, ==, and, or, not, ->, <->
 
@@ -151,8 +203,16 @@ while()
 
 
 \subsection{Comments}
-one hash for single line
-two hashes for block comments
+Comments are also handled the pythonic way : using a single pound sign '#' for one-line comments and double pound signs '##' to indicate start and end of block comments'
+
+Example:
+# this is a comment
+
+##
+	this is a block comment
+	this is a block comment
+	this is a block comment
+##
 
 
 \label{sect:core}
