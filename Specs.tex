@@ -14,10 +14,12 @@ The list type implements a sequence, and also allows you to add and remove objec
 Lists are created as:
 
 L = [<expr>, <expr>, ...]
+L = [23, 45, 2]
 
-An item in a list can be accessed using the list index
+An item in a list can be accessed using the list index. Indices start from 0.
 
-Item = L [index]
+Item = L [<index>]
+Item = L [0]
 
 
 
@@ -28,17 +30,47 @@ Keys in the dictionary have to be unique.
 
 Dictionaries are created as:
 
+Dict = {<expr> : <expr>, <expr>, <expr>, ...}
 Dict = { 'Bob' : '1974', 'alice' : '1987', ...}
 
 A value in a dictionary can be accessed using its corresponding key.
 
+Val = Dict [<key>]
 Val = Dict ['Bob']
 
 
 
 
-\subsection{Int, Float, Boolean,  String}
-one example describing each...
+\subsection{Datatypes}
+
+- INT
+
+Integer datatypes are declared using the 'Int' keyword. Integer variables can store whole number values like 0, 7, -1024
+Variable names have to begin with an alphabet. Int support both signed and unsigned values.
+
+Integer variables are declared as:
+
+Int <var>, <var>, ...
+Int <var> = <var_name>
+
+Int a, b, c
+Int a = 234
+
+
+- FLOAT
+
+Float integer types can store real values like 1.03, -23.56. Floating Point datatypes are declared using the 'Float' keyword. Variable names have to begin with an alphabet.
+
+Integer variables are declared as:
+
+Int <var>, <var>, ...
+Int <var> = <var_name>
+
+Int a, b, c
+Int a = 234
+
+
+
 
 \subsection{Dependences}
 Maybe one-two example here? (bidirectional and single arrow?)
