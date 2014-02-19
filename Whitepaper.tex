@@ -1,10 +1,23 @@
-\documentclass[preprint]{article}
+\documentclass{article}
+\usepackage[a4paper]{geometry}
 
-\title{Language Name? - Let's all think it}
+\def \lang {Maestro}
+
+\title{\lang: An agile job orchestration language }
 \author{A. Swaminathan, G. Koloventzos, M. Lecuyer, V. Atlidakis, Y. Lu}
 \date{\today}
 
-\def \lang {TheName }
+
+\newenvironment{enu}{%     
+    \begin{enumerate}%     
+    \vspace{-\topsep}%     
+    \setlength\itemsep{-\parskip}%     
+    \setlength\parsep{0.25in}%     
+    }
+    {     
+%    \vspace{-\topsep}     
+    \end{enumerate}
+}
 
 \begin{document}
 \maketitle
@@ -13,4 +26,6 @@
 \input{Specs}
 \input{Environment}
 \input{Conclusion}
+\bibliography{BibFile}
+\bibliographystyle{plain}
 \end{document}

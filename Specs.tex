@@ -2,263 +2,240 @@
 \label{sect:spec}
 
 \subsection{Operators}
-Operators essentially match those provided in python:
+In what follows we present tables demonstrating the operators supported by our 
+language, along with some indicative example. 
 
+
+\begin{table}[h]
 \begin{center}
-    \begin{tabular}{| l | l | l |}
-    \hline
-    Arithmetic Operator & Description & Example where a = 4, b = 2
-    + & Adds value on both sides of operator & a + b gives 6 \\ \hline
-    - & Subtracts value to the right of the operator from value on left side of operator & a - b gives 2 \\ \hline
-    / & Divides value on left side of operator by value on right side of operator & a/b gives gives 2 \\ \hline
-    * & Multiplies values on both sides of operator & a*b gives 8 \\ \hline
-    \% & Divides value on left side of operator by value on right side of operator and returns remainder & a \% b gives 0 \\ \hline
-    
-    \end{tabular}
+    \parbox{.45\linewidth}{
+        \begin{tabular}{| l | l |}
+        \hline
+        Operator & $a=4, b=2$ \\ \hline
+        $+$ &  $a + b$ gives 6 \\  \hline
+        $-$ &  $a - b$ gives 2  \\ \hline
+        $/$ &  $a / b$ gives gives 2 \\ \hline
+        $*$ &  $a * b$ gives 8  \\ \hline
+        $\%$ & $a \% b$ gives 0 \\ \hline
+        \end{tabular}
+        \caption{Arithmetic operators.}
+    }
+    \parbox{.45\linewidth}{
+        \begin{tabular}{| l | l |}
+        \hline
+        Operator & $a=4, b=2$ \\ \hline
+        $=$  &  $a = b$  $a$ has taken on the value of 2 \\ \hline
+        $+=$ &  $a += b$ is equivalent to a = a + b\\ \hline
+        $-=$ &  $a -= b$ is equivalent to a = a - b \\ \hline
+        $+=$ &  $a *= b$ is equivalent to a = a * b\\ \hline
+        $/=$ &  $a /= b$ is equivalent to a = a / b\\ \hline
+        \end{tabular}
+        \caption{Assignment operators.}
+    }
 \end{center}
+\end{table}
 
+\begin{table}[h]
 \begin{center}
-    \begin{tabular}{| l | l | l |}
-    \hline
-    Comparison Operator & Description & Example where a = 4, b = 2 \\ \hline
-    == & If values on both sides of operand are equal, condition becomes true & a == b is not true \\ \hline
-    != & If values on both sides of operand are not equal, condition becomes true & a != b is true \\ \hline
-    < & If value on left side of operand is strictly less than value on right side, condition becomes true \\ a < b is false \\ \hline
-    > & If value on left side of operand is strictly greater than value on right side, condition becomes true & a > b is true \\ \hline
-    <= & If value on left side of operand is less than or equal to value on right side, condition becomes true \\ a <= b is not true \hline
-    >= & If value on right side of operand is greater than or equal to value on right side, condition becomes true & a >= b is true \\ \hline
-    \end{tabular}
+    \parbox{.4\linewidth}{
+        \begin{tabular}{| l | l |}
+        \hline
+        Operator & $a=4, b=2$ \\ \hline
+        $==$ & $a == b$ is not true \\ \hline
+        $!=$ & $a != b$ is true \\ \hline
+        $\textless$  & $a \textless b$ is false \\ \hline
+        $\textgreater$  & $a \textgreater b$ is true \\ \hline
+        $\textless=$ & $a \textless= b$ is not true \\ \hline
+        $\textgreater=$ & $a \textgreater= b$ is true \\ \hline
+        \end{tabular}
+        \caption{Comparison operators.}
+    }
+    \parbox{.4\linewidth}{
+        \begin{tabular}{| l | l |}
+        \hline
+        Operator & $a = true, b = false$ \\ \hline
+        and & a and b is false \\ \hline
+        or & a or b is true\\ \hline
+        not & not b is true \\ \hline
+        in & a in b is true \\ \hline
+        not in & a not in b is false\\ \hline
+        \end{tabular}
+        \caption{Logical operators}
+     }
 \end{center}
+\end{table}
 
-\begin{center}
-    \begin{tabular}{| l | l | l |}
-    \hline
-    Assignment Operator & Description & Example where a = 4, b = 2 \\ \hline
-    = & Assigns values from right side of the operator to left side operand & a = b means a has taken on the value of 2 \\ \hline
-    += & Adds right operand to left operand and assigns result to left operand & a += b is equivalent to a = a + b\\ \hline
-    -= & Subtracts right operand from left operand and assigns result to left operand \\ a -= b is equivalent to a = a - b \\ \hline
-    += * Multiplies right operand and left operand and assigns result to left operand & a *= b is equivalent to a = a * b\\ \hline
-    /= * Divides left operand by right operand and assigns result to left operand & a /= b is equivalent to a = a / b\\ \hline
-    \end{tabular}
-\end{center}
+The order of supported operations 
+is: (1) Exponentiation; (2) Multiply, divide, modulo; (3) Addition, Subtraction; 
+(4) Comparison; (5) Assignment; (6) Membership; (7) Logical.
 
-\begin{center}
-    \begin{tabular}{| l | l | l |}
-    \hline
-    Logical Operator & Description & Example where a = true, b = false \\ \hline
-    and & if both operands are true, then condition becomes true & a and b is false \\ \hline
-    or & if either operand is true, then condition becomes true & a or b is true\\ \hline
-    not & if condition is true, this operator will make it false. \\ not b is true \\ \hline
-    \end{tabular}
-\end{center}
-
-\begin{center}
-    \begin{tabular}{| l | l | l |}
-    \hline
-   	Membership operator & Description & Example where a = 'sam', b = ['sam', 'james', 'robert'] \\ \hline
-    in & true if variable in specified sequence, false otherwise &  \\ a in b is true \hline
-    not in & true if variable is absent from specified sequence, false otherwise & a not in b is false\\ \hline
-    \end{tabular}
-\end{center}
-
-Order of operations is as follows 
-\begin{enumerate}
-\item Exponentiation
-\item Multiply, divide, modulo
-\item Addition, Subtraction
-\item Comparison
-\item Assignment
-\item Membership
-\item Logical
-\end{enumerate}
-
-+, -, /, \%, *, >, <, >=, <=, <>, +=, -=, ==, and, or, not, ->, <->
 
 \subsection{Lists and Dictionaries}
-
-- Lists
-
-The list type is a container that holds a number of other objects, in a given order.
-The list type implements a sequence, and also allows you to add and remove objects from the sequence.
+\begin{description}
+\item [Lists:] List type is a container that holds a number of other objects
+ in a given order. The list type implements a sequence, and also allows you 
+ to add/remove objects from the sequence.
 
 Lists are created as:
+$L = [\textless expr \textgreater, \textless expr \textgreater, ...]$, e.g., $L = [23, 45, 2]$.
 
-L = [<expr>, <expr>, ...]
-L = [23, 45, 2]
-
-An item in a list can be accessed using the list index. Indices start from 0.
-
-Item = L [<index>]
-Item = L [0]
+An item in a list can be accessed using the list index, starting from 0.
+$Item = L [ \textless index\textgreater]$, e.g., $Item = L [0]$.
 
 
 
-- Dictionary
-
-The dictionary type is an associative array that holds a pair of items called a key-value pair.
-Keys in the dictionary have to be unique.
+\item [Dictionary:] The dictionary type is an associative array that holds 
+a pair of items called a key-value pair. Keys in the dictionary have to be unique.
 
 Dictionaries are created as:
+$Dict = \{ \textless key \textgreater :  \textless val\textgreater,  \textless key \textgreater : \textless val \textgreater, ...\}$, e.g., 
+$Dict = \{ 'Bob' : '1974', 'alice' : '1987'\}$.
 
-Dict = {<expr> : <expr>, <expr>, <expr>, ...}
-Dict = { 'Bob' : '1974', 'alice' : '1987', ...}
 
 A value in a dictionary can be accessed using its corresponding key.
-
-Val = Dict [<key>]
-Val = Dict ['Bob']
-
+$Val = Dict [ \textless key\textgreater]$, e.g., $Val = Dict ['Bob']$.
+\end{description}
 
 
 
 \subsection{Datatypes}
 
-All variables have to be declared before they can be used. The datatype of the variable has to be specifies at declaration time.
-
-
-- INT
-
-Integer datatypes are declared using the 'Int' keyword. Integer variables can store whole number values like 0, 7, -1024
-Variable names have to begin with an alphabet. Int support both signed and unsigned values.
-
+All variables have to be declared before they can be used. The datatype of a 
+variable has to be specifies at declaration time.
+\begin{description}
+\item [Int:] Integer datatypes are declared using the 'Int' keyword. Integer 
+variables can store whole number values like 0, 7, -1024. Variable names have 
+to begin with an alphabet. Int support both signed and unsigned values.
 Integer variables are declared as:
+$Int \textless var\textgreater, \textless var\textgreater, ...$ 
+%$Int \textlessvar\textgreater = \textlessvalue\textgreater$
 
-Int <var>, <var>, ...
-Int <var> = <value>
-
-Int a, b, c
-Int a = 234
-
-
-- FLOAT
-
-Floating point datatypes can store real values like 1.03, -23.56. Floating Point variables are declared using the 'Float' keyword. Variable names have to begin with an alphabet.
-
-Float variables are declared as:
-
-Float <var>, <var>, ...
-Float <var> = <value>
-
-Float a, b, c
-Float a = 23.78
+%$Int a, b, c$
+%$Int a = 234$
 
 
-- BOOL
+\item [Float:] Floating point datatypes can store real values like 1.03 or -23.56. 
+Floating Point variables are declared using the 'Float' keyword. Variable names 
+have to begin with an alphabet. Float variables are declared as:
+$Float \textless  var\textgreater, \textless  var\textgreater, ...$
+%$Float \textlessvar\textgreater = \textlessvalue\textgreater$
 
-Boolean datatypes can only hold one of two possible values: True or False. Boolean variables are declared using the 'Bool' keyword. Variable names have to begin with an alphabet.
+%Float a, b, c
+%Float a = 23.78
 
-Boolean variables are declared as :
 
-Bool <var>, <var>, ...
-Bool <var> = [<True> OR <False>]
-
-Bool a, b, c
-Bool a = True
+\item [Bool:] Boolean datatypes can only hold one of two possible values: 
+True or False. Boolean variables are declared using the 'Bool' keyword. Variable 
+names have to begin with an alphabet. Boolean variables are declared as:
+$Bool \textless  var\textgreater, \textless  var\textgreater, ...$
+%$Bool \textlessvar\textgreater = [\textlessTrue\textgreater OR \textlessFalse\textgreater]$
+%
+%$Bool a, b, c$
+%$Bool a = True$
 
 
 
-- STRING
-
-String datatypes represent a sequence of characters. String type variables are declared using the 'String' keyword. Variable names have to begin with an alphabet. String values are declared within single quotation marks.
-
+\item [String:] String datatypes represent a sequence of characters. String type 
+variables are declared using the 'String' keyword. Variable names have to begin
+with an alphabet. String values are declared within single quotation marks.
 String variables are declared as:
+$String \textless var\textgreater, \textless  var\textgreater, ...$
+%$String \textlessvar\textgreater = ' \textlessvalue\textgreater '$
 
-String <var>, <var>, ...
-String <var> = ' <value> '
-
-String a, b, c
-String a = 'test'
-
+%$String a, b, c$
+%$String a = 'test'$
+\end{description}
 
 \subsection{Dependences}
-Dependencies between programs can be specified in the language using single $-->$ arrows. Bidirectional $<-->$ arrows indicate that programs should be run in parallel. This provides a clean easy syntax for straightforward job dependencies, in the spirit of Python's list comprehensions. For grouping, use parentheses.
+Dependencies between programs can be specified in the language using single arrows $\rightarrow$,
+whereas bidirectional arrows $\leftrightarrow$ indicate that programs should be run in parallel. 
+This provides a straightforward job dependency expression, in the spirit of Python's 
+list comprehensions. We give some indiocative examples:
+%For grouping parentheses can be used.
 
-Example 1:
-Job B takes as input a file that Job A outputs. 'program_a --> program_b'
+Example 1: Job B depends on Job A: $program\_a \rightarrow program\_b$
 
-Example 2: 
-Jobs $A$, $B$, and $C$ should be run in parallel. 'program_a <--> program_b <--> program_c'
+Example 2: Jobs $A$, $B$, $C$ must run in parallel: $program\_a 
+\leftrightarrow program\_b \leftrightarrow program\_c$
 
 Example 3:
-Jobs $A$ and $B$ to be run in parallel, with Job $C$ dependent. ('program_a'<-->'program_b')--> 'program_c'
+Jobs $A$, $B$ parallel, Job $C$ dependent:
+$(program\_a \leftrightarrow program\_b ) \leftrightarrow program\_c$
+
 \subsection{Conditional Statments and Errors - Mathias}
+\begin{description}
+\item [Functions:] Functions can return a value and an error, 
+and are created with the func keyword. Lambdas are supported if no function name is given.
 
-\subsection{Function definition and lambdas - Mathis}
+Example:
+$func~~~name(type arg1, type arg2)(return\_type name, error\_type err)\{ //code here\}$ 
+%
+%$\{  // code here
+%        name = "bla"
+%        err = nil
+%        return
+%\}$
 
-if {}
-else\_if {}
-else{}
+\item [Error checking:] ``If'' accepts a pre statement that will be executed (like the first 
+statement of a for loop)
 
-if {}
-else{}
+Example:
+$if (\_, err~=~execute\_job(j1);~ err~ !=~ nil) {}$
+\end{description}
 
 
+%
+%if {}
+%else\_if {}
+%else{}
+%
+%if {}
+%else{}
+%
+%
 \subsection{Loops}
+\begin{description}
+\item [For loop:] The For loop is designed to iterate a fixed number of times. 
+For loop is declared as:
 
-- FOR loop
+For $\textless var \textgreater~in~[\textless initialization \textgreater : \textless increment \textgreater: \textless termination \textgreater]~\{\textless statements \textgreater\}$
 
-The For loop is designed to iterate a fixed number of times. 
+%Example:
+%$For i IN [ 1 : 2 : 10] loops as 1, 3, 5, 7 and 9.$
 
-The For loop is declared as:
+\item [While loop:] The while loop simply repeats the $\textless  statements\textgreater$ as long 
+as the $\textless  condition\textgreater$ is true. While loop is declared as:
+$While (\textless  condition\textgreater)~\{\textless  statement\textgreater\}$
 
-For <var> IN [<initialization> : <increment> : <termination>]
-{
-     <statements>
-}
+%Example:
+%$int x = 5
+%while ( x \textless 10 )
+%{
+%    print "Hello World"
+%    x++
+%}$
 
-For example:
+%This program prints Hello World as long as the value of the variable x is less than 10. Therefore, it loops 5 times.
 
-For i IN [ 1 : 2 : 10] loops as 1, 3, 5, 7 and 9.
-
-
-- WHILE loop
-
-The while loop simply repeats the <statements> as long as the <condition> is true.
-
-The While loop is declared as:
-
-While (<condition>)
-{
-   <statement>
-}
-
-For example:
-
-int x = 5
-
-while ( x < 10 )
-{
-    print "Hello World"
-    x++
-}
-
-This program prints Hello World as long as the value of the variable x is less than 10. Therefore, it loops 5 times.
-
-- DO...WHILE loop
-
-It behaves like a while-loop, except that <condition> is evaluated after the execution of <statement> instead of before, guaranteeing at least one execution of <statement>, even if <condition> is never fulfilled. 
-
-The Do..While loop is declared as:
-
-do
-{
-    <statement>
-}
-while( <condition>)
-
+\item [do-while loop:] It behaves like a while-loop, except that $\textless condition\textgreater$ 
+is evaluated after the execution of $\textless  statement\textgreater$ instead before. Guarantee 
+at least one execution of $\textless statement \textgreater$, even if $\textless condition \textgreater$ is never true. 
+do-while loop is declared as:
+$do\{\textless  statement\textgreater\}~while(\textless condition\textgreater)$
+\end{description}
 
 
 \subsection{Comments}
-Comments are also handled the pythonic way : using a single pound sign '#' for one-line comments and double pound signs '##' to indicate start and end of block comments'
+Comments are also handled the pythonic way, using a single pound sign '\#' for 
+one-line comments and double pound signs '\#\#' to indicate start and end of block comments'
 
-Example:
-# this is a comment
-
-##
-	this is a block comment
-	this is a block comment
-	this is a block comment
-##
+%Example:
+%\# this is a comment
+%
+%\#\#
+%	this is a block comment\\
+%	this is a block comment
+%\#\#
 
 
 \label{sect:core}
