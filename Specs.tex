@@ -1,9 +1,9 @@
 \section{Language Specifications and Main Features}
 \label{sect:spec}
 
-\subsection{Operators}
-In what follows we present tables demonstrating the operators supported by our 
-language, along with some indicative example. 
+\subsection*{Operators}
+In what follows we present tables demonstrating the operators supported by our
+language.%, along with some indicative example.
 
 
 \begin{table}[h]
@@ -65,26 +65,26 @@ language, along with some indicative example.
 \end{center}
 \end{table}
 
-The order of supported operations 
-is: (1) Exponentiation; (2) Multiply, divide, modulo; (3) Addition, Subtraction; 
-(4) Comparison; (5) Assignment; (6) Membership; (7) Logical.
+The order of supported operations
+is: (1) Exponentiation, (2) Multiply, Divide, Modulo, (3) Addition, Subtraction,
+(4) Comparison, (5) Assignment, (6) Membership, and (7) Logical.
 
-\subsection{Datatypes}
-All variables have to be declared before they can be used. The datatype of a
-variable has to be specifies at declaration time.
+\subsection*{Datatypes}
+Variables have to be declared before used, and datatypes of
+variables are specified at declaration time.
 
 \begin{description}
-\item [Job:] The Job type is a \lang specific name. It is the equivalent of a struct
-with many fields and it describes a Job to the ran. The fields are: 'script' for the
+\item [Job:] The Job type is a \lang{} specific name, equivalent to a struct
+of fields describing a Job to be run. The fields are: 'script' for the
 name of the script implementing the job, 'workers' for the number of workers to use
 (default is as many as possible), and 'priority', an Int from 0 to 5, 0 being the
 highest priority.
 Job variables are declared as:
 $Job \textless var\textgreater = Job.new(script=<String>, workers=<Int>, priority=<Int>)$
 
-\item [Int:] Integer datatypes are declared using the 'Int' keyword. Integer 
-variables can store whole number values like 0, 7, -1024. Variable names have 
-to begin with an alphabet. Int support both signed and unsigned values.
+\item [Int:] Integer variables can store whole number values like 0, 7, -1024,
+and support both signed and unsigned values. Integer variables are declared
+using the 'Int' keyword, and names have to begin with an alphabet.
 Integer variables are declared as:
 $Int \textless var\textgreater, \textless var\textgreater, ...$ 
 %$Int \textlessvar\textgreater = \textlessvalue\textgreater$
@@ -92,8 +92,8 @@ $Int \textless var\textgreater, \textless var\textgreater, ...$
 %$Int a, b, c$
 %$Int a = 234$
 
-\item [Float:] Floating point datatypes can store real values like 1.03 or -23.56. 
-Floating Point variables are declared using the 'Float' keyword. Variable names 
+\item [Float:] Floating point datatypes can store real values like 1.03 or -23.56.
+Floating Point variables are declared using the 'Float' keyword, and names
 have to begin with an alphabet. Float variables are declared as:
 $Float \textless  var\textgreater, \textless  var\textgreater, ...$
 %$Float \textlessvar\textgreater = \textlessvalue\textgreater$
@@ -102,8 +102,8 @@ $Float \textless  var\textgreater, \textless  var\textgreater, ...$
 %Float a = 23.78
 
 
-\item [Bool:] Boolean datatypes can only hold one of two possible values: 
-True or False. Boolean variables are declared using the 'Bool' keyword. Variable 
+\item [Bool:] Boolean datatypes can only hold one of two possible values:
+True or False. Boolean variables are declared using the 'Bool' keyword, and variable
 names have to begin with an alphabet. Boolean variables are declared as:
 $Bool \textless  var\textgreater, \textless  var\textgreater, ...$
 %$Bool \textlessvar\textgreater = [\textlessTrue\textgreater OR \textlessFalse\textgreater]$
@@ -113,8 +113,8 @@ $Bool \textless  var\textgreater, \textless  var\textgreater, ...$
 
 
 
-\item [String:] String datatypes represent a sequence of characters. String type 
-variables are declared using the 'String' keyword. Variable names have to begin
+\item [String:] String datatypes represent a sequence of characters. String
+variables are declared using the 'String' keyword, and names have to begin
 with an alphabet. String values are declared within single quotation marks.
 String variables are declared as:
 $String \textless var\textgreater, \textless  var\textgreater, ...$
@@ -125,7 +125,7 @@ $String \textless var\textgreater, \textless  var\textgreater, ...$
 
 \item [List:]
 List type is a container that holds a number of other objects of the same type,
-in a given order. The list type implements a sequence, and also allows you to
+in a given order. The list type implements a sequence, and also allows user to
 add/remove objects from the sequence.
 
 Lists are created as:
@@ -137,8 +137,8 @@ $Item = L [ \textless index\textgreater]$, e.g., $Item = L [0]$.
 
 \iffalse
 \item [Dictionary:]
-The dictionary type is an associative array that holds 
-a pair of items called a key-value pair. Keys in the dictionary have to be unique.
+The dictionary type is an associative array that holds
+a pair of items, called a key-value pair. Keys in the dictionary have to be unique.
 
 Dictionaries are created as:
 $Dict = \{ \textless key \textgreater :  \textless val\textgreater,  \textless key \textgreater : \textless val \textgreater, ...\}$, e.g.,
@@ -149,23 +149,23 @@ $Val = Dict [ \textless key\textgreater]$, e.g., $Val = Dict ['Bob']$.
 \fi
 \end{description}
 
-\subsection{Dependences}
-Dependencies between programs can be specified in the language using single arrows $\rightarrow$,
-whereas bidirectional arrows $\leftrightarrow$ indicate that programs should be run in parallel. 
-This provides a straightforward job dependency expression, in the spirit of Python's 
-list comprehensions. We give some indiocative examples:
+\subsection*{Dependences}
+Dependencies between programs can be specified using single arrows $\rightarrow$,
+whereas bidirectional arrows $\leftrightarrow$ indicate that programs should be run in parallel.
+This provides a straightforward job dependency expression, in the spirit of Python's
+list comprehensions. We give some indicative examples:
 %For grouping parentheses can be used.
 
 Example 1: Job B depends on Job A: $program\_a \rightarrow program\_b$
 
-Example 2: Jobs $A$, $B$, $C$ must run in parallel: $program\_a 
+Example 2: Jobs $A$, $B$, $C$ must run in parallel: $program\_a
 \leftrightarrow program\_b \leftrightarrow program\_c$
 
 Example 3:
 Jobs $A$, $B$ parallel, Job $C$ dependent:
 $(program\_a \leftrightarrow program\_b ) \leftrightarrow program\_c$
 
-\subsection{Functions and lambdas}
+\subsection*{Functions and lambdas}
 Functions can return a value and an error, and are created with the func
 keyword. Lambdas are supported if no function name is given.
 \begin{lstlisting}
@@ -180,7 +180,7 @@ func name(type arg1, type arg2) (return_type name, error_type err)
 
 \subsection{Conditional Statments and Errors}
 \begin{description}
-\item [Error checking:] ``If'' accepts a pre statement that will be executed (like the first 
+\item [Error checking:] ``If'' accepts a pre-statement that will be executed (like the first
 statement of a for loop)
 
 Example:
@@ -199,7 +199,7 @@ $if (\_, err~=~execute\_job(j1);~ err~ !=~ nil) {}$
 %
 \subsection{Loops}
 \begin{description}
-\item [For loop:] The For loop is designed to iterate a fixed number of times. 
+\item [For loop:] For loop is designed to iterate a fixed number of times.
 For loop is declared as:
 
 For $\textless var \textgreater~in~[\textless initialization \textgreater : \textless increment \textgreater: \textless termination \textgreater]~\{\textless statements \textgreater\}$
@@ -207,7 +207,7 @@ For $\textless var \textgreater~in~[\textless initialization \textgreater : \tex
 %Example:
 %$For i IN [ 1 : 2 : 10] loops as 1, 3, 5, 7 and 9.$
 
-\item [While loop:] The while loop simply repeats the $\textless  statements\textgreater$ as long 
+\item [While loop:] while loop simply repeats the $\textless  statements\textgreater$ as long
 as the $\textless  condition\textgreater$ is true. While loop is declared as:
 $While (\textless  condition\textgreater)~\{\textless  statement\textgreater\}$
 
@@ -221,17 +221,18 @@ $While (\textless  condition\textgreater)~\{\textless  statement\textgreater\}$
 
 %This program prints Hello World as long as the value of the variable x is less than 10. Therefore, it loops 5 times.
 
-\item [do-while loop:] It behaves like a while-loop, except that $\textless condition\textgreater$ 
-is evaluated after the execution of $\textless  statement\textgreater$ instead before. Guarantee 
-at least one execution of $\textless statement \textgreater$, even if $\textless condition \textgreater$ is never true. 
+\item [do-while loop:] do-while loop behaves like a while-loop, except that $\textless condition\textgreater$
+is evaluated after the execution of $\textless  statement\textgreater$ instead before.
+%Guarantee 
+%at least one execution of $\textless statement \textgreater$, even if $\textless condition \textgreater$ is never true. 
 do-while loop is declared as:
 $do\{\textless  statement\textgreater\}~while(\textless condition\textgreater)$
 \end{description}
 
 
-\subsection{Comments}
-Comments are also handled the pythonic way, using a single pound sign '\#' for 
-one-line comments and double pound signs '\#\#' to indicate start and end of block comments'
+\subsection*{Comments}
+Comments are also handled the pythonic way, using a single pound sign '\#' for
+one-line comments and double pound signs '\#\#' to indicate start and end of block comments.
 
 %Example:
 %\# this is a comment
@@ -242,4 +243,3 @@ one-line comments and double pound signs '\#\#' to indicate start and end of blo
 %\#\#
 
 
-\label{sect:core}

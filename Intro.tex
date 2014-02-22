@@ -9,11 +9,13 @@ easy-to-use, and agile programming language to enhance user's ability to express
 complex semantics for job distribution and scheduling. There are many scenarios
 where semantics are needed to express dependencies for job execution, such as:
 \begin{description}
-\item[Jobs can depend on each other] You want to create and run 2 jobs $A$ and
-$B$ in parallel, on a few workers. And then you want to run job $C$ on some
-workers, only after both $A$ and $B$ succeeded.
-\item[Jobs can depend on external factors] Job $A$ should execute after 6.00 PM,
-job $B$ should execute in machines with CPU-load less than 0.5.
+\item[Jobs can depend on each other:] User needs to create and run jobs $A$,
+$B$ in parallel, on a few workers. If both $A$ and $B$ succeed, job $C$ should
+execute on some workers.
+%And then you want to run job $C$ on some
+%workers, only after both $A$ and $B$ succeeded.
+\item[Jobs can depend on external factors:] Job $A$ should execute after 6.00 PM
+and job $B$ should execute in machines with CPU-load less than 0.5.
 \end{description}
 
 Prior related work in this area includes the so-called infrastructure

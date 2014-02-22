@@ -3,21 +3,21 @@
 \begin{description}
 \item[Declarative] The goal is to have a declarative language to run jobs
 (scripts) in a distributed way. The programmer only has to register workers and
-declare dependencies. The language then figures out how to run the jobs and in
-what order.
-\item[Callbacks \& lambdas] \lang{} will also support before and after callbacks
-with a more imperative model to express any logic needed. \lang{} supports
+declare dependencies; the language will schedule and run the jobs.
+\item[Callbacks \& lambdas] \lang{} supports before/after callbacks
+with a more imperative model to express any logic needed, and
+% \lang{} supports
 lambdas to make callbacks easier to write.
 \item[Strongly typed] \lang{} is strongly typed so that errors can be check
 before jobs are sent. On top of classic types it supports a job type.
 \item[Garbage collected] Memory is handled by the language with a simple
-garbage collector. Users should not have to manage their memory is such a high
-level and domain specific language, where performance is not a critical issue.
-\item[No exceptions] Error checking are be handled on the spot, no exceptions
+garbage collector. Users should not have to manage their memory in a high
+level domain specific language, where performance is not critical.
+\item[No exceptions] Error checking is handled on the spot, and no exceptions
 will be thrown to avoid hard to debug situations from asynchronous callbacks.
-\item[Two return vlues] Functions can return a value and an error to make error
-checking easier and more compact, all without throwing exceptions.
+\item[Two return values] Functions return a value and an error, to make error
+checking easier and compact, without throwing exceptions.
 \item[Program structure] Programs are written as sequence of function
-definitions and declarations stored in a file or written in the REPL command line
+definitions and declarations stored in a file, or in the REPL command line
 interface.
 \end{description}

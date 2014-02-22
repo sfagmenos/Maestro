@@ -4,7 +4,7 @@ Example 1: You want to create and run 2 jobs $A$ and $B$ in parallel, on a few
 workers. And then you want to run job $C$ on some workers, only after both $A$
 and $B$ succeeded.
 \begin{lstlisting}
-Job a = Job.new(script="abc.pl", workers=5)             /* scripts corresponding to jobs */
+Job a = Job.new(script="abc.pl", workers=5)    /* job scripts */
 Job b = Job.new(script="xRay.rb", workers=3)
 Job c = Job.new("telesphorus.py")
 run((a <--> b) --> c)
