@@ -70,22 +70,22 @@ is: (1) Exponentiation, (2) Multiply, Divide, Modulo, (3) Addition, Subtraction,
 (4) Comparison, (5) Assignment, (6) Membership, and (7) Logical.
 
 \subsection*{Datatypes}
-Variables have to be declared before used, and datatypes of
-variables are specified at declaration time.
+Variables have to be declared before use, and datatypes of
+variables are specified at declaration time. Variable names 
+begin with an alphabet letter.
 
 \begin{description}
-\item [Job:] The Job type is a \lang{} specific name, equivalent to a struct
-of fields describing a Job to be run. The fields are: 'script' for the
+\item [Job:] The Job type is a \lang{} specific type, equivalent to a struct
+with fields describing a Job to be run. The fields are: 'script' for the
 name of the script implementing the job, 'workers' for the number of workers to use
 (default is as many as possible), and 'priority', an Int from 0 to 5, 0 being the
 highest priority.
 Job variables are declared as:
 $Job \textless var\textgreater = Job.new(script=<String>, workers=<Int>, priority=<Int>)$
 
-\item [Int:] Integer variables can store whole number values like 0, 7, -1024,
+\item [Int:] Integer variables can store integer values like 0, 7, -1024,
 and support both signed and unsigned values. Integer variables are declared
-using the 'Int' keyword, and names have to begin with an alphabet.
-Integer variables are declared as:
+using the 'Int' keyword as:
 $Int \textless var\textgreater, \textless var\textgreater, ...$ 
 %$Int \textlessvar\textgreater = \textlessvalue\textgreater$
 
@@ -93,8 +93,7 @@ $Int \textless var\textgreater, \textless var\textgreater, ...$
 %$Int a = 234$
 
 \item [Float:] Floating point datatypes can store real values like 1.03 or -23.56.
-Floating Point variables are declared using the 'Float' keyword, and names
-have to begin with an alphabet. Float variables are declared as:
+Floating Point variables are declared using the 'Float' keyword as:
 $Float \textless  var\textgreater, \textless  var\textgreater, ...$
 %$Float \textlessvar\textgreater = \textlessvalue\textgreater$
 
@@ -103,8 +102,7 @@ $Float \textless  var\textgreater, \textless  var\textgreater, ...$
 
 
 \item [Bool:] Boolean datatypes can only hold one of two possible values:
-True or False. Boolean variables are declared using the 'Bool' keyword, and variable
-names have to begin with an alphabet. Boolean variables are declared as:
+True or False. Boolean variables are declared using the 'Bool' keyword as
 $Bool \textless  var\textgreater, \textless  var\textgreater, ...$
 %$Bool \textlessvar\textgreater = [\textlessTrue\textgreater OR \textlessFalse\textgreater]$
 %
@@ -114,8 +112,8 @@ $Bool \textless  var\textgreater, \textless  var\textgreater, ...$
 
 
 \item [String:] String datatypes represent a sequence of characters. String
-variables are declared using the 'String' keyword, and names have to begin
-with an alphabet. String values are declared within single quotation marks.
+variables are declared using the 'String' keyword, and string values are 
+declared within single quotation marks.
 String variables are declared as:
 $String \textless var\textgreater, \textless  var\textgreater, ...$
 %$String \textlessvar\textgreater = ' \textlessvalue\textgreater '$
@@ -150,20 +148,21 @@ $Val = Dict [ \textless key\textgreater]$, e.g., $Val = Dict ['Bob']$.
 \end{description}
 
 \subsection*{Dependences}
-Dependencies between programs can be specified using single arrows $\rightarrow$,
-whereas bidirectional arrows $\leftrightarrow$ indicate that programs should be run in parallel.
+Dependencies between programs can be specified using single arrows $\longrightarrow$ ,
+whereas bidirectional arrows $\longleftrightarrow$ indicate that programs should be run in parallel.
 This provides a straightforward job dependency expression, in the spirit of Python's
 list comprehensions. We give some indicative examples:
 %For grouping parentheses can be used.
+\begin{lstlisting}
+Example 1: Job B depends on Job A: 
+program_a --> program_b
 
-Example 1: Job B depends on Job A: $program\_a \rightarrow program\_b$
+Example 2: Jobs A, B, C must run in parallel: 
+program_a <-->  program_b <--> program_c
 
-Example 2: Jobs $A$, $B$, $C$ must run in parallel: $program\_a
-\leftrightarrow program\_b \leftrightarrow program\_c$
-
-Example 3:
-Jobs $A$, $B$ parallel, Job $C$ dependent:
-$(program\_a \leftrightarrow program\_b ) \leftrightarrow program\_c$
+Example 3: Jobs A, B parallel, Job C dependent: 
+(program_a <--> program_b ) <--> program_c
+\end{lstlisting}
 
 \subsection*{Functions and lambdas}
 Functions can return a value and an error, and are created with the func
@@ -178,9 +177,9 @@ func name(type arg1, type arg2) (return_type name, error_type err)
 }
 \end{lstlisting}
 
-\subsection{Conditional Statments and Errors}
+\subsection*{Conditional Statements and Errors}
 \begin{description}
-\item [Error checking:] ``If'' accepts a pre-statement that will be executed (like the first
+\item [Error checking:] If accepts a pre-statement that is executed (like the first
 statement of a for loop)
 
 Example:
@@ -197,7 +196,7 @@ $if (\_, err~=~execute\_job(j1);~ err~ !=~ nil) {}$
 %else{}
 %
 %
-\subsection{Loops}
+\subsection*{Loops}
 \begin{description}
 \item [For loop:] For loop is designed to iterate a fixed number of times.
 For loop is declared as:
@@ -231,8 +230,8 @@ $do\{\textless  statement\textgreater\}~while(\textless condition\textgreater)$
 
 
 \subsection*{Comments}
-Comments are also handled the pythonic way, using a single pound sign '\#' for
-one-line comments and double pound signs '\#\#' to indicate start and end of block comments.
+Comments are also handled in a pythonic way, using a single pound sign '\#' for
+one-line comments, and double pound signs '\#\#' to indicate start and end of block comments.
 
 %Example:
 %\# this is a comment
