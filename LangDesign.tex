@@ -15,6 +15,8 @@ garbage collector. Users should not have to manage their memory is such a high
 level and domain specific language, where performance is not a critical issue.
 \item[No exceptions] Error checking are be handled on the spot, no exceptions
 will be thrown to avoid hard to debug situations from asynchronous callbacks.
+\item[Two return vlues] Functions can return a value and an error to make error
+checking easier and more compact, all without throwing exceptions.
 \item[Program structure] Programs are written as sequence of function
 definitions and declarations stored in a file or written in the REPL command line
 interface.

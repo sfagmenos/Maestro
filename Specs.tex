@@ -69,40 +69,19 @@ The order of supported operations
 is: (1) Exponentiation; (2) Multiply, divide, modulo; (3) Addition, Subtraction; 
 (4) Comparison; (5) Assignment; (6) Membership; (7) Logical.
 
-
-\subsection{Lists and Dictionaries}
-\begin{description}
-\item [Lists:] List type is a container that holds a number of other objects
- in a given order. The list type implements a sequence, and also allows you 
- to add/remove objects from the sequence.
-
-Lists are created as:
-$L = [\textless expr \textgreater, \textless expr \textgreater, ...]$, e.g., $L = [23, 45, 2]$.
-
-An item in a list can be accessed using the list index, starting from 0.
-$Item = L [ \textless index\textgreater]$, e.g., $Item = L [0]$.
-
-
-
-\item [Dictionary:] The dictionary type is an associative array that holds 
-a pair of items called a key-value pair. Keys in the dictionary have to be unique.
-
-Dictionaries are created as:
-$Dict = \{ \textless key \textgreater :  \textless val\textgreater,  \textless key \textgreater : \textless val \textgreater, ...\}$, e.g., 
-$Dict = \{ 'Bob' : '1974', 'alice' : '1987'\}$.
-
-
-A value in a dictionary can be accessed using its corresponding key.
-$Val = Dict [ \textless key\textgreater]$, e.g., $Val = Dict ['Bob']$.
-\end{description}
-
-
-
 \subsection{Datatypes}
-
-All variables have to be declared before they can be used. The datatype of a 
+All variables have to be declared before they can be used. The datatype of a
 variable has to be specifies at declaration time.
+
 \begin{description}
+\item [Job:] The Job type is a \lang specific name. It is the equivalent of a struct
+with many fields and it describes a Job to the ran. The fields are: 'script' for the
+name of the script implementing the job, 'workers' for the number of workers to use
+(default is as many as possible), and 'priority', an Int from 0 to 5, 0 being the
+highest priority.
+Job variables are declared as:
+$Job \textless var\textgreater = Job.new(script=<String>, workers=<Int>, priority=<Int>)$
+
 \item [Int:] Integer datatypes are declared using the 'Int' keyword. Integer 
 variables can store whole number values like 0, 7, -1024. Variable names have 
 to begin with an alphabet. Int support both signed and unsigned values.
@@ -112,7 +91,6 @@ $Int \textless var\textgreater, \textless var\textgreater, ...$
 
 %$Int a, b, c$
 %$Int a = 234$
-
 
 \item [Float:] Floating point datatypes can store real values like 1.03 or -23.56. 
 Floating Point variables are declared using the 'Float' keyword. Variable names 
@@ -144,6 +122,31 @@ $String \textless var\textgreater, \textless  var\textgreater, ...$
 
 %$String a, b, c$
 %$String a = 'test'$
+
+\item [List:]
+List type is a container that holds a number of other objects of the same type,
+in a given order. The list type implements a sequence, and also allows you to
+add/remove objects from the sequence.
+
+Lists are created as:
+$L = type[\textless expr \textgreater, \textless expr \textgreater, ...]$
+, e.g., $L = int[23, 45, 2]$.
+
+An item in a list can be accessed using the list index, starting from 0.
+$Item = L [ \textless index\textgreater]$, e.g., $Item = L [0]$.
+
+\iffalse
+\item [Dictionary:]
+The dictionary type is an associative array that holds 
+a pair of items called a key-value pair. Keys in the dictionary have to be unique.
+
+Dictionaries are created as:
+$Dict = \{ \textless key \textgreater :  \textless val\textgreater,  \textless key \textgreater : \textless val \textgreater, ...\}$, e.g.,
+$Dict = \{ 'Bob' : '1974', 'alice' : '1987'\}$.
+
+A value in a dictionary can be accessed using its corresponding key.
+$Val = Dict [ \textless key\textgreater]$, e.g., $Val = Dict ['Bob']$.
+\fi
 \end{description}
 
 \subsection{Dependences}
@@ -162,20 +165,21 @@ Example 3:
 Jobs $A$, $B$ parallel, Job $C$ dependent:
 $(program\_a \leftrightarrow program\_b ) \leftrightarrow program\_c$
 
+\subsection{Functions and lambdas}
+Functions can return a value and an error, and are created with the func
+keyword. Lambdas are supported if no function name is given.
+\begin{lstlisting}
+func name(type arg1, type arg2) (return_type name, error_type err)
+{
+    //code here
+    name = "my return object"
+    err = nil  # or the error
+    return
+}
+\end{lstlisting}
+
 \subsection{Conditional Statments and Errors}
 \begin{description}
-\item [Functions:] Functions can return a value and an error, 
-and are created with the func keyword. Lambdas are supported if no function name is given.
-
-Example:
-$func~~~name(type arg1, type arg2)(return\_type name, error\_type err)\{ //code here\}$ 
-%
-%$\{  // code here
-%        name = "bla"
-%        err = nil
-%        return
-%\}$
-
 \item [Error checking:] ``If'' accepts a pre statement that will be executed (like the first 
 statement of a for loop)
 

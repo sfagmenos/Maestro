@@ -1,0 +1,30 @@
+\section{Examples}
+\label{sect:ex}
+Example 1: You want to create and run 2 jobs $A$ and $B$ in parallel, on a few
+workers. And then you want to run job $C$ on some workers, only after both $A$
+and $B$ succeeded.
+\begin{lstlisting}
+Job a = Job.new(script="abc.pl", workers=5)             /* scripts corresponding to jobs */
+Job b = Job.new(script="xRay.rb", workers=3)
+Job c = Job.new("telesphorus.py")
+run((a <--> b) --> c)
+\end{lstlisting}
+Example 2: You want to make measurement that are in 3 steps: populate, collect
+data and analyse.
+\begin{lstlisting}
+func an_hour_after(Job j) {
+  return func () {
+    j.finish_time && j.finish_time - Time.now > Time.hour(1)
+  }
+}
+
+Job old_b = nil
+for i in range(0,10) {
+  a = Job.new(script='send_email_batch.rb', workers=1)
+  b = Job.new(script='collect_data.rb', workers=1)
+  b.add_func_dependency( an_hour_after(a) )
+  Job c = Job.new(script='anaoyse.py')
+  run(old_b --> a --> b --> c)
+  old_b = b
+}
+\end{lstlisting}

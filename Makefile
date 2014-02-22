@@ -1,12 +1,19 @@
 FILE = Whitepaper
 
 PRINTER = lp
+UNAME = $(shell uname)
+ifeq ($(UNAME),Linux)
+	OPEN_COMMAND = evince
+endif
+ifeq ($(UNAME),Darwin)
+	OPEN_COMMAND = open
+endif
 
 all:	$(FILE).tex
 	rm -f $(FILE).ps
 	latex $(FILE)
 	dvips $(FILE).dvi -o $(FILE).ps
-	evince $(FILE).ps
+	$(OPEN_COMMAND) $(FILE).ps
 
 clean:
 	rm -f $(FILE).ps $(FILE).pdf $(FILE).log $(FILE).dvi $(FILE).bbl $(FILE).blg $(FILE).aux

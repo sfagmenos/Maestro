@@ -1,21 +1,22 @@
 \documentclass{article}
 \usepackage[a4paper]{geometry}
+\usepackage{listings}
 
 \newcommand{\lang}{Maestro}
 
 \title{\lang{}: An agile job orchestration language }
-\author{A. Swaminathan, G. Koloventzos, M. Lecuyer, V. Atlidakis, Y. Lu}
+\author{V. Atlidakis, G. Koloventzos, M. Lecuyer, Y. Lu, A. Swaminathan }
 \date{\today}
 
 
-\newenvironment{enu}{%     
-    \begin{enumerate}%     
-    \vspace{-\topsep}%     
-    \setlength\itemsep{-\parskip}%     
-    \setlength\parsep{0.25in}%     
+\newenvironment{enu}{%
+    \begin{enumerate}%
+    \vspace{-\topsep}%
+    \setlength\itemsep{-\parskip}%
+    \setlength\parsep{0.25in}%
     }
-    {     
-%    \vspace{-\topsep}     
+    {
+%    \vspace{-\topsep}
     \end{enumerate}
 }
 
@@ -25,6 +26,7 @@
 \input{LangDesign}
 \input{Specs}
 \input{Environment}
+\input{Examples}
 \input{Conclusion}
 \bibliography{BibFile}
 \bibliographystyle{plain}
