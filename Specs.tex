@@ -14,9 +14,9 @@ language.%, along with some indicative example.
         Operator & $a=4, b=2$ \\ \hline
         $+$ &  $a + b$ gives 6 \\  \hline
         $-$ &  $a - b$ gives 2  \\ \hline
-        $/$ &  $a / b$ gives gives 2 \\ \hline
-        $*$ &  $a * b$ gives 8  \\ \hline
-        $\%$ & $a \% b$ gives 0 \\ \hline
+        $/$ &  $a~/~b$ gives gives 2 \\ \hline
+        $*$ &  $a~*~b$ gives 8  \\ \hline
+        $\%$ & $a~\%~b$ gives 0 \\ \hline
         \end{tabular}
         \caption{Arithmetic operators.}
     }
@@ -81,12 +81,12 @@ name of the script implementing the job, 'workers' for the number of workers to 
 (default is as many as possible), and 'priority', an Int from 0 to 5, 0 being the
 highest priority.
 Job variables are declared as:
-$Job \textless var\textgreater = Job.new(script=<String>, workers=<Int>, priority=<Int>)$
+$Job~\textless var\textgreater = Job.new(~script=<String>,~workers=<Int>,~priority=<Int>)$
 
 \item [Int:] Integer variables can store integer values like 0, 7, -1024,
 and support both signed and unsigned values. Integer variables are declared
 using the 'Int' keyword as:
-$Int \textless var\textgreater, \textless var\textgreater, ...$ 
+$Int~\textless var\textgreater,~\textless var\textgreater, ...$
 %$Int \textlessvar\textgreater = \textlessvalue\textgreater$
 
 %$Int a, b, c$
@@ -94,7 +94,7 @@ $Int \textless var\textgreater, \textless var\textgreater, ...$
 
 \item [Float:] Floating point datatypes can store real values like 1.03 or -23.56.
 Floating Point variables are declared using the 'Float' keyword as:
-$Float \textless  var\textgreater, \textless  var\textgreater, ...$
+$Float~\textless  var\textgreater,~\textless  var\textgreater, ...$
 %$Float \textlessvar\textgreater = \textlessvalue\textgreater$
 
 %Float a, b, c
@@ -103,7 +103,7 @@ $Float \textless  var\textgreater, \textless  var\textgreater, ...$
 
 \item [Bool:] Boolean datatypes can only hold one of two possible values:
 True or False. Boolean variables are declared using the 'Bool' keyword as
-$Bool \textless  var\textgreater, \textless  var\textgreater, ...$
+$Bool~\textless  var\textgreater,~\textless  var\textgreater, ...$
 %$Bool \textlessvar\textgreater = [\textlessTrue\textgreater OR \textlessFalse\textgreater]$
 %
 %$Bool a, b, c$
@@ -115,7 +115,7 @@ $Bool \textless  var\textgreater, \textless  var\textgreater, ...$
 variables are declared using the 'String' keyword, and string values are 
 declared within single quotation marks.
 String variables are declared as:
-$String \textless var\textgreater, \textless  var\textgreater, ...$
+$String~\textless var\textgreater,~\textless  var\textgreater, ...$
 %$String \textlessvar\textgreater = ' \textlessvalue\textgreater '$
 
 %$String a, b, c$
@@ -127,8 +127,8 @@ in a given order. The list type implements a sequence, and also allows user to
 add/remove objects from the sequence.
 
 Lists are created as:
-$L = type[\textless expr \textgreater, \textless expr \textgreater, ...]$
-, e.g., $L = int[23, 45, 2]$.
+$L = type[\textless expr \textgreater,~\textless expr \textgreater, ...]$
+, e.g., $L = int[23,~45,~2]$.
 
 An item in a list can be accessed using the list index, starting from 0.
 $Item = L [ \textless index\textgreater]$, e.g., $Item = L [0]$.
@@ -220,12 +220,12 @@ $While (\textless  condition\textgreater)~\{\textless  statement\textgreater\}$
 
 %This program prints Hello World as long as the value of the variable x is less than 10. Therefore, it loops 5 times.
 
-\item [do-while loop:] do-while loop behaves like a while-loop, except that $\textless condition\textgreater$
+\item [Do-While loop:] Do-While loop behaves like a While loop, except that $\textless condition\textgreater$
 is evaluated after the execution of $\textless  statement\textgreater$ instead before.
 %Guarantee 
 %at least one execution of $\textless statement \textgreater$, even if $\textless condition \textgreater$ is never true. 
-do-while loop is declared as:
-$do\{\textless  statement\textgreater\}~while(\textless condition\textgreater)$
+Do-While loop is declared as:
+$Do\{\textless  statement\textgreater\}~While(\textless condition\textgreater)$
 \end{description}
 
 
