@@ -2,7 +2,7 @@ Next Steps
 ==========
 - Lex and Yacc (PLY) for a basic prototype: Job type, arrow operators and run function (Mathias).
 - Tree struct and DFS for later execution (Vaggelis and Georgios)
-- Build the test framework:
+- Build the test framework (Yren and Arun):
 -- base it on a python Unit Test framework
 -- write basic python scripts (don't forget #! /usr/...) to be ran by maestro, one that fails and
 one that succeeds. They should write in a file to verified by the test. Be careful with concurent
