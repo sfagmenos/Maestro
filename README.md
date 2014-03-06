@@ -3,13 +3,13 @@ Next Steps
 - Lex and Yacc (PLY) for a basic prototype: Job type, arrow operators and run function (Mathias).
 - Tree struct and DFS for later execution (Vaggelis and Georgios)
 - Build the test framework (Yren and Arun):
--- base it on a python Unit Test framework
--- write basic python scripts (don't forget #! /usr/...) to be ran by maestro, one that fails and
+ - base it on a python Unit Test framework
+ - write basic python scripts (don't forget #! /usr/...) to be ran by maestro, one that fails and
 one that succeeds. They should write in a file to verified by the test. Be careful with concurent
 stuff (lock file?). Maybe add one that sleeps to make wure the dependency wait for it.
--- write something that will run a maestro program, and look at the result file to make sure it
+ - write something that will run a maestro program, and look at the result file to make sure it
 did the right thing.
--- think about test cases (and start implementing?) to test corner cases of the language.
+ - think about test cases (and start implementing?) to test corner cases of the language.
 
 Idea
 ====
