@@ -1,0 +1,147 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> E
+Rule 1     E -> E NODEP E
+Rule 2     E -> E DEP E
+Rule 3     E -> LP E RP
+Rule 4     E -> ID
+
+Terminals, with rules where they appear
+
+DEP                  : 2
+ID                   : 4
+LP                   : 3
+NODEP                : 1
+RP                   : 3
+error                : 
+
+Nonterminals, with rules where they appear
+
+E                    : 1 1 2 2 3 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . E
+    (1) E -> . E NODEP E
+    (2) E -> . E DEP E
+    (3) E -> . LP E RP
+    (4) E -> . ID
+
+    LP              shift and go to state 2
+    ID              shift and go to state 3
+
+    E                              shift and go to state 1
+
+state 1
+
+    (0) S' -> E .
+    (1) E -> E . NODEP E
+    (2) E -> E . DEP E
+
+    NODEP           shift and go to state 5
+    DEP             shift and go to state 4
+
+
+state 2
+
+    (3) E -> LP . E RP
+    (1) E -> . E NODEP E
+    (2) E -> . E DEP E
+    (3) E -> . LP E RP
+    (4) E -> . ID
+
+    LP              shift and go to state 2
+    ID              shift and go to state 3
+
+    E                              shift and go to state 6
+
+state 3
+
+    (4) E -> ID .
+
+    NODEP           reduce using rule 4 (E -> ID .)
+    DEP             reduce using rule 4 (E -> ID .)
+    $end            reduce using rule 4 (E -> ID .)
+    RP              reduce using rule 4 (E -> ID .)
+
+
+state 4
+
+    (2) E -> E DEP . E
+    (1) E -> . E NODEP E
+    (2) E -> . E DEP E
+    (3) E -> . LP E RP
+    (4) E -> . ID
+
+    LP              shift and go to state 2
+    ID              shift and go to state 3
+
+    E                              shift and go to state 7
+
+state 5
+
+    (1) E -> E NODEP . E
+    (1) E -> . E NODEP E
+    (2) E -> . E DEP E
+    (3) E -> . LP E RP
+    (4) E -> . ID
+
+    LP              shift and go to state 2
+    ID              shift and go to state 3
+
+    E                              shift and go to state 8
+
+state 6
+
+    (3) E -> LP E . RP
+    (1) E -> E . NODEP E
+    (2) E -> E . DEP E
+
+    RP              shift and go to state 9
+    NODEP           shift and go to state 5
+    DEP             shift and go to state 4
+
+
+state 7
+
+    (2) E -> E DEP E .
+    (1) E -> E . NODEP E
+    (2) E -> E . DEP E
+
+    DEP             reduce using rule 2 (E -> E DEP E .)
+    $end            reduce using rule 2 (E -> E DEP E .)
+    RP              reduce using rule 2 (E -> E DEP E .)
+    NODEP           shift and go to state 5
+
+  ! NODEP           [ reduce using rule 2 (E -> E DEP E .) ]
+  ! DEP             [ shift and go to state 4 ]
+
+
+state 8
+
+    (1) E -> E NODEP E .
+    (1) E -> E . NODEP E
+    (2) E -> E . DEP E
+
+    NODEP           reduce using rule 1 (E -> E NODEP E .)
+    DEP             reduce using rule 1 (E -> E NODEP E .)
+    $end            reduce using rule 1 (E -> E NODEP E .)
+    RP              reduce using rule 1 (E -> E NODEP E .)
+
+  ! NODEP           [ shift and go to state 5 ]
+  ! DEP             [ shift and go to state 4 ]
+
+
+state 9
+
+    (3) E -> LP E RP .
+
+    NODEP           reduce using rule 3 (E -> LP E RP .)
+    DEP             reduce using rule 3 (E -> LP E RP .)
+    $end            reduce using rule 3 (E -> LP E RP .)
+    RP              reduce using rule 3 (E -> LP E RP .)
+
