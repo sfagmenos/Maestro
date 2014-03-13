@@ -8,4 +8,5 @@
 *.pdf
 *.ps
 *.bbl
-
+*.pyc
+*egg-info*

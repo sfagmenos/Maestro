@@ -2,7 +2,8 @@
 Implementation of semantic actions
 '''
 
-from subprocess import Popen, wait
+import subprocess
+import time
 
 
 # This is a dictionary keeping all
@@ -14,44 +15,56 @@ class Job():
     '''Constructor of class should be supplied with job name and
     respective script name
     '''
-    def __init__(self, name, script, dependencies=None, workers=1):
-        self.dependencies = dependencies
-        self.workers = workers
-        self.script = script
-        self.stderr = None
-        self.stdout = None
-        self.errno = None  # errno is None since job has not run
-        Jobs[name] = self
-        self.name = name
+    def __init__(self, name, script, workers=1):
+        self._dependencies = []
+        self._workers = workers
+        self._script = script
+        self._stderr = None
+        self._stdout = None
+        self._errno = None  # errno is None since job has not run
+        self._name = name
+
+    def stdout(self):
+        return self._stdout
 
     def perror(self):
-        return self.errno, self.stderr
+        return self._errno, self._stderr
 
     def __repr__(self):
-        return self.name
+        return self._name
 
     def add_dependency(self, depends_on):
         '''Add names of jobs on which current object
         depends on.
         '''
-        for name in depends_on:
-            self.dependencies.append(name)
+        for job in depends_on:
+            self._dependencies.append(job)
 
     def run(self):
         '''this should do the remote execution of scripts'''
-        s = subprocess.Popen(self.script, stdout=subprocess.PIPE)
-        streamdata = s.communicate()
-        self.output = streamdata[0]
-        self.stderr = streamdata[1]
-        self.errno = s.returncode
+        # need error checkong of what Popen returns
+        try:
+            s = subprocess.Popen(self._script, stdout=subprocess.PIPE)
+        except OSError, error:
+            self._stdout = None
+            self._stderr = error
+            self._errno = -1
+            return
 
-    def can_run():
+        streamdata = s.communicate()
+        self._stdout = streamdata[0]
+        self._stderr = streamdata[1]
+        self._errno = s.returncode
+
+    def can_run(self):
         '''check if dependencies are fullfilled.
         Current instrance can run only if all jobs from
         its dependency list have successed ( errno is zero )
         '''
-        for job in self.dependencies:
-            if Jobs[job].perror() != (0, _):
+        if not self._dependencies:
+            return True
+        for job in self._dependencies:
+            if job.perror()[0] != 0:
                 return False
         return True
 
@@ -70,6 +83,11 @@ class JobQueue:
         self.Q[dependencies] = job
 
 
+def add_dependencies(jobs, depends_on):
+    for job in jobs:
+        job.add_dependency(depends_on)
+
+
 def run(Queue):
     '''Try to run job from queue'''
     # suppose queue is constructed.
@@ -78,9 +96,9 @@ def run(Queue):
     # dependency i.e., Q[0] = [a,b] should run before
     # jobs with two dependencies, i.e., Q[1] = [c]
     #
-    for i in range(len(Queue)):
-        while not Queue[i]:
-            for job in Queue[i]:
-                if job.can_run():
-                    Queue[i].remove(job)
-                    job.run()
+    while not Queue[i]:
+        for job in Queue[i]:
+            if job.can_run():
+                Queue[i].remove(job)
+                job.run()
+        time.sleep(0.5)
