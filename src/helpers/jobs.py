@@ -6,11 +6,6 @@ import subprocess
 import time
 
 
-# This is a dictionary keeping all
-# Jobs that have been constructed.
-Jobs = dict()
-
-
 class Job():
     '''Constructor of class should be supplied with job name and
     respective script name
