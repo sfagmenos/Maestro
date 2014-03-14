@@ -78,9 +78,9 @@ class JobQueue:
         self.Q[dependencies] = job
 
 
-def add_dependencies(jobs, depends_on):
+def add_dependencies(jobs, depend_on):
     for job in jobs:
-        job.add_dependency(depends_on)
+        job.add_dependency(depend_on)
 
 
 def run(Queue):
