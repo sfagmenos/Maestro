@@ -7,17 +7,22 @@ tokens = (
    'NODEP',
    'LP',
    'RP',
+   'ASSIGN',
+   'COMMA',
+   'STR',
 )
 
 # Regular expression rules for simple tokens
-t_DEP   = r'->'
-t_NODEP = r'<->'
-t_LP    = r'\('
-t_RP    = r'\)'
+t_DEP    = r'->'
+t_NODEP  = r'<->'
+t_LP     = r'\('
+t_RP     = r'\)'
+t_ASSIGN = r'='
+t_STR    = r'"[^"]*"'
 
 # A regular expression rule with some action code
 def t_ID(t):
-    r'[a-zA-Z_][]-zA-Z_\d]*'
+    r'[a-zA-Z_][a-zA-Z_\d]*'
     return t
 
 # Define a rule so we can track line numbers
