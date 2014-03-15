@@ -1,7 +1,7 @@
 import ply.yacc as yacc
 import helpers.jobs as hj
 
-# Get the token map from the lexer.  This is required.
+# Get the token map from the lexer
 from mlex import tokens
 precedence = (
     ('left', 'ASSIGN'),
@@ -16,12 +16,13 @@ def p_func_call(p):
 
 # assign a variable:
 # - put the name in the sym_table
-# - the expresion gets the value
+# - the expresion gets the value for 1 liners
 def p_assign(p):
     'E : ID ASSIGN E'
     sym_table[p[1]] = p[3]
     p[0] = p[3]  # do that to have assign return the var
 
+# strings for Job names
 def p_e_str(p):
     'E : STR'
     p[0] = p[1]
@@ -35,6 +36,7 @@ def p_e_str(p):
     # 'LI : LP LII RP'
     # p[0] = p[2]
 
+# arguments of a function or inside of a list for later
 def p_list_inside_grow(p):
     'LII : LII COMMA E'
     p[0] = p[1] + [p[3]]
@@ -43,19 +45,22 @@ def p_list_inside_orig(p):
     'LII : E'
     p[0] = [p[1]]
 
+# <->
 def p_e_nodep(p):
     'E : E NODEP E'
     p[0] = nodep(p[1], p[3])
 
+# ->
 def p_e_dep(p):
     'E : E DEP E'
     p[0] = dep(p[3], p[1])
 
+# ()
 def p_e_parenthesize(p):
     'E : LP E RP'
     p[0] = p[2]
 
-# that's a variable: fetch it in the sym table
+# that's a variable: fetch it in the symbol table
 def p_e_id(p):
     'E : ID'
     p[0] = sym_table[p[1]]
