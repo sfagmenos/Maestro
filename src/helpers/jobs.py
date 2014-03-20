@@ -38,8 +38,10 @@ class Job():
     def run(self):
         '''this should do the remote execution of scripts'''
         # need error checkong of what Popen returns
+        ip = 'localhost'
         try:
-            s = subprocess.Popen(self._script, stdout=subprocess.PIPE)
+            #s = subprocess.Popen(self._script, stdout=subprocess.PIPE)
+            s = subprocess.Popen(['rsh',ip,self._script], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         except OSError, error:
             self._stdout = None
             self._stderr = error
