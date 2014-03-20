@@ -1,0 +1,8 @@
+src/*
+tests/*
+*.aux
+*.dvi
+*.log
+*.out
+*.ps
+*.pdf
