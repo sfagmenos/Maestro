@@ -2,6 +2,7 @@
 Implementation of semantic actions
 '''
 
+import paramiko
 import subprocess
 import time
 
@@ -39,19 +40,23 @@ class Job():
         '''this should do the remote execution of scripts'''
         # need error checkong of what Popen returns
         ip = 'localhost'
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(ip, username='vatlidak', key_filename='/home/vatlidak/.ssh/id_rsa')
         try:
             #s = subprocess.Popen(self._script, stdout=subprocess.PIPE)
-            s = subprocess.Popen(['rsh',ip,self._script], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        except OSError, error:
+            #s = subprocess.Popen(['rsh',ip,self._script], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            ssh.exec_command(self._script)
+        except Exception, error:
             self._stdout = None
             self._stderr = error
             self._errno = -1
             return
 
-        streamdata = s.communicate()
-        self._stdout = streamdata[0]
-        self._stderr = streamdata[1]
-        self._errno = s.returncode
+        #streamdata = s.communicate()
+        #self._stdout = streamdata[0]
+        #self._stderr = streamdata[1]
+        #self._errno = s.returncode
 
     def can_run(self):
         '''check if dependencies are fullfilled.
