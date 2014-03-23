@@ -5,44 +5,44 @@ Consider a Ruby script file named $hello\_world.rb$ containing the following scr
 puts 'Hello world'
 
 Now consider a Maestro program like the following:
-\begin{lstlisting}
+\begin{verbatim}
 Job a = Job.new(name="a", script="hello_world.rb")
 run(a)
-\end{lstlisting}
+\end{verbatim}
 
 This program creates a jobs, job $A$ that will run the hello world script we created. 
 It runs job $A$ on the requested number of workers and prints out 'Hello world'.
 \\
 
 \subsection*{Example Program 2:}
-\begin{lstlisting}
+\begin{verbatim}
 Job a = Job.new(name="a", script="abc.pl", workers=5) /* job scripts */
 Job b = Job.new(name="b", script="xRay.rb", workers=3)
 run(a --> b)
-\end{lstlisting}
+\end{verbatim}
 
 This program creates two jobs, job $A$ and job $B$. It runs job $A$ first on the requested number of workers
 and if successful, runs job $B$. If job $A$ fails, job $B$ is not initiated.
 \\
 
 \subsection*{Example Program 3:}
-\begin{lstlisting}
+\begin{verbatim}
 Job a = Job.new(name="a", script="abc.pl", workers=5) /* job scripts */
 Job b = Job.new(name="b", script="xRay.rb", workers=3)
 run(a <--> b)
-\end{lstlisting}
+\end{verbatim}
 
 This program creates two jobs, job $A$ and job $B$ and runs them in parellel in their respective number of requested workers.
 Unlike the previous example the outcome of one job is not dependent on the execution of the other job(s).
 \\
 
 \subsection*{Example Program 4:}
-\begin{lstlisting}
+\begin{verbatim}
 Job a = Job.new(name="a", script="abc.pl", workers=5) /* job scripts */
 Job b = Job.new(name="b", script="xRay.rb", workers=3)
 Job c = Job.new(name="c", "telesphorus.py")
 run((a <--> b) --> c)
-\end{lstlisting}
+\end{verbatim}
 
 This program creates and runs two jobs, $A$ and $B$ in parallel, on a few
 workers. And then it runs job $C$ on some workers, only after both $A$
@@ -51,7 +51,7 @@ only excuted AFTER jobs $A$ and $B$ have successfully been excuted on workers.
 \\
 
 \subsection*{Example Program 5:}
-\begin{lstlisting}
+\begin{verbatim}
 func an_hour_after(Job j) {
   return func () {
     j.finish_time && j.finish_time - Time.now > Time.hour(1)
@@ -67,7 +67,7 @@ for i in range(0,10) {
   run(old_b --> a --> b --> c)
   old_b = b
 }
-\end{lstlisting}
+\end{verbatim}
 This program makes measurements in 3 steps:
 Populate
 Collect Data
