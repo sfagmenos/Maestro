@@ -1,6 +1,29 @@
 \section{General Instructions}
 \label{sect:general}
 
+\subsection*{Objects and Functions in Maestro}
+\begin{lstlisting}
+ New jobs are declared as objects of the $Job$ class using the implemented $new()$ method. The $new()$ method requires as parameters;
+ $script$ which is the script to be executed on the worker(s).
+ $workers$ which an optional parameters to mention the number of workers to run the job on.
+ \\
+
+ For example:
+ 
+ Job b = Job.new( script=”xRay . rb” , worker s=3)
+ Job c = Job.new(”telesphorus.py”)
+
+ These create new jobs $b$ and $c$ as instances of the $Job$ class using the $new()$ method.
+ \\
+\end{lstlisting} 
 
 
+\begin{lstlisting}
+ Jobs are executed using the $run()$ method. The $run()$ method takes as parameter instances of the job class.
+ The dependencies between jobs have to be mentioned. Dependencies are mentioned using $-->$ or $<-->$ as described in the whitepaper.
+
+ For example:
+
+ run ( ( a <−−> b) −−> c )
+\end{lstlisting} 
 
