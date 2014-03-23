@@ -6,7 +6,7 @@ puts 'Hello world'
 
 Now consider a Maestro program like the following:
 \begin{lstlisting}
-Job a = Job.new(script="hello_world.rb", workers=1)
+Job a = Job.new(name="a", script="hello_world.rb")
 run(a)
 \end{lstlisting}
 
@@ -16,8 +16,8 @@ It runs job $A$ on the requested number of workers and prints out 'Hello world'.
 
 \subsection*{Example Program 2:}
 \begin{lstlisting}
-Job a = Job.new(script="abc.pl", workers=5) /* job scripts */
-Job b = Job.new(script="xRay.rb", workers=3)
+Job a = Job.new(name="a", script="abc.pl", workers=5) /* job scripts */
+Job b = Job.new(name="b", script="xRay.rb", workers=3)
 run(a --> b)
 \end{lstlisting}
 
@@ -27,8 +27,8 @@ and if successful, runs job $B$. If job $A$ fails, job $B$ is not initiated.
 
 \subsection*{Example Program 3:}
 \begin{lstlisting}
-Job a = Job.new(script="abc.pl", workers=5) /* job scripts */
-Job b = Job.new(script="xRay.rb", workers=3)
+Job a = Job.new(name="a", script="abc.pl", workers=5) /* job scripts */
+Job b = Job.new(name="b", script="xRay.rb", workers=3)
 run(a <--> b)
 \end{lstlisting}
 
@@ -38,9 +38,9 @@ Unlike the previous example the outcome of one job is not dependent on the execu
 
 \subsection*{Example Program 4:}
 \begin{lstlisting}
-Job a = Job.new(script="abc.pl", workers=5) /* job scripts */
-Job b = Job.new(script="xRay.rb", workers=3)
-Job c = Job.new("telesphorus.py")
+Job a = Job.new(name="a", script="abc.pl", workers=5) /* job scripts */
+Job b = Job.new(name="b", script="xRay.rb", workers=3)
+Job c = Job.new(name="c", "telesphorus.py")
 run((a <--> b) --> c)
 \end{lstlisting}
 
@@ -60,10 +60,10 @@ func an_hour_after(Job j) {
 
 Job old_b = nil
 for i in range(0,10) {
-  a = Job.new(script='send_email_batch.rb', workers=1)
-  b = Job.new(script='collect_data.rb', workers=1)
+  a = Job.new(name="a", script='send_email_batch.rb')
+  b = Job.new(name="b", script='collect_data.rb')
   b.add_func_dependency( an_hour_after(a) )
-  Job c = Job.new(script='analyze.py')
+  Job c = Job.new(name="c", script='analyze.py')
   run(old_b --> a --> b --> c)
   old_b = b
 }
