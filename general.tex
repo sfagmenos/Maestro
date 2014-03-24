@@ -1,29 +1,40 @@
 \section{General Instructions}
 \label{sect:general}
 
-\subsection*{Objects and Functions in Maestro}
-\begin{lstlisting}
- New jobs are declared as objects of the $Job$ class using the implemented $new()$ method. The $new()$ method requires as parameters;
- $script$ which is the script to be executed on the worker(s).
- $workers$ which an optional parameters to mention the number of workers to run the job on.
- \\
+\subsection*{Classes and Functions in Maestro}
 
- For example:
- 
- Job b = Job.new( script=”xRay . rb” , worker s=3)
- Job c = Job.new(”telesphorus.py”)
+\subsubsection*{$Job(string <name>, string <script\_path>, int <workers>=1)$}
+New jobs are declared as objects of the $Job$ class using the implemented $new()$ method.\\
+The $new()$ method requires as parameters;\\
+$name$ which is the name of the job.\\
+$script\_path$ which is the script to be executed.\\
+$workers$ which an optional parameters to mention the number of workers to run the job on.\\\\
+The default number of workers is 1.\\
+Example:\\
+Here we create 2 new jobs $b$ and $c$ as instances of \\the $Job$ class using the $new()$ method.
+\begin{verbatim}
+ Job b = Job.new("b","xRay.rb",3)
+ Job c = Job.new("c","telesphorus.py")
+\end{verbatim}
+\subsection*{Job Functions}
+\subsubsection*{$Job.add\_dependency(List <dependencies>)$}
+Function to create the dependency list of a job. The job we will be
+able to run if and only if all this jobs terminated successfully.
+\subsubsection*{$Job.stdout()$}
+Function to return the output of the command. As it is the result of the script we should need to print it.
+\subsubsection*{$Job.perror()$}
+Function to return a tuple. The first variable of the tuple is the error code. The second is the error string.
+With this function we can determine whether the script terminated successfully or not.
+\subsubsection*{$Job.run()$}
+Function to actual run the script from $script\_path$. In general is creates a shell in the desired machine
+and executes the script.
+\subsubsection*{$Job.can\_run()$}
+Function to go through all the dependencies and check if all terminated correctly. This will give us the notion
+that this job can continue with execution.
 
- These create new jobs $b$ and $c$ as instances of the $Job$ class using the $new()$ method.
- \\
-\end{lstlisting} 
+Jobs are executed using the $run()$ method. The $run()$ method takes as parameter instances of the job class.
+The dependencies between jobs have to be mentioned. Dependencies are mentioned using $-->$ or $<-->$ as described in the whitepaper.
 
-
-\begin{lstlisting}
- Jobs are executed using the $run()$ method. The $run()$ method takes as parameter instances of the job class.
- The dependencies between jobs have to be mentioned. Dependencies are mentioned using $-->$ or $<-->$ as described in the whitepaper.
-
- For example:
-
- run ( ( a <−−> b) −−> c )
-\end{lstlisting} 
-
+\begin{verbatim}
+ run ( ( a <--> b) --> c )
+\end{verbatim}
