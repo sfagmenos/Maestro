@@ -13,7 +13,7 @@ all:	$(FILE).tex
 	rm -f $(FILE).ps
 	latex $(FILE)
 	dvips $(FILE).dvi -o $(FILE).ps
-	$(OPEN_COMMAND) $(FILE).ps
+	# $(OPEN_COMMAND) $(FILE).ps
 
 clean:
 	rm -f $(FILE).ps $(FILE).pdf $(FILE).log $(FILE).dvi $(FILE).bbl $(FILE).blg $(FILE).aux

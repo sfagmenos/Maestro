@@ -32,7 +32,7 @@ to understand what happened with our example.\\
 \begin{verbatim}
 Job a = Job.new(name="a", script="abc.pl", workers=5)
 Job b = Job.new(name="b", script="xRay.rb", workers=3)
-run(a --> b)
+run(a -> b)
 \end{verbatim}
 
 In this example we are creating 2 jobs. You can see in this example that\\
@@ -47,7 +47,7 @@ of the workers. Then the job `b' will run in 3 workers.
 \begin{verbatim}
 Job a = Job.new(name="a", script="abc.pl", workers=5)
 Job b = Job.new(name="b", script="xRay.rb", workers=3)
-run(a <--> b)
+run(a <-> b)
 \end{verbatim}
 
 This program creates two jobs, job $A$ and job $B$ and runs them in parellel in their respective number of requested workers.
@@ -59,7 +59,7 @@ Unlike the previous example the outcome of one job is not dependent on the execu
 Job a = Job.new(name="a", script="abc.pl", workers=5)
 Job b = Job.new(name="b", script="xRay.rb", workers=3)
 Job c = Job.new(name="c", "telesphorus.py")
-run((a <--> b) --> c)
+run((a <-> b) -> c)
 \end{verbatim}
 
 This program creates and runs two jobs, $A$ and $B$ in parallel, on a few
@@ -82,7 +82,7 @@ for i in range(0,10) {
   b = Job.new(name="b", script='collect_data.rb')
   b.add_func_dependency( an_hour_after(a) )
   Job c = Job.new(name="c", script='analyze.py')
-  run(old_b --> a --> b --> c)
+  run(old_b -> a -> b -> c)
   old_b = b
 }
 \end{verbatim}

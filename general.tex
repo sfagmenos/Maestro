@@ -4,13 +4,13 @@
 \subsection*{Unique Operators in \lang{}}
 
 In \lang{} language we are defining 2 operators with special meaning.\\
-The operator $-->$ and the $<-->$.
-\subsubsection*{The asynchronous $(-->)$ operator}
+The operator $->$ and the $<->$.
+\subsubsection*{The asynchronous $(->)$ operator}
 In order to define a way that 2 process must run the one after the other\\
 we implemented the asychronous operator. By this operator we declare that\\
 the process at left of the arrow must first terminate successfully and\\
 then the process at the right can start.
-\subsubsection*{The concurrent $(<-->)$ operator}
+\subsubsection*{The concurrent $(<->)$ operator}
 Unlike the asynchronous operator this operator denotes that this 2 jobs can\\
 run parallel. This means that this 2 scripts can be send to 2 different\\
 workers to execute. The failure of any of these jobs are not crucial to the\\
@@ -47,8 +47,8 @@ Function to go through all the dependencies and check if all terminated correctl
 that this job can continue with execution.
 
 Jobs are executed using the $run()$ method. The $run()$ method takes as parameter instances of the job class.
-The dependencies between jobs have to be mentioned. Dependencies are mentioned using $-->$ or $<-->$ as described in the whitepaper.
+The dependencies between jobs have to be mentioned. Dependencies are mentioned using $->$ or $<->$ as described in the whitepaper.
 
 \begin{verbatim}
- run ( ( a <--> b) --> c )
+ run ( ( a <-> b) -> c )
 \end{verbatim}
