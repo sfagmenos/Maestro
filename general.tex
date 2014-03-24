@@ -29,8 +29,8 @@ The default number of workers is 1.\\
 Example:\\
 Here we create 2 new jobs $b$ and $c$ as instances of \\the $Job$ class using the $new()$ method.
 \begin{verbatim}
- Job b = Job.new("b","xRay.rb",3)
- Job c = Job.new("c","telesphorus.py")
+b = Job("b","xRay.rb",3)
+c = Job("c","telesphorus.py")
 \end{verbatim}
 \subsection*{Job Functions}
 \subsubsection*{$Job.add\_dependency(List <dependencies>)$}
