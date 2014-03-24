@@ -2,21 +2,35 @@
 \label{sect:samples}
 \subsection*{Example Program 1:}
 Consider a Ruby script file named $hello\_world.rb$ containing the following script
+\begin{verbatim}
 puts 'Hello world'
+\end{verbatim}
 
 Now consider a Maestro program like the following:
 \begin{verbatim}
 Job a = Job.new(name="a", script="hello_world.rb")
 run(a)
+if (a.perror()[0] == 0){
+    print a.stdout()
+}
+else{
+    print a.perror()[1]
+}
 \end{verbatim}
-
-This program creates a jobs, job $A$ that will run the hello world script we created. 
-It runs job $A$ on the requested number of workers and prints out 'Hello world'.
-\\
+In this example we can see the declaration of a job with name `a'.\\
+We initialize it with the script name of our hello world script and\\
+we leave the workers with the default 1 value. In line 2 we $run()$\\
+our job. Our language will find a not loaded worker and run our command.\\
+After the exection it will populate the internal values of the `Job'\\
+class. Afterwards we are testing if it returned properly (line 3). If it\\
+returned 0 (the general code that execution terminated correctly) we are\\
+printing the stdout variable of our job (line 4). Otherwise we are\\
+printing the error string (line 7) that our program returned in order\\
+to understand what happened with our example.\\
 
 \subsection*{Example Program 2:}
 \begin{verbatim}
-Job a = Job.new(name="a", script="abc.pl", workers=5) /* job scripts */
+Job a = Job.new(name="a", script="abc.pl", workers=5)
 Job b = Job.new(name="b", script="xRay.rb", workers=3)
 run(a --> b)
 \end{verbatim}
@@ -27,7 +41,7 @@ and if successful, runs job $B$. If job $A$ fails, job $B$ is not initiated.
 
 \subsection*{Example Program 3:}
 \begin{verbatim}
-Job a = Job.new(name="a", script="abc.pl", workers=5) /* job scripts */
+Job a = Job.new(name="a", script="abc.pl", workers=5)
 Job b = Job.new(name="b", script="xRay.rb", workers=3)
 run(a <--> b)
 \end{verbatim}
@@ -38,7 +52,7 @@ Unlike the previous example the outcome of one job is not dependent on the execu
 
 \subsection*{Example Program 4:}
 \begin{verbatim}
-Job a = Job.new(name="a", script="abc.pl", workers=5) /* job scripts */
+Job a = Job.new(name="a", script="abc.pl", workers=5)
 Job b = Job.new(name="b", script="xRay.rb", workers=3)
 Job c = Job.new(name="c", "telesphorus.py")
 run((a <--> b) --> c)
