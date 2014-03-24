@@ -8,6 +8,7 @@ puts 'Hello world'
 
 Now consider a Maestro program like the following:
 \begin{verbatim}
+#Hello World
 Job a = Job.new(name="a", script="hello_world.rb")
 run(a)
 if (a.perror()[0] == 0){
@@ -17,15 +18,15 @@ else{
     print a.perror()[1]
 }
 \end{verbatim}
-In this example we can see the declaration of a job with name `a'.\\
+In this example we can see the declaration of a job with name `a' at line 2.\\
 We initialize it with the script name of our hello world script and\\
-we leave the workers with the default 1 value. In line 2 we $run()$\\
+we leave the workers with the default 1 value. In line 3 we $run()$\\
 our job. Our language will find a not loaded worker and run our command.\\
 After the exection it will populate the internal values of the `Job'\\
-class. Afterwards we are testing if it returned properly (line 3). If it\\
+class. Afterwards we are testing if it returned properly (line 4). If it\\
 returned 0 (the general code that execution terminated correctly) we are\\
-printing the stdout variable of our job (line 4). Otherwise we are\\
-printing the error string (line 7) that our program returned in order\\
+printing the stdout variable of our job (line 5). Otherwise we are\\
+printing the error string (line 8) that our program returned in order\\
 to understand what happened with our example.\\
 
 \subsection*{Example Program 2:}
