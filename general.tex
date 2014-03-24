@@ -7,7 +7,7 @@ You can se the documentation of Redis \href{http://redis.io/documentation}{here}
 \subsection*{Unique Operators in \lang{}}
 
 In \lang{} language we are defining some operators with special meaning.\\
-The operators $->$ and $<->$ for concurrency. Also the operators $~$,$~<$\\and $~>$ for the job dependancies.\\
+The operators $->$ and $<->$ for concurrency. Also the operators \texttildelow,\texttildelow\textless\\and \texttildelow\textgreater for the job dependancies.\\
 \subsubsection*{The asynchronous $(->)$ operator}
 In order to define a way that 2 process must run the one after the other\\
 we implemented the asychronous operator. By this operator we declare that\\
@@ -18,15 +18,16 @@ Unlike the asynchronous operator this operator denotes that this 2 jobs can\\
 run parallel. This means that this 2 scripts can be send to 2 different\\
 workers to execute. The failure of any of these jobs are not crucial to the\\
 other.
-\subsubsection*{The equal dependancy $(~)$ operator}
+\subsubsection*{The equal dependancy $($\texttildelow$)$ operator}
 The use of this operators states that these jobs should run concurrent if there\\
 are enough resources.
-\subsubsection*{The prior dependancy $(~>)$ operator}
+\subsubsection*{The prior dependancy $($\texttildelow$>)$ operator}
 The use of this operators states that the job at left should run before the one\\
 at the right.
-\subsubsection*{The later dependancy $(~<)$ operator}
+\subsubsection*{The later dependancy $($\texttildelow$<)$ operator}
 The use of this operators states that the job at left should run after the one\\
 at the right.
+The 3 last operators are introducing the `soft' dependency as we call it in \lang{}\\
 \subsection*{Classes and Functions in \lang{}}
 \subsubsection*{Class $Job(string <name>, string <script\_path>, int <workers>=1)$}
 New jobs are declared as objects of the $Job$ class using the implemented $new()$ method.\\
