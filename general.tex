@@ -1,8 +1,21 @@
 \section{General Instructions}
 \label{sect:general}
 
-\subsection*{Classes and Functions in Maestro}
+\subsection*{Unique Operators in \lang{}}
 
+In \lang{} language we are defining 2 operators with special meaning.\\
+The operator $-->$ and the $<-->$.
+\subsubsection*{The asynchronous $(-->)$ operator}
+In order to define a way that 2 process must run the one after the other\\
+we implemented the asychronous operator. By this operator we declare that\\
+the process at left of the arrow must first terminate successfully and\\
+then the process at the right can start.
+\subsubsection*{The concurrent $(<-->)$ operator}
+Unlike the asynchronous operator this operator denotes that this 2 jobs can\\
+run parallel. This means that this 2 scripts can be send to 2 different\\
+workers to execute. The failure of any of these jobs are not crucial to the\\
+other.
+\subsection*{Classes and Functions in \lang{}}
 \subsubsection*{Class $Job(string <name>, string <script\_path>, int <workers>=1)$}
 New jobs are declared as objects of the $Job$ class using the implemented $new()$ method.\\
 The $new()$ method requires as parameters;\\
@@ -23,8 +36,9 @@ able to run if and only if all this jobs terminated successfully.
 \subsubsection*{$Job.stdout()$}
 Function to return the output of the command. As it is the result of the script we should need to print it.
 \subsubsection*{$Job.perror()$}
-Function to return a tuple. The first variable of the tuple is the error code. The second is the error string.
-With this function we can determine whether the script terminated successfully or not.
+The perror function looks if the job executed properly in all of the workers. All of the return codes are stored in a list. So if any error occured in any worker the job knows in which worker happened.
+\subsubsection*{$Job.error()$}
+The error function returns the error message if any and also appends the ip of the worker that failed to execute the script.
 \subsubsection*{$Job.run()$}
 Function to actual run the script from $script\_path$. In general is creates a shell in the desired machine
 and executes the script.
