@@ -6,7 +6,7 @@ Consider a Ruby script file named $hello\_world.rb$ containing the following scr
 puts 'Hello world'
 \end{verbatim}
 Now consider a \lang{} program like the following:
-\begin{verbatim}
+\begin{Verbatim}[numbers=left]
 #Hello World
 a = Job(name="a", script="hello_world.rb")
 run(a)
@@ -16,7 +16,7 @@ if (a.perror() == 0){
 else{
     print a.error()
 }
-\end{verbatim}
+\end{Verbatim}
 
 In this example we can see the declaration of a job with name `a' at line 2.\\
 We initialize it with the script name of our hello world script and\\
@@ -30,11 +30,11 @@ printing the error string (line 8) that our program returned in order\\
 to understand what happened with our example.\\
 
 \subsection*{Example Program 2:}
-\begin{verbatim}
+\begin{Verbatim}[numbers=left]
 a = Job(name="a", script="abc.pl", workers=5)
 b = Job(name="b", script="xRay.rb", workers=3)
 run(a -> b)
-\end{verbatim}
+\end{Verbatim}
 
 In this example we are creating 2 jobs. You can see in this example that\\
 we are stating in how many workers we want this script ot run. How to \\
@@ -45,11 +45,11 @@ of the workers. Then the job `b' will run in 3 workers.
 \\
 
 \subsection*{Example Program 3:}
-\begin{verbatim}
+\begin{Verbatim}[numbers=left]
 a = Job(name="a", script="abc.pl", workers=5)
 b = Job(name="b", script="xRay.rb", workers=3)
 run(a <-> b)
-\end{verbatim}
+\end{Verbatim}
 
 This example is the same as the 2nd example with one big difference.\\
 Here we demonstrate how to run 2 jobs asychronous. You can see that\\
@@ -60,12 +60,12 @@ the concurrent and not concurrent jobs. This will help developers and\\
 not computer scientists to create easily distributable batch proccesses.\\
 
 \subsection*{Example Program 4:}
-\begin{verbatim}
+\begin{Verbatim}[numbers=left]
 a = Job(name="a", script="abc.pl", workers=5)
 b = Job(name="b", script="xRay.rb", workers=3)
 c = Job(name="c", "telesphorus.py")
 run((a <-> b) -> c)
-\end{verbatim}
+\end{Verbatim}
 
 This 4th example we are taking full capabilities of \lang{}.\\
 We are creating 3 jobs. Without creating any real dependency,\\
@@ -75,7 +75,7 @@ In order for the 3rd job to start the first 2 jobs must terminate\\
 in all of the workers.\\
 
 \subsection*{Example Program 5:}
-\begin{verbatim}
+\begin{Verbatim}[numbers=left]
 func an_hour_after(Job j) {
   return func () {
     j.finish_time && j.finish_time - Time.now > Time.hour(1)
@@ -91,7 +91,7 @@ for i in range(0,10) {
   run(old_b -> a -> b -> c)
   old_b = b
 }
-\end{verbatim}
+\end{Verbatim}
 This program makes measurements in 3 steps:
 Populate
 Collect Data
