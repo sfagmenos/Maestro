@@ -67,11 +67,12 @@ Job c = Job.new(name="c", "telesphorus.py")
 run((a <-> b) -> c)
 \end{verbatim}
 
-This program creates and runs two jobs, $A$ and $B$ in parallel, on a few
-workers. And then it runs job $C$ on some workers, only after both $A$
-and $B$ succeed. The important point to be noted here is that job $C$ is 
-only excuted AFTER jobs $A$ and $B$ have successfully been excuted on workers.
-\\
+This 4th example we are taking full capabilities of \lang{}.\\
+We are creating 3 jobs. Without creating any real dependency,\\
+the 2 jobs (`a',`b') will run asychronous and when this jobs\\
+terminate successfully the 3rd job `c' will start.\\
+In order for the 3rd job to start the first 2 jobs must terminate\\
+in all of the workers.\\
 
 \subsection*{Example Program 5:}
 \begin{verbatim}
