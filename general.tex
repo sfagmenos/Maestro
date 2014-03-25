@@ -54,28 +54,28 @@ if (condition) statement
 Here, condition is the expression that is being evaluated. If this condition is true, statement is executed. If it is false, statement is not executed (it is simply ignored), and the program continues right after the entire selection statement.
 
 Example:
-\begin{verbatim}
+\begin{Verbatim}[numbers=left]
 a = Job(....)
 run(a)
 if (a.perror()==0)
     print a.stdout()
     
-\end{verbatim}
+\end{Verbatim}
 
 Here, if executing Job a produces an error, this statement is ignored and nothing is printed. Stout is printed if and only if the job a is executed successfully.
 
-If you want to include more than a single statement to be executed when the condition is fulfilled, these statements shall be enclosed in braces ({}), forming a block.
+If you want to include more than a single statement to be executed when the condition is fulfilled, these statements shall be enclosed in braces (\{\}), forming a block.
 
 Example:
 
-\begin{verbatim}
+\begin{Verbatim}[numbers=left]
 a = Job(....)
 run(a)
 if (a.perror()==0){
     print a.stdout()
     print "Job successful"
     }
-\end{verbatim}
+\end{Verbatim}
 Selection statements with if can also specify what happens when the condition is not fulfilled, by using the else keyword to introduce an alternative statement. Its syntax is:
 
 if (condition) statement1 else statement2
@@ -83,14 +83,14 @@ if (condition) statement1 else statement2
 where statement1 is executed in case condition is true, and in case it is not, statement2 is executed.
 
 Example:
-\begin{verbatim}
+\begin{Verbatim}[numbers=left]
 a = Job(....)
 run(a)
 if (a.perror()==0)
     print a.stdout()
 else
     print a.error()
-\end{verbatim}
+\end{Verbatim}
 
 Here, if executing job a produces an error, the error code is printed. If the job is executed successfully, the output is printed.
 
@@ -130,10 +130,10 @@ $workers$ which an optional parameters to mention the number of workers to run t
 The default number of workers is 1.\\
 Example:\\
 Here we create 2 new jobs $b$ and $c$ as instances of \\the $Job$ class using the $new()$ method.
-\begin{verbatim}
+\begin{Verbatim}[numbers=left]
 b = Job("b","xRay.rb",3)
 c = Job("c","telesphorus.py")
-\end{verbatim}
+\end{Verbatim}
 \subsection*{Job Functions}
 \subsubsection*{$Job.add\_dependency(List <dependencies>)$}
 Function to create the dependency list of a job. The job we will be
