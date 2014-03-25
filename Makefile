@@ -1,4 +1,5 @@
-FILE = main
+FILE = lrm_arithmetic
+# FILE = main
 
 PRINTER = lp
 UNAME = $(shell uname)
@@ -11,8 +12,9 @@ endif
 
 all:	$(FILE).tex
 	rm -f $(FILE).ps
-	latex $(FILE)
-	dvips $(FILE).dvi -o $(FILE).ps
+	# latex $(FILE)
+	pdflatex $(FILE)
+	# dvips $(FILE).dvi -o $(FILE).ps
 	# $(OPEN_COMMAND) $(FILE).ps
 
 clean:

@@ -1,4 +1,3 @@
-
 \documentclass[12pt]{article}
 \usepackage{amssymb,amsmath,amsthm}
 \usepackage[pdftex]{graphicx}
@@ -10,7 +9,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode} 
 \usepackage{bbm}
-\usepackage[margin=1in]{geometry}
+% \usepackage[margin=1in]{geometry}
 \linespread{1.5}
 
 \title{Language Reference Manual Operators}
@@ -63,7 +62,7 @@ $$\vert ``!=''$$
 
 The results of comparisons are boolean values, true and false.
 
-Comparisons can be chained and are equivalent to their constituent pieces. i.e., $x < y < z$ is equivalent to $x < y$ and $y < z$, although evaluation occurs right to left, up to correctness.
+Comparisons can be chained and are equivalent to their constituent pieces, i.e. $x < y < z$ is equivalent to $x < y$ and $y < z$, although evaluation occurs right to left, up to correctness.
 
 \subsection{Dependencies}
 
@@ -80,9 +79,4 @@ $$priorOperator \rightarrow ``~>'' \vert ``<~>''$$
 The results of dependencies are boolean values, true and false.
 
 \end{document}
-
-
-
-
-
 
