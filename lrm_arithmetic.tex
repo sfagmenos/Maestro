@@ -1,0 +1,88 @@
+
+\documentclass[12pt]{article}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usepackage{ulem}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[top=1in, bottom=1in, left=.5in, right=1in]{geometry}
+\usepackage{algorithm}
+\usepackage{algpseudocode} 
+\usepackage{bbm}
+\usepackage[margin=1in]{geometry}
+\linespread{1.5}
+
+\title{Language Reference Manual Operators}
+
+\author{Mathias Lécuyer, Vaggelis Atlidakis, Georgios Koloventzos, Yiren Lu}
+\date{\today}
+
+\begin{document}
+
+\subsection{Unary arithmetic operations}
+
+$$unaryExpr \rightarrow ``-'' unaryExpr$$
+
+The minus symbol $``-''$ returns the negation of the argument, which needs to be numeric. If the argument has the wrong time, the error \textbf{TypeError} is returned.
+
+\subsection{Binary arithmetic operations}
+
+There are two priority levels for binary arithmetic operators, one for addition/subtraction and another for multiplication/division.
+
+$$multExpr \rightarrow multExpr ``*'' unaryExpr$$
+$$ \vert multExpr ``/'' unaryExpr$$
+$$ \vert multExpr ``\%'' unaryExpr$$
+$$ \vert unaryExpr$$
+
+$$addExpr \rightarrow addExpr ``+'' unaryExpr $$ 
+$$\vert addExpr ``-'' unaryExpr$$
+$$\vert multExpr$$
+
+The multiplication symbol $``*''$ gives the product of the two operands, which both must be numbers (ie either integer or floats), and are first converted to common type.
+
+The division symbol $``/''$ gives the quotient of the two operands, both of which must be numeric. Division by zero raises the \textbf{DivideByZero} error.
+
+The addition symbol $``+''$ gives the sum of the two operands, both of which must be numeric.
+
+The subtraction symbol $``-''$ gives the difference of the two operands, both of which must be numeric.
+
+The modulo symbol $``\%''$ gives the remainder of the quotient of the two operands. A right argument with value zero will raise the \textbf{DivideByZero} error.
+
+\subsection{Comparison Operators}
+
+Comparisons have a lower priority than the arithmetic operations
+
+$$comp \rightarrow addExpr (compOperator \text{ } addExpr)*$$
+$$compOperator \rightarrow ``<'' $$
+$$\vert ``>'' $$
+$$\vert ``=='' $$
+$$\vert ``<='' $$
+$$\vert ``>='' $$
+$$\vert ``!=''$$
+
+The results of comparisons are boolean values, true and false.
+
+Comparisons can be chained and are equivalent to their constituent pieces. i.e., $x < y < z$ is equivalent to $x < y$ and $y < z$, although evaluation occurs right to left, up to correctness.
+
+\subsection{Dependencies}
+
+$$dep \rightarrow addExpr (depOperator \text{ } addExpr)*$$
+$$depOperator \rightarrow ``->'' \vert ``<->''$$
+
+The results of dependencies are boolean values, true and false. 
+
+\subsection{Priorities}
+
+$$priorities \rightarrow addExpr (priorOperator \text{ } addExpr)*$$
+$$priorOperator \rightarrow ``~>'' \vert ``<~>''$$
+
+The results of dependencies are boolean values, true and false.
+
+\end{document}
+
+
+
+
+
+
