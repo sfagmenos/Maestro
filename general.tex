@@ -4,6 +4,59 @@
 \subsection*{Define Workers in \lang{}}
 For us to create the workers for \lang{} we will use \href{http://www.redis.io}{Redis}.
 You can se the documentation of Redis \href{http://redis.io/documentation}{here}
+
+\subsection*{Control Flows in \lang{}}
+Control flow statements are used to execute a non-linear sequence of statements.
+\subsubsection*{if-else statements}
+The if keyword is used to execute a statement or block, if, and only if, a condition is fulfilled. Its syntax is:
+
+if (condition) statement 
+
+Here, condition is the expression that is being evaluated. If this condition is true, statement is executed. If it is false, statement is not executed (it is simply ignored), and the program continues right after the entire selection statement.
+
+Example:
+\begin{verbatim}
+a = Job(....)
+run(a)
+if (a.perror()==0)
+    print a.stdout()
+    
+\end{verbatim}
+
+Here, if executing Job a produces an error, this statement is ignored and nothing is printed. Stout is printed if and only if the job a is executed successfully.
+
+If you want to include more than a single statement to be executed when the condition is fulfilled, these statements shall be enclosed in braces ({}), forming a block.
+
+Example:
+
+\begin{verbatim}
+a = Job(....)
+run(a)
+if (a.perror()==0){
+    print a.stdout()
+    print "Job successful"
+    }
+\end{verbatim}
+Selection statements with if can also specify what happens when the condition is not fulfilled, by using the else keyword to introduce an alternative statement. Its syntax is:
+
+if (condition) statement1 else statement2
+
+where statement1 is executed in case condition is true, and in case it is not, statement2 is executed.
+
+Example:
+\begin{verbatim}
+a = Job(....)
+run(a)
+if (a.perror()==0)
+    print a.stdout()
+else
+    print a.error()
+\end{verbatim}
+
+Here, if executing job a produces an error, the error code is printed. If the job is executed successfully, the output is printed.
+
+
+
 \subsection*{Unique Operators in \lang{}}
 
 In \lang{} language we are defining some operators with special meaning.\\
