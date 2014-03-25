@@ -77,29 +77,48 @@ before the \textit{expr}. \\
 At last we have the $(expr\sim<d)$. This expression means that the \\
 job `d' should run before the \textit{expr}.
 
-\subsection*{Example Program 5:}
-\begin{Verbatim}[numbers=left]
-func an_hour_after(Job j) {
-  return func () {
-    j.finish_time && j.finish_time - Time.now > Time.hour(1)
-  }
-}
-
-Job old_b = nil
-for i in range(0,10) {
-  a = Job(name="a", script='send_email_batch.rb')
-  b = Job(name="b", script='collect_data.rb')
-  b.add_func_dependency( an_hour_after(a) )
-  c = Job(name="c", script='analyze.py')
-  run(old_b -> a -> b -> c)
-  old_b = b
-}
+\subsection*{Example Program 4:}
+\begin{Verbatim}[numbers=left,commandchars=\\\{\}]
+a = Job(name="a", script="abc.pl", workers=5)
+b = Job(name="b", script="xRay.rb", workers=3)
+c = Job(name="c", "telesphorus.py")
+d = Job(name="d", "nimbledriod.py")
+c.add_dependency([b,d])
+a\mytilde<b
+run(a,b,c,d)
 \end{Verbatim}
-This program makes measurements in 3 steps:
-Populate
-Collect Data
-Analyse
-\\
+
+In the 4th example we can see the 3rd way to introduce dependencies.
+With the funcion \textit{add\_dependency} we are adding to a job (here the `c')
+a list of other jobs to be depended on. The execution then will start with the job
+`b'. Thus we have the soft dependency at line 6. After the termination of job `b'
+it will continue with `a'. The c is still blocked as it needs both jobs `b' and `d'.
+As we do not have any dependency between `b' and `d', `d' will start to run in another
+server. After the termination of `d' the job `c' is now ready to run.
+
+%\subsection*{Example Program 5:}
+%\begin{Verbatim}[numbers=left]
+%func an_hour_after(Job j) {
+%  return func () {
+%    j.finish_time && j.finish_time - Time.now > Time.hour(1)
+%  }
+%}
+%
+%Job old_b = nil
+%for i in range(0,10) {
+%  a = Job(name="a", script='send_email_batch.rb')
+%  b = Job(name="b", script='collect_data.rb')
+%  b.add_func_dependency( an_hour_after(a) )
+%  c = Job(name="c", script='analyze.py')
+%  run(old_b -> a -> b -> c)
+%  old_b = b
+%}
+%\end{Verbatim}
+%This program makes measurements in 3 steps:
+%Populate
+%Collect Data
+%Analyse
+%\\
 
 All programs are executed using the 'maestro' command.
 \\
