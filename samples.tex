@@ -59,12 +59,14 @@ You can see that \lang{} offers an easy way to distinguish between\\
 the concurrent and not concurrent jobs. This will help developers and\\
 not computer scientists to create easily distributable batch proccesses.\\
 
-\subsection*{Example Program 4:}
-\begin{Verbatim}[numbers=left]
+\subsection*{Example Program 3:}
+\begin{Verbatim}[numbers=left,commandchars=\\\{\}]
 a = Job(name="a", script="abc.pl", workers=5)
 b = Job(name="b", script="xRay.rb", workers=3)
 c = Job(name="c", "telesphorus.py")
-run((a <-> b) -> c)
+d = Job(name="d", "nimbledriod.py")
+((a\mytilde>(b\mytilde c))\mytilde<d)
+run((a,b,c,d)
 \end{Verbatim}
 
 This 4th example we are taking full capabilities of \lang{}.\\
