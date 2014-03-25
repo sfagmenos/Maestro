@@ -14,88 +14,20 @@
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage{geometry}
-\geometry{verbose,tmargin=2cm,bmargin=3cm,lmargin=2cm,rmargin=2cm,headheight=2cm,headsep=2cm,footskip=2cm}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3.5cm,rmargin=3.5cm,headheight=3cm,headsep=2cm,footskip=2cm}
 \usepackage{amstext}
 % \usepackage[margin=1in]{geometry}
 \linespread{1.5}
 
 \title{Language Reference Manual Operators}
 
-\author{Mathias Lécuyer, Vaggelis Atlidakis, Georgios Koloventzos, Yiren Lu}
+\author{Mathias Lecuyer, Vaggelis Atlidakis, Georgios Koloventzos, Yiren Lu}
 \date{\today}
 
 \begin{document}
 
 \maketitle
 \tableofcontents
-
-\subsection{Unary arithmetic operations}
-
-$$unaryExpr \rightarrow ``-'' unaryExpr$$
-
-The minus symbol $``-''$ returns the negation of the argument, which needs to be numeric. If the argument has the wrong time, the error \textbf{TypeError} is returned.
-
-\subsection{Binary arithmetic operations}
-
-There are two priority levels for binary arithmetic operators, one for addition/subtraction and another for multiplication/division.
-
-$$multExpr \rightarrow multExpr ``*'' unaryExpr$$
-$$ \vert multExpr ``/'' unaryExpr$$
-$$ \vert multExpr ``\%'' unaryExpr$$
-$$ \vert unaryExpr$$
-
-$$addExpr \rightarrow addExpr ``+'' unaryExpr $$ 
-$$\vert addExpr ``-'' unaryExpr$$
-$$\vert multExpr$$
-
-The multiplication symbol $``*''$ gives the product of the two operands, which both must be numbers (ie either integer or floats), and are first converted to common type.
-
-The division symbol $``/''$ gives the quotient of the two operands, both of which must be numeric. Division by zero raises the \textbf{DivideByZero} error.
-
-The addition symbol $``+''$ gives the sum of the two operands, both of which must be numeric.
-
-The subtraction symbol $``-''$ gives the difference of the two operands, both of which must be numeric.
-
-The modulo symbol $``\%''$ gives the remainder of the quotient of the two operands. A right argument with value zero will raise the \textbf{DivideByZero} error.
-
-\subsection{Comparison Operators}
-
-Comparisons have a lower priority than the arithmetic operations
-
-$$comp \rightarrow addExpr (compOperator \text{ } addExpr)*$$
-$$compOperator \rightarrow ``<'' $$
-$$\vert ``>'' $$
-$$\vert ``=='' $$
-$$\vert ``<='' $$
-$$\vert ``>='' $$
-$$\vert ``!=''$$
-
-The results of comparisons are boolean values, true and false.
-
-Comparisons can be chained and are equivalent to their constituent pieces, i.e. $x < y < z$ is equivalent to $x < y$ and $y < z$, although evaluation occurs right to left, up to correctness.
-
-\subsection{Dependencies}
-
-$$dep \rightarrow addExpr (depOperator \text{ } addExpr)*$$
-$$depOperator \rightarrow ``->'' \vert ``<->''$$
-
-The results of dependencies are boolean values, true and false. 
-
-\subsection{Priorities}
-
-$$priorities \rightarrow addExpr (priorOperator \text{ } addExpr)*$$
-$$priorOperator \rightarrow ``~>'' \vert ``<~>''$$
-
-The results of dependencies are boolean values, true and false.
-
-
-
-
-
-
-
-
-
 
 \section{Introduction}
 The Maestro language is a declarative language to schedule jobs with hard and soft dependencies, locally or over the network.
@@ -106,7 +38,7 @@ The Maestro language is a declarative language to schedule jobs with hard and so
 
 \section{Lexical conventions}
 \subsection{Whitespace}
-Whitespaces are either a tab or a white space. At least one white space is required to separate identifiers from
+Whitespaces are either a tab, a new line, or a white space. At least one white space is required to separate identifiers from
 each other, and certain operators.
 
 \subsection{Comments}
@@ -117,7 +49,7 @@ An identifier is a sequence of letters, digits, and underscores. The first chara
 
 \subsection{Keywords}
 The following identifiers are used as keywords, and are reserved names:\\
-if else map reduce run Job
+if else
 
 \subsection{Built in functions}
 The following functions are built into the language, and their names are reserved:\\
@@ -139,9 +71,9 @@ All return a list of Jobs.
     and runs them. If they have dependencies, these dependencies will run first.
 \end{description}
 
-\subsection{Reserved}
+\subsection{Reserved Identifiers}
 The following characters are reserved: $\texttt{+ - / * \% -> => <-> \textasciitilde>
-\textasciitilde< \textasciitilde , ( ) " .}$.
+\textasciitilde< \textasciitilde , ( ) "}$
 
 \subsection{Types}
 Maestro is dynamically typed and doesn't allow users to create new types.
@@ -169,9 +101,9 @@ is thus the entire script, or the whole lifetime of the interpreter.
 \subsection{Operators}
 Operators are left associative and have the following precedences (same line
 means same precedence, lower line means higher precedence):\\
-$\texttt{+ - -> => \textasciitilde> \textasciitilde<}$\\
-$\texttt{/ * <-> \textasciitilde}$\\
-$\texttt{\%}$.
+$\texttt{-> => \textasciitilde> \textasciitilde<}$\\
+$\texttt{+ - <-> \textasciitilde}$\\
+$\texttt{/ * \%}$
 
 \subsection{Expressions}
 \subsubsection{identifier}
@@ -185,7 +117,13 @@ A function call is an expression. The arguments are comma separated and are eval
 from left to right, before the call. It is possible to have 0 arguments.
 
 \subsubsection{expression + expression}
-The result is the sum of the expressions if they evaluate to an Int.
+The result is the sum of the expressions if they evaluate to an Int.\\
+The result is the concatenation of the lists if both expressions evaluate to
+a list.\\
+The result is the concatenation of the strings if both expressions evaluate to
+a string.\\
+The result is the concatenation of the string and the Int in a string format if
+one expression evaluates to a string and the other to an Int.\\
 
 \subsubsection{expression - expression}
 The result is the difference of the expressions if they evaluate to an Int.
@@ -194,154 +132,81 @@ The result is the difference of the expressions if they evaluate to an Int.
 The result is the multiplication of the expressions if they evaluate to an Int.
 
 \subsubsection{expression / expression}
-The result is the Integer division of the expressions if they evaluate to an Int.
+The result is the Integer division of the expressions if they evaluate to an Int.\\
+When dividing by 0, the program crashes.
 
 \subsubsection{expression \% expression}
 The \% operator yields the remainder from the division of the first expression by the second, if
 both expressions evaluate to an Int.
 
 \subsubsection{expression -> expression}
+The dependency operator (->) requires both expressions to be lists of Jobs.\\
+The call is asynchronous and adds all Jobs in the right hand side list as dependencies
+for all Jobs on the left hand side list.\\
+It returns a list of Jobs that is the concatenation of both lists.
+
+\subsubsection{expression => expression}
+The distributed dependency operator (=>) requires both expressions to be lists of Jobs.\\
+The call is asynchronous and adds all Jobs in the right hand side list as dependencies
+for all Jobs on the left hand side list. Moreover, the dependent Jobs (right
+hand side)  will be ran on the same worker as the previous Job (left hand
+side).\\
+It returns a list of Jobs that is the concatenation of both lists.
+
 \subsubsection{expression <-> expression}
-% The value of the right hand side operand should be non-negative and less than 32, if not the result is undefined.
-% The value of “E1 >> E2” is E1 arithmetically right-shifted by E2 bit positions. Vacated bits are filled by a copy of
-% the sign bit of the first expression.
-% The value of “E1 << E2” is R1 left-shifted by E2 bit positions. Vacated bits are 0-filled.
-% 3.19
-% expression
-% expression
-% expression
-% expression
-% < expression
-% > expression
-% <= expression
-% >= expression
-% The operators < (less than), > (greater than), <= (less than or equal to), >= (greater than or equal to) all yield 0 if
-% the specified relation is false and 1 if it is true.
-% 3.20
-\subsubsection{expression == expression}
-\subsubsection{expression != expression}
-% The operators == (equal to) and the != (not equal to) yield 0 if the specified relation is false, 1 if it is true.
-% 3.21
-% expression & expression
-% The & operator yield the bitwise and function of the operands.
-% 3.22
-% expression ˆ expression
-% The & operator yield the bitwise exclusive or function of the operands.
-% 3.23
-% expression | expression
-% The | operator yield the bitwise inclusive or function of the operands.
-% 3.24
-% expression && expression
-% The && operator returns 1 if both operands are non-zero, 0 otherwise. Both operands are always evaluated.
-% 3.25
-% expression || expression
-% The || operator returns 1 if either of its operands is non-zero, 0 otherwise. Both operands are always evaluated.
-% 3
-% 3.26
-% identifier = expression
-% The value of the referred variable is replaced by the value of the expression.
-% 3.27
-% identifier
-% identifier
-% identifier
-% identifier
-% identifier
-% identifier
-% identifier
-% identifier
-% identifier
-% identifier
-% += expression
-% -= expression
-% *= expression
-% /= expression
-% %= expression
-% >>= expression
-% <<= expression
-% &= expression
-% ˆ= expression
-% |= expression
-% An expression of the form “id op= expr” is equivalent to “id = id op expr”.
-% 4
-% Statements
-% Statements are executed in sequence.
-% 4.1
-% Expression statement
-% Most statement are expression statements, which have the form
-% expression ;
-% 4.2
-% Compound statement
-% So that several statements can be used where one is expected, the compound statement is provided:
-% compound-statement:
-% { statement-listopt }
-% statement-list:
-% statement
-% statement statement-list
-% 4.3
-% Conditional statement
-% The two forms of the conditional statement are
-% if ( expression ) statement
-% if ( expression ) statement else statement
-% In both cases the expression is evaluated and if it is non-zero, the first substatement is executed. In the second case
-% the second substatement is executed if the expression is 0. As usual the “else” ambiguity is resolved by connecting
-% an else with the last encountered elseless if.
-% 4
-% 4.4
-% While statement
-% The while statement has the form
-% while ( expression ) statement
-% The substatement is executed repeatedly so long as the value of the expression remains non-zero. The test takes
-% place before each execution of the statement.
-% 4.5
-% For statement
-% The for statement has the form
-% for ( expression-1opt ; expression-2opt ; expression-3opt ) statement
-% This statement is equivalent to
-% expression-1;
-% while ( expression-2 ) {
-% statement
-% expression-3;
-% }
-% Any or all the expression may be dropped. A missing expression-2 makes the implied while clause equivalent
-% to “while(1)”. Other missing expressions are simply dropped from the expansion above.
-% 4.6
-% Break statement
-% The statement
-% break;
-% casuses termination of the smallest enclosing while or for statement; control passes to the statement following the
-% terminated statement.
-% 4.7
-% Continue statement
-% The statement
-% continue;
-% causes control to pass to the loop-continuation portion of the smallest enclosing while or for statement; that is to
-% the end of the loop. In case of a for loop of the form “for(e1;e2;e3) {...}”, e3 is evaluated before checking e2.
-% 4.8
-% Return statement
-% A function returns to its caller by means of the return statement
-% return expression ;
-% The value of the expression is returned to the caller of the function.
-% 4.9
-% Null statement
-% The null statement has the form
-% ;
-% A null statement is useful to supply a null body to a looping statement such as while.
-% 5
-% 4.10
-% Try-catch statement
-% The two form of the try-catch statement are
-% try { statement-listopt }catch ( identifier ) { statement-listopt }
-% try { statement-listopt }catch { statement-listopt }
-% The statments enclosed in the try block are executed until an exception is thrown. In case no exception is thrown,
-% the statments enclosed in the catch block are not executed. The first form of the try-catch statement allows to
-% assign the value of the exception to a variable. Try-catch statement dynamically nest across function calls.
-% 4.11
-% Throw statement
-% The throw statement has the form
-% throw expression ;
-% Throwing an exception causes control to pass to the catch block of the nearest dynamically-enclosing try-catch
-% statement. If none is found, it causes the program to terminate with an error. The given expression is the value of
-% the thrown exception.
+The parallel operator (<->) requires both expressions to be lists of Jobs.\\
+The call is asynchronous and no dependencies are added. It is a visual way to
+concatenate lists of Jobs.\\
+It returns a list of Jobs that is the concatenation of both lists.
+
+\subsubsection{expression \textasciitilde> expression}
+The soft dependency operator (\textasciitilde>) requires both expressions to be lists of Jobs.\\
+The call is asynchronous and puts all right hand side Jobs prority to be 1 less than the smallest
+priority of the left hand side Jobs.\\
+It returns a list of Jobs that is the concatenation of both lists.\\
+A soft dependency is a priority indication: if more than one Job can run, Maestro will run the
+one with higher priority, but there is no order guaranty, as opposed to dependencies.
+
+\subsubsection{expression \textasciitilde< expression}
+The soft dependency operator (\textasciitilde<) requires both expressions to be lists of Jobs.\\
+The call is asynchronous and puts all right hand side Jobs prority to be 1 more than the biggest
+priority of the left hand side Jobs.\\
+It returns a list of Jobs that is the concatenation of both lists.\\
+A soft dependency is a priority indication: if more than one Job can run, Maestro will run the
+one with higher priority, but there is no order guaranty, as opposed to dependencies.
+
+\subsubsection{expression \textasciitilde expression}
+The soft parallel operator (\textasciitilde) requires both expressions to be lists of Jobs.\\
+The call is asynchronous and no priorities are changed. It is a visual way to
+concatenate lists of Jobs.\\
+It returns a list of Jobs that is the concatenation of both lists.
+
+\subsubsection{identifier = expression}
+The value of the variable wich name is the identifier value is replaced by the value of the expression
+evaluates to. If the variable doesn't exist, it is create: the programmer doesn't need to declare the
+variable beforehand.\\
+The default value of the variable is not determined.
+
+\section{Statements}
+Statements are executed in sequence.
+
+\subsection{statement}
+Most statement are expression statements, which have the form\\
+expression ;
+
+\subsection{statement-list}
+Most statement are expression statements, which have the form\\
+statement statement-list\\
+statement
+
+\subsection{Conditional statement}
+The two forms of the conditional statement are:\\
+if ( expression ) { statement-list }\\
+if ( expression ) { statement-list } else { statement-list }\\
+
+In both cases the expression is evaluated. If it is true, the first statements will be evaluated.
+If it is false and there is an else, the else statements will be evaluated.
+
 % 5
 % Program definition
 % A ltc program consists of a sequence of function definition.
@@ -362,20 +227,7 @@ both expressions evaluate to an Int.
 % if (a > b) m = a; else m = b;
 % if (m > c) return m; else return c;
 % }
-% 6
-% 6
-% Scope rules
-% There are no global variables, but only local variables which are statically binded. The scope of a local variable is
-% the whole function where the variable is used. The scope of function parameters is the whole function.
-% Function scope is the entire program.
-% 7
-% Declarations
-% Variables don’t need to be declared, they are initialized to 0.
-% A function call can be made whether or not the function actually exists, the program will simply not link if a call
-% to a non-existing function is made.
-% 8
-% Namespace
-% Variables and function use different namespaces. Therefore such a function is correct: “f() {f=1; return f; }”.
+
 % 9
 % 9.1
 % Syntax Summary
@@ -446,36 +298,5 @@ both expressions evaluate to an Int.
 % identifier
 % identifier , parameter-list
 % 9
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \end{document}
 
