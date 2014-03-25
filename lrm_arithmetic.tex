@@ -116,7 +116,7 @@ Comments are denoted by // and represent a comment that ends with the end of the
 An identifier is a sequence of letters, digits, and underscores. The first character must not be a digit.
 
 \subsection{Keywords}
-The following identifiers are used as keywords, and are reserved names:
+The following identifiers are used as keywords, and are reserved names:\\
 if else map reduce run Job
 
 \subsection{Built in functions}
@@ -131,9 +131,11 @@ All return a list of Jobs.
     stdout will be concatenated. For every line in the concatenated stdout, map will create
     a Job with the string argmuent and the stdout line as an argument. It returns the list
     of created Jobs. This call is asynchronous.
-  \item[reduce(list, string)] the first list is a list of jobs that will run first, and their
-
-  \item[run(list)] run takes an arbitrary number of comma separrated lists of Jobs
+  \item[reduce(list, string)] the first list is a list of jobs that will run first (usually the
+    output of a map). String is the path to the reduce program. There will be one Job
+    created with that program, with arguments that are the output from the previous reduce and
+    the output of the next Job from the list. The first reduce will have nil as first argument.
+  \item[run(list)] run takes an arbitrary number of comma separated lists of Jobs
     and runs them. If they have dependencies, these dependencies will run first.
 \end{description}
 
@@ -177,61 +179,29 @@ An identifier evaluates to the value of the corresponding variable.
 
 \subsubsection{( expression )}
 A parenthesized expression takes the value of the evaluated expression.
-% 3.4
+
 \subsubsection{identifier ( expression-listopt )}
-A function call is an expression. The arguments are optional and separated with a comma. They are evaluated
-from left to right before the call (applicative order). The value returned by the function is the value the callee
-returns with a return statement.
-% 3.5
-\subsubsection{-expression
-% The result is the negative of the expression.
-% 3.6
-\subsubsection{+expression
-% The result is the expression itself.
-% 3.7
-\subsubsection{!expression
-% The result of the logical negation operator ! is 1 if the value of the expression is 0, 0 if the value of the expression
-% is non-zero.
-% 3.8
-\subsubsection{~expression
-% The ~ operator yields the one’s complement of its operand.
-% 3.9
-\subsubsection{identifier++
-% The referred variable is incremented when evaluated. The expression evalutaes to the value of the variable before
-% the increment.
-% Note that the statement “{a = 0; b = 0; b = a++ + a++; }” sets the value of a to 2, and b to 1.
-% 3.10
-\subsubsection{identifier--
-% The referred variable is decremented when evaluated. The expression evaluates to the value of the variable before
-% the decrement.
-% 3.11
-\subsubsection{++identifier
-% The referred variable is incremented when evaluated. The expression evaluates to the value of the variable after
-% the increment.
-% 3.12
-\subsubsection{--identifier
-% The referred variable is decremented when evaluated. The expression evaluates to the value of the variable after
-% the decrement.
-% 3.13
-\subsubsection{expression * expression
-% The binary * operator indicates multiplication.
-% 3.14
-\subsubsection{expression / expression
-% The binary /operator indicates division.
-% 2
-% 3.15
-\subsubsection{expression % expression
-% The binary % operator yields the remainder from the division of the first expression by the second. The remainder
-% has the same sign as the dividend.
-% 3.16
-\subsubsection{expression + expression
-% The result is the sum of the expressions.
-% 3.17
-\subsubsection{expression - expression
-% The result is the difference of the expressions.
-% 3.18
-\subsubsection{expression >> expression
-\subsubsection{expression << expression
+A function call is an expression. The arguments are comma separated and are evaluated
+from left to right, before the call. It is possible to have 0 arguments.
+
+\subsubsection{expression + expression}
+The result is the sum of the expressions if they evaluate to an Int.
+
+\subsubsection{expression - expression}
+The result is the difference of the expressions if they evaluate to an Int.
+
+\subsubsection{expression * expression}
+The result is the multiplication of the expressions if they evaluate to an Int.
+
+\subsubsection{expression / expression}
+The result is the Integer division of the expressions if they evaluate to an Int.
+
+\subsubsection{expression \% expression}
+The \% operator yields the remainder from the division of the first expression by the second, if
+both expressions evaluate to an Int.
+
+\subsubsection{expression -> expression}
+\subsubsection{expression <-> expression}
 % The value of the right hand side operand should be non-negative and less than 32, if not the result is undefined.
 % The value of “E1 >> E2” is E1 arithmetically right-shifted by E2 bit positions. Vacated bits are filled by a copy of
 % the sign bit of the first expression.
@@ -248,8 +218,8 @@ returns with a return statement.
 % The operators < (less than), > (greater than), <= (less than or equal to), >= (greater than or equal to) all yield 0 if
 % the specified relation is false and 1 if it is true.
 % 3.20
-\subsubsection{expression == expression
-\subsubsection{expression != expression
+\subsubsection{expression == expression}
+\subsubsection{expression != expression}
 % The operators == (equal to) and the != (not equal to) yield 0 if the specified relation is false, 1 if it is true.
 % 3.21
 % expression & expression
