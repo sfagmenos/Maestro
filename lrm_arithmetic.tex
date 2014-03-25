@@ -9,6 +9,13 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode} 
 \usepackage{bbm}
+\usepackage{textcomp}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=3cm,lmargin=2cm,rmargin=2cm,headheight=2cm,headsep=2cm,footskip=2cm}
+\usepackage{amstext}
 % \usepackage[margin=1in]{geometry}
 \linespread{1.5}
 
@@ -18,6 +25,9 @@
 \date{\today}
 
 \begin{document}
+
+\maketitle
+\tableofcontents
 
 \subsection{Unary arithmetic operations}
 
@@ -77,6 +87,425 @@ $$priorities \rightarrow addExpr (priorOperator \text{ } addExpr)*$$
 $$priorOperator \rightarrow ``~>'' \vert ``<~>''$$
 
 The results of dependencies are boolean values, true and false.
+
+
+
+
+
+
+
+
+
+
+\section{Introduction}
+The Maestro language is a declarative language to schedule jobs with hard and soft dependencies, locally or over the network.
+% The C Flat language is mostly a subset of the C language. Some of the core functionalities of C has been stripped:
+% there is no preprocessor, no structs, no strings, not even pointers. it’s goal is purely educational. Originally Nico
+% and Dan were working on two separate languages. The two projects merged, taking some features from each, and
+% this is the resulting language. This document is inspired by the C Reference Manuel by Dennis Ritchie.
+
+\section{Lexical conventions}
+\subsection{Whitespace}
+Whitespaces are either a tab or a white space. At least one white space is required to separate identifiers from
+each other, and certain operators.
+
+\subsection{Comments}
+Comments are denoted by // and represent a comment that ends with the end of the current line.
+
+\subsection{Identifiers}
+An identifier is a sequence of letters, digits, and underscores. The first character must not be a digit.
+
+\subsection{Keywords}
+The following identifiers are used as keywords, and are reserved names:
+if else map reduce run Job
+
+\subsection{Built in functions}
+The following functions are built into the language, and their names are reserved:\\
+map reduce run Job\\
+All return a list of Jobs.
+\begin{description}
+  \item[Job(string, string..)] Job takes a string that is the path of a file to
+    execute for the job, and any number of strings that will be passed as
+    arguments. It returns a list with a Job object.
+  \item[map(list, string)] the first list is a list of jobs that will run first, and their
+    stdout will be concatenated. For every line in the concatenated stdout, map will create
+    a Job with the string argmuent and the stdout line as an argument. It returns the list
+    of created Jobs. This call is asynchronous.
+  \item[reduce(list, string)] the first list is a list of jobs that will run first, and their
+
+  \item[run(list)] run takes an arbitrary number of comma separrated lists of Jobs
+    and runs them. If they have dependencies, these dependencies will run first.
+\end{description}
+
+\subsection{Reserved}
+The following characters are reserved: $\texttt{+ - / * \% -> => <-> \textasciitilde>
+\textasciitilde< \textasciitilde , ( ) " .}$.
+
+\subsection{Types}
+Maestro is dynamically typed and doesn't allow users to create new types.
+\subsubsection{Basic Types}
+\begin{description}
+  \item[Job] A Job represents a program that can be ran on a worker. It encapsulates
+    the path of the program and exposes outputs and errors.
+  \item[Int] Ints are signed integers with arbitrary size.
+  \item[String] Strings are delimited by " and have to be on one line.
+  \item[Boolean] Boolean encapsulates true or false.
+\end{description}
+
+\subsubsection{Derived Types}
+\begin{description}
+  \item[List] Lists are ordered collections of one or more values. These
+    objects do not need to have the same type. The literal representation is a
+    comma separated sequence of expressions surrounded by brackets ([ and ]).
+\end{description}
+
+\subsection{Scope}
+Maestro is a scripting language to quickly distributed interdependent jobs. Its
+intended use is for scripts that glue tasks together. The scope of a variable
+is thus the entire script, or the whole lifetime of the interpreter.
+
+\subsection{Operators}
+Operators are left associative and have the following precedences (same line
+means same precedence, lower line means higher precedence):\\
+$\texttt{+ - -> => \textasciitilde> \textasciitilde<}$\\
+$\texttt{/ * <-> \textasciitilde}$\\
+$\texttt{\%}$.
+
+\subsection{Expressions}
+\subsubsection{identifier}
+An identifier evaluates to the value of the corresponding variable.
+
+\subsubsection{( expression )}
+A parenthesized expression takes the value of the evaluated expression.
+% 3.4
+\subsubsection{identifier ( expression-listopt )}
+A function call is an expression. The arguments are optional and separated with a comma. They are evaluated
+from left to right before the call (applicative order). The value returned by the function is the value the callee
+returns with a return statement.
+% 3.5
+\subsubsection{-expression
+% The result is the negative of the expression.
+% 3.6
+\subsubsection{+expression
+% The result is the expression itself.
+% 3.7
+\subsubsection{!expression
+% The result of the logical negation operator ! is 1 if the value of the expression is 0, 0 if the value of the expression
+% is non-zero.
+% 3.8
+\subsubsection{~expression
+% The ~ operator yields the one’s complement of its operand.
+% 3.9
+\subsubsection{identifier++
+% The referred variable is incremented when evaluated. The expression evalutaes to the value of the variable before
+% the increment.
+% Note that the statement “{a = 0; b = 0; b = a++ + a++; }” sets the value of a to 2, and b to 1.
+% 3.10
+\subsubsection{identifier--
+% The referred variable is decremented when evaluated. The expression evaluates to the value of the variable before
+% the decrement.
+% 3.11
+\subsubsection{++identifier
+% The referred variable is incremented when evaluated. The expression evaluates to the value of the variable after
+% the increment.
+% 3.12
+\subsubsection{--identifier
+% The referred variable is decremented when evaluated. The expression evaluates to the value of the variable after
+% the decrement.
+% 3.13
+\subsubsection{expression * expression
+% The binary * operator indicates multiplication.
+% 3.14
+\subsubsection{expression / expression
+% The binary /operator indicates division.
+% 2
+% 3.15
+\subsubsection{expression % expression
+% The binary % operator yields the remainder from the division of the first expression by the second. The remainder
+% has the same sign as the dividend.
+% 3.16
+\subsubsection{expression + expression
+% The result is the sum of the expressions.
+% 3.17
+\subsubsection{expression - expression
+% The result is the difference of the expressions.
+% 3.18
+\subsubsection{expression >> expression
+\subsubsection{expression << expression
+% The value of the right hand side operand should be non-negative and less than 32, if not the result is undefined.
+% The value of “E1 >> E2” is E1 arithmetically right-shifted by E2 bit positions. Vacated bits are filled by a copy of
+% the sign bit of the first expression.
+% The value of “E1 << E2” is R1 left-shifted by E2 bit positions. Vacated bits are 0-filled.
+% 3.19
+% expression
+% expression
+% expression
+% expression
+% < expression
+% > expression
+% <= expression
+% >= expression
+% The operators < (less than), > (greater than), <= (less than or equal to), >= (greater than or equal to) all yield 0 if
+% the specified relation is false and 1 if it is true.
+% 3.20
+\subsubsection{expression == expression
+\subsubsection{expression != expression
+% The operators == (equal to) and the != (not equal to) yield 0 if the specified relation is false, 1 if it is true.
+% 3.21
+% expression & expression
+% The & operator yield the bitwise and function of the operands.
+% 3.22
+% expression ˆ expression
+% The & operator yield the bitwise exclusive or function of the operands.
+% 3.23
+% expression | expression
+% The | operator yield the bitwise inclusive or function of the operands.
+% 3.24
+% expression && expression
+% The && operator returns 1 if both operands are non-zero, 0 otherwise. Both operands are always evaluated.
+% 3.25
+% expression || expression
+% The || operator returns 1 if either of its operands is non-zero, 0 otherwise. Both operands are always evaluated.
+% 3
+% 3.26
+% identifier = expression
+% The value of the referred variable is replaced by the value of the expression.
+% 3.27
+% identifier
+% identifier
+% identifier
+% identifier
+% identifier
+% identifier
+% identifier
+% identifier
+% identifier
+% identifier
+% += expression
+% -= expression
+% *= expression
+% /= expression
+% %= expression
+% >>= expression
+% <<= expression
+% &= expression
+% ˆ= expression
+% |= expression
+% An expression of the form “id op= expr” is equivalent to “id = id op expr”.
+% 4
+% Statements
+% Statements are executed in sequence.
+% 4.1
+% Expression statement
+% Most statement are expression statements, which have the form
+% expression ;
+% 4.2
+% Compound statement
+% So that several statements can be used where one is expected, the compound statement is provided:
+% compound-statement:
+% { statement-listopt }
+% statement-list:
+% statement
+% statement statement-list
+% 4.3
+% Conditional statement
+% The two forms of the conditional statement are
+% if ( expression ) statement
+% if ( expression ) statement else statement
+% In both cases the expression is evaluated and if it is non-zero, the first substatement is executed. In the second case
+% the second substatement is executed if the expression is 0. As usual the “else” ambiguity is resolved by connecting
+% an else with the last encountered elseless if.
+% 4
+% 4.4
+% While statement
+% The while statement has the form
+% while ( expression ) statement
+% The substatement is executed repeatedly so long as the value of the expression remains non-zero. The test takes
+% place before each execution of the statement.
+% 4.5
+% For statement
+% The for statement has the form
+% for ( expression-1opt ; expression-2opt ; expression-3opt ) statement
+% This statement is equivalent to
+% expression-1;
+% while ( expression-2 ) {
+% statement
+% expression-3;
+% }
+% Any or all the expression may be dropped. A missing expression-2 makes the implied while clause equivalent
+% to “while(1)”. Other missing expressions are simply dropped from the expansion above.
+% 4.6
+% Break statement
+% The statement
+% break;
+% casuses termination of the smallest enclosing while or for statement; control passes to the statement following the
+% terminated statement.
+% 4.7
+% Continue statement
+% The statement
+% continue;
+% causes control to pass to the loop-continuation portion of the smallest enclosing while or for statement; that is to
+% the end of the loop. In case of a for loop of the form “for(e1;e2;e3) {...}”, e3 is evaluated before checking e2.
+% 4.8
+% Return statement
+% A function returns to its caller by means of the return statement
+% return expression ;
+% The value of the expression is returned to the caller of the function.
+% 4.9
+% Null statement
+% The null statement has the form
+% ;
+% A null statement is useful to supply a null body to a looping statement such as while.
+% 5
+% 4.10
+% Try-catch statement
+% The two form of the try-catch statement are
+% try { statement-listopt }catch ( identifier ) { statement-listopt }
+% try { statement-listopt }catch { statement-listopt }
+% The statments enclosed in the try block are executed until an exception is thrown. In case no exception is thrown,
+% the statments enclosed in the catch block are not executed. The first form of the try-catch statement allows to
+% assign the value of the exception to a variable. Try-catch statement dynamically nest across function calls.
+% 4.11
+% Throw statement
+% The throw statement has the form
+% throw expression ;
+% Throwing an exception causes control to pass to the catch block of the nearest dynamically-enclosing try-catch
+% statement. If none is found, it causes the program to terminate with an error. The given expression is the value of
+% the thrown exception.
+% 5
+% Program definition
+% A ltc program consists of a sequence of function definition.
+% program:
+% function-definition
+% function-definition program
+% function-definition:
+% identifier ( parameter-listopt ) { statement-listopt }
+% parameter-list:
+% identifier
+% identifier , parameter-list
+% the same identifier cannot be used more than once in the parameter list. Within the same program, A function
+% cannot be defined twice (name wise).
+% All functions return a integer value. A function can return to the caller without an explicit return statement, in
+% this case the return value is undefined.
+% A simple example of a complete function definition:
+% max (a, b, c) {
+% if (a > b) m = a; else m = b;
+% if (m > c) return m; else return c;
+% }
+% 6
+% 6
+% Scope rules
+% There are no global variables, but only local variables which are statically binded. The scope of a local variable is
+% the whole function where the variable is used. The scope of function parameters is the whole function.
+% Function scope is the entire program.
+% 7
+% Declarations
+% Variables don’t need to be declared, they are initialized to 0.
+% A function call can be made whether or not the function actually exists, the program will simply not link if a call
+% to a non-existing function is made.
+% 8
+% Namespace
+% Variables and function use different namespaces. Therefore such a function is correct: “f() {f=1; return f; }”.
+% 9
+% 9.1
+% Syntax Summary
+% Expressions
+% expression:
+% identifier
+% literal
+% ( expression )
+% identifier ( expression-listopt )
+% -expression
+% +expression
+% !expression
+% ∼expression
+% ++identifier
+% --identifier
+% identifier++
+% identifier--
+% expression binop expression
+% identifier asgnop expression
+% expression-list:
+% expression
+% expression , expression-list
+% The unary operators - + ! ∼ have higher priority than binary operator.
+% Binary operators all group left to right and have priority decreasing as indicated:
+% binop:
+% * / %
+% 7
+% + -
+% >> <<
+% < > <= >=
+% == !=
+% &
+% ∧
+% |
+% &&
+% ||
+% Assignment operator all have the same priority, and all group right to left.
+% asgnop:
+% = += -= *= /= %= >>= <<= &= ∧ = |=
+% 9.2
+% Statements
+% statement:
+% expression ;
+% { statement-listopt }
+% if ( expression ) statement
+% if ( expression ) statement else statement
+% while ( expression ) statement
+% for ( expressionopt ; expressionopt ; expressionopt ) statement
+% break;
+% continue;
+% return expression;
+% try { statement-listopt }catch { statement-listopt }
+% try { statement-listopt }catch ( identifier ) { statement-listopt }
+% throw expression;
+% ;
+% statement-list:
+% statement
+% statement statement-list
+% 8
+% 9.3
+% Program definition
+% program:
+% function-definition
+% function-definition program
+% function-definition:
+% identifier ( parameter-listopt ) { statement-listopt }
+% parameter-list:
+% identifier
+% identifier , parameter-list
+% 9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \end{document}
 
