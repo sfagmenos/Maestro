@@ -33,31 +33,23 @@ to understand what happened with our example.\\
 \begin{Verbatim}[numbers=left]
 a = Job(name="a", script="abc.pl", workers=5)
 b = Job(name="b", script="xRay.rb", workers=3)
-run(a -> b)
+c = Job(name="c", "telesphorus.py")
+run((a <-> b) -> c)
 \end{Verbatim}
 
-In this example we are creating 2 jobs. You can see in this example that\\
-we are stating in how many workers we want this script ot run. How to \\
-state workers will see this in another example. In line 3 we can an\\
-example on how to state that one job must run before the other.\\
-The job `a' must run in the 5 workers and terminate correct in all\\
-of the workers. Then the job `b' will run in 3 workers.
-\\
-
-\subsection*{Example Program 3:}
-\begin{Verbatim}[numbers=left]
-a = Job(name="a", script="abc.pl", workers=5)
-b = Job(name="b", script="xRay.rb", workers=3)
-run(a <-> b)
-\end{Verbatim}
-
-This example is the same as the 2nd example with one big difference.\\
-Here we demonstrate how to run 2 jobs asychronous. You can see that\\
-the only difference is the operator inside the run function.\\
+The 2nd example uses all of the capabilities of \lang{} about concurrency\\
+In this example we are creating 3 jobs. You can see in this example that\\
+we are stating in how many workers we want this script ot run. In line 3\\
+we have a simple example on how to introduce dependencies in our language.\\
+We have first the $(a <-> b)$. This states that the jobs `a' and `b' can\\
+run concurrent in different servers. Afterwards we have $-> c$. With this\\
+natation we state that the job `c' must run after the successful termination\\
+of the previous job/s (in our example the `a' and `b' jobs).\\
 
 You can see that \lang{} offers an easy way to distinguish between\\
 the concurrent and not concurrent jobs. This will help developers and\\
 not computer scientists to create easily distributable batch proccesses.\\
+\\
 
 \subsection*{Example Program 3:}
 \begin{Verbatim}[numbers=left,commandchars=\\\{\}]
@@ -69,12 +61,21 @@ d = Job(name="d", "nimbledriod.py")
 run((a,b,c,d)
 \end{Verbatim}
 
-This 4th example we are taking full capabilities of \lang{}.\\
-We are creating 3 jobs. Without creating any real dependency,\\
-the 2 jobs (`a',`b') will run asychronous and when this jobs\\
-terminate successfully the 3rd job `c' will start.\\
-In order for the 3rd job to start the first 2 jobs must terminate\\
-in all of the workers.\\
+This exmaples demonstrates the `soft' dependencies in \lang{}.\\
+\underline{All of the soft dependencies must be in one line.} Otherwise only the\\
+last line of dependecies are taken into consideration. All of the operators\\
+are left associate but here we are using parenthesis in order to help\\
+the user undestand how the soft dependencies works. In one line we \\
+have all of the operators but we will explain the meening of every \\
+parenthesis for clarifing everything. In the 5 line is where all \\
+the magic happens. In order to understand the example will take the\\
+parenthesis one at a time.\\
+First we have the $(b\sim c)$. This means that these 2 jobs can run\\
+sychronous if we have enough resources. \\
+Second we have the $(a\sim>expr)$. This means that job `a' should run\\
+before the \textit{expr}. \\
+At last we have the $(expr\sim<d)$. This expression means that the \\
+job `d' should run before the \textit{expr}.
 
 \subsection*{Example Program 5:}
 \begin{Verbatim}[numbers=left]
