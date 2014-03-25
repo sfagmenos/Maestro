@@ -27,30 +27,25 @@ p = true
 
 This assigns the integer value 10 to the variable a, the string john to the variable x, the float value 1000.2 to the variable m and the Boolean value true to the variable p.
 
-Another important type of variable that can be created in Maestro is the Job variable.
+The most important type of variable that can be created in Maestro is the Job variable.
 
 Example:
 \begin{verbatim}
 a = Job ("a","abc.rb")
 \end{verbatim}
 
-Here, a is now a variable of 'job' type. 
+Here, `a' is now a variable of 'job' type. 
 
 Therefore, Maestro supports five datatypes;
 
-Int
-String
-Float
-Boolean
-Job
-
+Int, String, Float, Boolean, Job
 
 \subsection*{Control Flows in \lang{}}
 Control flow statements are used to execute a non-linear sequence of statements.
 \subsubsection*{if-else statements}
 The if keyword is used to execute a statement or block, if, and only if, a condition is fulfilled. Its syntax is:
 
-if (condition) statement 
+\textit{if (condition) statement}
 
 Here, condition is the expression that is being evaluated. If this condition is true, statement is executed. If it is false, statement is not executed (it is simply ignored), and the program continues right after the entire selection statement.
 
@@ -79,8 +74,7 @@ if (a.perror()==0){
 \end{Verbatim}
 Selection statements with if can also specify what happens when the condition is not fulfilled, by using the else keyword to introduce an alternative statement. Its syntax is:
 
-if (condition) statement1 else statement2
-
+\textit{if (condition) statement1 else statement2}
 where statement1 is executed in case condition is true, and in case it is not, statement2 is executed.
 
 Example:
