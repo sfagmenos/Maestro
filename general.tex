@@ -2,8 +2,13 @@
 \label{sect:general}
 
 \subsection*{Define Workers in \lang{}}
-For us to create the workers for \lang{} we will use \href{http://www.redis.io}{Redis}.
-You can se the documentation of Redis \href{http://redis.io/documentation}{here}
+In this first version of our \lang{} language, we will use \href{http://www.redis.io}{Redis}
+for creating the pseudo cluster for our workers. This feauture will remain in the future version for backwards compatibility but also for test purposes for the users.
+It will be a nice feature for user to run their \lang{} programs either locally or pseudo-clustered and full clustered.
+You can see the documentation of Redis \href{http://redis.io/documentation}{here}.
+In the next versions of \lang{} we will implement the cluster object which will take the cluster name (e.g. \textit{clic.cs.columbia.edu}) and distributed in this cluster.
+Also a worker object will be implemented which will store the ip of machine. Then the \lang{} will distrubute the jobs in those workers.
+Only one method will available ofr each runtime. You wiil not be able specify a cluster and some workers or a redis server and a cluster.
 
 \subsection*{Variables and Expressions in \lang{}}
 Variables are nothing but reserved memory locations to store values. This means that when you create a variable you reserve some space in memory.
