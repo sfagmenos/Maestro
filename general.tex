@@ -5,6 +5,45 @@
 For us to create the workers for \lang{} we will use \href{http://www.redis.io}{Redis}.
 You can se the documentation of Redis \href{http://redis.io/documentation}{here}
 
+\subsection*{Variables and Expressions in \lang{}}
+Variables are nothing but reserved memory locations to store values. This means that when you create a variable you reserve some space in memory.
+
+Based on the data type of a variable, the interpreter allocates memory and decides what can be stored in the reserved memory. Therefore, by assigning different data types to variables, you can store integers, decimals or characters in these variables.
+
+Assigning Values to Variables:
+
+Maestro variables do not have to be explicitly declared to reserve memory space. The declaration happens automatically when you assign a value to a variable. The equal sign (=) is used to assign values to variables.
+
+The operand to the left of the = operator is the name of the variable and the operand to the right of the = operator is the value stored in the variable. 
+
+Example:
+\begin{verbatim}
+a = 10
+x = "john"
+m = 1000.2
+p = true
+\end{verbatim}
+
+This assigns the integer value 10 to the variable a, the string john to the variable x, the float value 1000.2 to the variable m and the Boolean value true to the variable p.
+
+Another important type of variable that can be created in Maestro is the Job variable.
+
+Example:
+\begin{verbatim}
+a = job ("abc.rb")
+\end{verbatim}
+
+Here, a is now a variable of 'job' type. 
+
+Therefore, Maestro supports five datatypes;
+
+Int
+String
+Float
+Boolean
+Job
+
+
 \subsection*{Control Flows in \lang{}}
 Control flow statements are used to execute a non-linear sequence of statements.
 \subsubsection*{if-else statements}
