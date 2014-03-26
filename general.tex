@@ -12,20 +12,25 @@ The master calls master("0.0.0.0") (replace 0.0.0.0 by the IP of the Redis serve
 at the beginning of its program.
 
 \subsection*{Variables and Expressions in \lang{}}
-In \lang{} variables are reserved memory locations which store values. This means that when a user declares a variable
-memory space is allocated.
+In \lang{} variables are reserved memory locations which store values.
+Practically, when a user declares a variable memory space is allocated.
 
-Based on the data type of a variable, the interpreter allocates memory and decides what can be stored in the reserved memory.
-Therefore, by assigning different data types to variables, you can store integers, Jobs or strings in these variables.
+Based on the data type of a variable, the interpreter allocates memory
+and decides what can be stored in the reserved memory. Therefore, by
+assigning different data types to variables, user can store integers, Jobs,
+or strings.
 
 \subsubsection*{Assignment operator}
-\lang{}  is a dynamically typed language, and variables types are not explicitly declared.
-The variable types are decided when a variable is assigned a value with the equal sign ``=''.
+\lang{}  is a dynamically typed language and variables types are not explicitly declared.
+Variable types are decided when a variable is assigned a value with the equal
+assignment operator (``='').
 
-The operand on the left side of ``='' operator must be a variable name and the operand on the right side of ``='' operator must be a value.
-The variable on the left side of ``='' is assigned the value on the right side of ``='' operator.\\
+The operand on the left side of assignment operator (``='') must be a variable name
+and the operand on the right side of assignment operator (``='') must be a value.
+The variable on the left side of ``='' is assigned the value on the right side
+of ``=''.\\
 \\
-Example 1:
+Example:
 \begin{Verbatim}[numbers=left]
 a = 10
 x = "john"
@@ -33,72 +38,98 @@ path = "/afs/columbia.edu/users/phd/username/my_script.sh"
 p = true
 \end{Verbatim}
 
-The above code snippet demonstrates the following assignments:\\
-(1) variable a is assigned integer value 10;\\
-(2) variable x is assigned string ``john'';\\
-(3) variable path is assigned a string representing the absolute path of script;\\
-(4) variable p is assigned boolean value true.
+The above code snippet demonstrates the following assignments:
+In line one variable ``a'' is assigned integer value 10.
+In line two variable ``x'' is assigned string ``john''.
+In line three variable ``path'' is assigned a string representing the absolute path some script.
+Finally, in line four variable ``p'' is assigned boolean value true.
 
 \subsubsection*{Job}
-One of the most important type of variable that can be created in \lang{} is the Job variable.\\
+The most important type of variable that can be created in \lang{}, is Job variable.\\
 \\
-Example 2:
+Example:
 \begin{Verbatim}[numbers=left]
-a = Job ("a","abc.rb")
+a = Job ("abc.rb")
 \end{Verbatim}
 In this case variable ``a'' is assigned a job related with script ``abc.rb'' 
 
-\subsection*{Control Flows in \lang{}}
-Control flow statements are used to support non sequential \lang{} programs.
-\subsubsection*{if statement}
-``if'' keyword is used to define that a single statement or a block of statements is executed if a condition is true. Its syntax is:
+%\subsection*{Control Flows in \lang{}}
+%Control flow statements are used to support non sequential \lang{} programs.
+%\subsubsection*{if statement}
+%``if'' keyword is used to define that a single statement or a block of statements is executed if a condition is true. Its syntax is:
+%
+%\textit{if (condition) statement}
+%
+%\noindent The interpretation is that ``statement'' is executed if ``condition'' is true. 
+%Otherwise, if ``condition'' is false, ``statement'' is not executed and program execution continues after the end of ``statement''.
+%\\
+%\\
+%Example 3:
+%\begin{Verbatim}[numbers=left]
+%a = Job(....)
+%run(a)
+%if (a.perror()==0)
+%    print a.stdout()
+%\end{Verbatim}
+%
+%In the above code snippet, Job ``a'' is initialized and run. If execution of Job ``a'' terminates successfully, Job's ``a'' output is printed. 
+%Otherwise ``statement'' of line 4 is not executed because ``condition'' of line 3 is not true
+%
+%If the user wants to include more than a multiple statements these should be enclosed between brackets (\{\}) forming a block.\\
+%\\
+%Example 4:
+%\begin{Verbatim}[numbers=left]
+%a = Job(....)
+%run(a)
+%if (a.perror()==0){
+%    print a.stdout()
+%    print "Job successful"
+%    }
+%\end{Verbatim}
+%\subsubsection*{if-else statement}
+%``if-else'' keywords are used to define a flow of execution depending on a condition. ``if-else'' statement is an extension of ``if'' statement because
+%in the sense that a user can also specify a block of statements when condition is false. Its syntax is:
+%
+%\textit{if (condition) statement1 else statement2}\\
+%The interpretation is that statement1 is executed if ``condition'' is true, otherwise statement2 is executed.\\
+%\\
+%Example 5:
+%\begin{Verbatim}[numbers=left]
+%a = Job(....)
+%run(a)
+%if (a.perror()==0)
+%    print a.stdout()
+%else
+%    print a.error()
+%\end{Verbatim}
+%
+%In the above code snippet if execution of Job `a' produces an error, its error code is printed. If job `a' is executed successfully, the output is printed.
+%
 
-\textit{if (condition) statement}
+\subsection*{each}
 
-\noindent The interpretation is that ``statement'' is executed if ``condition'' is true. 
-Otherwise, if ``condition'' is false, ``statement'' is not executed and program execution continues after the end of ``statement''.
+\noindent ``each'' keyword is used to feed a list of variables as input
+to a block of statments. Its syntax is:
+
+\textit{[val1, val2, ..., valN].each(var)\{ statements\}}\\
+
+The interpretation is that ``statements'' are executed as many times as the
+number of variables in list [val1, val2, ..., valN]. For the first execution, var is assigned
+the value val1 and is feed to statments. For the second execution var is assigned the value
+of val2 and is feed to statments. This process is repeated until every value 
+from 1 to N has been assign to var.\\
 \\
-\\
-Example 3:
+Example:
 \begin{Verbatim}[numbers=left]
-a = Job(....)
-run(a)
-if (a.perror()==0)
-    print a.stdout()
+vals = ["h", "e", "l", "l", "o"]
+vals.each(var){
+    print var
+}
 \end{Verbatim}
 
-In the above code snippet, Job ``a'' is initialized and run. If execution of Job ``a'' terminates successfully, Job's ``a'' output is printed. 
-Otherwise ``statement'' of line 4 is not executed because ``condition'' of line 3 is not true
+In the above code snippet, var is assigned each value of list vals defined in line one.
+Then, statment of line three prints every value of list vals.
 
-If the user wants to include more than a multiple statements these should be enclosed between brackets (\{\}) forming a block.\\
-\\
-Example 4:
-\begin{Verbatim}[numbers=left]
-a = Job(....)
-run(a)
-if (a.perror()==0){
-    print a.stdout()
-    print "Job successful"
-    }
-\end{Verbatim}
-\subsubsection*{if-else statement}
-``if-else'' keywords are used to define a flow of execution depending on a condition. ``if-else'' statement is an extension of ``if'' statement because
-in the sense that a user can also specify a block of statements when condition is false. Its syntax is:
-
-\textit{if (condition) statement1 else statement2}\\
-The interpretation is that statement1 is executed if ``condition'' is true, otherwise statement2 is executed.\\
-\\
-Example 5:
-\begin{Verbatim}[numbers=left]
-a = Job(....)
-run(a)
-if (a.perror()==0)
-    print a.stdout()
-else
-    print a.error()
-\end{Verbatim}
-
-In the above code snippet if execution of Job `a' produces an error, its error code is printed. If job `a' is executed successfully, the output is printed.
 
 
 \subsection*{Operators in \lang{}}
@@ -124,51 +155,59 @@ Post dependency operator ($\sim<$) states that the job at its left should run af
 at its right.
 
 \subsection*{Classes and Functions in \lang{}}
-\subsubsection*{Class $Job(string <name>, string <script\_path>, int <workers>=1)$}
+\subsubsection*{Class $Job(string <name>,~ string <script\_path>,~arg1,~arg2, ...,~argN)$}
 Construction of a $Job$ type needs the following variables:
 \begin{itemize}
 \item $name$ which is the name of the job.
 \item $script\_path$ which is the script to be executed.
-\item $workers$ which an optional parameters to mention the number of workers to run the job on. The default number of workers is 1.
+\item A list of arguments related to script under $script\_path$.\\
 \end{itemize}
-Example:\\
+Example:
 \begin{Verbatim}[numbers=left]
-b = Job("b","xRay.rb",3)
-c = Job("c","telesphorus.py")
+b = Job("xRay.rb","arg1", "arg2")
+c = Job("telesphorus.py", "arg1")
 \end{Verbatim}
-The above snippet creates two jobs `b' and `c' as instances of class $Job$.
-\subsubsection*{$Job.add\_dependency(List <dependencies>)$}
-Creates the dependency list of a job, which will be eligible to run if all dependencies terminate successfully.
-\subsubsection*{$Job.stdout()$}
-Returns the output of Job's script.
-\subsubsection*{$Job.perror()$}
-Returns zero (0) if the job executes successfully on all of workers. Otherwise, returns one (1).
-\subsubsection*{$Job.error()$}
-Returns the error message, if any, along with the ip(s) of the worker(s) where failure occurred.
-\subsubsection*{$Job.run()$}
-Runs a script specified in $script\_path$ variable. In general, it creates a shell in a dedicated worker which will execute a script.
-\subsubsection*{$Job.can\_run()$}
-Function which goes through all dependencies and checks if all jobs terminated correctly. This function determines whether
-a job can start execution or not.
+
+The above snippet creates two jobs ``b'' and ``c'' as instances of class $Job$.
+Job ``b'' is assigned the excecution of script ``xRay.rb'' with arguments ``arg1'' and ``arg2''.
+Job ``c'' is assigned the excecution of script ``telesphorus.py'' with arguments ``arg1'' and ``arg2''.
+
+
+
+%\subsubsection*{$Job.add\_dependency(List <dependencies>)$}
+%Creates the dependency list of a job, which will be eligible to run if all dependencies terminate successfully.
+%\subsubsection*{$Job.stdout()$}
+%Returns the output of Job's script.
+%\subsubsection*{$Job.perror()$}
+%Returns zero (0) if the job executes successfully on all of workers. Otherwise, returns one (1).
+%\subsubsection*{$Job.error()$}
+%Returns the error message, if any, along with the ip(s) of the worker(s) where failure occurred.
+%\subsubsection*{$Job.run()$}
+%Runs a script specified in $script\_path$ variable. In general, it creates a shell in a dedicated worker which will execute a script.
+%\subsubsection*{$Job.can\_run()$}
+%Function which goes through all dependencies and checks if all jobs terminated correctly. This function determines whether
+%a job can start execution or not.
 
 \subsubsection*{\lang{} Functions}
 
 This section we present core functions of \lang{}.
 \subsubsection*{$run($\textit{expr}$)$}
 \textit{run} function has one argument, which is an expression related to jobs.
-This is the distributed version of the function.
 \textit{expr} can be jobs:
 \begin{Verbatim}[numbers=left]
-a = Job(name="a", script="abc.pl", workers=5)
-b = Job(name="b", script="xRay.rb", workers=3)
-c = Job(name="c", "telesphorus.py")
+a = Job(script="abc.pl", "10")
+b = Job(script="xRay.rb", "mailbox")
+c = Job("telesphorus.py", "android\_logs")
 run(a,b,c)
 \end{Verbatim}
-or a `hard' dependency among jobs:
+
+or a ``hard'' dependency among jobs:
 \begin{Verbatim}[numbers=left]
-a = Job(name="a", script="abc.pl", workers=5)
-b = Job(name="b", script="xRay.rb", workers=3)
+a = Job(script="abc.pl", "10")
+b = Job(script="xRay.rb", "mailbox")
 run(a->b)
 \end{Verbatim}
 \subsubsection*{$run\_local($\textit{expr}$)$}
-This is a local version of the ``run'' function. With ``run\_local'' function jobs may run locally for testing purposes before user launches a program remotely with ``run''.
+This is a local version of the ``run'' function.
+With ``run\_local'' function jobs may run locally for testing purposes before
+user launches a program remotely with ``run''.
