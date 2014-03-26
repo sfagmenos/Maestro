@@ -13,7 +13,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage{geometry}
-\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=4.5cm,rmargin=4.5cm,headheight=3cm,headsep=2cm,footskip=2cm}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm,headheight=3cm,headsep=2cm,footskip=2cm}
 \usepackage{amstext}
 \linespread{1.5}
 
@@ -48,11 +48,11 @@ An identifier is a sequence of letters, digits, and underscores. The first chara
 
 \subsection{Keywords}
 The following identifiers are used as keywords, and are reserved names:\\
-if else
+if else each range
 
 \subsection{Reserved Identifiers}
 The following characters are reserved: $\texttt{+ - / * \% -> => <-> \textasciitilde>
-\textasciitilde< \textasciitilde , ( ) "}$
+\textasciitilde< \textasciitilde , ( ) " .}$
 
 \section{Types}
 Maestro is dynamically typed and doesn't allow users to create new types.
@@ -67,8 +67,8 @@ Maestro is dynamically typed and doesn't allow users to create new types.
 
 \subsection{Derived Types}
 \begin{description}
-  \item[Jobs] Jobs are ordered collections of one or more values. These
-    objects need to be of type Job. The literal representation is a
+  \item[List] List are ordered collections of one or more values. These
+    objects can be of any type. The literal representation is a
     comma separated sequence of expressions surrounded by brackets ([ and ]).
 \end{description}
 
@@ -119,14 +119,14 @@ from left to right, before the call. It is possible to have 0 arguments.
 \subsubsection{Built in functions}
 The following functions are built into the language, and their names are reserved:\\
 map reduce run Job\\
-All return a Jobs (list of Jobs).
+All return a list of Jobs.
 \begin{description}
   \item[Job(string, string..)] Job takes a string that is the path of a file to
     execute for the job, and any number of strings that will be passed as
     arguments. It returns a list with a Job object.
   \item[Wait(int)] Creates a Job which only sleeps for the given time. It can be inserted
   in the dependencies to wait between Jobs.
-  % \item[range(int)] Returns a list of ints from 0 to int-1.
+  \item[range(int)] Returns a list of ints from 0 to int-1.
   \item[map(list, string)] the first list is a list of jobs that will run first, and their
     stdout will be concatenated. For every line in the concatenated stdout, map will create
     a Job with the string argument and the stdout line as an argument. It returns the list
@@ -139,8 +139,8 @@ All return a Jobs (list of Jobs).
     and runs them. If they have dependencies, these dependencies will run first.
 \end{description}
 
-\subsection{Jobs}
-Jobs are created with the brackets notation. E.g. $list = [a, b, c, ...]$
+\subsection{Lists}
+Lists are created with the brackets notation. E.g. $list = [a, b, c, ...]$
 \begin{description}
   \item[]expression: \hfill \\
     $[$ expression-list $]$
@@ -163,8 +163,8 @@ $\texttt{/ * \%}$
 \begin{description}
 \item[+] \hfil \\
 The result is the sum of the expressions if they evaluate to an Int.\\
-The result is the concatenation of the Jobs if both expressions evaluate to
-a Jobs.\\
+The result is the concatenation of both expressions if both expressions evaluate to
+a list.\\
 The result is the concatenation of the strings if both expressions evaluate to
 a string.\\
 The result is the concatenation of the string and the Int in a string format if
@@ -246,35 +246,36 @@ Statements are executed in sequence.
 Statements are semicolon ended expressions.
 \begin{description}
   \item[]statement: \hfill \\
-    expression ;
+    expression ; \\
+    | ;
 \end{description}
 
-% \subsection{statement-list}
-% Most statement are expression statements, which have the form\\
-% \begin{description}
-  % \item[]statement-list: \hfill \\
-    % statement statement-list \\
-    % | statement
-% \end{description}
+\subsection{statement-list}
+Most statement are expression statements, which have the form
+\begin{description}
+  \item[]statement-list: \hfill \\
+    statement statement-list \\
+    | statement
+\end{description}
 
-% \subsection{Conditional statement}
-% The two forms of the conditional statement are:
-% \begin{description}
-  % \item[]statement: \hfill \\
-    % if ( expression ) { statement-list } \\
-    % | if ( expression ) { statement-list } else { statement-list }\\
-% \end{description}
-% In both cases the expression is evaluated. If it is true, the first statements will be evaluated.
-% If it is false and there is an else, the else statements will be evaluated.
+\subsection{Conditional statement}
+The two forms of the conditional statement are:
+\begin{description}
+  \item[]statement: \hfill \\
+    if ( expression ) { statement-list } \\
+    | if ( expression ) { statement-list } else { statement-list }\\
+\end{description}
+In both cases the expression is evaluated. If it is true, the first statements will be evaluated.
+If it is false and there is an else, the else statements will be evaluated.
 
-% \subsection{.each statement}
-% The each statement is a basic loop, and can be called on the Jobs type. 
-% \begin{description}
-  % \item[]statement: \hfill \\
-    % expression .each ( identifier ) { statement-list }
-% \end{description}
-% The first expression has to evaluate to a list type. The identifier is the name of a variable (global scope
-% like all variables) that will the assigned each Job in turn before running the statement list.
+\subsection{.each statement}
+The each statement is a basic loop, and can be called on the Jobs type. 
+\begin{description}
+  \item[]statement: \hfill \\
+    expression .each ( identifier ) { statement-list }
+\end{description}
+The first expression has to evaluate to a list type. The identifier is the name of a variable (global scope
+like all variables) that will the assigned each Job in turn before running the statement list.
 
 \subsection{Program definition}
 A program consists of a list of statements evaluated from left to right.\\
@@ -335,12 +336,31 @@ In the REPL, inputs are read and evaluated every time the user hits enter.\\
 
 \begin{description}
   \item[]statement: \hfill \\
-    expression ;
+    expression ; \\
+    | ;
 \end{description}
 
 \begin{description}
   \item[]program: \hfill \\
     statement program
 \end{description}
+
+\begin{description}
+  \item[]statement-list: \hfill \\
+    statement statement-list \\
+    | statement
+\end{description}
+
+\begin{description}
+  \item[]statement: \hfill \\
+    if ( expression ) { statement-list } \\
+    | if ( expression ) { statement-list } else { statement-list }\\
+\end{description}
+
+\begin{description}
+  \item[]statement: \hfill \\
+    expression .each ( identifier ) { statement-list }
+\end{description}
+
 \end{document}
 
