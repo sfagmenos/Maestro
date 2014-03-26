@@ -14,10 +14,10 @@
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage{geometry}
-\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3.5cm,rmargin=3.5cm,headheight=3cm,headsep=2cm,footskip=2cm}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm,headheight=3cm,headsep=2cm,footskip=2cm}
 \usepackage{amstext}
 % \usepackage[margin=1in]{geometry}
-\linespread{1.5}
+\linespread{1.6}
 
 \title{Language Reference Manual Operators}
 
@@ -30,11 +30,11 @@
 \tableofcontents
 
 \section{Introduction}
-The Maestro language is a declarative language to schedule jobs with hard and soft dependencies, locally or over the network.
-% The C Flat language is mostly a subset of the C language. Some of the core functionalities of C has been stripped:
-% there is no preprocessor, no structs, no strings, not even pointers. it’s goal is purely educational. Originally Nico
-% and Dan were working on two separate languages. The two projects merged, taking some features from each, and
-% this is the resulting language. This document is inspired by the C Reference Manuel by Dennis Ritchie.
+Maestro is a declarative language built to easily schedule jobs with hard and soft dependencies, locally or over the network.
+Its goal is to provide a DSL to very quickly express dependencies between jobs and run them, either from the REPL or in a file.
+It exposes high level functions and operators to declare complex logic. Maestro is meant for scripting, not to develop large
+scale programs. It thus doesn't support functions, or even loops. However, it exposes a map/reduce interface that allows for
+complex declarations.
 
 \section{Lexical conventions}
 \subsection{Whitespace}
@@ -50,26 +50,6 @@ An identifier is a sequence of letters, digits, and underscores. The first chara
 \subsection{Keywords}
 The following identifiers are used as keywords, and are reserved names:\\
 if else
-
-\subsection{Built in functions}
-The following functions are built into the language, and their names are reserved:\\
-map reduce run Job\\
-All return a list of Jobs.
-\begin{description}
-  \item[Job(string, string..)] Job takes a string that is the path of a file to
-    execute for the job, and any number of strings that will be passed as
-    arguments. It returns a list with a Job object.
-  \item[map(list, string)] the first list is a list of jobs that will run first, and their
-    stdout will be concatenated. For every line in the concatenated stdout, map will create
-    a Job with the string argmuent and the stdout line as an argument. It returns the list
-    of created Jobs. This call is asynchronous.
-  \item[reduce(list, string)] the first list is a list of jobs that will run first (usually the
-    output of a map). String is the path to the reduce program. There will be one Job
-    created with that program, with arguments that are the output from the previous reduce and
-    the output of the next Job from the list. The first reduce will have nil as first argument.
-  \item[run(list)] run takes an arbitrary number of comma separated lists of Jobs
-    and runs them. If they have dependencies, these dependencies will run first.
-\end{description}
 
 \subsection{Reserved Identifiers}
 The following characters are reserved: $\texttt{+ - / * \% -> => <-> \textasciitilde>
@@ -88,8 +68,8 @@ Maestro is dynamically typed and doesn't allow users to create new types.
 
 \subsubsection{Derived Types}
 \begin{description}
-  \item[List] Lists are ordered collections of one or more values. These
-    objects do not need to have the same type. The literal representation is a
+  \item[Jobs] Jobs are ordered collections of one or more values. These
+    objects need to be of type Job. The literal representation is a
     comma separated sequence of expressions surrounded by brackets ([ and ]).
 \end{description}
 
@@ -105,47 +85,98 @@ $\texttt{-> => \textasciitilde> \textasciitilde<}$\\
 $\texttt{+ - <-> \textasciitilde}$\\
 $\texttt{/ * \%}$
 
-\subsection{Expressions}
-\subsubsection{identifier}
+\subsection{identifier}
 An identifier evaluates to the value of the corresponding variable.
 
-\subsubsection{( expression )}
+\section{Expressions}
+\subsection{Parenthesized expression}
 A parenthesized expression takes the value of the evaluated expression.
+\begin{description}
+  \item[]expression: \hfill \\
+    ( expression )
+\end{description}
 
-\subsubsection{identifier ( expression-listopt )}
+\subsection{Function call}
 A function call is an expression. The arguments are comma separated and are evaluated
 from left to right, before the call. It is possible to have 0 arguments.
+\begin{description}
+  \item[]expression: \hfill \\
+    identifier ( expression-list )
+\end{description}
 
-\subsubsection{expression + expression}
+\begin{description}
+  \item[]expression-list: \hfill \\
+    expression-list , expression \\
+    | expression
+\end{description}
+
+\subsubsection{Built in functions}
+The following functions are built into the language, and their names are reserved:\\
+map reduce run Job\\
+All return a Jobs (list of Jobs).
+\begin{description}
+  \item[Job(string, string..)] Job takes a string that is the path of a file to
+    execute for the job, and any number of strings that will be passed as
+    arguments. It returns a list with a Job object.
+  \item[Wait(int)] Creates a Job which only sleeps for the given time. It can be inserted
+  in the dependencies to wait between Jobs.
+  % \item[range(int)] Returns a list of ints from 0 to int-1.
+  \item[map(list, string)] the first list is a list of jobs that will run first, and their
+    stdout will be concatenated. For every line in the concatenated stdout, map will create
+    a Job with the string argument and the stdout line as an argument. It returns the list
+    of created Jobs. This call is asynchronous.
+  \item[reduce(list, string)] the first list is a list of jobs that will run first (usually the
+    output of a map). String is the path to the reduce program. There will be one Job
+    created with that program, with arguments that are the output from the previous reduce and
+    the output of the next Job from the list. The first reduce will have nil as first argument.
+  \item[run(list)] run takes an arbitrary number of comma separated lists of Jobs
+    and runs them. If they have dependencies, these dependencies will run first.
+\end{description}
+
+\subsection{Jobs}
+Jobs are created with the brackets notation. E.g. $list = [a, b, c, ...]$
+\begin{description}
+  \item[]expression: \hfill \\
+    $[$ expression-list $]$
+\end{description}
+
+\subsection{Operators in expressions}
+\begin{description}
+  \item[]expression: \hfill \\
+    expression OPERATOR expression
+\end{description}
+
+\begin{description}
+\item[+] \hfil \\
 The result is the sum of the expressions if they evaluate to an Int.\\
-The result is the concatenation of the lists if both expressions evaluate to
-a list.\\
+The result is the concatenation of the Jobs if both expressions evaluate to
+a Jobs.\\
 The result is the concatenation of the strings if both expressions evaluate to
 a string.\\
 The result is the concatenation of the string and the Int in a string format if
 one expression evaluates to a string and the other to an Int.\\
 
-\subsubsection{expression - expression}
+\item[-] \hfil \\
 The result is the difference of the expressions if they evaluate to an Int.
 
-\subsubsection{expression * expression}
+\item[*] \hfil \\
 The result is the multiplication of the expressions if they evaluate to an Int.
 
-\subsubsection{expression / expression}
+\item[/] \hfil \\
 The result is the Integer division of the expressions if they evaluate to an Int.\\
 When dividing by 0, the program crashes.
 
-\subsubsection{expression \% expression}
+\item[\%] \hfil \\
 The \% operator yields the remainder from the division of the first expression by the second, if
 both expressions evaluate to an Int.
 
-\subsubsection{expression -> expression}
+\item[->] \hfil \\
 The dependency operator (->) requires both expressions to be lists of Jobs.\\
 The call is asynchronous and adds all Jobs in the right hand side list as dependencies
 for all Jobs on the left hand side list.\\
 It returns a list of Jobs that is the concatenation of both lists.
 
-\subsubsection{expression => expression}
+\item[=>] \hfil \\
 The distributed dependency operator (=>) requires both expressions to be lists of Jobs.\\
 The call is asynchronous and adds all Jobs in the right hand side list as dependencies
 for all Jobs on the left hand side list. Moreover, the dependent Jobs (right
@@ -153,150 +184,149 @@ hand side)  will be ran on the same worker as the previous Job (left hand
 side).\\
 It returns a list of Jobs that is the concatenation of both lists.
 
-\subsubsection{expression <-> expression}
+\item[<->] \hfil \\
 The parallel operator (<->) requires both expressions to be lists of Jobs.\\
 The call is asynchronous and no dependencies are added. It is a visual way to
 concatenate lists of Jobs.\\
 It returns a list of Jobs that is the concatenation of both lists.
 
-\subsubsection{expression \textasciitilde> expression}
+\item[\textasciitilde>] \hfil \\
 The soft dependency operator (\textasciitilde>) requires both expressions to be lists of Jobs.\\
-The call is asynchronous and puts all right hand side Jobs prority to be 1 less than the smallest
+The call is asynchronous and puts all right hand side Jobs priority to be 1 less than the smallest
 priority of the left hand side Jobs.\\
 It returns a list of Jobs that is the concatenation of both lists.\\
 A soft dependency is a priority indication: if more than one Job can run, Maestro will run the
 one with higher priority, but there is no order guaranty, as opposed to dependencies.
 
-\subsubsection{expression \textasciitilde< expression}
+\item[\textasciitilde<] \hfil \\
 The soft dependency operator (\textasciitilde<) requires both expressions to be lists of Jobs.\\
-The call is asynchronous and puts all right hand side Jobs prority to be 1 more than the biggest
+The call is asynchronous and puts all right hand side Jobs priority to be 1 more than the biggest
 priority of the left hand side Jobs.\\
 It returns a list of Jobs that is the concatenation of both lists.\\
 A soft dependency is a priority indication: if more than one Job can run, Maestro will run the
 one with higher priority, but there is no order guaranty, as opposed to dependencies.
 
-\subsubsection{expression \textasciitilde expression}
+\item[\textasciitilde] \hfil \\
 The soft parallel operator (\textasciitilde) requires both expressions to be lists of Jobs.\\
 The call is asynchronous and no priorities are changed. It is a visual way to
 concatenate lists of Jobs.\\
 It returns a list of Jobs that is the concatenation of both lists.
+\end{description}
 
-\subsubsection{identifier = expression}
-The value of the variable wich name is the identifier value is replaced by the value of the expression
-evaluates to. If the variable doesn't exist, it is create: the programmer doesn't need to declare the
+\section{Assignments}
+The value of the variable which name is the identifier value is replaced by the value of the expression
+evaluates to. If the variable doesn't exist, it is created: the programmer doesn't need to declare the
 variable beforehand.\\
+The assignment is also an expression that has the variable final value as a value, which is useful for
+one liners.\\
 The default value of the variable is not determined.
+\begin{description}
+  \item[]expression: \hfill \\
+    identifier = expression
+\end{description}
 
 \section{Statements}
 Statements are executed in sequence.
 
 \subsection{statement}
-Most statement are expression statements, which have the form\\
-expression ;
+Statements are semicolon ended expressions.
+\begin{description}
+  \item[]statement: \hfill \\
+    expression ;
+\end{description}
 
-\subsection{statement-list}
-Most statement are expression statements, which have the form\\
-statement statement-list\\
-statement
+% \subsection{statement-list}
+% Most statement are expression statements, which have the form\\
+% \begin{description}
+  % \item[]statement-list: \hfill \\
+    % statement statement-list \\
+    % | statement
+% \end{description}
 
-\subsection{Conditional statement}
-The two forms of the conditional statement are:\\
-if ( expression ) { statement-list }\\
-if ( expression ) { statement-list } else { statement-list }\\
+% \subsection{Conditional statement}
+% The two forms of the conditional statement are:
+% \begin{description}
+  % \item[]statement: \hfill \\
+    % if ( expression ) { statement-list } \\
+    % | if ( expression ) { statement-list } else { statement-list }\\
+% \end{description}
+% In both cases the expression is evaluated. If it is true, the first statements will be evaluated.
+% If it is false and there is an else, the else statements will be evaluated.
 
-In both cases the expression is evaluated. If it is true, the first statements will be evaluated.
-If it is false and there is an else, the else statements will be evaluated.
+% \subsection{.each statement}
+% The each statement is a basic loop, and can be called on the Jobs type. 
+% \begin{description}
+  % \item[]statement: \hfill \\
+    % expression .each ( identifier ) { statement-list }
+% \end{description}
+% The first expression has to evaluate to a list type. The identifier is the name of a variable (global scope
+% like all variables) that will the assigned each Job in turn before running the statement list.
 
-% 5
-% Program definition
-% A ltc program consists of a sequence of function definition.
-% program:
-% function-definition
-% function-definition program
-% function-definition:
-% identifier ( parameter-listopt ) { statement-listopt }
-% parameter-list:
-% identifier
-% identifier , parameter-list
-% the same identifier cannot be used more than once in the parameter list. Within the same program, A function
-% cannot be defined twice (name wise).
-% All functions return a integer value. A function can return to the caller without an explicit return statement, in
-% this case the return value is undefined.
-% A simple example of a complete function definition:
-% max (a, b, c) {
-% if (a > b) m = a; else m = b;
-% if (m > c) return m; else return c;
-% }
+\subsection{Program definition}
+A program consists of a list of statements evaluated from left to right.\\
+\begin{description}
+  \item[]program: \hfill \\
+    statement program
+\end{description}
 
-% 9
-% 9.1
-% Syntax Summary
-% Expressions
-% expression:
-% identifier
-% literal
-% ( expression )
-% identifier ( expression-listopt )
-% -expression
-% +expression
-% !expression
-% ∼expression
-% ++identifier
-% --identifier
-% identifier++
-% identifier--
-% expression binop expression
-% identifier asgnop expression
-% expression-list:
-% expression
-% expression , expression-list
-% The unary operators - + ! ∼ have higher priority than binary operator.
-% Binary operators all group left to right and have priority decreasing as indicated:
-% binop:
-% * / %
-% 7
-% + -
-% >> <<
-% < > <= >=
-% == !=
-% &
-% ∧
-% |
-% &&
-% ||
-% Assignment operator all have the same priority, and all group right to left.
-% asgnop:
-% = += -= *= /= %= >>= <<= &= ∧ = |=
-% 9.2
-% Statements
-% statement:
-% expression ;
-% { statement-listopt }
-% if ( expression ) statement
-% if ( expression ) statement else statement
-% while ( expression ) statement
-% for ( expressionopt ; expressionopt ; expressionopt ) statement
-% break;
-% continue;
-% return expression;
-% try { statement-listopt }catch { statement-listopt }
-% try { statement-listopt }catch ( identifier ) { statement-listopt }
-% throw expression;
-% ;
-% statement-list:
-% statement
-% statement statement-list
-% 8
-% 9.3
-% Program definition
-% program:
-% function-definition
-% function-definition program
-% function-definition:
-% identifier ( parameter-listopt ) { statement-listopt }
-% parameter-list:
-% identifier
-% identifier , parameter-list
-% 9
+\subsection{REPL}
+In the REPL, inputs are read and evaluated every time the user hits enter.\\
+
+\section{Grammar}
+\begin{description}
+  \item[]expression: \hfill \\
+    expression + expression \\
+    | expression - expression \\
+    | expression * expression \\
+    | expression / expression \\
+    | expression \% expression \\
+    | expression -> expression \\
+    | expression => expression \\
+    | expression <-> expression \\
+    | expression \textasciitilde> expression \\
+    | expression \textasciitilde< expression \\
+    | expression \textasciitilde expression \\
+\end{description}
+
+\begin{description}
+  \item[]expression: \hfill \\
+    ( expression )
+\end{description}
+
+\begin{description}
+  \item[]expression: \hfill \\
+    identifier
+\end{description}
+
+\begin{description}
+  \item[]expression: \hfill \\
+    identifier ( expression-list )
+\end{description}
+
+\begin{description}
+  \item[]expression-list: \hfill \\
+    expression-list , expression \\
+    | expression
+\end{description}
+
+\begin{description}
+  \item[]expression: \hfill \\
+    $[$ expression-list $]$
+\end{description}
+
+\begin{description}
+  \item[]expression: \hfill \\
+    identifier = expression
+\end{description}
+
+\begin{description}
+  \item[]statement: \hfill \\
+    expression ;
+\end{description}
+
+\begin{description}
+  \item[]program: \hfill \\
+    statement program
+\end{description}
 \end{document}
 
