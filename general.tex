@@ -2,22 +2,24 @@
 \label{sect:general}
 
 \subsection*{Define Workers in \lang{}}
-In the first version of \lang{}, we will use a Redis~\cite{redis} cluster to
-implement . In specific, when a user disseminates a job for execution,
-\lang{} will publish a job-script to Redis and the machine (worker)
-running Redis cluster will fetch and execute pending jobs.
-To simulate pseudo-clustering, our Redis cluster might listen
-to multiple ports binded on the same IP address.
+In the first version of \lang{}, we will use a Redis~\cite{redis} server to
+implement. To add a worker to the workers' pool, the only thing one has to do
+is run the following Maestro program: worker("0.0.0.0") (replace 0.0.0.0 by
+the IP of the Redis server).\\
+This will subscribe the worker to a job channel in Redis, where all Jobs will
+be published for execution when a master runs the run command.\\
+The master calls master("0.0.0.0") (replace 0.0.0.0 by the IP of the Redis server)
+at the beginning of its program.
 
 \subsection*{Variables and Expressions in \lang{}}
 In \lang{} variables are reserved memory locations which store values. This means that when a user declares a variable
 memory space is allocated.
 
 Based on the data type of a variable, the interpreter allocates memory and decides what can be stored in the reserved memory.
-Therefore, by assigning different data types to variables, you can store integers, decimals or characters in these variables.
+Therefore, by assigning different data types to variables, you can store integers, Jobs or strings in these variables.
 
 \subsubsection*{Assignment operator}
-\lang{}  is a dynamically typed language, and thus variables types are not explicitly declared.
+\lang{}  is a dynamically typed language, and variables types are not explicitly declared.
 The variable types are decided when a variable is assigned a value with the equal sign ``=''.
 
 The operand on the left side of ``='' operator must be a variable name and the operand on the right side of ``='' operator must be a value.
@@ -28,12 +30,14 @@ Example 1:
 a = 10
 x = "john"
 path = "/afs/columbia.edu/users/phd/username/my_script.sh"
-m = 1000.2
 p = true
 \end{Verbatim}
 
-The above code snippet demonstrates the following assignments:(1) variable a is assigned integer value 10; (2) variable x is assigned string ``john''; 
-(3) variable path is assigned a string representing the absolute path of script; (4) variable m is assigned float value 1000.2; (5) variable p is assigned boolean value true.
+The above code snippet demonstrates the following assignments:\\
+(1) variable a is assigned integer value 10;\\
+(2) variable x is assigned string ``john'';\\
+(3) variable path is assigned a string representing the absolute path of script;\\
+(4) variable p is assigned boolean value true.
 
 \subsubsection*{Job}
 One of the most important type of variable that can be created in \lang{} is the Job variable.\\
@@ -47,7 +51,7 @@ In this case variable ``a'' is assigned a job related with script ``abc.rb''
 \subsection*{Control Flows in \lang{}}
 Control flow statements are used to support non sequential \lang{} programs.
 \subsubsection*{if statement}
-``if'' keyword is used to define that a single statement or a block of statements is executed if a condition is true. Its syntax is: 
+``if'' keyword is used to define that a single statement or a block of statements is executed if a condition is true. Its syntax is:
 
 \textit{if (condition) statement}
 
