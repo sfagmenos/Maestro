@@ -6,3 +6,4 @@ tests/*
 *.out
 *.ps
 *.pdf
+*.toc
