@@ -29,11 +29,14 @@
 \newpage
 
 \section{Introduction}
-Maestro is a declarative language built to easily schedule jobs with hard and soft dependencies, locally or over the network.
-Its goal is to provide a DSL to very quickly express dependencies between jobs and run them, either from the REPL or in a file.
-It exposes high level functions and operators to declare complex logic. Maestro is meant for scripting, not to develop large
-scale programs. It thus doesn't support functions, or even loops. However, it exposes a map/reduce interface that allows for
-complex declarations.
+Maestro is a declarative language built to easily schedule jobs with hard and
+soft dependencies, locally or over the network.  Its goal is to provide a DSL to
+very quickly express dependencies between jobs and run them, either from the
+REPL or in a file.  It exposes high level functions and operators to declare
+complex logic. Maestro is meant for scripting, not to develop large scale
+programs. It thus doesn't support functions, or conditionals. However, it
+supports loops with an each statement and exposes a map/reduce interface that
+allows for complex declarations.
 
 \section{Lexical conventions}
 \subsection{Whitespace}
@@ -48,7 +51,7 @@ An identifier is a sequence of letters, digits, and underscores. The first chara
 
 \subsection{Keywords}
 The following identifiers are used as keywords, and are reserved names:\\
-if else each range
+each range
 
 \subsection{Reserved Identifiers}
 The following characters are reserved: $\texttt{+ - / * \% -> => <-> \textasciitilde>
@@ -119,13 +122,22 @@ from left to right, before the call. It is possible to have 0 arguments.
 \subsubsection{Built in functions}
 The following functions are built into the language, and their names are reserved:\\
 map reduce run Job\\
-All return a list of Jobs.
 \begin{description}
   \item[Job(string, string..)] Job takes a string that is the path of a file to
     execute for the job, and any number of strings that will be passed as
-    arguments. It returns a list with a Job object.
+    arguments. It returns a list with one Job object.
   \item[Wait(int)] Creates a Job which only sleeps for the given time. It can be inserted
-  in the dependencies to wait between Jobs.
+  in the dependencies to wait between Jobs. It returns a list with one Job object that just
+  waits.
+  \item[worker(string)] This subscribes the worker to a job channel on a redis running at
+    the IP:PORT denoted by the string. From now on, the worker will be pushed jobs to
+    execute on that channel. It doesn't return anything and crashed if the redis doesn't
+    answer.
+  \item[master(string)] This function is used to declare
+    the IP:PORT (denoted by the string argument) on which the redis server listens.
+    From now on, the master will publish jobs thaat need to run on the job channel of the redis
+    for a worker to execute. It doesn't return anything and crashed if the redis doesn't
+    answer.
   \item[range(int)] Returns a list of ints from 0 to int-1.
   \item[map(list, string)] the first list is a list of jobs that will run first, and their
     stdout will be concatenated. For every line in the concatenated stdout, map will create
@@ -258,24 +270,15 @@ Most statement are expression statements, which have the form
     | statement
 \end{description}
 
-\subsection{Conditional statement}
-The two forms of the conditional statement are:
-\begin{description}
-  \item[]statement: \hfill \\
-    if ( expression ) { statement-list } \\
-    | if ( expression ) { statement-list } else { statement-list }\\
-\end{description}
-In both cases the expression is evaluated. If it is true, the first statements will be evaluated.
-If it is false and there is an else, the else statements will be evaluated.
-
-\subsection{.each statement}
-The each statement is a basic loop, and can be called on the Jobs type. 
+\subsection{each statement}
+The each statement is a basic loop, and can be called on the Jobs type.
 \begin{description}
   \item[]statement: \hfill \\
     expression .each ( identifier ) { statement-list }
 \end{description}
-The first expression has to evaluate to a list type. The identifier is the name of a variable (global scope
-like all variables) that will the assigned each Job in turn before running the statement list.
+The first expression has to evaluate to a list type. The identifier is the name
+of a variable (global scope like all variables) that will the assigned each
+element of the list before running the statement list.
 
 \subsection{Program definition}
 A program consists of a list of statements evaluated from left to right.\\
@@ -300,7 +303,7 @@ In the REPL, inputs are read and evaluated every time the user hits enter.\\
     | expression <-> expression \\
     | expression \textasciitilde> expression \\
     | expression \textasciitilde< expression \\
-    | expression \textasciitilde expression \\
+    | expression \textasciitilde~expression \\
 \end{description}
 
 \begin{description}
@@ -349,12 +352,6 @@ In the REPL, inputs are read and evaluated every time the user hits enter.\\
   \item[]statement-list: \hfill \\
     statement statement-list \\
     | statement
-\end{description}
-
-\begin{description}
-  \item[]statement: \hfill \\
-    if ( expression ) { statement-list } \\
-    | if ( expression ) { statement-list } else { statement-list }\\
 \end{description}
 
 \begin{description}
