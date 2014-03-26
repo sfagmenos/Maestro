@@ -113,14 +113,12 @@ run in parallel. Failure of one is not crucial to the other.
 Equal dependency operator ($\sim$) states that two jobs may run concurrent if there
 are enough resources.
 \subsubsection*{Pre dependency operator ($\sim>$)}
-Pre dependency operator ($\sim>$) states that job at its left may run before the one
+Pre dependency operator ($\sim>$) states that the job at its left may run before the job
 at its right.
 \subsubsection*{Post dependency operator ($\sim<$)}
-Post dependency operator ($\sim<$) states that the job at left should run after its one
+Post dependency operator ($\sim<$) states that the job at its left should run after the job
 at its right.
 
-%The 3 last operators are introducing the `soft' dependency as we call it in \lang{}\\
-%The `soft' dependency will be explained along with the examples.\\
 \subsection*{Classes and Functions in \lang{}}
 \subsubsection*{Class $Job(string <name>, string <script\_path>, int <workers>=1)$}
 Construction of a $Job$ type needs the following variables:
@@ -142,7 +140,7 @@ Returns the output of Job's script.
 \subsubsection*{$Job.perror()$}
 Returns zero (0) if the job executes successfully on all of workers. Otherwise, returns one (1).
 \subsubsection*{$Job.error()$}
-Returns the error message, if any, along with the ip(s) of the worker(s) where failure occured.
+Returns the error message, if any, along with the ip(s) of the worker(s) where failure occurred.
 \subsubsection*{$Job.run()$}
 Runs a script specified in $script\_path$ variable. In general, it creates a shell in a dedicated worker which will execute a script.
 \subsubsection*{$Job.can\_run()$}
