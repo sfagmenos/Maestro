@@ -1,7 +1,7 @@
 \section{Sample Programs}
 \label{sect:samples}
 \subsection*{Example Program 1:}
-Consider a Ruby script file named $hello\_world.rb$ containing the following script
+Consider a Ruby script named $hello\_world.rb$ containing the following:
 \begin{verbatim}
 puts 'Hello world'
 \end{verbatim}
@@ -18,16 +18,12 @@ else{
 }
 \end{Verbatim}
 
-In this example we can see the creation of a job with name `a' at line 2.\\
-We initialize it with the script of our hello world program and\\
-we leave the workers with the default value (1). In line 3 we $run()$\\
-our job. Our language will find a not loaded worker and run our command.\\
-After the exection it will populate the internal values of the `Job'\\
-class. Afterwards we are testing if the job terminated properly (line 4). If\\
-the script returned 0 (the general code that execution terminated correctly)\\
-we are printing the stdout variable of our job (line 5). Otherwise we are\\
-printing the error string (line 8) that our program returned in order\\
-to understand what happened with our example.\\
+In the above code snippet we demonstrate how to create of a job with name `a'.
+This job is then initialized with the script of our hello world program and
+workers the default value (1). In line 3, $run()$, disseminates job `a'. 
+\lang{} will find an idle worker and execute our script hello\_world.rb.
+Afterwards, error code of job `a' is evaluated. If script hello\_world.rb terminates properly (line 4)
+,its stdout is printed. Otherwise, an error string is printed.
 
 \subsection*{Example Program 2:}
 \begin{Verbatim}[numbers=left]
@@ -37,18 +33,16 @@ c = Job(name="c", "telesphorus.py")
 run((a <-> b) -> c)
 \end{Verbatim}
 
-The 2nd example uses all of the capabilities of \lang{} about concurrency\\
-In this example we are creating 3 jobs. You can see in this example that\\
-the user states in how many workers wants this script to run. In line 3\\
-we have a simple example on how to introduce dependencies in our language.\\
-First comes the $(a <-> b)$. This states that the jobs `a' and `b' can\\
-run concurrent in different servers. Afterwards we have $-> c$. With this\\
-notation the user states that the job `c' must run after the successful termination\\
-of the previous job/s (in our example the `a' and `b' jobs).\\
+This example uses all concurrency capabilities of \lang{}.
+3 jobs are created, and dependencies amongst them are specified.
+In this case each job can run on different number of workers.
+Line 4  shows a simple example on how to introduce dependencies in \lang{}.
+The expression $(a <-> b)$ states that jobs `a' and `b' can
+run concurrently in different servers. Afterwards,  $-> c$ that the job `c' must run after the successful termination
+of the previous job/s (jobs `a' and `b').
 
 You can see that \lang{} offers an easy way to distinguish between\\
-the concurrent and not concurrent jobs. This will help developers and\\
-not computer scientists to create easily distributable batch proccesses.\\
+concurrent and not concurrent jobs. This will help user create and easily distribute batch processes.\\
 \\
 
 \subsection*{Example Program 3:}
@@ -61,21 +55,14 @@ d = Job(name="d", "nimbledriod.py")
 run((a,b,c,d)
 \end{Verbatim}
 
-This exmaples demonstrates the `soft' dependencies in \lang{}.\\
-\underline{All of the soft dependencies must be in one line.} Otherwise only the\\
-last line of `soft' dependecies are taken into consideration. All of the operators\\
-are left associate but here we are using parenthesis in order to help\\
-the user to undestand how the `soft' dependencies works. In one line the \\
-user has all of the operators but we will explain the meening of every \\
-parenthesis in order to  clarify everything. In the 5 line is where all \\
-the magic happens. In order to understand the example will take the\\
-parenthesis one at a time.\\
-First we see the $(b\sim c)$. This means that these 2 jobs can run\\
-sychronous if we have enough resources. \\
-Second we see the $(a\sim>expr)$. This means that job `a' should run\\
-before the \textit{expr}. \\
-At last we have the $(expr\sim<d)$. This expression means that the \\
-job `d' should run before the \textit{expr}.
+This example demonstrates `soft' dependencies in \lang{}.\\
+`Soft' dependencies must be in one line. Operators
+are left associate but we use parenthesis in order to help
+user understand how `soft' dependencies work. Line 5 is where all
+magic happens. First, $(b\sim c)$ means that jobs `b' and `c' can run 
+sychronous if there are enough resources. Second,
+$(a\sim>expr)$ means that job `a' should run before \textit{expr}. 
+Finally $(expr\sim<d)$ means that job `d' should run before \textit{expr}.
 
 \subsection*{Example Program 4:}
 \begin{Verbatim}[numbers=left,commandchars=\\\{\}]
@@ -88,36 +75,11 @@ a\mytilde<b
 run(a,b,c,d)
 \end{Verbatim}
 
-In the 4th example we can see the 3rd way to introduce dependencies.
-With the function \textit{add\_dependency} the user adds to a job (here the `c')
-a list of other jobs to be depended on. The execution then will start with the job
-`b'. This happens because of the `soft' dependency at line 6. After the termination of job `b'
-it will continue with `a'. The `c' is still blocked as it needs both jobs `b' and `d'.
-As we do not have any dependency between `b' and `d', `d' will start to run in another
-server. After the termination of `d' the job `c' is now ready to run.
-
-%\subsection*{Example Program 5:}
-%\begin{Verbatim}[numbers=left]
-%func an_hour_after(Job j) {
-%  return func () {
-%    j.finish_time && j.finish_time - Time.now > Time.hour(1)
-%  }
-%}
-%
-%Job old_b = nil
-%for i in range(0,10) {
-%  a = Job(name="a", script='send_email_batch.rb')
-%  b = Job(name="b", script='collect_data.rb')
-%  b.add_func_dependency( an_hour_after(a) )
-%  c = Job(name="c", script='analyze.py')
-%  run(old_b -> a -> b -> c)
-%  old_b = b
-%}
-%\end{Verbatim}
-%This program makes measurements in 3 steps:
-%Populate
-%Collect Data
-%Analyse
-%\\
-
-All programs are executed using the 'maestro' command.\\
+This example shows a third way to introduce dependencies.
+With function \textit{add\_dependency} user adds to a job
+a list of other jobs to be dependant on. First, execution of job `b' 
+will start prior to job `a' since there is a soft dependency introduced 
+in line 6. Job `a' will start as soon as job `b' terminates.
+In addition job `c' is blocked until both jobs `b' and `d' terminate.
+Since there is no dependency between `b' and `d', `d' may start execution  
+in any worker. Upon termination of `d', job `c' will be eligible to run.

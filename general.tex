@@ -2,73 +2,73 @@
 \label{sect:general}
 
 \subsection*{Define Workers in \lang{}}
-In this first version of our \lang{} language, we will use \href{http://www.redis.io}{Redis}
-for creating the pseudo cluster for our workers. This feauture will remain in the future versions for backwards compatibility but also for test purposes for the users.
-It will be a nice feature for user to run their \lang{} programs either locally or pseudo-clustered and full clustered.
-You can see the documentation of Redis \href{http://redis.io/documentation}{here}.
-In the next versions of \lang{} we will implement the cluster object which will take the cluster name (e.g. \textit{clic.cs.columbia.edu}) and distributed in this cluster.
-Also a worker object will be implemented which will store the ip of a machine. Then the \lang{} will distrubute the jobs in those workers.
-Only one method willi be available for each runtime. The user wiil not be able to specify a cluster and some workers or a redis server and a cluster.
+In the first version of \lang{}, we will use a Redis~\cite{redis} cluster to
+implement . In specific, when a user disseminates a job for execution,
+\lang{} will publish a job-script to Redis and the machine (worker)
+running Redis cluster will fetch and execute pending jobs.
+To simulate pseudo-clustering, our Redis cluster might listen
+to multiple ports binded on the same IP address.
 
 \subsection*{Variables and Expressions in \lang{}}
-Variables are nothing but reserved memory locations to store values. This means that when you create a variable you reserve some space in memory.
+In \lang{} variables are reserved memory locations which store values. This means that when a user declares a variable
+memory space is allocated.
 
-Based on the data type of a variable, the interpreter allocates memory and decides what can be stored in the reserved memory. Therefore, by assigning different data types to variables, you can store integers, decimals or characters in these variables.
+Based on the data type of a variable, the interpreter allocates memory and decides what can be stored in the reserved memory.
+Therefore, by assigning different data types to variables, you can store integers, decimals or characters in these variables.
 
-\subsubsection*{Assigning Values to Variables}
+\subsubsection*{Assignment operator}
+\lang{}  is a dynamically typed language, and thus variables types are not explicitly declared.
+The variable types are decided when a variable is assigned a value with the equal sign ``=''.
 
-Maestro variables do not have to be explicitly declared to reserve memory space. The declaration happens automatically when you assign a value to a variable. The equal sign (=) is used to assign values to variables.
-
-The operand to the left of the = operator is the name of the variable and the operand to the right of the = operator is the value stored in the variable. 
-
-Example:
-\begin{verbatim}
+The operand on the left side of ``='' operator must be a variable name and the operand on the right side of ``='' operator must be a value.
+The variable on the left side of ``='' is assigned the value on the right side of ``='' operator.\\
+\\
+Example 1:
+\begin{Verbatim}[numbers=left]
 a = 10
 x = "john"
 path = "/afs/columbia.edu/users/phd/username/my_script.sh"
 m = 1000.2
 p = true
-\end{verbatim}
+\end{Verbatim}
 
-This assigns the integer value 10 to the variable a, the string john to the variable x, the path of a distrubuted file system to path, the float value 1000.2 to the variable m and the Boolean value true to the variable p.
+The above code snippet demonstrates the following assignments:(1) variable a is assigned integer value 10; (2) variable x is assigned string ``john''; 
+(3) variable path is assigned a string representing the absolute path of script; (4) variable m is assigned float value 1000.2; (5) variable p is assigned boolean value true.
 
-The most important type of variable that can be created in Maestro is the Job variable.
-
-Example:
-\begin{verbatim}
+\subsubsection*{Job}
+One of the most important type of variable that can be created in \lang{} is the Job variable.\\
+\\
+Example 2:
+\begin{Verbatim}[numbers=left]
 a = Job ("a","abc.rb")
-\end{verbatim}
-
-Here, `a' is now a variable of 'job' type. 
-
-Therefore, Maestro supports five datatypes;
-
-Int, String, Float, Boolean, Job
+\end{Verbatim}
+In this case variable ``a'' is assigned a job related with script ``abc.rb'' 
 
 \subsection*{Control Flows in \lang{}}
-Control flow statements are used to execute a non-linear sequence of statements.
-\subsubsection*{if-else statements}
-The if keyword is used to execute a statement or block, if, and only if, a condition is fulfilled. Its syntax is:
+Control flow statements are used to support non sequential \lang{} programs.
+\subsubsection*{if statement}
+``if'' keyword is used to define that a single statement or a block of statements is executed if a condition is true. Its syntax is: 
 
 \textit{if (condition) statement}
 
-Here, condition is the expression that is being evaluated. If this condition is true, statement is executed. If it is false, statement is not executed (it is simply ignored), and the program continues right after the entire selection statement.
-
-Example:
+\noindent The interpretation is that ``statement'' is executed if ``condition'' is true. 
+Otherwise, if ``condition'' is false, ``statement'' is not executed and program execution continues after the end of ``statement''.
+\\
+\\
+Example 3:
 \begin{Verbatim}[numbers=left]
 a = Job(....)
 run(a)
 if (a.perror()==0)
     print a.stdout()
-    
 \end{Verbatim}
 
-Here, if executing Job a produces an error, this statement is ignored and nothing is printed. Stout is printed if and only if the job a is executed successfully.
+In the above code snippet, Job ``a'' is initialized and run. If execution of Job ``a'' terminates successfully, Job's ``a'' output is printed. 
+Otherwise ``statement'' of line 4 is not executed because ``condition'' of line 3 is not true
 
-If you want to include more than a single statement to be executed when the condition is fulfilled, these statements shall be enclosed in braces (\{\}), forming a block.
-
-Example:
-
+If the user wants to include more than a multiple statements these should be enclosed between brackets (\{\}) forming a block.\\
+\\
+Example 4:
 \begin{Verbatim}[numbers=left]
 a = Job(....)
 run(a)
@@ -77,12 +77,14 @@ if (a.perror()==0){
     print "Job successful"
     }
 \end{Verbatim}
-Selection statements with if can also specify what happens when the condition is not fulfilled, by using the else keyword to introduce an alternative statement. Its syntax is:
+\subsubsection*{if-else statement}
+``if-else'' keywords are used to define a flow of execution depending on a condition. ``if-else'' statement is an extension of ``if'' statement because
+in the sense that a user can also specify a block of statements when condition is false. Its syntax is:
 
 \textit{if (condition) statement1 else statement2}\\
-where statement1 is executed in case condition is true, and in case it is not, statement2 is executed.
-
-Example:
+The interpretation is that statement1 is executed if ``condition'' is true, otherwise statement2 is executed.\\
+\\
+Example 5:
 \begin{Verbatim}[numbers=left]
 a = Job(....)
 run(a)
@@ -92,85 +94,79 @@ else
     print a.error()
 \end{Verbatim}
 
-Here, if executing job `a' produces an error, the error code is printed. If the job is executed successfully, the output is printed.
+In the above code snippet if execution of Job `a' produces an error, its error code is printed. If job `a' is executed successfully, the output is printed.
 
 
+\subsection*{Operators in \lang{}}
 
-\subsection*{Unique Operators in \lang{}}
-
-In \lang{} language we are defining some operators with special meaning.\\
-The operators $->$ and $<->$ for concurrency. Also the operators $\sim$,$\sim<$\\
-and $\sim>$ for the job dependancies. All of the operators are left associative.\\
-\subsubsection*{The asynchronous $(->)$ operator}
-In order to define a way that 2 process must run one after the other\\
-we implemented the asychronous operator. By this operator we declare that\\
-the process at left of the arrow must first terminate successfully and\\
-then the process at the right can start.
-\subsubsection*{The concurrent $(<->)$ operator}
-Unlike the asynchronous operator this operator denotes that this 2 jobs can\\
-run parallel. This means that this 2 scripts can be send to 2 different\\
-workers to execute. The failure of any of these jobs is not crucial to the\\
-other.
-\subsubsection*{The equal dependancy ($\sim$) operator}
-The use of this operators states that these jobs should run concurrent if there\\
+\lang{} language supports left associative operators with special meaning: operators $->$ and $<->$ for concurrency. 
+Also operators $\sim$, $\sim<$ and $\sim>$ for job dependencies.
+\subsubsection*{Asynchronous operator $(->)$}
+In order to allow user define that 2 processes must run one after another
+we implement the asychronous operator $(->)$. Using asychronous operator, the user
+specifies that the process at right of the arrow can start as soon as
+the process at the left of the arrow terminates successfully.
+\subsubsection*{Concurrent operator $(<->)$}
+Unlike asynchronous operator, concurrent operator $(<->)$ denotes that 2 jobs can
+run in parallel. Failure of one is not crucial to the other.
+\subsubsection*{Equal dependency operator ($\sim$)}
+Equal dependency operator ($\sim$) states that two jobs may run concurrent if there
 are enough resources.
-\subsubsection*{The prior dependancy ($\sim>$) operator}
-The use of this operators states that the job at left should run before the one\\
-at the right.
-\subsubsection*{The later dependancy ($\sim<$) operator}
-The use of this operators states that the job at left should run after the one\\
-at the right.\\
-The 3 last operators are introducing the `soft' dependency as we call it in \lang{}\\
-The `soft' dependency will be explained along with the examples.\\
+\subsubsection*{Pre dependency operator ($\sim>$)}
+Pre dependency operator ($\sim>$) states that job at its left may run before the one
+at its right.
+\subsubsection*{Post dependency operator ($\sim<$)}
+Post dependency operator ($\sim<$) states that the job at left should run after its one
+at its right.
+
+%The 3 last operators are introducing the `soft' dependency as we call it in \lang{}\\
+%The `soft' dependency will be explained along with the examples.\\
 \subsection*{Classes and Functions in \lang{}}
 \subsubsection*{Class $Job(string <name>, string <script\_path>, int <workers>=1)$}
-New jobs are declared as objects of the $Job$ class using the implemented $new()$ method.\\
-The construction of a $Job$ type needs the following variables;\\
-$name$ which is the name of the job.\\
-$script\_path$ which is the script to be executed.\\
-$workers$ which an optional parameters to mention the number of workers to run the job on.\\\\
-The default number of workers is 1.\\
+Construction of a $Job$ type needs the following variables:
+\begin{itemize}
+\item $name$ which is the name of the job.
+\item $script\_path$ which is the script to be executed.
+\item $workers$ which an optional parameters to mention the number of workers to run the job on. The default number of workers is 1.
+\end{itemize}
 Example:\\
-Here we create 2 new jobs `b' and `c' as instances of the $Job$ class.
 \begin{Verbatim}[numbers=left]
 b = Job("b","xRay.rb",3)
 c = Job("c","telesphorus.py")
 \end{Verbatim}
-\subsection*{Job Functions}
+The above snippet creates two jobs `b' and `c' as instances of class $Job$.
 \subsubsection*{$Job.add\_dependency(List <dependencies>)$}
-Function to create the dependency list of a job. The job we will be
-able to run if and only if all this jobs terminated successfully.
+Creates the dependency list of a job, which will be eligible to run if all dependencies terminate successfully.
 \subsubsection*{$Job.stdout()$}
-Function to return the output of the command. As it is the result of the script we should need to print it.
+Returns the output of Job's script.
 \subsubsection*{$Job.perror()$}
-The perror function looks if the job executed properly in all of the workers. All of the return codes are stored in a list. If any error occured in any worker the job knows in which worker happened.
+Returns zero (0) if the job executes successfully on all of workers. Otherwise, returns one (1).
 \subsubsection*{$Job.error()$}
-The error function returns the error message if any, also appends the ip of the worker that failed to execute the script.
+Returns the error message, if any, along with the ip(s) of the worker(s) where failure occured.
 \subsubsection*{$Job.run()$}
-Function to actual run the script from $script\_path$. In general it creates a shell in the desired machine
-and executes the script.
+Runs a script specified in $script\_path$ variable. In general, it creates a shell in a dedicated worker which will execute a script.
 \subsubsection*{$Job.can\_run()$}
-Function to go through all the dependencies and check if all terminated correctly. This function will determine
-if the job can continue with execution.
+Function which goes through all dependencies and checks if all jobs terminated correctly. This function determines whether
+a job can start execution or not.
 
-\subsubsection*{Functions}
+\subsubsection*{\lang{} Functions}
 
-This section will present the main functions of \lang{}.
+This section we present core functions of \lang{}.
 \subsubsection*{$run($\textit{expr}$)$}
-The \textit{run} function takes the \textit{expr} and runs it in the workers we have introduced.
+\textit{run} function has one argument, which is an expression related to jobs.
 This is the distributed version of the function.
-The \textit{expr} can have many interpretations. The \textit{expr} can be just just the jobs:
+\textit{expr} can be jobs:
 \begin{Verbatim}[numbers=left]
 a = Job(name="a", script="abc.pl", workers=5)
 b = Job(name="b", script="xRay.rb", workers=3)
 c = Job(name="c", "telesphorus.py")
 run(a,b,c)
 \end{Verbatim}
-The \textit{expr} can also be a `hard' dependency string between jobs:
+or a `hard' dependency among jobs:
 \begin{Verbatim}[numbers=left]
 a = Job(name="a", script="abc.pl", workers=5)
 b = Job(name="b", script="xRay.rb", workers=3)
 run(a->b)
 \end{Verbatim}
 \subsubsection*{$run\_local($\textit{expr}$)$}
-This is the local (as the names states!) version of the previous function.With this function the jobs will be run localy to our machine to test the code before the user launches the program with the previous function. It does not have any difference with the previous function in the sense of what \textit{expr} can be.
+This is a local version of the ``run'' function. With ``run\_local'' function jobs may run locally for testing purposes before user launches a program remotely with ``run''.

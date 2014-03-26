@@ -1,8 +1,27 @@
 \section{Introduction}
 \label{sect:intro}
-The \lang{} language will help users to execute a large amount of scripts into a pool of workers.
-Here we will give some practical examples on how to create jobs, define dependencies between them and
-explain all the feautures \lang{} is offering.
+
+%In the era of virtualization modern data centres switch from traditional servers to virtual machines.
+%
+%Companies, institutions, and large scientific organizations are now following an agile way of computing.
+%mazon with the cloud infastructure to the FOSS reliable solution of Openstack from RedHat,
+%data centres around the world are changing and with them changes the computing itself.
+%As the user can be unaware of the spawning, \lang{} will come to fill such gap. Either the user will
+%introduce a pool of workers or a cluster of machines(like clic.cs.columbia.edu), \lang{} will be 
+%able to distrubute the jobs in the less loaded machine for faster completion. Having also a REPL
+%interface will help the user to experiment with \lang{} before starts to create more complex 
+%p
+%
+Frequently a user allocates a pool of machines in order to conduct experimental
+evaluation represented in the format of scripts. In a broad sense, an end-user
+operates on a pool of machines and allocates jobs represented in a scripting
+language. \lang{} is a programming language which provides user with ability
+to express powerful semantics related to job distribution and scheduling.
+The purpose of this tutorial is to demonstrate features and functionality 
+supported by  \lang{}. Also, we provide exemplarey programs  to
+explain how \lang{}  should be used to create jobs, describe dependencies amongst jobs,
+and execute jobs on a cluster of workers. 
+
 
 
 The main functionality will be demonstrated in the examples that will follow. Starting from a 
@@ -10,13 +29,4 @@ proper "Hello World!" program will continue with more complex ones in order to g
 for all the aspects of the language.
 
 
-With the arrival of the virtual machines most of the modern data centres switch from mainframes to
-virtual machines that are spawm when the data centre needs more computing power. More and more companies,
-institutions and large expreiments around the world are looking into the agile way of doing computing. From the
-pioneer Amazon with the cloud infastructure to the FOSS reliable solution of Openstack from RedHat,
-data centres around the world are changing and with them changes the computing itself.
-As the user can be unaware of the spawning, \lang{} will come to fill such gap. Either the user will
-introduce a pool of workers or a cluster of machines(like clic.cs.columbia.edu), \lang{} will be 
-able to distrubute the jobs in the less loaded machine for faster completion. Having also a REPL
-interface will help the user to experiment with \lang{} before starts to create more complex 
-programs. He can also play with the examples we are having in this tutorial without breaking a sweat.
+rograms. He can also play with the examples we are having in this tutorial without breaking a sweat.
