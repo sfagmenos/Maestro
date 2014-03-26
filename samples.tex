@@ -1,6 +1,6 @@
 \section{Sample Programs}
 \label{sect:samples}
-In order to run the programs, we just need to call maestro program\_path. If the Maetro
+In order to run the programs, we just need to call maestro program\_path. If the \lang{} 
 program is not in the PATH, it need to be specified (e.g. /home/user/bin/maestro).\\
 We can also start the REPL with maestro, and write the commands.
 
@@ -96,13 +96,13 @@ run(b);
 \end{Verbatim}
 
 This examples shows how to schedule many instances of the same Job with different
-arguments, and wait for all of them to be done before starting another script.\\
+arguments, and wait for all of them to be done before starting another script.
 In this example, send\_email takes an email number and an email address as arguments
 and sends the email to the address. The program creates one Job per email so that it
 can be distributed. Then it waits for an hour after the last email, and starts some data
 collection dependent on the emails. It assumes all workers have access to the email list
 to retrieve the right one (it could be hard coded in the script or through a distributed
-file system).\\
+file system).
 Execution of job `b' will start only on success of all email sending,
 and of a one hour wait.
 
