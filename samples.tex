@@ -1,74 +1,103 @@
 \section{Sample Programs}
 \label{sect:samples}
-\subsection*{Example Program 1:}
+In order to run the programs, we just need to call maestro program\_path. If the Maetro
+program is not in the PATH, it need to be specified (e.g. /home/user/bin/maestro).\\
+We can also start the REPL with maestro, and write the commands.
+
+\subsection*{Example Program 0: Hello World}
 Consider a Ruby script named $hello\_world.rb$ containing the following:
 \begin{verbatim}
-puts 'Hello world'
+#!/usr/bin/env ruby
+puts 'Hello World!'
 \end{verbatim}
 Now consider a \lang{} program like the following:
 \begin{Verbatim}[numbers=left]
 #Hello World
-a = Job(name="a", script="hello_world.rb")
+a = Job("hello_world.rb")
 run(a)
 \end{Verbatim}
 
-In the above code snippet we demonstrate how to create of a job with name `a'.
+In the above code snippet we demonstrate how to create of a job running an hello world script.
 This job is then initialized with the script of our hello world program and
-workers the default value (1). In line 3, $run()$, disseminates job `a'. 
+assigned to variable `a'. In line 3, $run()$ starts job `a'. 
 \lang{} will find an idle worker and execute our script hello\_world.rb.
-Afterwards, error code of job `a' is evaluated. If script hello\_world.rb terminates properly (line 4)
-,its stdout is printed. Otherwise, an error string is printed.
+Afterwards, error code of job `a' is evaluated. If script hello\_world.rb terminates properly
+,its stdout will be loged on the master. Otherwise, stderr will be logged.
 
-\subsection*{Example Program 2:}
+\subsection*{Example Program 2: Distributed Hello World}
+Consider a Ruby script named $print.rb$ that prints its first argument:
+\begin{verbatim}
+#!/usr/bin/env ruby
+puts ARGV.first
+\end{verbatim}
+And the Maetro program can be:
 \begin{Verbatim}[numbers=left]
-a = Job(name="a", script="abc.pl", workers=5)
-b = Job(name="b", script="xRay.rb", workers=3)
-c = Job(name="c", "telesphorus.py")
-run((a <-> b) -> c)
+master("0.0.0.0:6379")
+a = Job("print.rb", "Hello")
+b = Job("print.rb", "World")
+c = Job("print.rb", "!")
+run(a -> b -> Wait(10) -> c)
 \end{Verbatim}
 
-This example uses all concurrency capabilities of \lang{}.
+There is a lot going on in this example. It uses concurrency capabilities of \lang{} to express dependencies and
+waiting times. We can also see how to run a Job with an argument.\\
+First, we declare the IP:PORT of Redis (here localhost on the default Redis port). It will be used to
+distribute the Jobs.\\
 3 jobs are created, and dependencies amongst them are specified.
-In this case each job can run on different number of workers.
-Line 4  shows a simple example on how to introduce dependencies in \lang{}.
-The expression $(a <-> b)$ states that jobs `a' and `b' can
-run concurrently in different servers. Afterwards,  $-> c$ that the job `c' must run after the successful termination
-of the previous job/s (jobs `a' and `b').
+Line 5 shows a simple example on how to introduce dependencies in \lang{}.
+The expression $a -> b$ states that jobs `a' will run before `b', potentially in different servers. Afterwards,  $-> c$ that the job `c' must run after the successful termination of the previous jobs (`a' and `b').\\
+The Wait() call creates a fake Job which only purpose it to delay the next Job. The hard dependency system
+ensures `c' will not run before 10 seconds after `b' finished.\\
+If we wanted `a' and `b' to run in parallel, and add the ! at the end after 10 seconds, we could call:
+\begin{Verbatim}[numbers=left]
+run((a <-> b) -> Wait(10) -> c)
+\end{Verbatim}
 
-You can see that \lang{} offers an easy way to distinguish between\\
+You can see that \lang{} offers an easy way to distinguish between
 concurrent and not concurrent jobs. This will help user create and easily distribute batch processes.\\
 \\
 
 \subsection*{Example Program 3:}
 \begin{Verbatim}[numbers=left,commandchars=\\\{\}]
-a = Job(name="a", script="abc.pl", workers=5)
-b = Job(name="b", script="xRay.rb", workers=3)
-c = Job(name="c", "telesphorus.py")
-d = Job(name="d", "nimbledriod.py")
+a = Job("abc.pl", workers=5)
+b = Job("xRay.rb", workers=3)
+c = Job("telesphorus.py")
+d = Job("nimbledriod.py")
 ((a\mytilde>(b\mytilde c))\mytilde<d)
 run((a,b,c,d)
 \end{Verbatim}
 
-This example demonstrates `soft' dependencies in \lang{}.\\
+This example demonstrates {\em soft} dependencies in \lang{}.\\
 `Soft' dependencies must be in one line. Operators
 are left associate but we use parenthesis in order to help
 user understand how `soft' dependencies work. Line 5 is where all
 magic happens. First, $(b\sim c)$ means that jobs `b' and `c' can run 
-sychronous if there are enough resources. Second,
+synchronous if there are enough resources. Second,
 $(a\sim>expr)$ means that job `a' should run before \textit{expr}. 
 Finally $(expr\sim<d)$ means that job `d' should run before \textit{expr}.\\
 \\
 
 \subsection*{Example Program 4:}
 \begin{Verbatim}[numbers=left,commandchars=\\\{\}]
-a = Job(name="a", script="abc.pl", workers=5)
-b = Job(name="b", script="xRay.rb", workers=3)
-a -> Wait(3600) -> b
+list = []
+range(100).each(i) \{
+  a = Job("send_email.pl", "" + i, "test@maestro.com")
+  list = list + a
+\}
+b = Job("collect_data.rb")
+list -> Wait(3600) -> b
 run(b)
 \end{Verbatim}
 
-This examples shows how to use a dummy waiting Job to add time dependencies
-between jobs. First, execution of job `b' will start only on success of 'a',
+This examples shows how to schedule many instances of the same Job with different
+arguments, and wait for all of them to be done before starting another script.\\
+In this example, send\_email takes an email number and an email address as arguments
+and sends the email to the address. The program creates one Job per email so that it
+can be distributed. Then it waits for an hour after the last email, and starts some data
+collection dependent on the emails. It assumes all workers have access to the email list
+to retrieve the right one (it could be hard coded in the script or through a distributed
+file system).\\
+Execution of job `b' will start only on success of all email sending,
 and of a one hour wait.
 
 \subsection*{Example Program 5:}
@@ -81,6 +110,18 @@ run(red)
 
 This example shows how to use the map/reduce built in functions to distribute data
 analysis of a big file. This assumes that all workers have access to the file (e.g.
-distributed file system), or that split.rb scps the pieces of file in the workers.
+distributed file system), or that split.rb can scp the pieces of file in the workers.
 Then map will create one Job per output line of split.rb. This Job will be the map.rb
-script and have as argument one line of split output. Reduce will then...
+script and have as argument one line of split output. Reduce will then create one Job
+with the reduce.rb program, with arguments that are the output from the previous reduce and
+the output of the next Job from the list. The first reduce will have nil as first argument.\\
+Let us assume the big file contains words, and we want to count the number of appearance for
+each different word:
+\begin{itemize}
+  \item split.rd can split the big file in chunks and output the name of each chunk
+  \item map.rb can take a file path, and return a dictionary with the words as keys
+    and an int for the number, in the JSON format.
+  \item reduce.rb can take 2 arguments as JSON strings and parse them. If the first is
+    empty, it means it is the initialisation and we create an empty dictionary. Then is
+    merges the dictionaries and return the merged in JSON.
+\end{itemize}
