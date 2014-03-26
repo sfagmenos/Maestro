@@ -18,10 +18,10 @@
 \contentsline {subsection}{\numberline {6.4}Jobs}{7}{subsection.6.4}
 \contentsline {subsection}{\numberline {6.5}Operators in expressions}{7}{subsection.6.5}
 \contentsline {subsection}{\numberline {6.6}Operators}{7}{subsection.6.6}
-\contentsline {subsection}{\numberline {6.7}Operators description}{7}{subsection.6.7}
+\contentsline {subsection}{\numberline {6.7}Operators description}{8}{subsection.6.7}
 \contentsline {section}{\numberline {7}Assignments}{10}{section.7}
-\contentsline {section}{\numberline {8}Statements}{10}{section.8}
-\contentsline {subsection}{\numberline {8.1}statement}{10}{subsection.8.1}
+\contentsline {section}{\numberline {8}Statements}{11}{section.8}
+\contentsline {subsection}{\numberline {8.1}statement}{11}{subsection.8.1}
 \contentsline {subsection}{\numberline {8.2}Program definition}{11}{subsection.8.2}
 \contentsline {subsection}{\numberline {8.3}REPL}{11}{subsection.8.3}
 \contentsline {section}{\numberline {9}Grammar}{11}{section.9}
