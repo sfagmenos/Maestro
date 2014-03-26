@@ -1,0 +1,25 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}
+\contentsline {section}{\numberline {2}Lexical conventions}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Whitespace}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Comments}{3}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Identifiers}{3}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Keywords}{3}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Reserved Identifiers}{3}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}Types}{3}{subsection.2.6}
+\contentsline {subsubsection}{\numberline {2.6.1}Basic Types}{4}{subsubsection.2.6.1}
+\contentsline {subsubsection}{\numberline {2.6.2}Derived Types}{4}{subsubsection.2.6.2}
+\contentsline {subsection}{\numberline {2.7}Scope}{4}{subsection.2.7}
+\contentsline {subsection}{\numberline {2.8}Operators}{4}{subsection.2.8}
+\contentsline {subsection}{\numberline {2.9}identifier}{5}{subsection.2.9}
+\contentsline {section}{\numberline {3}Expressions}{5}{section.3}
+\contentsline {subsection}{\numberline {3.1}Parenthesized expression}{5}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Function call}{5}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}Built in functions}{5}{subsubsection.3.2.1}
+\contentsline {subsection}{\numberline {3.3}Jobs}{6}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Operators in expressions}{6}{subsection.3.4}
+\contentsline {section}{\numberline {4}Assignments}{9}{section.4}
+\contentsline {section}{\numberline {5}Statements}{9}{section.5}
+\contentsline {subsection}{\numberline {5.1}statement}{9}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Program definition}{10}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}REPL}{10}{subsection.5.3}
+\contentsline {section}{\numberline {6}Grammar}{10}{section.6}
