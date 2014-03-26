@@ -28,6 +28,7 @@
 
 \maketitle
 \tableofcontents
+\newpage
 
 \section{Introduction}
 Maestro is a declarative language built to easily schedule jobs with hard and soft dependencies, locally or over the network.
@@ -55,9 +56,9 @@ if else
 The following characters are reserved: $\texttt{+ - / * \% -> => <-> \textasciitilde>
 \textasciitilde< \textasciitilde , ( ) "}$
 
-\subsection{Types}
+\section{Types}
 Maestro is dynamically typed and doesn't allow users to create new types.
-\subsubsection{Basic Types}
+\subsection{Basic Types}
 \begin{description}
   \item[Job] A Job represents a program that can be ran on a worker. It encapsulates
     the path of the program and exposes outputs and errors.
@@ -66,29 +67,36 @@ Maestro is dynamically typed and doesn't allow users to create new types.
   \item[Boolean] Boolean encapsulates true or false.
 \end{description}
 
-\subsubsection{Derived Types}
+\subsection{Derived Types}
 \begin{description}
   \item[Jobs] Jobs are ordered collections of one or more values. These
     objects need to be of type Job. The literal representation is a
     comma separated sequence of expressions surrounded by brackets ([ and ]).
 \end{description}
 
-\subsection{Scope}
-Maestro is a scripting language to quickly distributed interdependent jobs. Its
-intended use is for scripts that glue tasks together. The scope of a variable
-is thus the entire script, or the whole lifetime of the interpreter.
+\section{Scope}
+Maestro is a scripting language used to quickly distributed interdependent jobs.
+Its intended use is for scripts that glue tasks together, not to build and
+maintain large programs. The scope of a variable is thus the entire script
+(global scope), or the whole lifetime of the interpreter.
 
-\subsection{Operators}
-Operators are left associative and have the following precedences (same line
-means same precedence, lower line means higher precedence):\\
-$\texttt{-> => \textasciitilde> \textasciitilde<}$\\
-$\texttt{+ - <-> \textasciitilde}$\\
-$\texttt{/ * \%}$
-
-\subsection{identifier}
-An identifier evaluates to the value of the corresponding variable.
+\section{Errors}
+There are two kinds of errors in Maestro:
+\begin{itemize}
+  \item logic or type errors just make the program crash with an error
+  message
+  \item Job errors create a log on the local machine. If a later Job depend
+  on this Job, the program will crash. If not, it will continue uninterrupted.
+\end{itemize}
 
 \section{Expressions}
+\subsection{Identifier}
+An identifier evaluates to the value of the corresponding variable.
+\begin{description}
+  \item[]expression: \hfill \\
+    identifier
+\end{description}
+
 \subsection{Parenthesized expression}
 A parenthesized expression takes the value of the evaluated expression.
 \begin{description}
@@ -146,6 +154,14 @@ Jobs are created with the brackets notation. E.g. $list = [a, b, c, ...]$
     expression OPERATOR expression
 \end{description}
 
+\subsection{Operators}
+Operators are left associative and have the following precedences (same line
+means same precedence, lower line means higher precedence):\\
+$\texttt{-> => \textasciitilde> \textasciitilde<}$\\
+$\texttt{+ - <-> \textasciitilde}$\\
+$\texttt{/ * \%}$
+
+\subsection{Operators description}
 \begin{description}
 \item[+] \hfil \\
 The result is the sum of the expressions if they evaluate to an Int.\\
