@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 \contentsline {section}{\numberline {1}Introduction}{3}{section.1}
 \contentsline {section}{\numberline {2}Lexical conventions}{3}{section.2}
 \contentsline {subsection}{\numberline {2.1}Whitespace}{3}{subsection.2.1}
@@ -27,3 +28,35 @@
 \contentsline {subsection}{\numberline {8.4}Program definition}{11}{subsection.8.4}
 \contentsline {subsection}{\numberline {8.5}REPL}{11}{subsection.8.5}
 \contentsline {section}{\numberline {9}Grammar}{11}{section.9}
+=======
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}
+\contentsline {section}{\numberline {2}Lexical conventions}{2}{section.2}
+\contentsline {subsection}{\numberline {2.1}Whitespace}{2}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Comments}{2}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Identifiers}{2}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Keywords}{2}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Reserved Identifiers}{3}{subsection.2.5}
+\contentsline {section}{\numberline {3}Types}{3}{section.3}
+\contentsline {subsection}{\numberline {3.1}Basic Types}{3}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Derived Types}{3}{subsection.3.2}
+\contentsline {section}{\numberline {4}Scope}{3}{section.4}
+\contentsline {section}{\numberline {5}Errors}{4}{section.5}
+\contentsline {section}{\numberline {6}Expressions}{4}{section.6}
+\contentsline {subsection}{\numberline {6.1}Identifier}{4}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Parenthesized expression}{4}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Function call}{4}{subsection.6.3}
+\contentsline {subsubsection}{\numberline {6.3.1}Built in functions}{5}{subsubsection.6.3.1}
+\contentsline {subsection}{\numberline {6.4}Lists}{5}{subsection.6.4}
+\contentsline {subsection}{\numberline {6.5}Operators in expressions}{6}{subsection.6.5}
+\contentsline {subsection}{\numberline {6.6}Operators}{6}{subsection.6.6}
+\contentsline {subsection}{\numberline {6.7}Operators description}{6}{subsection.6.7}
+\contentsline {section}{\numberline {7}Assignments}{8}{section.7}
+\contentsline {section}{\numberline {8}Statements}{9}{section.8}
+\contentsline {subsection}{\numberline {8.1}statement}{9}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}statement-list}{9}{subsection.8.2}
+\contentsline {subsection}{\numberline {8.3}Conditional statement}{9}{subsection.8.3}
+\contentsline {subsection}{\numberline {8.4}.each statement}{10}{subsection.8.4}
+\contentsline {subsection}{\numberline {8.5}Program definition}{10}{subsection.8.5}
+\contentsline {subsection}{\numberline {8.6}REPL}{10}{subsection.8.6}
+\contentsline {section}{\numberline {9}Grammar}{10}{section.9}
+>>>>>>> Stashed changes
