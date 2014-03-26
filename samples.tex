@@ -10,12 +10,6 @@ Now consider a \lang{} program like the following:
 #Hello World
 a = Job(name="a", script="hello_world.rb")
 run(a)
-if (a.perror() == 0){
-    print a.stdout()
-}
-else{
-    print a.error()
-}
 \end{Verbatim}
 
 In the above code snippet we demonstrate how to create of a job with name `a'.
@@ -69,18 +63,24 @@ Finally $(expr\sim<d)$ means that job `d' should run before \textit{expr}.\\
 \begin{Verbatim}[numbers=left,commandchars=\\\{\}]
 a = Job(name="a", script="abc.pl", workers=5)
 b = Job(name="b", script="xRay.rb", workers=3)
-c = Job(name="c", "telesphorus.py")
-d = Job(name="d", "nimbledriod.py")
-c.add_dependency([b,d])
-a\mytilde<b
-run(a,b,c,d)
+a -> Wait(3600) -> b
+run(b)
 \end{Verbatim}
 
-This example shows a third way to introduce dependencies.
-With function \textit{add\_dependency} user adds to a job
-a list of other jobs to be dependant on. First, execution of job `b' 
-will start prior to job `a' since there is a soft dependency introduced 
-in line 6. Job `a' will start as soon as job `b' terminates.
-In addition job `c' is blocked until both jobs `b' and `d' terminate.
-Since there is no dependency between `b' and `d', `d' may start execution  
-in any worker. Upon termination of `d', job `c' will be eligible to run.
+This examples shows how to use a dummy waiting Job to add time dependencies
+between jobs. First, execution of job `b' will start only on success of 'a',
+and of a one hour wait.
+
+\subsection*{Example Program 5:}
+\begin{Verbatim}[numbers=left,commandchars=\\\{\}]
+a = Job("split.rb", "/tmp/big_file_name.data")
+maps = map(a, "map.rb")
+red = reduce(maps, "reduce.rb")
+run(red)
+\end{Verbatim}
+
+This example shows how to use the map/reduce built in functions to distribute data
+analysis of a big file. This assumes that all workers have access to the file (e.g.
+distributed file system), or that split.rb scps the pieces of file in the workers.
+Then map will create one Job per output line of split.rb. This Job will be the map.rb
+script and have as argument one line of split output. Reduce will then...
