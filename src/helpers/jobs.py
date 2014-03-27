@@ -11,23 +11,19 @@ class Job():
     '''Constructor of class should be supplied with job name and
     respective script name
     '''
-    def __init__(self, name, script, workers=1):
+    def __init__(self, script, workers=1):
         self._dependencies = []
         self._workers = workers
         self._script = script
         self._stderr = None
         self._stdout = None
         self._errno = None  # errno is None since job has not run
-        self._name = name
 
     def stdout(self):
         return self._stdout
 
     def perror(self):
         return self._errno, self._stderr
-
-    def __repr__(self):
-        return self._name
 
     def add_dependency(self, depends_on):
         '''Add names of jobs on which current object
@@ -39,24 +35,20 @@ class Job():
     def run(self):
         '''this should do the remote execution of scripts'''
         # need error checkong of what Popen returns
-        ip = 'localhost'
-        ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(ip, username='vatlidak', key_filename='/home/vatlidak/.ssh/id_rsa')
         try:
-            #s = subprocess.Popen(self._script, stdout=subprocess.PIPE)
-            #s = subprocess.Popen(['rsh',ip,self._script], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            ssh.exec_command(self._script)
+            s = subprocess.Popen(self._script, stdout=subprocess.PIPE)
         except Exception, error:
+            print "Error", error
+            print self._script
             self._stdout = None
             self._stderr = error
             self._errno = -1
             return
-
-        #streamdata = s.communicate()
-        #self._stdout = streamdata[0]
-        #self._stderr = streamdata[1]
-        #self._errno = s.returncode
+        streamdata = s.communicate()
+        self._stdout = streamdata[0]
+        self._stderr = streamdata[1]
+        self._errno = s.returncode
+        print self._stdout, self._stderr, self._errno
 
     def can_run(self):
         '''check if dependencies are fullfilled.
@@ -98,9 +90,10 @@ def run(Queue):
     # dependency i.e., Q[0] = [a,b] should run before
     # jobs with two dependencies, i.e., Q[1] = [c]
     #
-    while not Queue[i]:
-        for job in Queue[i]:
+    while Queue:
+        for job in Queue:
+            print job.can_run()
             if job.can_run():
-                Queue[i].remove(job)
+                Queue.remove(job)
                 job.run()
         time.sleep(0.5)
