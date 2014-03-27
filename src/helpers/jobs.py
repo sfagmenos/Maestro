@@ -36,19 +36,18 @@ class Job():
         '''this should do the remote execution of scripts'''
         # need error checkong of what Popen returns
         try:
+            self._script = self._script.replace('"','')
             s = subprocess.Popen(self._script, stdout=subprocess.PIPE)
         except Exception, error:
-            print "Error", error
-            print self._script
             self._stdout = None
             self._stderr = error
             self._errno = -1
             return
+
         streamdata = s.communicate()
         self._stdout = streamdata[0]
         self._stderr = streamdata[1]
         self._errno = s.returncode
-        print self._stdout, self._stderr, self._errno
 
     def can_run(self):
         '''check if dependencies are fullfilled.
@@ -92,7 +91,6 @@ def run(Queue):
     #
     while Queue:
         for job in Queue:
-            print job.can_run()
             if job.can_run():
                 Queue.remove(job)
                 job.run()
