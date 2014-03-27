@@ -3,6 +3,7 @@ import helpers.jobs as hj
 
 # Get the token map from the lexer
 from mlex import tokens
+from maestro_cmd import Console
 precedence = (
     ('left', 'ASSIGN'),
     ('left', 'DEP'),
@@ -113,11 +114,12 @@ class Node:
 # Build the parser
 parser = yacc.yacc()
 
-while True:
-   try:
-       s = raw_input('maestro> ')
-   except EOFError:
-       break
-   if not s: continue
-   result = parser.parse(s)
-   print result
+if __name__ == '__main__':
+        console = Console(parser) #while True:
+        console . cmdloop() #   try:
+#       s = raw_input('maestro> ')
+#   except EOFError:
+#       break
+#   if not s: continue
+#   result = parser.parse(s)
+#   print result
