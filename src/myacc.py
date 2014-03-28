@@ -1,3 +1,4 @@
+import sys
 import ply.yacc as yacc
 import helpers.jobs as hj
 
@@ -115,8 +116,29 @@ class Node:
 parser = yacc.yacc()
 
 if __name__ == '__main__':
+    first=True
+    if len(sys.argv) == 1:
         console = Console(parser) #while True:
         console . cmdloop() #   try:
+    elif len(sys.argv) == 2:
+        try:
+            f = open(sys.argv[1])
+        except IOError:
+            print 'cannot open', sys.argv[1]
+        else:
+            with f:
+                for line in f:
+                    if first:
+                        first=False
+                        if line == "#!maestro\n":
+                            continue
+                        else:
+                            print "No maestro file specified!"
+                            break
+                    else:
+                        result=parser.parse(line)
+    else:
+        print "Usage: python myacc.py <file_name>"
 #       s = raw_input('maestro> ')
 #   except EOFError:
 #       break
