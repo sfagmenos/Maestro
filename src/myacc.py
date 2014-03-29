@@ -91,7 +91,9 @@ def eval_func(name, args):
     if name == "Job":
         return hj.Job(args[0], args[0])
     if name == "run":
-        hj.run(args)
+        # hj.run(args)
+        # args[0] solves the bug we encountered with aho's TA
+        hj.run(args[0])
         return args  # useful to reuse in a one liner
 
 
