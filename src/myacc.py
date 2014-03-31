@@ -132,7 +132,6 @@ parser = yacc.yacc()
 
 
 if __name__ == '__main__':
-    first = True
     if len(sys.argv) == 1:
         console = Console(parser)  # while True:
         console.cmdloop()  # try:
@@ -141,17 +140,12 @@ if __name__ == '__main__':
             f = open(sys.argv[1])
         except IOError:
             print 'cannot open', sys.argv[1]
-        else:
-            for line in f:
-                if first:
-                    first = False
-                    if line == "#!maestro\n":
-                        continue
-                    else:
-                        print "No maestro file specified!"
-                        break
-                else:
-                    result = parser.parse(line)
+        first = f.next()
+        if first != "#!maestro\n":
+            print "No maestro file specified!"
+            sys.exit(-1)
+        for line in f:
+            result = parser.parse(line)
         f.close()
     else:
         print "Usage: python myacc.py <file_name>"
