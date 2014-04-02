@@ -1,0 +1,64 @@
+1. check hard circular dependencies with strings
+
+2. check soft circular dependencies with strings
+
+3. check soft malicious dependencies
+
+4. check hard malicious dependencies
+
+5. check what happens when a -> b but a takes as input a file that b produces, ie when explicit dependencies contradict implicit dependencies?
+
+6. check what happens when hard dependencies and soft dependencies are combined. 
+
+7. check what happens when hard equivalences and soft equivalences are combined. 
+
+8. check what happens when jobs depend on themselves
+
+9. check what happens when we just run wait expressions in circular?
+
+10. check what happens when we just run wait expressions in parallel?
+
+11. check lists of scripts - what happens when the list is empty?
+
+12. check scripts - what happens when user doesn't give enough input arguments
+
+13. check lists of scripts - what happens when one of the scripts is not valid and/or non existent
+
+14. check lists of scripts - what happens when you concatenate lists and then run each on them
+
+15. what happens when you run dependencies on multiple lines that contradict each other
+
+16. what happens when you're asked to run (L1 <-> L2) -> L3 where L2 is empty
+
+17. what happens when you run half-formed expressions
+
+18. what happens when you run an each loop with concatenating dependencies
+
+19. check the scope of variables within loops - does it retain previous value?
+
+20. check whether the jobs are run in order in lists
+
+21. suggestion - should do a*10 to designate run a~a~a~a ten times
+
+22. check whether (((a -> b) -> b) -> b) -> b) is different from (a -> b -> b -> b)
+
+23. check precedences of the different operators, ie a -> b <-> c should be the same as a -> (b <-> c)
+
+24. check use of the operator + in different contexts, ie list concatenation, arithmetic operation, string concatenation
+
+25. check use of the operator - arithmetic operations
+
+26. check use of the operator * arithmetic operations
+
+27. check use of the operator % arithmetic operations
+
+28. check use of the operator / arithmetic operation
+
+29. check nested loops
+
+30. check map reduce type stuff
+
+
+
+
+
