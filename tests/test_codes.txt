@@ -72,11 +72,13 @@
 
 37. check speed vs. for-loop for map
 
-38. 
+39. check if data file is indivisible
 
-39. check inside the
+40. check what happens when map is given a list of jobs 
 
-40. 
+41. check what happens when booleans are fed to the each statement
+
+
 
 
 
