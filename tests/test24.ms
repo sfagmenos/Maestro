@@ -4,10 +4,16 @@ master("0.0.0.0:6379");
 
 # check use of the operator + in different contexts, ie list concatenation, arithmetic operation, string concatenation
 
-a = Job('print.py', 'one');
-b = Job('print.py', 'two');
+l1 = [e+'.py', f+'.py'];
 
-# maybe we need to add an evaluate expression function?
+e = 'too';
+f = 'much';
 
-run((((a -> b) -> b) -> b) -> b));
-run((a -> b -> b -> b));
+a = Job('print.py', e+f);
+b = Job('print.py', f+e);
+
+c = Job('print.py', 5+4);
+d = Job('print.py', 8%2);
+
+run((a<->b)~>(c->d));
+
