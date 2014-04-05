@@ -145,6 +145,8 @@ if __name__ == '__main__':
             print "No maestro file specified!"
             sys.exit(-1)
         for line in f:
+            if line == "\n":
+                continue
             result = parser.parse(line)
         f.close()
     else:
