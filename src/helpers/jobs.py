@@ -6,28 +6,33 @@ from networkx import *
 import subprocess
 import time
 
+
 def isCyclicUtil(graph, vertex, visited, recstack):
+
     if not visited[vertex]:
         visited[vertex] = True
         recstack[vertex] = True
     for des in graph.successors(vertex):
-        if not visited[des] and isCyclicUtil(graph,des,visited,recstack):
+        if not visited[des] and isCyclicUtil(graph, des, visited, recstack):
             return True
         elif recstack[des]:
             return True
     recstack[vertex] = False
     return False
 
+
 def isCyclic(graph):
-    visited={}
-    recstack={}
+
+    visited = {}
+    recstack = {}
     for node in graph.nodes():
         visited[node] = False
         recstack[node] = False
     for node in graph.nodes():
-        if isCyclicUtil(graph,node,visited,recstack):
+        if isCyclicUtil(graph, node, visited, recstack):
             return True
     return False
+
 
 class Job():
     '''Constructor of class should be supplied with job name and
@@ -58,7 +63,7 @@ class Job():
         '''this should do the remote execution of scripts'''
         # need error checkong of what Popen returns
         try:
-            self._script = self._script.replace('"','')
+            self._script = self._script.replace('"', '')
             s = subprocess.Popen(self._script, stdout=subprocess.PIPE)
         except Exception, error:
             self._stdout = None
