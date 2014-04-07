@@ -2,10 +2,32 @@
 Implementation of semantic actions
 '''
 
-import paramiko
+from networkx import *
 import subprocess
 import time
 
+def isCyclicUtil(graph, vertex, visited, recstack):
+    if not visited[vertex]:
+        visited[vertex] = True
+        recstack[vertex] = True
+    for des in graph.successors(vertex):
+        if not visited[des] and isCyclicUtil(graph,des,visited,recstack):
+            return True
+        elif recstack[des]:
+            return True
+    recstack[vertex] = False
+    return False
+
+def isCyclic(graph):
+    visited={}
+    recstack={}
+    for node in graph.nodes():
+        visited[node] = False
+        recstack[node] = False
+    for node in graph.nodes():
+        if isCyclicUtil(graph,node,visited,recstack):
+            return True
+    return False
 
 class Job():
     '''Constructor of class should be supplied with job name and
