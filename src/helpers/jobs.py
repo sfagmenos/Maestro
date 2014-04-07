@@ -33,6 +33,8 @@ def isCyclic(graph):
             return True
     return False
 
+depen_graph = DiGraph()
+
 
 class Job():
     '''Constructor of class should be supplied with job name and
@@ -45,6 +47,7 @@ class Job():
         self._stderr = None
         self._stdout = None
         self._errno = None  # errno is None since job has not run
+        depen_graph.add_node(self)
 
     def stdout(self):
         return self._stdout
@@ -58,6 +61,7 @@ class Job():
         '''
         for job in depends_on:
             self._dependencies.append(job)
+            depen_graph.add_edge(self, job)
 
     def run(self):
         '''this should do the remote execution of scripts'''
@@ -116,6 +120,9 @@ def run(Queue):
     # dependency i.e., Q[0] = [a,b] should run before
     # jobs with two dependencies, i.e., Q[1] = [c]
     #
+    if isCyclic(depen_graph):
+        print "Your jobs have circular dependencies"
+        return False
     while Queue:
         for job in Queue:
             if job.can_run():
