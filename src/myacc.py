@@ -12,7 +12,7 @@ precedence = (
 # LII is a comma separated list of Expressions
 def p_func_call(p):
     'E : ID LP LII RP'
-    p[0] = eval_func(p[1], p[3])
+    p[0] = AST_obj(eval_func(p[1].v, p[3].v), Node(p[1].node, p[3].node))
 
 # assign a variable:
 # - put the name in the sym_table
@@ -20,12 +20,12 @@ def p_func_call(p):
 def p_assign(p):
     'E : ID ASSIGN E'
     sym_table[p[1]] = p[3]
-    p[0] = p[3]  # do that to have assign return the var
+    p[0] = AST_obj(p[3].v, Node('=', p[3].node))
 
 # strings for Job names
 def p_e_str(p):
     'E : STR'
-    p[0] = p[1]
+    p[0] = AST_obj(p[1].value, Node(None, p[3], n_type='String'))
 
 # do we need that later?
 # please do not remove
@@ -40,6 +40,7 @@ def p_e_str(p):
 def p_list_inside_grow(p):
     'LII : LII COMMA E'
     p[0] = p[1] + [p[3]]
+    p[0] = AST_obj(p[1].value + [p[3].value], Node('concat', p[1], p[3], n_type='List'))
 
 def p_list_inside_orig(p):
     'LII : E'
@@ -99,16 +100,24 @@ def dep(jobs, depend_on_jobs):
     hj.add_dependencies(jobs, depend_on_jobs)
     return jobs + depend_on_jobs
 
-# AST structure
-# TODO use it instead of doing stuff directly
+# AST node structure
 class Node:
-    def __init__(self, type, children=None, leaf=None):
-         self.type = type
+    def __init__(self, operation, children=None, leaf=None, n_type=None):
+         self.n_type = n_type
+         self.operation = operation
          if children:
               self.children = children
          else:
               self.children = []
          self.leaf = leaf
+
+# we add one layer of abstraction to be able to get values and syblings
+# on top of node
+class AST_obj:
+    def __init__(self, value=None, node=None, syblings=None):
+        self.value = value
+        self.node = node
+        self.syblings = syblings
 
 # Build the parser
 parser = yacc.yacc()
