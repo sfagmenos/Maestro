@@ -6,11 +6,11 @@ class TestJobs(unittest.TestCase):
 
     def setUp(self):
         # this can run
-        self.a = jobs.Job("a", "ls")
+        self.a = jobs.Job("ls")
         # this cannot run
-        self.b = jobs.Job("b", "/bin/lils")
+        self.b = jobs.Job("/bin/lils")
         # this will depend on the above
-        self.c = jobs.Job("c", "/bin/time")
+        self.c = jobs.Job( "/bin/time")
 
     def test_perror_no_error(self):
         self.assertEqual(self.a.perror(), (None, None))

@@ -2,23 +2,52 @@
 Implementation of semantic actions
 '''
 
-import paramiko
+from networkx import *
 import subprocess
 import time
+
+
+def isCyclicUtil(graph, vertex, visited, recstack):
+
+    if not visited[vertex]:
+        visited[vertex] = True
+        recstack[vertex] = True
+    for des in graph.successors(vertex):
+        if not visited[des] and isCyclicUtil(graph, des, visited, recstack):
+            return True
+        elif recstack[des]:
+            return True
+    recstack[vertex] = False
+    return False
+
+
+def isCyclic(graph):
+
+    visited = {}
+    recstack = {}
+    for node in graph.nodes():
+        visited[node] = False
+        recstack[node] = False
+    for node in graph.nodes():
+        if isCyclicUtil(graph, node, visited, recstack):
+            return True
+    return False
+
+depen_graph = DiGraph()
 
 
 class Job():
     '''Constructor of class should be supplied with job name and
     respective script name
     '''
-    def __init__(self, name, script, workers=1):
+    def __init__(self, script, workers=1):
         self._dependencies = []
         self._workers = workers
         self._script = script
         self._stderr = None
         self._stdout = None
         self._errno = None  # errno is None since job has not run
-        self._name = name
+        depen_graph.add_node(self)
 
     def stdout(self):
         return self._stdout
@@ -26,37 +55,30 @@ class Job():
     def perror(self):
         return self._errno, self._stderr
 
-    def __repr__(self):
-        return self._name
-
     def add_dependency(self, depends_on):
         '''Add names of jobs on which current object
         depends on.
         '''
         for job in depends_on:
             self._dependencies.append(job)
+            depen_graph.add_edge(self, job)
 
     def run(self):
         '''this should do the remote execution of scripts'''
         # need error checkong of what Popen returns
-        ip = 'localhost'
-        ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(ip, username='vatlidak', key_filename='/home/vatlidak/.ssh/id_rsa')
         try:
-            #s = subprocess.Popen(self._script, stdout=subprocess.PIPE)
-            #s = subprocess.Popen(['rsh',ip,self._script], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            ssh.exec_command(self._script)
+            self._script = self._script.replace('"', '')
+            s = subprocess.Popen(self._script, stdout=subprocess.PIPE)
         except Exception, error:
             self._stdout = None
             self._stderr = error
             self._errno = -1
             return
 
-        #streamdata = s.communicate()
-        #self._stdout = streamdata[0]
-        #self._stderr = streamdata[1]
-        #self._errno = s.returncode
+        streamdata = s.communicate()
+        self._stdout = streamdata[0]
+        self._stderr = streamdata[1]
+        self._errno = s.returncode
 
     def can_run(self):
         '''check if dependencies are fullfilled.
@@ -98,9 +120,12 @@ def run(Queue):
     # dependency i.e., Q[0] = [a,b] should run before
     # jobs with two dependencies, i.e., Q[1] = [c]
     #
-    while not Queue[i]:
-        for job in Queue[i]:
+    if isCyclic(depen_graph):
+        print "Your jobs have circular dependencies"
+        return False
+    while Queue:
+        for job in Queue:
             if job.can_run():
-                Queue[i].remove(job)
+                Queue.remove(job)
                 job.run()
         time.sleep(0.5)
