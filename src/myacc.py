@@ -94,7 +94,7 @@ def eval_func(name, args):
     if name == "Job":
         return hj.Job(args[0], args[0])
     if name == "run":
-        hj.run(args)
+        hj.run([j.value for j in args])
         return args  # useful to reuse in a one liner
 
 
