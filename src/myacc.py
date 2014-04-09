@@ -15,7 +15,7 @@ precedence = (
 # LII is a comma separated list of Expressions
 def p_func_call(p):
     'E : ID LP LII RP'
-    p[0] = AST_obj(eval_func(p[1].value, p[3].value), Node(p[1].node, p[3].node))
+    p[0] = AST_obj(eval_func(p[1], p[3].value), Node(p[1], p[3].node))
 
 
 # assign a variable:
