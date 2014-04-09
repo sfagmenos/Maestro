@@ -78,9 +78,80 @@
 
 41. check what happens when booleans are fed to the each statement
 
+42. check what happens when a job is run without being declared
 
+43. check use of the operator += assignment operations
 
+44. check use of the operator -= assignment operations
 
+45. check use of the operator /= assignment operations
 
+46. check use of the operator *= assignment operations
 
+47. check use of the operator == comparison operations
 
+48. check use of the operator != comparison operations
+
+49. check use of the operator <= comparison operations
+
+50. check use of the operator >= comparison operations
+
+51. heck use of the operator AND logical operations
+
+52. check use of the operator OR logical operations
+
+53. check operation precedence.  ex: 3+4*2 returns 11 and not 14
+
+54. check if parentheses affect precedence correctly. ex (3+4)*2 returns 14 and not 11
+
+55. check behaviour of program if multiple dependencies are defined between jobs
+
+56. check behaviour of run() if job is defined within run() parameters
+
+57. Check hard circular dependencies embedded within a dependency parameter
+
+58. check soft circular dependencies embedded within a dependency parameter
+
+59. check lists of scripts - what happens when the user passes a list with malicious objects
+
+60. check lists of scripts - what happens when the list that has both valid and malicious objects
+
+61. check scripts - what happens when user gives more than required number of input arguments
+
+62. check use of consistent types for: INT and INT
+
+63. check use of consistent types for:INT and Float
+
+64. check use of consistent types for:INT and BOOL
+
+65. check use of consistent types for:INT and STRING
+
+66. check use of consistent types for:FLOAT and INT
+
+67. check use of consistent types for:FLOAT and FLOAT
+
+68. check use of consistent types for:FLOAT and BOOL
+
+69. check use of consistent types for:FLOAT and STRING
+
+70. check use of consistent types for:BOOL and INT
+
+71. check use of consistent types for:BOOL and FLOAT
+
+72. check use of consistent types for:BOOL and BOOL
+
+73. check use of consistent types for:BOOL and STRING
+
+74. check use of typecasting (to be discussed)
+
+75. Edited Yiren’s suggestion, - should do a*~10 to designate run a~a~a~a ten times
+
+76. Edited Yiren’s suggestion, - should do a*->10 to designate run a->a->a->a ten times
+
+77. check scenario where parameter of wait is given of incompatible type
+
+78. check use of the operator NOT logical operations
+
+79. check use of the operator IN logical operations
+
+80. check use of the operator NOT IN logical operations
