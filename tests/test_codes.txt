@@ -80,25 +80,25 @@
 
 42. check what happens when a job is run without being declared
 
-43. check use of the operator += assignment operations
+43. **check use of the operator += assignment operations
 
-44. check use of the operator -= assignment operations
+44. **check use of the operator -= assignment operations
 
-45. check use of the operator /= assignment operations
+45. **check use of the operator /= assignment operations
 
-46. check use of the operator *= assignment operations
+46. **check use of the operator *= assignment operations
 
-47. check use of the operator == comparison operations
+47. **check use of the operator == comparison operations
 
-48. check use of the operator != comparison operations
+48. **check use of the operator != comparison operations
 
-49. check use of the operator <= comparison operations
+49. **check use of the operator <= comparison operations
 
-50. check use of the operator >= comparison operations
+50. **check use of the operator >= comparison operations
 
-51. heck use of the operator AND logical operations
+51. **check use of the operator AND logical operations
 
-52. check use of the operator OR logical operations
+52. **check use of the operator OR logical operations
 
 53. check operation precedence.  ex: 3+4*2 returns 11 and not 14
 
@@ -155,3 +155,9 @@
 79. check use of the operator IN logical operations
 
 80. check use of the operator NOT IN logical operations
+
+81. check use of range() for negative numbers
+
+82. check use of range for a single INT parameter
+
+83. check use of wait() without a value
