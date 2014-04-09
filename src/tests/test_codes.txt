@@ -1,0 +1,157 @@
+1. check hard circular dependencies with strings
+
+2. check soft circular dependencies with strings
+
+3. check soft malicious dependencies
+
+4. check hard malicious dependencies
+
+5. check what happens when a -> b but a takes as input a file that b produces, ie when explicit dependencies contradict implicit dependencies?
+
+6. check what happens when hard dependencies and soft dependencies are combined. 
+
+7. check what happens when hard equivalences and soft equivalences are combined. 
+
+8. check what happens when jobs depend on themselves
+
+9. check what happens when we just run wait expressions in circular?
+
+10. check what happens when we just run wait expressions in parallel?
+
+11. check lists of scripts - what happens when the list is empty?
+
+12. check scripts - what happens when user doesn't give enough input arguments
+
+13. check lists of scripts - what happens when one of the scripts is not valid and/or non existent
+
+14. check lists of scripts - what happens when you concatenate lists and then run each on them
+
+15. what happens when you run dependencies on multiple lines that contradict each other
+
+16. what happens when you're asked to run (L1 <-> L2) -> L3 where L2 is empty
+
+17. what happens when you run half-formed expressions
+
+18. what happens when you run an each loop with concatenating dependencies
+
+19. check the scope of variables within loops - does it retain previous value?
+
+20. check whether the jobs are run in order in lists
+
+21. suggestion - should do a*10 to designate run a~a~a~a ten times
+
+22. check whether (((a -> b) -> b) -> b) -> b) is different from (a -> b -> b -> b)
+
+23. check precedences of the different operators, ie a -> b <-> c should be the same as a -> (b <-> c)
+
+24. check use of the operator + in different contexts, ie list concatenation, arithmetic operation, string concatenation
+
+25. check use of the operator - arithmetic operations - might want something to minus lists? 
+
+26. check use of the operator * arithmetic operations
+
+27. check use of the operator % arithmetic operations
+
+28. check use of the operator / arithmetic operation with nonwhole numbers
+
+29. check use of the operator , with divide by zero errors
+
+30. check nested loops 
+
+31. check what happens when lists are used before being declared within loops
+
+32. check what happens when lists are redeclared at every loop, ie there's a conflict of scope
+
+33. check what happens when we have (a ~> b ~< a); which takes precedence?
+
+34. check what happens to distributed dependencies when the lists are the same?
+
+35. check what happens to map function when file is corrupted
+
+36. check what happens when you give the reduce function something other than the output of a map function.
+
+37. check speed vs. for-loop for map
+
+39. check if data file is indivisible
+
+40. check what happens when map is given a list of jobs 
+
+41. check what happens when booleans are fed to the each statement
+
+42. check what happens when a job is run without being declared
+
+43. check use of the operator += assignment operations
+
+44. check use of the operator -= assignment operations
+
+45. check use of the operator /= assignment operations
+
+46. check use of the operator *= assignment operations
+
+47. check use of the operator == comparison operations
+
+48. check use of the operator != comparison operations
+
+49. check use of the operator <= comparison operations
+
+50. check use of the operator >= comparison operations
+
+51. heck use of the operator AND logical operations
+
+52. check use of the operator OR logical operations
+
+53. check operation precedence.  ex: 3+4*2 returns 11 and not 14
+
+54. check if parentheses affect precedence correctly. ex (3+4)*2 returns 14 and not 11
+
+55. check behaviour of program if multiple dependencies are defined between jobs
+
+56. check behaviour of run() if job is defined within run() parameters
+
+57. Check hard circular dependencies embedded within a dependency parameter
+
+58. check soft circular dependencies embedded within a dependency parameter
+
+59. check lists of scripts - what happens when the user passes a list with malicious objects
+
+60. check lists of scripts - what happens when the list that has both valid and malicious objects
+
+61. check scripts - what happens when user gives more than required number of input arguments
+
+62. check use of consistent types for: INT and INT
+
+63. check use of consistent types for:INT and Float
+
+64. check use of consistent types for:INT and BOOL
+
+65. check use of consistent types for:INT and STRING
+
+66. check use of consistent types for:FLOAT and INT
+
+67. check use of consistent types for:FLOAT and FLOAT
+
+68. check use of consistent types for:FLOAT and BOOL
+
+69. check use of consistent types for:FLOAT and STRING
+
+70. check use of consistent types for:BOOL and INT
+
+71. check use of consistent types for:BOOL and FLOAT
+
+72. check use of consistent types for:BOOL and BOOL
+
+73. check use of consistent types for:BOOL and STRING
+
+74. check use of typecasting (to be discussed)
+
+75. Edited Yiren’s suggestion, - should do a*~10 to designate run a~a~a~a ten times
+
+76. Edited Yiren’s suggestion, - should do a*->10 to designate run a->a->a->a ten times
+
+77. check scenario where parameter of wait is given of incompatible type
+
+78. check use of the operator NOT logical operations
+
+79. check use of the operator IN logical operations
+
+80. check use of the operator NOT IN logical operations
