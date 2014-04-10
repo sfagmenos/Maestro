@@ -52,7 +52,7 @@
 
 27. check use of the operator % arithmetic operations
 
-28. check use of the operator / arithmetic operation with nonwhole numbers
+28. check use of the operator / arithmetic operation with non whole numbers
 
 29. check use of the operator , with divide by zero errors
 
