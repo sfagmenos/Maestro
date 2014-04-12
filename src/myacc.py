@@ -90,8 +90,8 @@ sym_table = {}  # map[name]node
 def eval_func(name, args):
     if name == "Job":
         return hj.Job(args[0], args[0])
-    if name == "run":
-        if type(args) is list:
+    if name == "run":        
+        if type(args[0]) is list:
             hj.run(args[0])
         else:
             hj.run(args)
