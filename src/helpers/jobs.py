@@ -122,6 +122,7 @@ def run(Queue):
     #
     if isCyclic(depen_graph):
         print "Your jobs have circular dependencies"
+        depen_graph.clear()
         return False
     while Queue:
         for job in Queue:
