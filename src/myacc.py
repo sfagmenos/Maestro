@@ -91,7 +91,10 @@ def eval_func(name, args):
     if name == "Job":
         return hj.Job(args[0], args[0])
     if name == "run":
-        hj.run(args)
+        if type(args) is list:
+            hj.run(args[0])
+        else:
+            hj.run(args)
         return args  # useful to reuse in a one liner
 
 
