@@ -1,7 +1,5 @@
-#!/usr/bin/maestro
-
-master("0.0.0.0:6379")
-
+#!maestro
+#master("0.0.0.0:6379")
 #To be discussed:
 
 #check use of typecasting (program should support and handle this, right?) for:

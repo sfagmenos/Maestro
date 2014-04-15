@@ -1,7 +1,5 @@
-#!/usr/bin/maestro
-
-master("0.0.0.0:6379")
-
+#!maestro
+#master("0.0.0.0:6379")
 # Check hard circular dependencies embedded within a dependency parameter
 
 a = Job('print.py', ‘foo’)
