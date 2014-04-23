@@ -148,6 +148,7 @@ if __name__ == '__main__':
             f = open(sys.argv[1])
         except IOError:
             print 'cannot open', sys.argv[1]
+            sys.exit(-1)
         first = f.next()
         if first != "#!maestro\n":
             print "No maestro file specified!"
