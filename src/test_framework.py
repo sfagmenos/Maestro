@@ -8,7 +8,7 @@ from colorama import init,Fore, Back, Style
 init()
 
 global failCount
-failCount = 0
+failCount = 1
 
 def parseErr(stderr):
 	global failCount
@@ -32,7 +32,7 @@ if len(sys.argv)!= 2:
 	print "Wrong input. Usage: 'python test_bash.py <1,2,...>' or 'python test_bash.py all'"
 
 elif sys.argv[1] == 'all':
-	for i in range(0,78):
+	for i in range(1,78):
 		oldCount = failCount
 		cmd = 'python myacc.py tests/test'+str(i)+'.ms'
 		p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
