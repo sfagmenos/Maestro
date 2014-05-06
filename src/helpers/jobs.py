@@ -128,4 +128,9 @@ def run(Queue):
             if job.can_run():
                 Queue.remove(job)
                 job.run()
+                (error, error_str) = job.perror()
+                if (error != 0):
+                    print job.stdout()
+                else:
+                    print error_str
         time.sleep(0.5)
