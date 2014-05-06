@@ -5,9 +5,9 @@ _tabversion = '3.2'
 
 _lr_method = 'LALR'
 
-_lr_signature = '\xca|\xc8\x1f\x8e\xf9\x18\xb5\xc1\x805\x87\xbf\xd5\x81R'
+_lr_signature = '\xdf\x14\xd3\xc8\x9c\x1aU\x92\xcc\xa5\xc0cQ.\x98m'
     
-_lr_action_items = {'RP':([1,2,7,10,11,12,13,14,15,17,18,],[-3,-9,13,-5,17,-2,-8,-7,-6,-1,-4,]),'LP':([0,2,3,5,6,8,9,16,],[3,5,3,3,3,3,3,3,]),'DEP':([1,2,4,7,10,12,13,14,15,17,18,],[-3,-9,8,8,8,8,-8,-7,-6,-1,8,]),'ASSIGN':([2,],[6,]),'COMMA':([1,2,10,11,12,13,14,15,17,18,],[-3,-9,-5,16,-2,-8,-7,-6,-1,-4,]),'STR':([0,3,5,6,8,9,16,],[1,1,1,1,1,1,1,]),'NODEP':([1,2,4,7,10,12,13,14,15,17,18,],[-3,-9,9,9,9,9,-8,9,-6,-1,9,]),'ID':([0,3,5,6,8,9,16,],[2,2,2,2,2,2,2,]),'$end':([1,2,4,12,13,14,15,17,],[-3,-9,0,-2,-8,-7,-6,-1,]),}
+_lr_action_items = {'RP':([2,6,10,14,15,16,17,18,19,20,22,23,24,],[-6,-12,16,-9,-10,-11,22,23,-8,-5,-3,-4,-7,]),'LP':([0,4,6,8,9,12,13,21,],[4,4,12,4,4,4,4,4,]),'DEP':([1,2,6,10,14,15,16,19,20,22,23,24,],[9,-6,-12,9,-9,-10,-11,9,9,-3,-4,9,]),'ASSIGN':([6,],[13,]),'COMMA':([2,6,14,15,16,17,19,20,22,23,24,],[-6,-12,-9,-10,-11,21,-8,-5,-3,-4,-7,]),'STR':([0,4,8,9,12,13,21,],[2,2,2,2,2,2,2,]),'error':([0,12,],[5,18,]),'SC':([1,2,5,6,14,15,16,20,22,23,],[7,-6,11,-12,-9,-10,-11,-5,-3,-4,]),'NODEP':([1,2,6,10,14,15,16,19,20,22,23,24,],[8,-6,-12,8,-9,8,-11,8,8,-3,-4,8,]),'ID':([0,4,8,9,12,13,21,],[6,6,6,6,6,6,6,]),'$end':([3,7,11,],[0,-1,-2,]),}
 
 _lr_action = { }
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'E':([0,3,5,6,8,9,16,],[4,7,10,12,14,15,18,]),'LII':([5,],[11,]),}
+_lr_goto_items = {'E':([0,4,8,9,12,13,21,],[1,10,14,15,19,20,24,]),'LII':([12,],[17,]),'STMT':([0,],[3,]),}
 
 _lr_goto = { }
 for _k, _v in _lr_goto_items.items():
@@ -25,14 +25,17 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> E","S'",1,None,None,None),
-  ('E -> ID LP LII RP','E',4,'p_func_call','myacc.py',13),
-  ('E -> ID ASSIGN E','E',3,'p_assign','myacc.py',20),
-  ('E -> STR','E',1,'p_e_str','myacc.py',25),
-  ('LII -> LII COMMA E','LII',3,'p_list_inside_grow','myacc.py',38),
-  ('LII -> E','LII',1,'p_list_inside_orig','myacc.py',42),
-  ('E -> E NODEP E','E',3,'p_e_nodep','myacc.py',46),
-  ('E -> E DEP E','E',3,'p_e_dep','myacc.py',50),
-  ('E -> LP E RP','E',3,'p_e_parenthesize','myacc.py',54),
-  ('E -> ID','E',1,'p_e_id','myacc.py',59),
+  ("S' -> STMT","S'",1,None,None,None),
+  ('STMT -> E SC','STMT',2,'p_stmt','myacc.py',17),
+  ('STMT -> error SC','STMT',2,'p_stmt_error','myacc.py',20),
+  ('E -> ID LP LII RP','E',4,'p_func_call','myacc.py',26),
+  ('E -> ID LP error RP','E',4,'p_func_call_error','myacc.py',33),
+  ('E -> ID ASSIGN E','E',3,'p_assign','myacc.py',41),
+  ('E -> STR','E',1,'p_e_str','myacc.py',51),
+  ('LII -> LII COMMA E','LII',3,'p_list_inside_grow','myacc.py',68),
+  ('LII -> E','LII',1,'p_list_inside_orig','myacc.py',76),
+  ('E -> E NODEP E','E',3,'p_e_nodep','myacc.py',85),
+  ('E -> E DEP E','E',3,'p_e_dep','myacc.py',94),
+  ('E -> LP E RP','E',3,'p_e_parenthesize','myacc.py',103),
+  ('E -> ID','E',1,'p_e_id','myacc.py',109),
 ]

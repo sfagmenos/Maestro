@@ -10,6 +10,7 @@ tokens = (
    'ASSIGN',
    'COMMA',
    'STR',
+   'SC',
 )
 
 # Regular expression rules for simple tokens
@@ -19,6 +20,7 @@ t_LP     = r'\('
 t_RP     = r'\)'
 t_ASSIGN = r'='
 t_STR    = r'"[^"]*"'
+t_SC     = r';'
 
 # A regular expression rule with some action code
 def t_ID(t):

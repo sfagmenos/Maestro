@@ -11,6 +11,15 @@ precedence = (
     ('left', 'NODEP'),
 )
 
+lines = 0
+
+def p_stmt(p):
+    'STMT : E SC'
+
+def p_stmt_error(p):
+    'STMT : error SC'
+    line = p.lineno(p[0]) # line number of error
+    print "Syntax error in statement. Bad expression"
 
 # LII is a comma separated list of Expressions
 def p_func_call(p):
@@ -19,6 +28,11 @@ def p_func_call(p):
     _type = 'list'
     node = Node(p[1], [p[3].node], _type, val)
     p[0] = AST_obj(node)
+
+def p_func_call_error(p):
+    'E : ID LP error RP'
+    line = p.lineno(p[0]) # line number of error
+    print "Syntax error in function call, line ", line
 
 # assign a variable:
 # - put the name in the sym_table
