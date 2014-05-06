@@ -1,2 +1,3 @@
 #!maestro
-run(Job("./tmp/test.sh"))
+a = Job("./tmp/test.sh")
+run(a)
