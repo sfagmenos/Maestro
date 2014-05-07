@@ -6,7 +6,8 @@ import sys
 from subprocess import Popen, PIPE, STDOUT
 from colorama import init,Fore, Back, Style
 init()
-
+global output
+output= ""
 global failCount
 failCount = 1
 
@@ -21,8 +22,19 @@ def parseErr(stderr):
 	print "**************************"
 def parseOut(stdout):
 	global failCount
+	global output
+	
+	with open ("TestsOutput/check.txt", "r") as myfile:
+		data=myfile.read()
+		
+	if (data!=str(output)):
+		failCount=failCount+1
+		print (Fore.RED + "Test Failed - Expected output not found at file")
+		print "**************************"
+		print (Fore.BLACK+ "Expected Output: "+output+" \nOutput read at file: "+ data)
+		print "\n"
 
-	if "Illegal" in stdout:
+	elif "Illegal" in stdout:
 		print (Fore.RED + "Test Failed - Illegal token resulting in syntax error")
 		failCount = failCount + 1
 	else:
@@ -32,7 +44,11 @@ if len(sys.argv)!= 2:
 	print "Wrong input. Usage: 'python test_bash.py <1,2,...>' or 'python test_bash.py all'"
 
 elif sys.argv[1] == 'all':
+	
 	for i in range(1,78):
+
+		output = str(i)
+
 		oldCount = failCount
 		cmd = 'python myacc.py tests/test'+str(i)+'.ms'
 		p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
@@ -58,9 +74,11 @@ elif sys.argv[1] == 'all':
 	print (Fore.BLUE + "Tests Passed : " + str(passCount)+"/77")
 	print "**************************"
 else:
+	output = sys.argv[1]
 	cmd = 'python myacc.py tests/test'+sys.argv[1]+'.ms'
 	p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
 	stdout, stderr = p.communicate()
+	print"Output is "+output
 	print (Fore.BLUE + "-------------------------------")
 	print "TEST"+sys.argv[1]
 	print "-------------------------------"
