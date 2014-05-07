@@ -23,9 +23,9 @@ def p_stmt_list(p):
     '''STMTLIST : STMTLIST STMT
                 | STMT'''
     if len(p) == 2:
-        node = p[1].node
+        node = Node('stmt-list', [p[1].node], None, None)
     else:
-        node = Node('statements', [p[1].node, p[2].node], None, None)
+        node = Node('stmt-list', [p[1].node, p[2].node], None, None)
     p[0] = AST_obj(node)
 
 def p_stmt(p):
@@ -180,7 +180,7 @@ parser = yacc.yacc()
 
 # pipeline for execution
 def pipeline(code):
-    ast = parser.parse(code)
+    ast = parser.parse(code).node
     sa.analyse(ast)
     result = t.execute(ast)
     return result
