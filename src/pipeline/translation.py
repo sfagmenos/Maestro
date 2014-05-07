@@ -17,8 +17,6 @@ def execute(ast, sym_table):
         return ast.value
     elif op == 'Job':  # all args should be strings
         children_exec = [execute(c, sym_table) for c in ast.children][0]
-        print children_exec[0]
-        print children_exec[1:]
         args = children_exec
         ast.value = hj.Job(args[0], args[1:])
         return ast.value
@@ -26,7 +24,6 @@ def execute(ast, sym_table):
         ast.value = hj.Wait(ast.children[0])
         return ast.value
     elif op == 'run':
-        print ast.children
         children_exec = [execute(c, sym_table) for c in ast.children][0]
         ast.value = hj.run(children_exec)
         return ast.value
