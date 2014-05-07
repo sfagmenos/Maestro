@@ -11,7 +11,7 @@ import readline
 
 class Console(cmd.Cmd):
 
-    def __init__(self,pars):
+    def __init__(self, pars):
         cmd.Cmd.__init__(self)
         self.prompt = "maestro> "
         self.parser = pars
@@ -69,17 +69,17 @@ class Console(cmd.Cmd):
         """
         return stop
 
-    def emptyline(self):    
+    def emptyline(self):
         """Do nothing on empty input line"""
         pass
 
-    def default(self, line):       
+    def default(self, line):
         """Called on an input line when the command prefix is not recognized.
            In that case we execute the line as Python code.
         """
         try:
             result = self.parser.parse(line)
-#            exec(line) in self._locals, self._globals
+#           exec(line) in self._locals, self._globals
         except Exception, e:
             print e.__class__, ":", e
 
