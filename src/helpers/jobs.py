@@ -1,6 +1,7 @@
 '''
 Implementation of semantic actions
 '''
+from networkx import DiGraph
 import subprocess
 import time
 import os
@@ -31,6 +32,7 @@ def isCyclic(graph):
         if isCyclicUtil(graph, node, visited, recstack):
             return True
     return False
+
 
 depen_graph = DiGraph()
 
