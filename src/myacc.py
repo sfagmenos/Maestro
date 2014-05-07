@@ -63,7 +63,7 @@ def p_assign(p):
 def p_e_str(p):
     'E : STR'
     _type = 'sting'
-    node = Node('str', [], _type, value=str(p[1]), leaf=True)
+    node = Node('str', [], _type, value=str(p[1][1:-1]), leaf=True)
     p[0] = AST_obj(node)
 
 def p_e_int(p):
