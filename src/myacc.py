@@ -13,13 +13,20 @@ precedence = (
 
 lines = 0
 
+def p_program(p):
+    'PRGM : STMTLIST'
+
+def p_stmt_list(p):
+    '''STMTLIST : STMTLIST STMT
+                | STMT'''
+
 def p_stmt(p):
     'STMT : E SC'
 
 def p_stmt_error(p):
-    'STMT : error SC'
-    line = p.lineno(p[0]) # line number of error
-    print "Syntax error in statement. Bad expression"
+    'STMT : error'
+    line = p.lineno(p[1]) # line number of error
+    print "Syntax error in statement line " + line
 
 # LII is a comma separated list of Expressions
 def p_func_call(p):
@@ -114,7 +121,7 @@ def p_e_id(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    print "Syntax error in input!"
+    print "Syntax error in input: " + str(p)
 
 
 # Symbol table
@@ -183,14 +190,12 @@ if __name__ == '__main__':
         except IOError:
             print 'cannot open', sys.argv[1]
             sys.exit(-1)
-        first = f.next()
-        if first != "#!maestro\n":
-            print "No maestro file specified!"
-            sys.exit(-1)
-        for line in f:
-            if line == "\n":
-                continue
-            result = parser.parse(line)
+        # first = f.next()
+        # if first != "#!maestro\n":
+            # print "No maestro file specified!"
+            # sys.exit(-1)
+        prgm = f.read()
+        result = parser.parse(prgm)
         f.close()
     else:
         print "Usage: python myacc.py <file_name>"
