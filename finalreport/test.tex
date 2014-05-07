@@ -1,7 +1,101 @@
-Describe methodology
-\section{Tools}
-Describe tools
+\section{Methodology}
+We do not rely on any existing Python unit-test framework for our testing purposes. Instead, we have developed a customized testing engine for our project. The engine, encapsulated by the Tests folder, comprises of several Python files. Each file consists of a test written in Maestro that checks both the robustness of the compiler (i.e. its ability to identify and parse tokens), and the final output of the program. 
+
+Presented below is a sample unit test.
+
+\begin{center}
+\begin{verbatim}
+#!maestro
+master("0.0.0.0:6379");
+# check what happens when a job is run without being declared
+a = Job('print.py', 'foo');
+c = Job('print.py' 'bar');
+run(a -> b -> c);  # Job b is not declared
+\end{verbatim}
+\end{center}
+
+The test first checks if two Jobs are created successfully. The file \textit{print.py} is a Python program that writes the argument passed to it to a file \textit{check.txt}. Once executed, Job \textit{a} must run the argument \textit{foo} through the program \textit{print.py}. Similarly, Job \textit{b} must run the argument \textit{bar} through \textit{print.py}. 
+Once the two Jobs have been created successfully, we attempt to pass an undeclared Job to the \textit{run} method, which executes a single Job or a list of Jobs in the given order. In this case, we check to see if the Maestro compiler identifies undeclared Job \textit{b} as an error and handles it elegantly. Once the test completes execution, we check the expected output against the output that was piped to \textit{check.txt} to confirm success or failure. 
+
+We have a total of 75 testcases in our engine that test Maestro's  overall performance in different steps.
+
 \section{Relevant Files and Descriptions}
-Show programs used to test your translator.
-\section{Selected  Test Cases}
-some importand tests. Maybe circular dependency?
+
+\textbf{testframework.py}
+\newline
+\indent This is the main framework file. It can execute all Maestro test-cases or individual ones, depending on how it is called. 
+\newline \textit{python testframework.py all} executes all test cases in the \textit{Tests} folder. Replacing \textit{all} with the test-name will execute individual tests. 
+\newline
+\newline
+\textbf{run.sh}
+\newline
+\indent Similar to testframework.py, but written in bash script.
+\newline
+\newline
+\textbf{Tests\textbackslash print.py}
+\newline
+\indent This program is run by every Job created in our test cases. It writes the argument that it receives into file \textit{check.txt}. 
+\newline
+\newline
+\textbf{Tests\textbackslash}
+\newline
+\indent This folder contains all 75 Maestro test cases.
+\newpage
+\noindent\textbf{TestsOutput\textbackslash check.txt}
+\newline
+\indent The checkfile to which \textit{print.py} writes its output. We compare the contents of the file against the expected output to determine success or failure of a given Job.
+\newline
+\newline
+
+\section{Selected Test Cases}
+\begin{enumerate}
+
+\item This test checks the performance of Maestro in presence of a circular dependency. 
+\begin{verbatim}
+#!maestro
+#master("0.0.0.0:6379")
+# check hard circular dependencies with strings
+a = Job("print.py", "cheer")
+b = Job("print.py", "us")
+c = Job("print.py" "on")
+run(a -> b -> c -> a)
+\end{verbatim}
+Here job \textit{a} depends on \textit{b}, \textit{b} depends on \textit{c} and job \textit{c} in-turn depends on job \textit{a}.
+
+\item This test checks the performance of Maestro on self dependencies.
+\begin{verbatim}
+#!maestro
+#master("0.0.0.0:6379")
+# check what happens when jobs depend on themselves
+a = Job('print.py', 'foo')
+run(a -> a -> a)
+\end{verbatim}
+\newpage
+\noindent \item This test check the performance of Maestro on nested loops.
+\begin{verbatim}
+#!maestro
+#master("0.0.0.0:6379")
+# check use of the operator *
+c = 5
+d = 8
+range(d).each(var){
+	range(c).each(varr){
+		a = Job('print.py', var*varr)
+		run(a)
+	}
+
+}
+\end{verbatim}
+
+\item This test case checks what happens when we just run wait expressions in circular.
+\begin{verbatim}
+#!maestro
+#master("0.0.0.0:6379")
+# check what happens when we just run wait expressions in circular?
+a = Job('print.py', 'cool')
+b = Job('print.py', 'it')
+c = Job('print.py', 'now')
+run(wait(10) ~> wait(10) ~> c ~> wait(10))
+\end{verbatim}
+
+\end{enumerate}
