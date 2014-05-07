@@ -1,6 +1,5 @@
 import sys
 import ply.yacc as yacc
-import helpers.jobs as hj
 import pipeline.semantic_analysis as sa
 import pipeline.translation as t
 
@@ -125,35 +124,15 @@ def p_e_id(p):
 def p_error(p):
     print "Syntax error in input: " + str(p)
 
+#type helpers
+def type_for_func(name):
+    if name == 'Job':
+        return 'job'
+    elif name == 'run':
+        return 'list'
+
 # Symbol table
 sym_table = {}  # map[name]node
-
-# Eval function helper
-# TODO check types
-def eval_func(name, args):
-    if name == "Job":
-        return hj.Job(args[0], args[0])
-    if name == "run":
-        hj.run([j for j in args])
-        return args  # useful to reuse in a one liner
-
-# Dependencies helper
-# TODO check types
-def nodep(ljobs, rjobs):
-    if type(ljobs) is not list:
-        ljobs = [ljobs]
-    if type(rjobs) is not list:
-        rjobs = [rjobs]
-    return ljobs + rjobs
-
-# TODO check types
-def dep(jobs, depend_on_jobs):
-    if type(jobs) is not list:
-        jobs = [jobs]
-    if type(depend_on_jobs) is not list:
-        depend_on_jobs = [depend_on_jobs]
-    hj.add_dependencies(jobs, depend_on_jobs)
-    return jobs + depend_on_jobs
 
 # AST node structure
 class Node:
@@ -182,7 +161,7 @@ parser = yacc.yacc()
 def pipeline(code):
     ast = parser.parse(code).node
     sa.analyse(ast)
-    result = t.execute(ast)
+    result = t.execute(ast, sym_table)
     return result
 
 if __name__ == '__main__':
