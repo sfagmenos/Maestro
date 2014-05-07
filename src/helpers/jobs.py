@@ -49,11 +49,12 @@ class Job():
         self._stderr = None
         self._stdout = None
         self._errno = None  # errno is None since job has not run
+        argu = '_'.join(arguments)
         depen_graph.add_node(self)
         # create log file; truncate it if it exists
         self._logfile_name = os.getcwd() +\
                              '/' + self._script +\
-                             "_" + self._arguments
+                             "_" + argu
         self.f = open(self._logfile_name, "w")
         self.f.close()
 
@@ -75,7 +76,7 @@ class Job():
         '''this should do the remote execution of scripts'''
         # need error checkong of what Popen returns
         try:
-            arg = self._arguments.join(" ")
+            arg =" ".join(self._arguments)
             args = arg.replace('"', '')
             script = self._script.replace('"', '')
             all = script + " " + args
