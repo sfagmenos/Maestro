@@ -1,0 +1,308 @@
+%\section{Introduction}
+%\label{sect:intro}
+
+Frequently a user allocates a pool of machines in order to conduct experimental
+evaluation represented in the format of scripts. In a broad sense, an end-user
+operates on a pool of machines and allocates jobs represented in a scripting
+language. \lang{} is a programming language which provides user the ability
+to express powerful semantics related to job distribution and scheduling.
+The purpose of this tutorial is to demonstrate features and functionality 
+supported by \lang{}. Also, we provide exemplary programs  to
+explain how \lang{}  should be used to create jobs, describe dependencies amongst jobs,
+and execute jobs on workers. Our examples include a simple Hello World program as well as
+more complex programs which cover \lang{}'s functionality in details.
+
+
+\section{General Instructions}
+\label{sect:general}
+
+\subsection*{Define Workers in \lang{}}
+In the first version of \lang{}, we will use a Redis~\cite{redis} server to
+implement. To add a worker to the workers' pool, the only thing one has to do
+is run the following Maestro program: worker("0.0.0.0") (replace 0.0.0.0 by
+the IP of the Redis server).\\
+This will subscribe the worker to a job channel in Redis, where all Jobs will
+be published for execution when a master runs the run command.\\
+The master calls master("0.0.0.0") (replace 0.0.0.0 by the IP of the Redis server)
+at the beginning of its program.
+
+\subsection*{Variables and Expressions in \lang{}}
+In \lang{} variables are reserved memory locations which store values.
+Practically, when a user declares a variable memory space is allocated.
+
+Based on the data type of a variable, the interpreter allocates memory
+and decides what can be stored in the reserved memory. Therefore, by
+assigning different data types to variables, user can store integers, Jobs,
+or strings.
+
+\subsubsection*{Assignment operator}
+\lang{}  is a dynamically typed language and variables types are not explicitly declared.
+Variable types are decided when a variable is assigned a value with the equal
+assignment operator ``=''.
+
+The operand on the left side of assignment operator ``='' must be a variable name
+and the operand on the right side of assignment operator ``='' must be a value.
+The variable on the left side of ``='' is assigned the value on the right side
+of ``=''.\\
+\\
+Example:
+\begin{Verbatim}[numbers=left]
+a = 10;
+x = "john";
+path = "/afs/columbia.edu/users/phd/username/my_script.sh";
+p = true;
+\end{Verbatim}
+
+The above code snippet demonstrates the following assignments:
+In line one variable ``a'' is assigned integer value 10.
+In line two variable ``x'' is assigned string ``john''.
+In line three variable ``path'' is assigned a string representing the absolute path some script.
+Finally, in line four variable ``p'' is assigned boolean value true.
+
+\subsubsection*{Job}
+The most important type of variable that can be created in \lang{}, is Job variable.\\
+\\
+Example:
+\begin{Verbatim}[numbers=left]
+a = Job ("abc.rb");
+\end{Verbatim}
+In this case variable ``a'' is assigned a job related with script ``abc.rb'' 
+
+\subsection*{each}
+
+\noindent ``each'' keyword is used to feed a list of variables as input
+to a block of statments. Its syntax is:
+
+\textit{[val1, val2, ..., valN].each(var)\{ statements\}}\\
+
+The interpretation is that ``statements'' are executed as many times as the
+number of variables in list [val1, val2, ..., valN]. For the first execution, var is assigned
+the value val1 and is feed to statements. For the second execution var is assigned the value
+of val2 and is feed to statements. This process is repeated until every value 
+from 1 to N has been assign to var.\\
+\\
+Example:
+\begin{Verbatim}[numbers=left]
+vals = ["tiny.txt", "medium.txt", "large.txt"];
+vals.each(var){
+    a = Job("/usr/bin/grep", "compiler", var);
+    run(a);
+}
+\end{Verbatim}
+
+In the above code snippet, Job ``a'' is instanciated and executed three times
+with different arguments each time.
+
+
+
+\subsection*{Operators in \lang{}}
+
+\lang{} language supports left associative operators with special meaning: operators $->$ and $<->$ for concurrency. 
+Also operators $\sim$, $\sim<$ and $\sim>$ for job dependencies.
+\subsubsection*{Asynchronous operator $(->)$}
+In order to allow user define that 2 processes must run one after another
+we implement the asychronous operator $(->)$. Using asychronous operator, the user
+specifies that the process at right of the arrow can start as soon as
+the process at the left of the arrow terminates successfully.
+\subsubsection*{Concurrent operator $(<->)$}
+Unlike asynchronous operator, concurrent operator $(<->)$ denotes that 2 jobs can
+run in parallel. Failure of one is not crucial to the other.
+\subsubsection*{Equal dependency operator ($\sim$)}
+Equal dependency operator ($\sim$) states that two jobs may run concurrent if there
+are enough resources.
+\subsubsection*{Pre dependency operator ($\sim>$)}
+Pre dependency operator ($\sim>$) states that the job at its left may run before the job
+at its right.
+\subsubsection*{Post dependency operator ($\sim<$)}
+Post dependency operator ($\sim<$) states that the job at its left should run after the job
+at its right.
+
+\subsection*{Classes and Functions in \lang{}}
+\subsubsection*{Class $Job(string <name>,~ string <script\_path>,~arg1,~arg2, ...,~argN)$}
+Construction of a $Job$ type needs the following variables:
+\begin{itemize}
+\item $name$ which is the name of the job.
+\item $script\_path$ which is the script to be executed.
+\item A list of arguments related to script under $script\_path$.\\
+\end{itemize}
+For each \lang{} job a log file is created under user's current working directory. This
+log file is named after $<script\_path>$ along with an additional ".log" suffix. The purpose
+of a log file is to store diagnostic messages and output generated by the respective job script.
+
+Example:
+\begin{Verbatim}[numbers=left]
+b = Job("xRay.rb","arg1", "arg2");
+c = Job("telesphorus.py", "arg1");
+\end{Verbatim}
+
+The above snippet creates two jobs ``b'' and ``c'' as instances of class $Job$.
+Job ``b'' is assigned the excecution of script ``xRay.rb'' with arguments ``arg1'' and ``arg2''.
+Job ``c'' is assigned the excecution of script ``telesphorus.py'' with arguments ``arg1'' and ``arg2''.
+
+
+\subsubsection*{\lang{} Functions}
+
+This section we present core functions of \lang{}.
+\subsubsection*{$run($\textit{expr}$)$}
+\textit{run} function has one argument, which is an expression related to jobs.
+\textit{expr} can be jobs:
+\begin{Verbatim}[numbers=left]
+a = Job(script="abc.pl", "10");
+b = Job(script="xRay.rb", "mailbox");
+c = Job("telesphorus.py", "android_logs");
+run(a,b,c);
+\end{Verbatim}
+
+or a ``hard'' dependency among jobs:
+\begin{Verbatim}[numbers=left]
+a = Job(script="abc.pl", "10");
+b = Job(script="xRay.rb", "mailbox");
+run(a->b);
+\end{Verbatim}
+\subsubsection*{$run\_local($\textit{expr}$)$}
+This is a local version of the ``run'' function.
+With ``run\_local'' function jobs may run locally for testing purposes before
+user launches a program remotely with ``run''.
+
+
+\section{Sample Programs}
+\label{sect:samples}
+In order to run the programs, we just need to call maestro program\_path. If the \lang{} 
+program is not in the PATH, it need to be specified (e.g. /home/user/bin/maestro).\\
+We can also start the REPL with maestro, and write the commands.
+
+\subsection*{Example Program 1: Hello World}
+Consider a Ruby script named $hello\_world.rb$ containing the following:
+\begin{verbatim}
+#!/usr/bin/env ruby
+puts 'Hello World!'
+\end{verbatim}
+Now consider a \lang{} program like the following:
+\begin{Verbatim}[numbers=left]
+// Hello World
+a = Job("hello_world.rb");
+run(a);
+\end{Verbatim}
+
+In the above code snippet we demonstrate how to create of a job running an hello world script.
+This job is then initialized with the script of our hello world program and
+assigned to variable `a'. In line 3, $run()$ starts job `a'. 
+\lang{} will find an idle worker and execute our script hello\_world.rb.
+Afterwards, error code of job `a' is evaluated. If script hello\_world.rb terminates properly
+,its stdout will be loged on the master. Otherwise, stderr will be logged.
+
+\subsection*{Example Program 2: Distributed Hello World}
+Consider a Ruby script named $print.rb$ that prints its first argument:
+\begin{verbatim}
+#!/usr/bin/env ruby
+puts ARGV.first
+\end{verbatim}
+We then start workers running this maestro program:
+\begin{Verbatim}[numbers=left]
+worker("0.0.0.0:6379");
+\end{Verbatim}
+And the Maetro program can be:
+\begin{Verbatim}[numbers=left]
+master("0.0.0.0:6379");
+a = Job("print.rb", "Hello");
+b = Job("print.rb", "World");
+c = Job("print.rb", "!");
+run(a -> b -> Wait(10) -> c);
+\end{Verbatim}
+
+There is a lot going on in this example. It uses concurrency capabilities of \lang{} to express dependencies and
+waiting times. We can also see how to run a Job with an argument.\\
+First, we declare the IP:PORT of Redis (here localhost on the default Redis port). It will be used to
+distribute the Jobs.\\
+3 jobs are created, and dependencies amongst them are specified.
+Line 5 shows a simple example on how to introduce dependencies in \lang{}.
+The expression $a -> b$ states that jobs `a' will run before `b', potentially in different servers. Afterwards,  $-> c$ that the job `c' must run after the successful termination of the previous jobs (`a' and `b').\\
+The Wait() call creates a fake Job which only purpose it to delay the next Job. The hard dependency system
+ensures `c' will not run before 10 seconds after `b' finished.\\
+If we wanted `a' and `b' to run in parallel, and add the ! at the end after 10 seconds, we could call:
+\begin{Verbatim}[numbers=left]
+run((a <-> b) -> Wait(10) -> c);
+\end{Verbatim}
+
+You can see that \lang{} offers an easy way to distinguish between
+concurrent and not concurrent jobs. This will help user create and easily distribute batch processes.\\
+\\
+
+\subsection*{Example Program 3:}
+\begin{Verbatim}[numbers=left,commandchars=\\\{\}]
+master("0.0.0.0:6379");
+a = Job("abc.pl");
+b = Job("xRay.rb");
+c = Job("telesphorus.py");
+d = Job("nimbledriod.py");
+((a\mytilde>(b\mytilde c))\mytilde<d);
+run((a,b,c,d);
+\end{Verbatim}
+
+This example demonstrates {\em soft} dependencies in \lang{}.\\
+`Soft' dependencies must be in one line. Operators
+are left associate but we use parenthesis in order to help
+user understand how `soft' dependencies work. Line 5 is where all
+magic happens. First, $(b\sim c)$ means that jobs `b' and `c' can run 
+synchronous if there are enough resources. Second,
+$(a\sim>expr)$ means that job `a' should run before \textit{expr}. 
+Finally $(expr\sim<d)$ means that job `d' should run before \textit{expr}.\\
+\\
+
+\subsection*{Example Program 4:}
+\begin{Verbatim}[numbers=left,commandchars=\\\{\}]
+master("0.0.0.0:6379")
+list = [];
+range(100).each(i) \{
+  a = Job("send_email.pl", "" + i, "test@maestro.com");
+  list = list + a;
+\}
+b = Job("collect_data.rb");
+list -> Wait(3600) -> b;
+run(b);
+\end{Verbatim}
+
+This examples shows how to schedule many instances of the same Job with different
+arguments, and wait for all of them to be done before starting another script.
+In this example, send\_email takes an email number and an email address as arguments
+and sends the email to the address. The program creates one Job per email so that it
+can be distributed. Then it waits for an hour after the last email, and starts some data
+collection dependent on the emails. It assumes all workers have access to the email list
+to retrieve the right one (it could be hard coded in the script or through a distributed
+file system).
+Execution of job `b' will start only on success of all email sending,
+and of a one hour wait.
+
+\subsection*{Example Program 5:}
+\begin{Verbatim}[numbers=left,commandchars=\\\{\}]
+master("0.0.0.0:6379");
+a = Job("split.rb", "/tmp/big_file_name.data");
+maps = map(a, "map.rb");
+red = reduce(maps, "reduce.rb");
+run(red);
+\end{Verbatim}
+
+This example shows how to use the map/reduce built in functions to distribute data
+analysis of a big file. This assumes that all workers have access to the file (e.g.
+distributed file system), or that split.rb can scp the pieces of file in the workers.
+Then map will create one Job per output line of split.rb. This Job will be the map.rb
+script and have as argument one line of split output. Reduce will then create one Job
+with the reduce.rb program, with arguments that are the output from the previous reduce and
+the output of the next Job from the list. The first reduce will have nil as first argument.\\
+Let us assume the big file contains words, and we want to count the number of appearance for
+each different word:
+\begin{itemize}
+  \item split.rd can split the big file in chunks and output the name of each chunk
+  \item map.rb can take a file path, and return a dictionary with the words as keys
+    and an int for the number, in the JSON format.
+  \item reduce.rb can take 2 arguments as JSON strings and parse them. If the first is
+    empty, it means it is the initialisation and we create an empty dictionary. Then is
+    merges the dictionaries and return the merged in JSON.
+\end{itemize}
+
+
+\section{Conclusion}
+\label{sect:conclusion}
+This language tutorial presents the core functionality of \lang{}. It includes examples
+demonstrating how \lang{} primitives should be used to create jobs, specify dependencies, and run
+jobs. For a complete analysis refer to our Language Reference Manual.
