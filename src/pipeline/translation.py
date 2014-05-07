@@ -20,9 +20,16 @@ def execute(ast, sym_table):
         args = children_exec
         ast.value = hj.Job(args[0], args[1:])
         return ast.value
+    elif op == 'Wait':  # 1 int arg
+        ast.value = hj.Wait(ast.children[0])
+        return ast.value
     elif op == 'run':
         children_exec = [execute(c, sym_table) for c in ast.children][0]
         ast.value = hj.run(children_exec)
+        return ast.value
+    elif op == 'range':
+        arg = ast.children[0]
+        ast.value = range(arg)
         return ast.value
     elif op == '=':
         children_exec = execute(ast.children[-1], sym_table)

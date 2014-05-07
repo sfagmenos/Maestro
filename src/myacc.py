@@ -119,9 +119,9 @@ def p_error(p):
 
 #type helpers
 def type_for_func(name):
-    if name == 'Job':
+    if name == 'Job' or name == 'Wait':
         return 'job'
-    elif name == 'run':
+    elif name == 'run' or name == 'range':
         return 'list'
 
 # Symbol table
