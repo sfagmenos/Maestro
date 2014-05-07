@@ -1,6 +1,8 @@
 import sys
 import ply.yacc as yacc
 import helpers.jobs as hj
+import pipeline.semantic_analysis as sa
+import pipeline.translation as t
 
 # Get the token map from the lexer
 from mlex import tokens
@@ -15,13 +17,20 @@ lines = 0
 
 def p_program(p):
     'PRGM : STMTLIST'
+    p[0] = p[1]
 
 def p_stmt_list(p):
     '''STMTLIST : STMTLIST STMT
                 | STMT'''
+    if len(p) == 2:
+        node = p[1].node
+    else:
+        node = Node('statements', [p[1].node, p[2].node], None, None)
+    p[0] = AST_obj(node)
 
 def p_stmt(p):
     'STMT : E SC'
+    p[0] = p[1]
 
 def p_stmt_error(p):
     'STMT : error'
@@ -52,7 +61,6 @@ def p_assign(p):
     sym_table[p[1]] = node
     p[0] = AST_obj(node)
 
-
 # strings for Job names
 def p_e_str(p):
     'E : STR'
@@ -60,7 +68,6 @@ def p_e_str(p):
     _type = 'sting'
     node = Node('str', [], _type, val, leaf=True)
     p[0] = AST_obj(node)
-
 
 # do we need that later?
 # please do not remove
@@ -78,14 +85,12 @@ def p_list_inside_grow(p):
     node = Node('list-concat', [p[1].node, p[3].node], _type, val)
     p[0] = AST_obj(node)
 
-
 def p_list_inside_orig(p):
     'LII : E'
     val = [p[1].node.value]
     _type = p[1].node._type
     node = Node('list-orig', [p[1].node], _type, val, leaf=True)
     p[0] = AST_obj(node)
-
 
 # <->
 def p_e_nodep(p):
@@ -95,7 +100,6 @@ def p_e_nodep(p):
     node = Node('<->', [p[1].node, p[3].node], _type, val)
     p[0] = AST_obj(node)
 
-
 # ->
 def p_e_dep(p):
     'E : E DEP E'
@@ -104,12 +108,10 @@ def p_e_dep(p):
     node = Node('->', [p[1].node, p[3].node], _type, val)
     p[0] = AST_obj(node)
 
-
 # ()
 def p_e_parenthesize(p):
     'E : LP E RP'
     p[0] = p[2]
-
 
 # that's a variable: fetch it in the symbol table
 def p_e_id(p):
@@ -123,10 +125,8 @@ def p_e_id(p):
 def p_error(p):
     print "Syntax error in input: " + str(p)
 
-
 # Symbol table
 sym_table = {}  # map[name]node
-
 
 # Eval function helper
 # TODO check types
@@ -137,7 +137,6 @@ def eval_func(name, args):
         hj.run([j for j in args])
         return args  # useful to reuse in a one liner
 
-
 # Dependencies helper
 # TODO check types
 def nodep(ljobs, rjobs):
@@ -146,7 +145,6 @@ def nodep(ljobs, rjobs):
     if type(rjobs) is not list:
         rjobs = [rjobs]
     return ljobs + rjobs
-
 
 # TODO check types
 def dep(jobs, depend_on_jobs):
@@ -180,6 +178,13 @@ class AST_obj:
 # Build the parser
 parser = yacc.yacc()
 
+# pipeline for execution
+def pipeline(code):
+    ast = parser.parse(code)
+    sa.analyse(ast)
+    result = t.execute(ast)
+    return result
+
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         console = Console(parser)  # while True:
@@ -195,7 +200,8 @@ if __name__ == '__main__':
             # print "No maestro file specified!"
             # sys.exit(-1)
         prgm = f.read()
-        result = parser.parse(prgm)
+        result = pipeline(prgm)
+        print result
         f.close()
     else:
         print "Usage: python myacc.py <file_name>"
