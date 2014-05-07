@@ -1,10 +1,9 @@
 '''
 Implementation of semantic actions
 '''
-
-from networkx import *
 import subprocess
 import time
+import os
 
 
 def isCyclicUtil(graph, vertex, visited, recstack):
@@ -40,7 +39,7 @@ class Job():
     '''Constructor of class should be supplied with job name and
     respective script name
     '''
-    def __init__(self, script, arguments = []):
+    def __init__(self, script, arguments=[]):
         self._dependencies = []
 #        self._workers = workers
         self._script = script
@@ -49,6 +48,12 @@ class Job():
         self._stdout = None
         self._errno = None  # errno is None since job has not run
         depen_graph.add_node(self)
+        # create log file; truncate it if it exists
+        self._logfile_name = os.getcwd() +\
+                             '/' + self._script +\
+                             "_" + self._arguments
+        self.f = open(self._logfile_name, "w")
+        self.f.close()
 
     def stdout(self):
         return self._stdout
@@ -72,17 +77,14 @@ class Job():
             args = arg.replace('"', '')
             script = self._script.replace('"', '')
             all = script + " " + args
-            s = subprocess.Popen(all, stdout=subprocess.PIPE)
+            s = subprocess.Popen(all, stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE)
+            self._stdout, self._stderr = s.communicate()
+            self._errno = s.returncode
+            #self._log()
         except Exception, error:
-            self._stdout = None
-            self._stderr = error
-            self._errno = -1
+            print "Unhandled Exception:", error
             return
-
-        streamdata = s.communicate()
-        self._stdout = streamdata[0]
-        self._stderr = streamdata[1]
-        self._errno = s.returncode
 
     def can_run(self):
         '''check if dependencies are fullfilled.
@@ -95,6 +97,16 @@ class Job():
             if job.perror()[0] != 0:
                 return False
         return True
+
+    def _log(self):
+        # file is created by class constructor. Append logs.
+        f = open(self._logfile_name, "a")
+        print >> f, "STDOUT:"
+        print >> f, self.stdout
+        print >> f, "STDERR:"
+        print >> f, self.stderr
+        print >> f, "---------"
+        f.close()
 
 
 class JobQueue:
