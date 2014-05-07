@@ -1,10 +1,16 @@
 %\section{Introduction}
 %\label{sect:wintro}
 
-Frequently a user would like to allocate a pool of machines and conduct experimental evaluation represented in the format of a script. In a
-broad sense, an end-user operates on a pool of machines and allocates jobs
-represented in any scripting language. Our purpose is to build a well-defined,
-easy-to-use, and agile programming language to enhance the user's ability to express complex semantics for job distribution and scheduling. There are many scenarios where semantics are needed to express dependencies for job execution, such as:
+Frequently a user allocates a pool of machines in order to conduct experimental
+evaluation represented in the format of scripts. In a broad sense, an end-user
+operates on a pool of machines and allocates jobs represented in a scripting
+language.
+Our purpose is to build a declerative programming language, named \lang{},
+to provide users with the ability to express complex semantics for job
+distribution
+and scheduling.
+There are many scenarios where semantics are needed to express dependencies for
+job execution, such as:
 \begin{description}
 \item[Jobs can depend on each other:] User needs to create and run jobs $A$,
 $B$ in parallel, on a few workers. If both $A$ and $B$ succeed, job $C$ should
