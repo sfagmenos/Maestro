@@ -40,10 +40,11 @@ class Job():
     '''Constructor of class should be supplied with job name and
     respective script name
     '''
-    def __init__(self, script, workers=1):
+    def __init__(self, script, arguments = []):
         self._dependencies = []
-        self._workers = workers
+#        self._workers = workers
         self._script = script
+        self._arguments = arguments
         self._stderr = None
         self._stdout = None
         self._errno = None  # errno is None since job has not run
@@ -67,8 +68,11 @@ class Job():
         '''this should do the remote execution of scripts'''
         # need error checkong of what Popen returns
         try:
-            self._script = self._script.replace('"', '')
-            s = subprocess.Popen(self._script, stdout=subprocess.PIPE)
+            arg = self._arguments.join(" ")
+            args = arg.replace('"', '')
+            script = self._script.replace('"', '')
+            all = script + " " + args
+            s = subprocess.Popen(all, stdout=subprocess.PIPE)
         except Exception, error:
             self._stdout = None
             self._stderr = error
