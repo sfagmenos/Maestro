@@ -41,7 +41,7 @@ class Job():
     '''Constructor of class should be supplied with job name and
     respective script name
     '''
-    def __init__(self, script, arguments=[]):
+    def __init__(self, script=None, arguments=[]):
         self._dependencies = []
 #        self._workers = workers
         self._script = script
@@ -49,13 +49,17 @@ class Job():
         self._stderr = None
         self._stdout = None
         self._errno = None  # errno is None since job has not run
-        argu = '_'.join(arguments)
         depen_graph.add_node(self)
+        # log is not needed if any script is associated
+        if not script:
+            return
         # create log file; truncate it if it exists
-        self._logfile_name = os.getcwd() +\
-                             '/' + self._script +\
-                             "_" + argu
-        self.f = open(self._logfile_name, "w")
+        self._logfile_name = os.getcwd() + self._script + ".log"
+        try:
+            self.f = open(self._logfile_name, "w")
+        except Exception, error:
+            print "Unhandled Exxception:", error,\
+                    " while creating log file for job:", self._script
         self.f.close()
 
     def stdout(self):
@@ -76,17 +80,16 @@ class Job():
         '''this should do the remote execution of scripts'''
         # need error checkong of what Popen returns
         try:
-            arg =" ".join(self._arguments)
-            args = arg.replace('"', '')
-            script = self._script.replace('"', '')
-            all = script + " " + args
-            s = subprocess.Popen(all, stdout=subprocess.PIPE,
+            args = [self._script]
+            args += self._arguments
+            s = subprocess.Popen(args, stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)
             self._stdout, self._stderr = s.communicate()
             self._errno = s.returncode
             #self._log()
         except Exception, error:
-            print "Unhandled Exception:", error
+            print "Unhandled Exception:", error, "for job:", self._script,\
+                    "with arguments:", self._arguments
             return
 
     def can_run(self):
@@ -147,9 +150,9 @@ def run(Queue):
             if job.can_run():
                 Queue.remove(job)
                 job.run()
-                (error, error_str) = job.perror()
-                if (error != 0):
-                    print job.stdout()
+                (errno, stderr) = job.perror()
+                if errno != 0:
+                    print stderr
                 else:
-                    print error_str
+                    print job.stdout()
         time.sleep(0.5)
