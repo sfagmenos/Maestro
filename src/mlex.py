@@ -21,6 +21,7 @@ t_RP     = r'\)'
 t_ASSIGN = r'='
 t_STR    = r'"[^"]*"'
 t_SC     = r';'
+t_COMMA  = r','
 
 # A regular expression rule with some action code
 def t_ID(t):
