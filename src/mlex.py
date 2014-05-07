@@ -3,6 +3,7 @@ import ply.lex as lex
 # List of token names.   This is always required
 tokens = (
    'ID',
+   'INT',
    'DEP',
    'NODEP',
    'LP',
@@ -11,6 +12,7 @@ tokens = (
    'COMMA',
    'STR',
    'SC',
+   'MOP',
 )
 
 # Regular expression rules for simple tokens
@@ -22,6 +24,8 @@ t_ASSIGN = r'='
 t_STR    = r'"[^"]*"'
 t_SC     = r';'
 t_COMMA  = r','
+t_INT    = r'[0-9]+'
+t_MOP    = r'[+-/*]'
 
 # A regular expression rule with some action code
 def t_ID(t):

@@ -5,9 +5,9 @@ _tabversion = '3.2'
 
 _lr_method = 'LALR'
 
-_lr_signature = '\x87\x18\x13|\xa5\xb3\x95\xbaw\x1d\x05A6\x93?U'
+_lr_signature = '\x96oc\x98A\xf5\x10\t\xde3w\x98\xffu\xc9\xf6'
     
-_lr_action_items = {'RP':([3,8,12,16,17,18,19,20,21,22,24,25,26,],[-9,-15,18,-12,-13,-14,24,25,-11,-8,-6,-7,-10,]),'LP':([0,2,5,6,7,8,9,10,11,13,14,15,23,],[2,2,-3,2,-5,14,-4,2,2,-2,2,2,2,]),'DEP':([1,3,8,12,16,17,18,21,22,24,25,26,],[11,-9,-15,11,-12,-13,-14,11,11,-6,-7,11,]),'ASSIGN':([8,],[15,]),'COMMA':([3,8,16,17,18,19,21,22,24,25,26,],[-9,-15,-12,-13,-14,23,-11,-8,-6,-7,-10,]),'STR':([0,2,5,6,7,9,10,11,13,14,15,23,],[3,3,-3,3,-5,-4,3,3,-2,3,3,3,]),'error':([0,5,6,7,9,13,14,],[7,-3,7,-5,-4,-2,20,]),'SC':([1,3,8,16,17,18,22,24,25,],[9,-9,-15,-12,-13,-14,-8,-6,-7,]),'NODEP':([1,3,8,12,16,17,18,21,22,24,25,26,],[10,-9,-15,10,-12,10,-14,10,10,-6,-7,10,]),'ID':([0,2,5,6,7,9,10,11,13,14,15,23,],[8,8,-3,8,-5,-4,8,8,-2,8,8,8,]),'$end':([4,5,6,7,9,13,],[0,-3,-1,-5,-4,-2,]),}
+_lr_action_items = {'RP':([3,6,9,13,17,18,19,20,21,22,23,25,26,27,],[-9,-10,-16,19,-13,-14,-15,25,26,-12,-8,-6,-7,-11,]),'LP':([0,2,5,7,8,9,10,11,12,14,15,16,24,],[2,2,-3,2,-5,15,-4,2,2,-2,2,2,2,]),'INT':([0,2,5,7,8,10,11,12,14,15,16,24,],[6,6,-3,6,-5,-4,6,6,-2,6,6,6,]),'ASSIGN':([9,],[16,]),'DEP':([1,3,6,9,13,17,18,19,22,23,25,26,27,],[12,-9,-10,-16,12,-13,-14,-15,12,12,-6,-7,12,]),'COMMA':([3,6,9,17,18,19,20,22,23,25,26,27,],[-9,-10,-16,-13,-14,-15,24,-12,-8,-6,-7,-11,]),'STR':([0,2,5,7,8,10,11,12,14,15,16,24,],[3,3,-3,3,-5,-4,3,3,-2,3,3,3,]),'error':([0,5,7,8,10,14,15,],[8,-3,8,-5,-4,-2,21,]),'SC':([1,3,6,9,17,18,19,23,25,26,],[10,-9,-10,-16,-13,-14,-15,-8,-6,-7,]),'NODEP':([1,3,6,9,13,17,18,19,22,23,25,26,27,],[11,-9,-10,-16,11,-13,11,-15,11,11,-6,-7,11,]),'ID':([0,2,5,7,8,10,11,12,14,15,16,24,],[9,9,-3,9,-5,-4,9,9,-2,9,9,9,]),'$end':([4,5,7,8,10,14,],[0,-3,-1,-5,-4,-2,]),}
 
 _lr_action = { }
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'PRGM':([0,],[4,]),'E':([0,2,6,10,11,14,15,23,],[1,12,1,16,17,21,22,26,]),'STMT':([0,6,],[5,13,]),'STMTLIST':([0,],[6,]),'LII':([14,],[19,]),}
+_lr_goto_items = {'PRGM':([0,],[4,]),'E':([0,2,7,11,12,15,16,24,],[1,13,1,17,18,22,23,27,]),'STMT':([0,7,],[5,14,]),'STMTLIST':([0,],[7,]),'LII':([15,],[20,]),}
 
 _lr_goto = { }
 for _k, _v in _lr_goto_items.items():
@@ -26,19 +26,20 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> PRGM","S'",1,None,None,None),
-  ('PRGM -> STMTLIST','PRGM',1,'p_program','myacc.py',17),
-  ('STMTLIST -> STMTLIST STMT','STMTLIST',2,'p_stmt_list','myacc.py',20),
-  ('STMTLIST -> STMT','STMTLIST',1,'p_stmt_list','myacc.py',21),
-  ('STMT -> E SC','STMT',2,'p_stmt','myacc.py',24),
-  ('STMT -> error','STMT',1,'p_stmt_error','myacc.py',28),
-  ('E -> ID LP LII RP','E',4,'p_func_call','myacc.py',34),
-  ('E -> ID LP error RP','E',4,'p_func_call_error','myacc.py',41),
-  ('E -> ID ASSIGN E','E',3,'p_assign','myacc.py',49),
-  ('E -> STR','E',1,'p_e_str','myacc.py',59),
-  ('LII -> LII COMMA E','LII',3,'p_list_inside_grow','myacc.py',76),
-  ('LII -> E','LII',1,'p_list_inside_orig','myacc.py',84),
-  ('E -> E NODEP E','E',3,'p_e_nodep','myacc.py',93),
-  ('E -> E DEP E','E',3,'p_e_dep','myacc.py',102),
-  ('E -> LP E RP','E',3,'p_e_parenthesize','myacc.py',111),
+  ('PRGM -> STMTLIST','PRGM',1,'p_program','myacc.py',18),
+  ('STMTLIST -> STMTLIST STMT','STMTLIST',2,'p_stmt_list','myacc.py',23),
+  ('STMTLIST -> STMT','STMTLIST',1,'p_stmt_list','myacc.py',24),
+  ('STMT -> E SC','STMT',2,'p_stmt','myacc.py',32),
+  ('STMT -> error','STMT',1,'p_stmt_error','myacc.py',36),
+  ('E -> ID LP LII RP','E',4,'p_func_call','myacc.py',42),
+  ('E -> ID LP error RP','E',4,'p_func_call_error','myacc.py',48),
+  ('E -> ID ASSIGN E','E',3,'p_assign','myacc.py',56),
+  ('E -> STR','E',1,'p_e_str','myacc.py',64),
+  ('E -> INT','E',1,'p_e_int','myacc.py',70),
+  ('LII -> LII COMMA E','LII',3,'p_list_inside_grow','myacc.py',85),
+  ('LII -> E','LII',1,'p_list_inside_orig','myacc.py',91),
+  ('E -> E NODEP E','E',3,'p_e_nodep','myacc.py',98),
+  ('E -> E DEP E','E',3,'p_e_dep','myacc.py',105),
+  ('E -> LP E RP','E',3,'p_e_parenthesize','myacc.py',112),
   ('E -> ID','E',1,'p_e_id','myacc.py',117),
 ]
