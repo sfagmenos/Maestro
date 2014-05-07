@@ -2,23 +2,26 @@
 %\label{sect:lrmintro}
 Maestro is a declarative language built to easily schedule jobs with hard and
 soft dependencies, locally or over the network.  Its goal is to provide a DSL to
-very quickly express dependencies between jobs and run them, either from the
-REPL or in a file.  It exposes high level functions and operators to declare
-complex logic. Maestro is meant for scripting, not to develop large scale
+quickly express dependencies between jobs and run them, either from the
+REPL or from a file. It exposes high level functions and operators to declare
+complex logic. Maestro is meant for scripting, not for developing large scale
 programs. It thus doesn't support functions, or conditionals. However, it
 supports loops with an each statement and exposes a map/reduce interface that
 allows for complex declarations.
 
 \section{Lexical conventions}
 \subsection{Whitespace}
-Whitespaces are either a tab, a new line, or a white space. At least one white space is required to separate identifiers from
-each other, and certain operators.
+Whitespaces are either a tab, a new line, or a white space. At least one white
+space is required to separate identifiers from each other, and certain
+operators.
 
 \subsection{Comments}
-Comments are denoted by // and represent a comment that ends with the end of the current line.
+Comments are denoted by ``\#'' and represent a comment that ends with the end of
+the current line.
 
 \subsection{Identifiers}
-An identifier is a sequence of letters, digits, and underscores. The first character must not be a digit.
+An identifier is a sequence of letters, digits, and underscores. The first
+character must not be a digit.
 
 \subsection{Keywords}
 The following identifiers are used as keywords, and are reserved names:\\
@@ -32,9 +35,9 @@ The following characters are reserved: $\texttt{+ - / * \% -> => <-> \textasciit
 Maestro is dynamically typed and doesn't allow users to create new types.
 \subsection{Basic Types}
 \begin{description}
-  \item[Job] A Job represents a program that can be ran on a worker. It encapsulates
-    the path of the program and exposes outputs and errors.
-  \item[Int] Ints are signed integers with arbitrary size.
+  \item[Job] A Job represents a program that can be run on a worker. It
+   encapsulates the path of the program and exposes outputs and errors.
+  \item[Int] Ints are signed integers of arbitrary size.
   \item[String] Strings are delimited by " and have to be on one line.
   \item[Boolean] Boolean encapsulates true or false.
 \end{description}
@@ -47,7 +50,7 @@ Maestro is dynamically typed and doesn't allow users to create new types.
 \end{description}
 
 \section{Scope}
-Maestro is a scripting language used to quickly distributed interdependent jobs.
+Maestro is a scripting language used to quickly distribute interdependent jobs.
 Its intended use is for scripts that glue tasks together, not to build and
 maintain large programs. The scope of a variable is thus the entire script
 (global scope), or the whole lifetime of the interpreter.
@@ -55,8 +58,8 @@ maintain large programs. The scope of a variable is thus the entire script
 \section{Errors}
 There are two kinds of errors in Maestro:
 \begin{itemize}
-  \item logic or type errors just make the program crash with an error
-  message
+  \item logic or type errors will result in the program crashing with an error
+  message.
   \item Job errors create a log on the local machine. If a later Job depend
   on this Job, the program will crash. If not, it will continue uninterrupted.
 \end{itemize}
@@ -78,7 +81,7 @@ A parenthesized expression takes the value of the evaluated expression.
 
 \subsection{Function call}
 A function call is an expression. The arguments are comma separated and are evaluated
-from left to right, before the call. It is possible to have 0 arguments.
+from left to right before the call. It is possible to have 0 arguments.
 \begin{description}
   \item[]expression: \hfill \\
     identifier ( expression-list )
@@ -100,13 +103,14 @@ map reduce run Job\\
   \item[Wait(int)] Creates a Job which only sleeps for the given time. It can be inserted
   in the dependencies to wait between Jobs. It returns a list with one Job object that just
   waits.
-  \item[worker(string)] This subscribes the worker to a job channel on a redis running at
-    the IP:PORT denoted by the string. From now on, the worker will be pushed jobs to
-    execute on that channel. It doesn't return anything and crashed if the redis doesn't
+  \item[worker(string)] This subscribes the worker to a job channel on redis running at
+    the IP:PORT denoted by the string. From now on, the worker will pushed jobs to
+    be execute on that channel. It doesn't return anything and crashes if redis doesn't
     answer.
+    %%%%%%%%%%%%%%%%%%%%%%%
   \item[master(string)] This function is used to declare
-    the IP:PORT (denoted by the string argument) on which the redis server listens.
-    From now on, the master will publish jobs thaat need to run on the job channel of the redis
+    the IP:PORT (denoted by the string argument) on which the redis server will listens.
+    From now on, the master will publish jobs that need to run on the job channel of the redis
     for a worker to execute. It doesn't return anything and crashed if the redis doesn't
     answer.
   \item[range(int)] Returns a list of ints from 0 to int-1.
@@ -117,7 +121,7 @@ map reduce run Job\\
   \item[reduce(list, string)] the first list is a list of jobs that will run first (usually the
     output of a map). String is the path to the reduce program. There will be one Job
     created with that program, with arguments that are the output from the previous reduce and
-    the output of the next Job from the list. The first reduce will have nil as first argument.
+    the output of the next Job from the list. The first reduce will have nil as its first argument.
   \item[run(list)] run takes an arbitrary number of comma separated lists of Jobs
     and runs them. If they have dependencies, these dependencies will run first.
 \end{description}
@@ -169,7 +173,7 @@ both expressions evaluate to an Int.
 
 \item[->] \hfil \\
 The dependency operator (->) requires both expressions to be lists of Jobs.\\
-The call is asynchronous and adds all Jobs in the right hand side list as dependencies
+The call is asynchronous and adds all Jobs on the right hand side list as dependencies
 for all Jobs on the left hand side list.\\
 It returns a list of Jobs that is the concatenation of both lists.
 
@@ -177,7 +181,7 @@ It returns a list of Jobs that is the concatenation of both lists.
 The distributed dependency operator (=>) requires both expressions to be lists of Jobs.\\
 The call is asynchronous and adds all Jobs in the right hand side list as dependencies
 for all Jobs on the left hand side list. Moreover, the dependent Jobs (right
-hand side)  will be ran on the same worker as the previous Job (left hand
+hand side)  will be run on the same worker as the previous Job (left hand
 side).\\
 It returns a list of Jobs that is the concatenation of both lists.
 
@@ -189,19 +193,19 @@ It returns a list of Jobs that is the concatenation of both lists.
 
 \item[\textasciitilde>] \hfil \\
 The soft dependency operator (\textasciitilde>) requires both expressions to be lists of Jobs.\\
-The call is asynchronous and puts all right hand side Jobs priority to be 1 less than the smallest
+The call is asynchronous and puts the priority of all right hand side Jobs to be 1 less than the lowest
 priority of the left hand side Jobs.\\
 It returns a list of Jobs that is the concatenation of both lists.\\
 A soft dependency is a priority indication: if more than one Job can run, Maestro will run the
-one with higher priority, but there is no order guaranty, as opposed to dependencies.
+one with higher priority, but there is no order guarantee, as opposed to dependencies.
 
 \item[\textasciitilde<] \hfil \\
 The soft dependency operator (\textasciitilde<) requires both expressions to be lists of Jobs.\\
-The call is asynchronous and puts all right hand side Jobs priority to be 1 more than the biggest
+The call is asynchronous and puts the priority of all right hand side Jobs to be 1 more than the highest
 priority of the left hand side Jobs.\\
 It returns a list of Jobs that is the concatenation of both lists.\\
 A soft dependency is a priority indication: if more than one Job can run, Maestro will run the
-one with higher priority, but there is no order guaranty, as opposed to dependencies.
+one with higher priority, but there is no order guarantee, as opposed to when using dependencies.
 
 \item[\textasciitilde] \hfil \\
 The soft parallel operator (\textasciitilde) requires both expressions to be lists of Jobs.\\
@@ -211,10 +215,10 @@ It returns a list of Jobs that is the concatenation of both lists.
 \end{description}
 
 \section{Assignments}
-The value of the variable which name is the identifier value is replaced by the value of the expression
+The value of the variable whose name is the identifier value is replaced by the value of the expression
 evaluates to. If the variable doesn't exist, it is created: the programmer doesn't need to declare the
 variable beforehand.\\
-The assignment is also an expression that has the variable final value as a value, which is useful for
+The assignment is also an expression that has the variable final value as value, which is useful for
 one liners.\\
 The default value of the variable is not determined.
 \begin{description}
@@ -234,7 +238,7 @@ Statements are semicolon ended expressions.
 \end{description}
 
 \subsection{statement-list}
-Most statement are expression statements, which have the form
+Most statement are expression statements which have the form:
 \begin{description}
   \item[]statement-list: \hfill \\
     statement statement-list \\
@@ -248,7 +252,7 @@ The each statement is a basic loop, and can be called on the Jobs type.
     expression .each ( identifier ) { statement-list }
 \end{description}
 The first expression has to evaluate to a list type. The identifier is the name
-of a variable (global scope like all variables) that will the assigned each
+of a variable (global scope like all variables) that will be assigned each
 element of the list before running the statement list.
 
 \subsection{Program definition}

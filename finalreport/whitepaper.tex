@@ -13,8 +13,8 @@ There are many scenarios where semantics are needed to express dependencies for
 job execution, such as:
 \begin{description}
 \item[Jobs can depend on each other:] User needs to create and run jobs $A$,
-$B$ in parallel, on a few workers. If both $A$ and $B$ succeed, job $C$ should
-execute on some workers.
+$B$ in parallel, on a few workers. Only if both $A$ and $B$ succeed, job $C$
+is allowed to execute.
 %And then you want to run job $C$ on some
 %workers, only after both $A$ and $B$ succeeded.
 \item[Jobs can depend on external factors:] Job $A$ should execute after 6.00 PM
@@ -24,7 +24,7 @@ and job $B$ should execute in machines with CPU-load less than 0.5.
 Prior related work in this area includes the so-called infrastructure
 configuration management frameworks, some of the most popular being
 Puppet~\cite{puppet} and Chef~\cite{chef}. Typical infrastructure
-configuration management allows system administrators express
+configuration management allows system administrators to express
 infrastructure configuration dependencies. Our approach differs in that
 it provides end-users the ability to express dependencies related to
 job work-flows.
@@ -47,17 +47,17 @@ declare job dependencies; the language will schedule and run the jobs.
 with a more imperative model to express any logic needed, and
 % \lang{} supports
 lambdas to make callbacks easier to write.
-\item[Strongly typed] \lang{} is strongly typed so that errors can be check
-before jobs are sent. On top of classic types it supports a job type.
+\item[Strongly typed] \lang{} is strongly typed so that errors can be checked
+before jobs are sent. On top of the classic types it supports a job type.
 \item[Garbage collected] Memory is handled by the language with a simple
 garbage collector. Users should not have to manage their memory in a high
 level domain specific language, where performance is not critical.
-\item[No exceptions] Error checking is handled on the spot, and no exceptions
+\item[No exceptions] Error checking is handled on the spot. No exceptions
 will be thrown to avoid hard to debug situations from asynchronous callbacks.
 \item[Two return values] Functions return a value and an error, to make error
-checking easier and compact, without throwing exceptions.
-\item[Program structure] Programs are written as sequence of function
-definitions and declarations stored in a file, or a REPL command line
+checking easier and more compact, without throwing exceptions.
+\item[Program structure] Programs are written as a sequence of function
+definitions and declarations stored in a file or a REPL command line
 interface.
 \end{description}
 
@@ -129,34 +129,36 @@ language.%, along with some indicative example.
 \end{table}
 
 The order of supported operations
-is: (1) Exponentiation, (2) Multiply, Divide, Modulo, (3) Addition, Subtraction,
-(4) Comparison, (5) Assignment, (6) Membership, and (7) Logical.
+is: (1) Exponentiation, (2) Multiplication, Division, Modulo, (3) Addition,
+Subtraction, (4) Comparison, (5) Assignment, (6) Membership, and (7) Logical.
 
 \subsection*{Datatypes}
 Variables have to be declared before use, and datatypes of
 variables are specified at declaration time. Variable names 
-begin with an alphabet letter.
+begin with an alphabetic letter.
 
 \begin{description}
 \item [Job:] The Job type is a \lang{} specific type, equivalent to a struct
-with fields describing a Job to be run. The fields are: 'script' for the
-name of the script implementing the job, 'workers' for the number of workers to use
-(default is as many as possible), and 'priority', an Int from 0 to 5, 0 being the
+with fields describing a Job to be run. The fields are: ``script'' for the
+name of the script implementing the job, ``workers'' for the number of workers
+to use (default is as many as possible), and ``priority'', an Int from 0 to 5,
+0 being the
 highest priority.
 Job variables are declared as:
 $Job~\textless var\textgreater = Job.new(~script=<String>,~workers=<Int>,~priority=<Int>)$
 
-\item [Int:] Integer variables can store integer values like 0, 7, -1024,
-and support both signed and unsigned values. Integer variables are declared
-using the 'Int' keyword as:
+\item [Int:] Integer variables are used to store integer values like 0, 7,
+-1024, and support both signed and unsigned values. Integer variables are
+declared using the ``Int'' keyword as:
 $Int~\textless var\textgreater,~\textless var\textgreater, ...$
 %$Int \textlessvar\textgreater = \textlessvalue\textgreater$
 
 %$Int a, b, c$
 %$Int a = 234$
 
-\item [Float:] Floating point datatypes can store real values like 1.03 or -23.56.
-Floating Point variables are declared using the 'Float' keyword as:
+\item [Float:] Floating point datatypes are used to store real values like
+1.03 or -23.56. Floating Point variables are declared using the ``Float''
+keyword as:
 $Float~\textless  var\textgreater,~\textless  var\textgreater, ...$
 %$Float \textlessvar\textgreater = \textlessvalue\textgreater$
 
@@ -164,8 +166,8 @@ $Float~\textless  var\textgreater,~\textless  var\textgreater, ...$
 %Float a = 23.78
 
 
-\item [Bool:] Boolean datatypes can only hold one of two possible values:
-True or False. Boolean variables are declared using the 'Bool' keyword as
+\item [Bool:] Boolean datatypes are used to store one of two possible values:
+True or False. Boolean variables are declared using the ``Bool'' keyword as
 $Bool~\textless  var\textgreater,~\textless  var\textgreater, ...$
 %$Bool \textlessvar\textgreater = [\textlessTrue\textgreater OR \textlessFalse\textgreater]$
 %
@@ -175,7 +177,7 @@ $Bool~\textless  var\textgreater,~\textless  var\textgreater, ...$
 
 
 \item [String:] String datatypes represent a sequence of characters. String
-variables are declared using the 'String' keyword, and string values are 
+variables are declared using the ``String'' keyword, and string values are 
 declared within single quotation marks.
 String variables are declared as:
 $String~\textless var\textgreater,~\textless  var\textgreater, ...$
@@ -185,21 +187,22 @@ $String~\textless var\textgreater,~\textless  var\textgreater, ...$
 %$String a = 'test'$
 
 \item [List:]
-List type is a container that holds a number of other objects of the same type,
-in a given order. The list type implements a sequence, and also allows user to
-add/remove objects from the sequence.
+List type is a container that holds objects of the same type in a given order.
+The list type implements a sequence, and also allows the user to add/remove
+objects from this sequence.
 
 Lists are created as:
 $L = type[\textless expr \textgreater,~\textless expr \textgreater, ...]$
 , e.g., $L = int[23,~45,~2]$.
 
-An item in a list can be accessed using the list index, starting from 0.
+An item of a list can be accessed using the list index, starting from 0.
 $Item = L [ \textless index\textgreater]$, e.g., $Item = L [0]$.
 
 \iffalse
 \item [Dictionary:]
 The dictionary type is an associative array that holds
-a pair of items, called a key-value pair. Keys in the dictionary have to be unique.
+a pair of items, called a key-value pair. Keys in the dictionary have to be
+unique.
 
 Dictionaries are created as:
 $Dict = \{ \textless key \textgreater :  \textless val\textgreater,  \textless key \textgreater : \textless val \textgreater, ...\}$, e.g.,
@@ -211,7 +214,7 @@ $Val = Dict [ \textless key\textgreater]$, e.g., $Val = Dict ['Bob']$.
 \end{description}
 
 \subsection*{Dependencies}
-Dependencies between programs can be specified using single arrows $\longrightarrow$ ,
+Dependencies between programs are specified using single arrows $\longrightarrow$ ,
 whereas bidirectional arrows $\longleftrightarrow$ indicate that programs should be run in parallel.
 This provides a straightforward job dependency expression, in the spirit of Python's
 list comprehensions. We give some indicative examples:
@@ -228,7 +231,7 @@ Example 3: Jobs A, B parallel, Job C dependent:
 \end{lstlisting}
 
 \subsection*{Functions and lambdas}
-Functions can return a value and an error, and are created with the func
+Functions return a value and an error, and are created with the func
 keyword. Lambdas are supported if no function name is given.
 \begin{lstlisting}
 func name(type arg1, type arg2) (return_type name, error_type err)
@@ -242,8 +245,8 @@ func name(type arg1, type arg2) (return_type name, error_type err)
 
 \subsection*{Conditional Statements and Errors}
 \begin{description}
-\item [Error checking:] If accepts a pre-statement that is executed (like the first
-statement of a for loop)
+\item [Error checking:] If accepts a pre-statement that is executed (like the
+first statement of a for loop)
 
 Example:
 $if (\_, err~=~execute\_job(j1);~ err~ !=~ nil) {}$
@@ -264,14 +267,14 @@ $if (\_, err~=~execute\_job(j1);~ err~ !=~ nil) {}$
 \item [For loop:] For loop is designed to iterate a fixed number of times.
 For loop is declared as:
 
-For $\textless var \textgreater~in~[\textless initialization \textgreater : \textless increment \textgreater: \textless termination \textgreater]~\{\textless statements \textgreater\}$
+For $\textless var \textgreater~in~[\textless initialization \textgreater : \textless increment \textgreater: \textless termination \textgreater]~\{\textless statements \textgreater\}$.
 
 %Example:
 %$For i IN [ 1 : 2 : 10] loops as 1, 3, 5, 7 and 9.$
 
 \item [While loop:] while loop simply repeats the $\textless  statements\textgreater$ as long
 as the $\textless  condition\textgreater$ is true. While loop is declared as:
-$While (\textless  condition\textgreater)~\{\textless  statement\textgreater\}$
+$While (\textless  condition\textgreater)~\{\textless  statement\textgreater\}$.
 
 %Example:
 %$int x = 5
@@ -283,8 +286,8 @@ $While (\textless  condition\textgreater)~\{\textless  statement\textgreater\}$
 
 %This program prints Hello World as long as the value of the variable x is less than 10. Therefore, it loops 5 times.
 
-\item [Do-While loop:] Do-While loop behaves like a While loop, except that $\textless condition\textgreater$
-is evaluated after the execution of $\textless  statement\textgreater$ instead before.
+\item [Do-While loop:] Do-While loop behaves like a While loop, except that $\textless condition\textgreater$.
+is evaluated after the execution of $\textless  statement\textgreater$ instead of before.
 %Guarantee 
 %at least one execution of $\textless statement \textgreater$, even if $\textless condition \textgreater$ is never true. 
 Do-While loop is declared as:
@@ -293,8 +296,8 @@ $Do\{\textless  statement\textgreater\}~While(\textless condition\textgreater)$
 
 
 \subsection*{Comments}
-Comments are also handled in a pythonic way, using a single pound sign '\#' for
-one-line comments, and double pound signs '\#\#' to indicate start and end of block comments.
+Comments are also handled in a pythonic way, using a single pound sign ``\#'' for
+one-line comments, and double pound signs ``\#\#'' to indicate start and end of block comments.
 
 %Example:
 %\# this is a comment
@@ -309,7 +312,7 @@ one-line comments, and double pound signs '\#\#' to indicate start and end of bl
 The language environment has three major characteristics:
 \begin{description}
 \item[Workers list] The user shouldn't have to manage his workers after
-they are launched; he only needs is to call a very basic program
+they are launched; he only needs to call a very basic program
 to register his workers. \lang{} will then transparently assign jobs to workers
 and manage dependencies.
 \item[Job queue] Under the hood, jobs are stored in a priority queue. When a
@@ -323,7 +326,7 @@ even need to open a text editor.
 
 \section{Examples}
 \label{sect:ex}
-Example 1: You want to create and run 2 jobs $A$ and $B$ in parallel, on a few
+Example 1: Create and run 2 jobs $A$ and $B$ in parallel, on a few
 workers. Then, you want to run job $C$ on some workers, only after both $A$
 and $B$ succeeded.
 \begin{lstlisting}
@@ -332,8 +335,8 @@ Job b = Job.new(script="xRay.rb", workers=3)
 Job c = Job.new("telesphorus.py")
 run((a <--> b) --> c)
 \end{lstlisting}
-Example 2: You want to make measurement that are in 3 steps: populate, collect
-data and analyze.
+Example 2: Make a measurement that is divided into 3 steps: populate, collect
+data, and analyze.
 \begin{lstlisting}
 func an_hour_after(Job j) {
   return func () {
@@ -354,7 +357,8 @@ for i in range(0,10) {
 
 \section{Conclusion}
 \label{sect:conc}
-In this white paper we present an introductory description of \lang{}, a language
-intended to help users describe and orchestrate jobs based on a-priory know dependencies.
-In future, during the evolution of our project, there may be additional functionality
-implemented, but the core specifications of \lang{} will remain as is.
+In this white paper we present an introductory description of \lang{}, a
+language intended to help users describe and orchestrate jobs based on a-priory
+known dependencies. In the future, during the evolution of our project, there
+may be additional functionality implemented, but the core specifications of
+\lang{} will remain as is.
