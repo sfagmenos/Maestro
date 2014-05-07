@@ -10,3 +10,4 @@
 *.bbl
 *.pyc
 *egg-info*
+*.sw*
