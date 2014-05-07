@@ -1,4 +1,7 @@
 #!maestro
 
+int i = 9;
 a = Job("ls", ".");
-run(a);
+b = Job("ls", "/");
+a->b;
+run(a,b);
