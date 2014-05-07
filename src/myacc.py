@@ -40,7 +40,7 @@ def p_stmt_error(p):
 def p_func_call(p):
     'E : ID LP LII RP'
     val = eval_func(p[1], p[3].node.value)
-    _type = 'list'
+    _type = type_for_func(p[1])
     node = Node(p[1], [p[3].node], _type, val)
     p[0] = AST_obj(node)
 
