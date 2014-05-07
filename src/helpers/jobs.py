@@ -54,7 +54,7 @@ class Job():
         if not script:
             return
         # create log file; truncate it if it exists
-        self._logfile_name = os.getcwd() + self._script + ".log"
+        self._logfile_name = os.getcwd() + '/' + self._script + ".log"
         try:
             self.f = open(self._logfile_name, "w")
         except Exception, error:
@@ -86,7 +86,7 @@ class Job():
                                     stderr=subprocess.PIPE)
             self._stdout, self._stderr = s.communicate()
             self._errno = s.returncode
-            #self._log()
+            self._log()
         except Exception, error:
             print "Unhandled Exception:", error, "for job:", self._script,\
                     "with arguments:", self._arguments
@@ -105,12 +105,16 @@ class Job():
         return True
 
     def _log(self):
+        print self._logfile_name,
         # file is created by class constructor. Append logs.
         f = open(self._logfile_name, "a")
         print >> f, "STDOUT:"
-        print >> f, self.stdout
+        print >> f, "---------"
+        print >> f, self._stdout
+        print >> f, "---------"
         print >> f, "STDERR:"
-        print >> f, self.stderr
+        print >> f, "---------"
+        print >> f, self._stderr
         print >> f, "---------"
         f.close()
 
