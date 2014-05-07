@@ -27,6 +27,11 @@ def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_\d]*'
     return t
 
+# remove comments
+def t_COMMENT(t):
+    r'(//|\#).*'
+    pass
+
 # Define a rule so we can track line numbers
 def t_newline(t):
     r'\n+'
