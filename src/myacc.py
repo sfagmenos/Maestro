@@ -16,15 +16,16 @@ lines = 0
 
 def p_program(p):
     'PRGM : STMTLIST'
-    p[0] = p[1]
+    node = Node('prgm', [p[1].node])
+    p[0] = AST_obj(node)
 
 def p_stmt_list(p):
     '''STMTLIST : STMTLIST STMT
                 | STMT'''
     if len(p) == 2:
-        node = Node('stmt-list', [p[1].node], None, None)
+        node = Node('stmt-list', [p[1].node])
     else:
-        node = Node('stmt-list', [p[1].node, p[2].node], None, None)
+        node = Node('stmt-list', [p[1].node, p[2].node])
     p[0] = AST_obj(node)
 
 def p_stmt(p):
@@ -39,9 +40,8 @@ def p_stmt_error(p):
 # LII is a comma separated list of Expressions
 def p_func_call(p):
     'E : ID LP LII RP'
-    val = eval_func(p[1], p[3].node.value)
     _type = type_for_func(p[1])
-    node = Node(p[1], [p[3].node], _type, val)
+    node = Node(p[1], [p[3].node], _type)
     p[0] = AST_obj(node)
 
 def p_func_call_error(p):
@@ -54,18 +54,16 @@ def p_func_call_error(p):
 # - the expresion gets the value for 1 liners
 def p_assign(p):
     'E : ID ASSIGN E'
-    val = p[3].node.value
     _type = p[3].node._type
-    node = Node('=', [p[3].node], _type, val)
-    sym_table[p[1]] = node
+    sym_table[p[1]] = [None, _type]
+    node = Node('=', [p[1], p[3].node], _type)
     p[0] = AST_obj(node)
 
 # strings for Job names
 def p_e_str(p):
     'E : STR'
-    val = p[1]
     _type = 'sting'
-    node = Node('str', [], _type, val, leaf=True)
+    node = Node('str', [], _type, value=p[1], leaf=True)
     p[0] = AST_obj(node)
 
 # do we need that later?
@@ -79,32 +77,28 @@ def p_e_str(p):
 # arguments of a function or inside of a list for later
 def p_list_inside_grow(p):
     'LII : LII COMMA E'
-    val = p[1].node.value + [p[3].node.value]
-    _type = None
-    node = Node('list-concat', [p[1].node, p[3].node], _type, val)
+    _type = 'list'
+    node = Node('list-concat', [p[1].node, p[3].node], _type)
     p[0] = AST_obj(node)
 
 def p_list_inside_orig(p):
     'LII : E'
-    val = [p[1].node.value]
-    _type = p[1].node._type
-    node = Node('list-orig', [p[1].node], _type, val, leaf=True)
+    _type = 'list'
+    node = Node('list-orig', [p[1].node], _type)
     p[0] = AST_obj(node)
 
 # <->
 def p_e_nodep(p):
     'E : E NODEP E'
-    val = nodep(p[1].node.value, p[3].node.value)
     _type = 'list'
-    node = Node('<->', [p[1].node, p[3].node], _type, val)
+    node = Node('<->', [p[1].node, p[3].node], _type)
     p[0] = AST_obj(node)
 
 # ->
 def p_e_dep(p):
     'E : E DEP E'
-    val = dep(p[1].node.value, p[3].node.value)
     _type = 'list'
-    node = Node('->', [p[1].node, p[3].node], _type, val)
+    node = Node('->', [p[1].node, p[3].node], _type)
     p[0] = AST_obj(node)
 
 # ()
@@ -115,9 +109,8 @@ def p_e_parenthesize(p):
 # that's a variable: fetch it in the symbol table
 def p_e_id(p):
     'E : ID'
-    val = sym_table[p[1]].value
-    _type = sym_table[p[1]]._type
-    node = Node('id', [], _type, val, leaf=True)
+    _type = sym_table[p[1]][-1]
+    node = Node('id', [], _type, value=p[1], leaf=True)
     p[0] = AST_obj(node)
 
 # Error rule for syntax errors
@@ -132,7 +125,7 @@ def type_for_func(name):
         return 'list'
 
 # Symbol table
-sym_table = {}  # map[name]node
+sym_table = {}  # map[symbol][value, type]
 
 # AST node structure
 class Node:
