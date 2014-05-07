@@ -41,7 +41,7 @@ class Job():
     '''Constructor of class should be supplied with job name and
     respective script name
     '''
-    def __init__(self, script=None, arguments=[]):
+    def __init__(self, script='', arguments=[]):
         self._dependencies = []
 #        self._workers = workers
         self._script = script
@@ -105,7 +105,6 @@ class Job():
         return True
 
     def _log(self):
-        print self._logfile_name,
         # file is created by class constructor. Append logs.
         f = open(self._logfile_name, "a")
         print >> f, "STDOUT:"
@@ -115,8 +114,22 @@ class Job():
         print >> f, "STDERR:"
         print >> f, "---------"
         print >> f, self._stderr
-        print >> f, "---------"
+        print >> f, "#########"
         f.close()
+
+
+class Wait(Job):
+    '''fake class to create wait objects'''
+    def __init__(self, sleepinterval):
+        Job.__init__(self)
+        self._sleepinterval = int(sleepinterval)
+
+    def run(self):
+        time.sleep(self._sleepinterval)
+        self._errno = 0
+
+    def _log(self):
+        pass
 
 
 class JobQueue:
