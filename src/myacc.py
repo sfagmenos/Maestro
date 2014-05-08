@@ -74,7 +74,7 @@ def p_e_int(p):
 
 def p_math_op(p):
     'E : E MOP E'
-    _type = '???'
+    _type = type_for_op(p[1].node._type, p[3].node._type, p[2])
     node = Node(p[2], [p[1].node, p[3].node], _type)
     p[0] = AST_obj(node)
 
@@ -136,14 +136,17 @@ def type_for_func(name):
     elif name == 'run' or name == 'range':
         return 'list'
 
-def type_for_sum(type1, type2):
+def type_for_op(type1, type2, op):
     if type1 == type2:
-        if type1 in ['list', 'string', 'int']:
-            return type1
+        return type1
+    elif op == '+':
+        return type_for_sum(type1, type2)
     else:
-        if (type1 == 'int' and type2 == 'sting') \
-            or (type2 == 'int' and type1 == 'sting'):
-            return 'string'
+        raise SyntaxError
+
+def type_for_sum(type1, type2):
+    if (type1 == 'int' and type2 == 'string') or (type2 == 'int' and type1 == 'string'):
+        return 'string'
     raise SyntaxError
 
 # Symbol table
