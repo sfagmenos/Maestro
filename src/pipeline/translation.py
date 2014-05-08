@@ -28,9 +28,16 @@ def execute(ast, sym_table):
         ast.value = hj.run(children_exec)
         return ast.value
     elif op == 'range':
-        arg = ast.children[0]
-        ast.value = range(arg)
+        arg = execute(ast.children[0], sym_table)
+        ast.value = range(arg[0])
         return ast.value
+    elif op == 'list-loop':
+        var = ast.children[1].value
+        l = execute(ast.children[0], sym_table)
+        for x in l:
+# TODO get the types
+            sym_table[var] = [x, '???']
+            execute(ast.children[2], sym_table)
     elif op == '=':
         children_exec = execute(ast.children[-1], sym_table)
         sym_table[ast.children[0]] = [children_exec, ast.children[-1]._type]

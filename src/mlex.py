@@ -12,7 +12,11 @@ tokens = (
    'COMMA',
    'STR',
    'SC',
-   'MOP',
+   'ADDOP',
+   'MULOP',
+   'EACH',
+   'OCURL',
+   'CCURL',
 )
 
 # Regular expression rules for simple tokens
@@ -25,7 +29,11 @@ t_STR    = r'"[^"]+"'
 t_SC     = r';'
 t_COMMA  = r','
 t_INT    = r'[0-9]+'
-t_MOP    = r'[+\-/*]'
+t_ADDOP    = r'[+\-]'
+t_MULOP    = r'[/*]'
+t_EACH   = r'\.each'
+t_OCURL  = r'{'
+t_CCURL  = r'}'
 
 # A regular expression rule with some action code
 def t_ID(t):

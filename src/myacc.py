@@ -8,8 +8,8 @@ from mlex import tokens
 from maestro_cmd import Console
 precedence = (
     ('left', 'ASSIGN'),
-    ('left', 'DEP'),
-    ('left', 'NODEP'),
+    ('left', 'ADDOP', 'DEP'),
+    ('left', 'MULOP', 'NODEP'),
 )
 
 lines = 0
@@ -36,6 +36,17 @@ def p_stmt_error(p):
     'STMT : error'
     line = p.lineno(p[1]) # line number of error
     print "Syntax error in statement line " + line
+
+def p_stmt_block(p):
+    'STMTBLOCK : OCURL STMTLIST CCURL'
+    p[0] = p[2]
+
+def p_list_loop(p):
+    'STMT : E EACH LP ID RP STMTBLOCK'
+    _type = 'list'
+    id_node = Node('id', [], 'mut', value=p[4], leaf=True)
+    node = Node('list-loop', [p[1].node, id_node, p[6].node], _type)
+    p[0] = AST_obj(node)
 
 # LII is a comma separated list of Expressions
 def p_func_call(p):
@@ -73,7 +84,8 @@ def p_e_int(p):
     p[0] = AST_obj(node)
 
 def p_math_op(p):
-    'E : E MOP E'
+    '''E : E MULOP E
+         | E ADDOP E'''
     _type = type_for_op(p[1].node._type, p[3].node._type, p[2])
     node = Node(p[2], [p[1].node, p[3].node], _type)
     p[0] = AST_obj(node)
