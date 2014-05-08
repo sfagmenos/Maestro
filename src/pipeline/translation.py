@@ -25,7 +25,7 @@ def execute(ast, sym_table):
         return ast.value
     elif op == 'run':
         children_exec = [execute(c, sym_table) for c in ast.children][0]
-        ast.value = hj.run(children_exec)
+        ast.value = hj.run(children_exec[0])
         return ast.value
     elif op == 'range':
         arg = execute(ast.children[0], sym_table)
@@ -85,13 +85,18 @@ def execute(ast, sym_table):
     else:
         return None
 
+# flatten helper: flattens a list of embeded lists
+def flatten(lst):
+    return sum( ([x] if not isinstance(x, list) else flatten(x)
+             for x in lst), [] )
+
 # Dependencies helper
 def nodep(ljobs, rjobs):
     if type(ljobs) is not list:
         ljobs = [ljobs]
     if type(rjobs) is not list:
         rjobs = [rjobs]
-    return ljobs + rjobs
+    return flatten(ljobs + rjobs)
 
 def dep(jobs, depend_on_jobs):
     if type(jobs) is not list:
@@ -99,4 +104,4 @@ def dep(jobs, depend_on_jobs):
     if type(depend_on_jobs) is not list:
         depend_on_jobs = [depend_on_jobs]
     hj.add_dependencies(jobs, depend_on_jobs)
-    return jobs + depend_on_jobs
+    return flatten(jobs + depend_on_jobs)
