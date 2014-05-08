@@ -86,7 +86,7 @@ class Job():
 
     def compute_args(self):
         if self._deps_args:
-            self._deps_args(self._deps_jobs[i].stdout())
+            self._arguments = self._deps_args(self._deps_jobs[i].stdout())
 
     def run(self):
         '''this should do the remote execution of scripts'''
