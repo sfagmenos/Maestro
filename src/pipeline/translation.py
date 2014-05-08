@@ -25,27 +25,27 @@ def execute(ast, sym_table):
         return ast.value
     elif op == 'run':
         children_exec = [execute(c, sym_table) for c in ast.children][0]
-        ast.value = hj.run(children_exec)
+        ast.value = hj.run(flatten(children_exec))
         return ast.value
     elif op == 'range':
         arg = execute(ast.children[0], sym_table)
         ast.value = range(arg[0])
         return ast.value
-    elif op == 'map':
-        list_of_job_arguments = [execute(c, sym_table) for c in ast.children[0]]
-        name_of_map_script = execute(ast.children[1]
-        for x in list_of_job_arguments:
-            sym_table[] = [x, ] 
-            hj.run(name_of_map_script)
-        children_exec = [execute(c,sym_table) for c in list_of_jobs]
-        dep(children_exec[0], children_exec[1])
-        ast.value = 
-        return ast.value
-    elif op == 'reduce':
-        maps = ast.children[0]
-        reduce_script = ast.children[1]
-        ast.value =
-        return ast.value
+    # elif op == 'map':
+        # list_of_job_arguments = [execute(c, sym_table) for c in ast.children[0]]
+        # name_of_map_script = execute(ast.children[1])
+        # for x in list_of_job_arguments:
+            # sym_table[] = [x, ]
+            # hj.run(name_of_map_script)
+        # children_exec = [execute(c,sym_table) for c in list_of_jobs]
+        # dep(children_exec[0], children_exec[1])
+        # ast.value = 
+        # return ast.value
+    # elif op == 'reduce':
+        # maps = ast.children[0]
+        # reduce_script = ast.children[1]
+        # ast.value =
+        # return ast.value
     elif op == 'list-loop':
         var = ast.children[1].value
         l = execute(ast.children[0], sym_table)
