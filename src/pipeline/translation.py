@@ -25,7 +25,7 @@ def execute(ast, sym_table):
         return ast.value
     elif op == 'run':
         children_exec = [execute(c, sym_table) for c in ast.children][0]
-        ast.value = hj.run(children_exec[0])
+        ast.value = hj.run(children_exec)
         return ast.value
     elif op == 'range':
         arg = execute(ast.children[0], sym_table)
