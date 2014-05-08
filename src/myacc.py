@@ -62,7 +62,7 @@ def p_assign(p):
 # strings for Job names
 def p_e_str(p):
     'E : STR'
-    _type = 'sting'
+    _type = 'string'
     node = Node('str', [], _type, value=str(p[1][1:-1]), leaf=True)
     p[0] = AST_obj(node)
 
@@ -70,6 +70,12 @@ def p_e_int(p):
     'E : INT'
     _type = 'int'
     node = Node('int', [], _type, value=int(p[1]), leaf=True)
+    p[0] = AST_obj(node)
+
+def p_math_op(p):
+    'E : E MOP E'
+    _type = '???'
+    node = Node(p[2], [p[1].node, p[3].node], _type)
     p[0] = AST_obj(node)
 
 # do we need that later?
@@ -129,6 +135,16 @@ def type_for_func(name):
         return 'job'
     elif name == 'run' or name == 'range':
         return 'list'
+
+def type_for_sum(type1, type2):
+    if type1 == type2:
+        if type1 in ['list', 'string', 'int']:
+            return type1
+    else:
+        if (type1 == 'int' and type2 == 'sting') \
+            or (type2 == 'int' and type1 == 'sting'):
+            return 'string'
+    raise SyntaxError
 
 # Symbol table
 sym_table = {}  # map[symbol][value, type]

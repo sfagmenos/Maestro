@@ -52,6 +52,17 @@ def execute(ast, sym_table):
         children_exec = [execute(c, sym_table) for c in ast.children]
         ast.value = dep(children_exec[0], children_exec[1])
         return ast.value
+    elif op == '+':
+        children_exec = [execute(c, sym_table) for c in ast.children]
+        t1 = ast.children[0]._type
+        t2 = ast.children[1]._type
+        if t1 == 'string' and t2 == 'int':
+            ast.value = children_exec[0] + str(children_exec[1])
+        elif t2 == 'string' and t1 == 'int':
+            ast.value = str(children_exec[0]) + children_exec[1]
+        else:
+            ast.value = reduce(lambda x,y: x+y, children_exec)
+        return ast.value
     else:
         return None
 

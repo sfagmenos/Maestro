@@ -12,7 +12,7 @@ tokens = (
    'COMMA',
    'STR',
    'SC',
-   # 'MOP',
+   'MOP',
 )
 
 # Regular expression rules for simple tokens
@@ -25,7 +25,7 @@ t_STR    = r'"[^"]+"'
 t_SC     = r';'
 t_COMMA  = r','
 t_INT    = r'[0-9]+'
-# t_MOP    = r'[\+-/\*]'
+t_MOP    = r'[+\-/*]'
 
 # A regular expression rule with some action code
 def t_ID(t):
