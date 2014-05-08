@@ -14,7 +14,6 @@ def analyse(ast):
         return ast._type
     #for being dynamic
     if ast.operation == "=":
-        print assign
         assign.append(ast.children[0])
         return "assign"
     #if -> or <->
