@@ -4,33 +4,36 @@ def execute(ast, sym_table):
     op = ast.operation
     if ast.leaf:  # we have a leaf, just return the value associated
         if op == 'id':
-            return sym_table[ast.value][0]
+            return sym_table[ast.value]
         else:
-            return ast.value
+            return [ast.value, ast._type]
 
     if op == 'prgm':
-        ast.value = execute(ast.children[0], sym_table)
-        return ast.value
+        val = execute(ast.children[0], sym_table)
+        ast.value = val[0]
+        return val
     elif op == 'stmt-list':
         children_exec = [execute(c, sym_table) for c in ast.children]
-        ast.value = children_exec[-1]
-        return ast.value
+        val = children_exec[-1]
+        ast.value = val[0]
+        return val
     elif op == 'Job':  # all args should be strings
         children_exec = [execute(c, sym_table) for c in ast.children][0]
-        args = children_exec
+        args = [c[0] for c in children_exec[0]]
         ast.value = hj.Job(args[0], args[1:])
-        return ast.value
+        return [ast.value, ast._type]
     elif op == 'Wait':  # 1 int arg
         ast.value = hj.Wait(ast.children[0])
-        return ast.value
+        return [ast.value, ast._type]
     elif op == 'run':
         children_exec = [execute(c, sym_table) for c in ast.children][0]
-        ast.value = hj.run(flatten(children_exec))
-        return ast.value
+        args = [c[0] for c in children_exec[0]]
+        ast.value = hj.run(flatten(args))
+        return children_exec
     elif op == 'range':
-        arg = execute(ast.children[0], sym_table)
-        ast.value = range(arg[0])
-        return ast.value
+        arg = execute(ast.children[0], sym_table)[0][0]  # first 0 for value, second because it's a list
+        ast.value = [[x, 'int'] for x in range(arg[0])]
+        return [ast.value, 'list']
     # elif op == 'map':
         # list_of_job_arguments = [execute(c, sym_table) for c in ast.children[0]]
         # name_of_map_script = execute(ast.children[1])
@@ -48,37 +51,38 @@ def execute(ast, sym_table):
         # return ast.value
     elif op == 'list-loop':
         var = ast.children[1].value
-        l = execute(ast.children[0], sym_table)
+        l = execute(ast.children[0], sym_table)[0]
         for x in l:
-            sym_table[var] = [x, '???']
+            sym_table[var] = x  # x is [value, type]
             execute(ast.children[2], sym_table)
+        return [l, 'list']
     elif op == '=':
         children_exec = execute(ast.children[-1], sym_table)
-        sym_table[ast.children[0]] = [children_exec, ast.children[-1]._type]
-        ast.value = children_exec
-        return ast.value
+        sym_table[ast.children[0]] = children_exec  # the exec is [value, type]
+        ast.value = children_exec[0]
+        return children_exec
     elif op == 'list':
         children_exec = [execute(c, sym_table) for c in ast.children]
-        ast.value = children_exec[0]
-        return ast.value
+        ast.value = children_exec[0][0]
+        return children_exec[0]
     elif op == 'list-concat':
         children_exec = [execute(c, sym_table) for c in ast.children]
-        ast.value = children_exec[0] + [children_exec[-1]]
-        return ast.value
+        ast.value = children_exec[0][0] + [children_exec[-1]]
+        return [ast.value, ast._type]
     elif op == 'list-orig':
         children_exec = [execute(c, sym_table) for c in ast.children]
         ast.value = children_exec
-        return ast.value
+        return [children_exec, 'list']
     elif op == '<->':
         children_exec = [execute(c, sym_table) for c in ast.children]
-        ast.value = nodep(children_exec[0], children_exec[1])
-        return ast.value
+        ast.value = nodep(children_exec[0][0], children_exec[1][0])
+        return [ast.value, ast._type]
     elif op == '->':
         children_exec = [execute(c, sym_table) for c in ast.children]
-        ast.value = dep(children_exec[0], children_exec[1])
-        return ast.value
+        ast.value = dep(children_exec[0][0], children_exec[1][0])
+        return [ast.value, ast._type]
     elif op == '+':
-        children_exec = [execute(c, sym_table) for c in ast.children]
+        children_exec = [execute(c, sym_table)[0] for c in ast.children]
         t1 = ast.children[0]._type
         t2 = ast.children[1]._type
         if t1 == 'string' and t2 == 'int':
@@ -87,19 +91,19 @@ def execute(ast, sym_table):
             ast.value = str(children_exec[0]) + children_exec[1]
         else:
             ast.value = reduce(lambda x,y: x+y, children_exec)
-        return ast.value
+        return [ast.value, ast._type]
     elif op == '-':
-        children_exec = [execute(c, sym_table) for c in ast.children]
+        children_exec = [execute(c, sym_table)[0] for c in ast.children]
         ast.value = children_exec[0] - children_exec[1]
-        return ast.value
+        return [ast.value, ast._type]
     elif op == '/':
-        children_exec = [execute(c, sym_table) for c in ast.children]
+        children_exec = [execute(c, sym_table)[0] for c in ast.children]
         ast.value = children_exec[0] / children_exec[1]
-        return ast.value
+        return [ast.value, ast._type]
     elif op == '%':
-        children_exec = [execute(c, sym_table) for c in ast.children]
+        children_exec = [execute(c, sym_table)[0] for c in ast.children]
         ast.value = children_exec[0] % children_exec[1]
-        return ast.value
+        return [ast.value, ast._type]
     else:
         return None
 
