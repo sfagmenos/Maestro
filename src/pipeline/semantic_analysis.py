@@ -1,10 +1,14 @@
 def analyse(ast):
+    error = {'->':"dependency operator",
+            '<->':"non dependency operator",
+            '-':"minus operator",
+            '+':"plus operator"}
     if not ast.children:
         #in leaf
         return ast._type
     #for being dynamic
     if ast.operation == "=":
-        return None
+        return "assign"
     #if -> or <->
     if ast.operation == '<->' or ast.operation == '->':
         #find type of first child
@@ -15,11 +19,22 @@ def analyse(ast):
         if type1 == type2 and type1 == "job":
             return type1
         else:
-            #print "lala " + node.value
-            print "error"
+            print "Invalid syntax " + xstr(type1) + " " \
+                    + ast.operation + " " + xstr(type2)
+            return None
+    if ast.operation == '-' or ast.operation == '/':
+        type1 = analyse(ast.children[0])
+        type2 = analyse(ast.children[1])
+        if type1 == type2 and type1 == "int":
+            return type1
+        else:
+            print "minus error"
             return None
     for node in ast.children:
-        analyse(node)
+        type = analyse(node)
+        if type == None:
+            break
+    return type
 
 
 def xstr(s):
