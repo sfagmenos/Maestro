@@ -86,6 +86,7 @@ def p_e_int(p):
 def p_math_op(p):
     '''E : E MULOP E
          | E ADDOP E'''
+    print p[2]
     _type = type_for_op(p[1].node._type, p[3].node._type, p[2])
     node = Node(p[2], [p[1].node, p[3].node], _type)
     p[0] = AST_obj(node)
@@ -121,6 +122,7 @@ def p_e_nodep(p):
 # ->
 def p_e_dep(p):
     'E : E DEP E'
+    print "DEP"
     _type = 'list'
     node = Node('->', [p[1].node, p[3].node], _type)
     p[0] = AST_obj(node)
