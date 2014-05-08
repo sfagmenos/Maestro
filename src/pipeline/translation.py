@@ -50,7 +50,6 @@ def execute(ast, sym_table):
         var = ast.children[1].value
         l = execute(ast.children[0], sym_table)
         for x in l:
-# TODO get the types
             sym_table[var] = [x, '???']
             execute(ast.children[2], sym_table)
     elif op == '=':
