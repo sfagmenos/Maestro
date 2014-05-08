@@ -34,8 +34,8 @@ def p_stmt(p):
 
 def p_stmt_error(p):
     'STMT : error'
-    line = p.lineno(p[1]) # line number of error
-    print "Syntax error in statement line " + line
+    #line = p.lineno(0) # line number of error
+    #print "Syntax error in statement line " + str(line)
 
 def p_stmt_block(p):
     'STMTBLOCK : OCURL STMTLIST CCURL'
@@ -87,6 +87,10 @@ def p_math_op(p):
     '''E : E MULOP E
          | E ADDOP E'''
     _type = type_for_op(p[1].node._type, p[3].node._type, p[2])
+    if _type == None:
+        line = p.lineno(2)
+        print "Syntax error in line " + str(line)
+        raise SyntaxError
     node = Node(p[2], [p[1].node, p[3].node], _type)
     p[0] = AST_obj(node)
 
@@ -121,6 +125,7 @@ def p_e_nodep(p):
 # ->
 def p_e_dep(p):
     'E : E DEP E'
+    #print "DEP"
     _type = 'list'
     node = Node('->', [p[1].node, p[3].node], _type)
     p[0] = AST_obj(node)
@@ -154,12 +159,14 @@ def type_for_op(type1, type2, op):
     elif op == '+':
         return type_for_sum(type1, type2)
     else:
-        raise SyntaxError
+        return None
+#        raise SyntaxError
 
 def type_for_sum(type1, type2):
     if (type1 == 'int' and type2 == 'string') or (type2 == 'int' and type1 == 'string'):
         return 'string'
-    raise SyntaxError
+    return None
+#    raise SyntaxError
 
 # Symbol table
 sym_table = {}  # map[symbol][value, type]
@@ -189,12 +196,17 @@ parser = yacc.yacc()
 
 # pipeline for execution
 def pipeline(code):
-    astree = parser.parse(code)
-    if astree == None:
+    try:
+        astree = parser.parse(code)
+        if astree == None:
+            return None
+        ast = astree.node
+    except:
         return None
-    ast = astree.node
     #sa.traverse(ast)
-    sa.analyse(ast)
+    sem = sa.analyse(ast)
+    if sem == None:
+        return "Semantic error. See above!"
     result = t.execute(ast, sym_table)
     return result
 
