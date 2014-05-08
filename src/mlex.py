@@ -35,7 +35,7 @@ t_SC     = r';'
 t_COMMA  = r','
 t_INT    = r'[0-9]+'
 t_ADDOP  = r'[+\-]'
-t_MULOP  = r'[/*]'
+t_MULOP  = r'[/*%]'
 t_EACH   = r'\.each'
 
 def t_DEP(t):
