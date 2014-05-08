@@ -142,7 +142,11 @@ def p_e_parenthesize(p):
 # that's a variable: fetch it in the symbol table
 def p_e_id(p):
     'E : ID'
-    _type = sym_table[p[1]][-1]
+    try:
+        _type = sym_table[p[1]][-1]
+    except:
+        print "Undefined variable " + p[1]
+        raise SyntaxError
     node = Node('id', [], _type, value=p[1], leaf=True)
     p[0] = AST_obj(node)
 
