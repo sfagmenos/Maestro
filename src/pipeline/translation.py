@@ -31,7 +31,8 @@ def execute(ast, sym_table):
         ast.value = hj.run(flatten(args))
         return children_exec
     elif op == 'range':
-        arg = execute(ast.children[0], sym_table)[0][0]  # first 0 for value, second because it's a list
+        arg = execute(ast.children[0], sym_table)[0][0]  # first 0 for value,
+                                                    # second because it's a list
         ast.value = [[x, 'int'] for x in range(arg[0])]
         return [ast.value, 'list']
     # elif op == 'map':
