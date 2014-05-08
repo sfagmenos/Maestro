@@ -41,7 +41,7 @@ class Job():
     '''Constructor of class should be supplied with job name and
     respective script name
     '''
-    def __init__(self, script='', arguments=[]):
+    def __init__(self, script='', arguments=[], deps_jobs=None, deps_args=None):
         self._dependencies = []
 #        self._workers = workers
         self._script = script
@@ -49,6 +49,8 @@ class Job():
         self._stderr = None
         self._stdout = None
         self._errno = None  # errno is None since job has not run
+        self._deps_jobs = deps_jobs
+        self._deps_args = deps_args
         depen_graph.add_node(self)
         # log is not needed if any script is associated
         if not script:
@@ -82,10 +84,16 @@ class Job():
             self._dependencies.append(job)
             depen_graph.add_edge(self, job)
 
+    def compute_args(self):
+        if self._deps_args:
+            for i in range(len(self._deps_jobs)):
+                self._deps_args(i, self._deps_jobs[i])
+
     def run(self):
         '''this should do the remote execution of scripts'''
         # need error checkong of what Popen returns
         try:
+            self.compute_args
             args = [self._script]
             args += self._arguments
             s = subprocess.Popen(args, stdout=subprocess.PIPE,
