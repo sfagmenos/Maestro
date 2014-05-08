@@ -1,13 +1,21 @@
+assign = []
 def analyse(ast):
     error = {'->':"dependency operator",
             '<->':"non dependency operator",
             '-':"minus operator",
             '+':"plus operator"}
-    if not ast.children:
+    #if not ast.children:
         #in leaf
+    #    return ast._type
+    if ast.operation == "id":
+        if ast.value not in assign:
+            print "Variable " + ast.value + " not previously declared"
+            return None
         return ast._type
     #for being dynamic
     if ast.operation == "=":
+        print assign
+        assign.append(ast.children[0])
         return "assign"
     #if -> or <->
     if ast.operation == '<->' or ast.operation == '->':
@@ -19,7 +27,7 @@ def analyse(ast):
         if type1 == type2 and type1 == "job":
             return type1
         else:
-            print "Invalid syntax " + xstr(type1) + " " \
+            print "Type error(sem) " + xstr(type1) + " " \
                     + ast.operation + " " + xstr(type2)
             return None
     if ast.operation == '-' or ast.operation == '/':
