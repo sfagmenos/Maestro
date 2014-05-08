@@ -57,6 +57,10 @@ def execute(ast, sym_table):
         sym_table[ast.children[0]] = [children_exec, ast.children[-1]._type]
         ast.value = children_exec
         return ast.value
+    elif op == 'list':
+        children_exec = [execute(c, sym_table) for c in ast.children]
+        ast.value = children_exec[0]
+        return ast.value
     elif op == 'list-concat':
         children_exec = [execute(c, sym_table) for c in ast.children]
         ast.value = children_exec[0] + [children_exec[-1]]

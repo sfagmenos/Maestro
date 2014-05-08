@@ -38,7 +38,7 @@ def p_stmt_error(p):
     #print "Syntax error in statement line " + str(line)
 
 def p_stmt_block(p):
-    'STMTBLOCK : OCURL STMTLIST CCURL'
+    'STMTBLOCK : LC STMTLIST RC'
     p[0] = p[2]
 
 def p_list_loop(p):
@@ -94,14 +94,18 @@ def p_math_op(p):
     node = Node(p[2], [p[1].node, p[3].node], _type)
     p[0] = AST_obj(node)
 
-# do we need that later?
-# please do not remove
-# def p_e_list(p):
-    # 'E : LI'
-    # p[0] = p[1]
-# def p_list(p):
-    # 'LI : LP LII RP'
-    # p[0] = p[2]
+# lists
+def p_e_list(p):
+    'E : LI'
+    p[0] = p[1]
+
+def p_list(p):
+    'LI : LB LII RB'
+    p[0] = p[2]
+    _type = 'list'
+    node = Node('list', [p[2].node], _type)
+    p[0] = AST_obj(node)
+
 # arguments of a function or inside of a list for later
 def p_list_inside_grow(p):
     'LII : LII COMMA E'
