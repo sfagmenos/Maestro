@@ -154,7 +154,7 @@ def p_error(p):
 def type_for_func(name):
     if name == 'Job' or name == 'Wait':
         return 'job'
-    elif name == 'run' or name == 'range':
+    elif name in ['run', 'range', 'map', 'reduce']:
         return 'list'
 
 def type_for_op(type1, type2, op):
@@ -167,7 +167,8 @@ def type_for_op(type1, type2, op):
 #        raise SyntaxError
 
 def type_for_sum(type1, type2):
-    if (type1 == 'int' and type2 == 'string') or (type2 == 'int' and type1 == 'string'):
+    if (type1 == 'int' and type2 == 'string') \
+            or (type2 == 'int' and type1 == 'string'):
         return 'string'
     return None
 #    raise SyntaxError

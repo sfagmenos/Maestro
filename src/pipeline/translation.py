@@ -26,30 +26,42 @@ def execute(ast, sym_table):
         ast.value = hj.Wait(ast.children[0])
         return [ast.value, ast._type]
     elif op == 'run':
-        children_exec = [execute(c, sym_table) for c in ast.children][0]
-        args = [c[0] for c in children_exec[0]]
-        ast.value = hj.run(flatten(args))
+        children_exec = [execute(c, sym_table) for c in ast.children]
+        # args = [c[0] for c in children_exec[0]]
+        args = type_flatten(children_exec)
+        ast.value = hj.run(args)
         return children_exec
     elif op == 'range':
         arg = execute(ast.children[0], sym_table)[0][0]  # first 0 for value,
                                                     # second because it's a list
         ast.value = [[x, 'int'] for x in range(arg[0])]
         return [ast.value, 'list']
-    # elif op == 'map':
-        # list_of_job_arguments = [execute(c, sym_table) for c in ast.children[0]]
-        # name_of_map_script = execute(ast.children[1])
-        # for x in list_of_job_arguments:
-            # sym_table[] = [x, ]
-            # hj.run(name_of_map_script)
-        # children_exec = [execute(c,sym_table) for c in list_of_jobs]
-        # dep(children_exec[0], children_exec[1])
-        # ast.value = 
-        # return ast.value
-    # elif op == 'reduce':
-        # maps = ast.children[0]
-        # reduce_script = ast.children[1]
-        # ast.value =
-        # return ast.value
+    elif op == 'map':
+        args = execute(ast.children[0], sym_table)[0]
+        prior = args[0]
+        map_script_path = args[1][0]
+        map_workers = args[2][0]
+        map_jobs = []
+        if prior[1] == 'job':
+            cut_job = prior[0]
+            for i in range(map_workers):
+                m = hj.Job(map_script_path, deps_jobs=cut_job, \
+                        deps_args=(lambda x: x[i]))
+                dep([m], [cut_job])
+                map_jobs.append([m, 'job'])
+        elif prior[1] == 'list':
+            for arg in prior[0]:
+                m = hj.Job(map_script_path, arg[0])
+                map_jobs.append([m, 'job'])
+        ast.value = [mj[0] for mj in map_jobs]
+        return [map_jobs, 'list']
+    elif op == 'reduce':
+        args = execute(ast.children[0], sym_table)[0]
+        priors = args[0][0]
+        reduce_script_path = args[1][0]
+        m = hj.Job(reduce_script_path, deps_jobs=priors, \
+                deps_args=(lambda x: x[i]))
+        return [[[m, 'job']], 'list']
     elif op == 'list-loop':
         var = ast.children[1].value
         l = execute(ast.children[0], sym_table)[0]
@@ -71,17 +83,17 @@ def execute(ast, sym_table):
         ast.value = children_exec[0][0] + [children_exec[-1]]
         return [ast.value, ast._type]
     elif op == 'list-orig':
-        children_exec = [execute(c, sym_table) for c in ast.children]
+        children_exec = [execute(c, sym_table) for c in ast.children][0]
         ast.value = children_exec
-        return [children_exec, 'list']
+        return [[children_exec], 'list']
     elif op == '<->':
-        children_exec = [execute(c, sym_table) for c in ast.children]
-        ast.value = nodep(children_exec[0][0], children_exec[1][0])
-        return [ast.value, ast._type]
+        children_exec = [type_flatten([execute(c, sym_table)]) for c in ast.children]
+        ast.value = nodep(children_exec[0], children_exec[1])
+        return [[[j, 'job'] for j in ast.value], 'list']
     elif op == '->':
-        children_exec = [execute(c, sym_table) for c in ast.children]
-        ast.value = dep(children_exec[0][0], children_exec[1][0])
-        return [ast.value, ast._type]
+        children_exec = [type_flatten([execute(c, sym_table)]) for c in ast.children]
+        ast.value = dep(children_exec[0], children_exec[1])
+        return [[[j, 'job'] for j in ast.value], 'list']
     elif op == '+':
         children_exec = [execute(c, sym_table)[0] for c in ast.children]
         t1 = ast.children[0]._type
@@ -112,6 +124,10 @@ def execute(ast, sym_table):
 def flatten(lst):
     return sum( ([x] if not isinstance(x, list) else flatten(x)
              for x in lst), [] )
+
+def type_flatten(lst):
+    return sum( [[x[0]] if not isinstance(x[0], list) else type_flatten(x[0])
+             for x in lst], [] )
 
 # Dependencies helper
 def nodep(ljobs, rjobs):
