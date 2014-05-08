@@ -67,6 +67,14 @@ def execute(ast, sym_table):
         children_exec = [execute(c, sym_table) for c in ast.children]
         ast.value = children_exec[0] - children_exec[1]
         return ast.value
+    elif op == '/':
+        children_exec = [execute(c, sym_table) for c in ast.children]
+        ast.value = children_exec[0] / children_exec[1]
+        return ast.value
+    elif op == '%':
+        children_exec = [execute(c, sym_table) for c in ast.children]
+        ast.value = children_exec[0] % children_exec[1]
+        return ast.value
     else:
         return None
 
