@@ -177,7 +177,11 @@ parser = yacc.yacc()
 
 # pipeline for execution
 def pipeline(code):
-    ast = parser.parse(code).node
+    astree = parser.parse(code)
+    if astree == None:
+        return None
+    ast = astree.node
+    #sa.traverse(ast)
     sa.analyse(ast)
     result = t.execute(ast, sym_table)
     return result
