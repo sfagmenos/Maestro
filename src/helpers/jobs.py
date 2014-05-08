@@ -65,6 +65,12 @@ class Job():
     def stdout(self):
         return self._stdout
 
+    def script(self):
+        return self._script
+
+    def dependencies(self):
+        return self._dependencies
+
     def perror(self):
         return self._errno, self._stderr
 
@@ -162,14 +168,22 @@ def run(Queue):
     if isCyclic(depen_graph):
         print "Your jobs have circular dependencies"
         return False
+    # print some stats so that user knows what's going on
+    print "Job-queue:", [job.script() for job in Queue]
+    print "----------"
+    for job in Queue:
+        print "Job: \"%s\"" % job.script(),\
+                "has: %d" % len(job.dependencies()),\
+                "unresolved dependencies."
+    print "----------"
     while Queue:
         for job in Queue:
             if job.can_run():
+                print "Running job: \"%s\"" % job.script()
                 Queue.remove(job)
                 job.run()
                 (errno, stderr) = job.perror()
                 if errno != 0:
+                    print "Error while executing Job: \"%s\"" % job.script()
                     print stderr
-                else:
-                    print job.stdout()
         time.sleep(0.5)
