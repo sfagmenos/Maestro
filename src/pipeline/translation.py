@@ -48,8 +48,8 @@ def execute(ast, sym_table):
         if prior[1] == 'job':
             cut_job = prior[0]
             for i in range(map_workers):
-                m = hj.Job(map_script_path, deps_jobs=cut_job, \
-                        deps_args=(lambda x: x[i]))
+                m = hj.Job(map_script_path, deps_jobs=[cut_job], \
+                        deps_args=(lambda x: [x[i]]))
                 dep([m], [cut_job])
                 map_jobs.append([m, 'job'])
         elif prior[1] == 'list':
