@@ -6,7 +6,6 @@ import time
 import threading
 
 class JobQueue():
-
     def __init__(self):
         self.mutex = threading.Lock()
         self._Q = []
@@ -21,7 +20,7 @@ class JobQueue():
         self.mutex.acquire()
         self._Q.remove(job)
         self.mutex.release()
-    
+
     def stop(self):
         self._Run = False
 
@@ -46,6 +45,10 @@ class JobQueue():
                 if job.can_run():
                     threading.Thread(target=self.execute, args=[job]).start()
             time.sleep(0.5)
+
+    def sort(self):
+        sorted(self._Q, key=lambda x: x.soft_priority)
+
 
 
 GlobalJobQueue = JobQueue() # construct global queue

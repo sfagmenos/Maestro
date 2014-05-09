@@ -7,7 +7,7 @@ import pipeline.translation as t
 from mlex import tokens
 precedence = (
     ('left', 'ASSIGN'),
-    ('left', 'ADDOP', 'DEP', 'SOFTDEP'),
+    ('left', 'ADDOP', 'DEP', 'SOFTPDEP', 'SOFTNDEP'),
     ('left', 'MULOP', 'NODEP', 'SOFTNODEP'),
 )
 
@@ -147,11 +147,19 @@ def p_e_dep(p):
     p[0] = AST_obj(node)
 
 # ~>
-def p_e_softdep(p):
-    'E : E SOFTDEP E'
+def p_e_softpdep(p):
+    'E : E SOFTPDEP E'
     _type = 'list'
     line = p.lineno(1)
     node = Node('~>', [p[1].node, p[3].node], _type, line=line)
+    p[0] = AST_obj(node)
+
+# ~>
+def p_e_softndep(p):
+    'E : E SOFTNDEP E'
+    _type = 'list'
+    line = p.lineno(1)
+    node = Node('~<', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
 # <~>
@@ -250,4 +258,4 @@ def pipeline(code):
     if sem == None:
         return "Semantic error. See above!"
     result = t.execute(ast, sym_table)
-    return result
+    # return result

@@ -111,6 +111,18 @@ def execute(ast, sym_table):
         children_exec = [type_flatten([execute(c, sym_table)]) for c in ast.children]
         ast.value = dep(children_exec[0], children_exec[1])
         return [[[j, 'job'] for j in ast.value], 'list']
+    elif op == '~>':
+        children_exec = [type_flatten([execute(c, sym_table)]) for c in ast.children]
+        ast.value = softpdep(children_exec[0], children_exec[1])
+        return [[[j, 'job'] for j in ast.value], 'list']
+    elif op == '~<':
+        children_exec = [type_flatten([execute(c, sym_table)]) for c in ast.children]
+        ast.value = softndep(children_exec[0], children_exec[1])
+        return [[[j, 'job'] for j in ast.value], 'list']
+    elif op == '<~>':
+        children_exec = [type_flatten([execute(c, sym_table)]) for c in ast.children]
+        ast.value = softnodep(children_exec[0], children_exec[1])
+        return [[[j, 'job'] for j in ast.value], 'list']
     elif op == '+':
         children_exec = [execute(c, sym_table)[0] for c in ast.children]
         t1 = ast.children[0]._type
@@ -160,4 +172,34 @@ def dep(jobs, depend_on_jobs):
     if type(depend_on_jobs) is not list:
         depend_on_jobs = [depend_on_jobs]
     hj.add_dependencies(jobs, depend_on_jobs)
+    return flatten(jobs + depend_on_jobs)
+
+def softnodep(ljobs, rjobs):
+    if type(ljobs) is not list:
+        ljobs = [ljobs]
+    if type(rjobs) is not list:
+        rjobs = [rjobs]
+    ljobs = flatten(ljobs)
+    rjobs = flatten(rjobs)
+    hj.add_soft_equal_dependencies(ljobs, rjobs)
+    return flatten(ljobs + rjobs)
+
+def softpdep(jobs, depend_on_jobs):
+    if type(jobs) is not list:
+        jobs = [jobs]
+    if type(depend_on_jobs) is not list:
+        depend_on_jobs = [depend_on_jobs]
+    jobs = flatten(jobs)
+    depend_on_jobs = flatten(depend_on_jobs)
+    hj.add_soft_p_dependencies(jobs, depend_on_jobs)
+    return flatten(jobs + depend_on_jobs)
+
+def softndep(jobs, depend_on_jobs):
+    if type(jobs) is not list:
+        jobs = [jobs]
+    if type(depend_on_jobs) is not list:
+        depend_on_jobs = [depend_on_jobs]
+    jobs = flatten(jobs)
+    depend_on_jobs = flatten(depend_on_jobs)
+    hj.add_soft_n_dependencies(jobs, depend_on_jobs)
     return flatten(jobs + depend_on_jobs)

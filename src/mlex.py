@@ -6,7 +6,8 @@ tokens = (
    'INT',
    'DEP',
    'NODEP',
-   'SOFTDEP',
+   'SOFTPDEP',
+   'SOFTNDEP',
    'SOFTNODEP',
    'LP',
    'RP',
@@ -25,7 +26,8 @@ tokens = (
 
 # Regular expression rules for simple tokens
 t_NODEP     = r'<->'
-t_SOFTDEP   = r'~>'
+t_SOFTPDEP   = r'~>'
+t_SOFTNDEP   = r'~<'
 t_SOFTNODEP = r'<~>'
 t_LP        = r'\('
 t_RP        = r'\)'

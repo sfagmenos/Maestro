@@ -29,6 +29,7 @@ class Job():
         self._errno = None  # errno is None since job has not run
         self._deps_jobs = deps_jobs
         self._deps_args = deps_args
+        self.soft_priority = 0
         depen_graph.add_node(self)
         # log is not needed if any script is associated
         if not script:
@@ -41,7 +42,7 @@ class Job():
             print "Unhandled Exxception:", error,\
                     " while creating log file for job:", self._script
         self.f.close()
-    
+
     def set_cluster(self, host, port, channel):
         self._host = host
         self._port = port
@@ -86,6 +87,7 @@ class Job():
             self.compute_args()
             # execute command
             pcommand = [self._script] + self._arguments
+            os.chmod(self._script, 0700)
             s = subprocess.Popen(pcommand, stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)
 
@@ -191,6 +193,24 @@ def add_dependencies(jobs, depend_on):
     for job in jobs:
         job.add_dependency(depend_on)
 
+def add_soft_p_dependencies(jobs, depend_on):
+    m_dep = max([x.soft_priority for x in depend_on]) + 1
+    for job in jobs:
+        job.soft_priority = m_dep
+    jobqueue.GlobalJobQueue.sort
+
+def add_soft_n_dependencies(jobs, depend_on):
+    m_dep = min([x.soft_priority for x in depend_on]) - 1
+    for job in jobs:
+        job.soft_priority = m_dep
+    jobqueue.GlobalJobQueue.sort
+
+def add_soft_equal_dependencies(jobs, depend_on):
+    m_dep = min([x.soft_priority for x in depend_on])
+    for job in jobs + depend_on:
+        job.soft_priority = m_dep
+    jobqueue.GlobalJobQueue.sort
+
 def service(host_port):
     try:
          jobqueue.GlobalServiceHost = host_port.split(":")[0]
@@ -216,6 +236,8 @@ def run(JobsList):
                     "has: %d" % len(job.dependencies()),\
                     "unresolved dependencies."
         jobqueue.GlobalJobQueue.enqueue(job)
+
+    jobqueue.GlobalJobQueue.sort
 
 
 def isCyclicUtil(graph, vertex, visited, recstack):

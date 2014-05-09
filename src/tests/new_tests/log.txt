@@ -2,7 +2,7 @@ my_file.ms   -Passed
 ********** 
 Job: "./tmp/test.sh" has: 0 unresolved dependencies.
 Job: "./tmp/test.sh" has: 0 unresolved dependencies.
-[[[[<helpers.jobs.Job instance at 0x1080dc170>, 'job'], [<helpers.jobs.Job instance at 0x1085cfcb0>, 'job']], 'list']]
+None
 Running job: "./tmp/test.sh"
 Running job: "./tmp/test.sh"
 Argument received: bla
@@ -14,4 +14,62 @@ comment.ms     -Failed
 ********** 
 Syntax error in input: None
 None
+
+single_run.ms   -Passed
+********** 
+Job: "./tmp/test.sh" has: 0 unresolved dependencies.
+None
+Running job: "./tmp/test.sh"
+Argument received: bla
+
+
+multiple_run.ms   -Passed
+********** 
+Job: "./tmp/test.sh" has: 0 unresolved dependencies.
+Job: "./tmp/test.sh" has: 0 unresolved dependencies.
+None
+Running job: "./tmp/test.sh"
+Running job: "./tmp/test.sh"
+Argument received: bla
+
+Argument received: foo
+
+
+empty_run.ms     -Failed
+********** 
+Syntax error in input: LexToken(RP,')',5,105)
+Syntax error in function call, line  5
+None
+
+multiple_declaration.ms   -Passed
+********** 
+Job: "./tmp/test.sh" has: 0 unresolved dependencies.
+None
+Running job: "./tmp/test.sh"
+Argument received: foo
+
+
+multiple_declaration2.ms   -Passed
+********** 
+Job: "./tmp/test.sh" has: 0 unresolved dependencies.
+Job: "./tmp/test.sh" has: 0 unresolved dependencies.
+None
+Running job: "./tmp/test.sh"
+ Running job: "./tmp/test.sh"
+Argument received: foo
+
+Argument received: foo
+
+
+hard_dependency.ms   -Passed
+********** 
+Job: "./tmp/test.sh" has: 1 unresolved dependencies.
+Job: "./tmp/test.sh" has: 0 unresolved dependencies.
+None
+Running job: "./tmp/test.sh"
+Argument received: foo
+
+Running job: "./tmp/test.sh"
+Argument received: bla
+
 
