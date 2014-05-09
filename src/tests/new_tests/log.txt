@@ -1,0 +1,17 @@
+my_file.ms   -Passed
+********** 
+Job: "./tmp/test.sh" has: 0 unresolved dependencies.
+Job: "./tmp/test.sh" has: 0 unresolved dependencies.
+[[[[<helpers.jobs.Job instance at 0x1080dc170>, 'job'], [<helpers.jobs.Job instance at 0x1085cfcb0>, 'job']], 'list']]
+Running job: "./tmp/test.sh"
+Running job: "./tmp/test.sh"
+Argument received: bla
+
+Argument received: bla
+
+
+comment.ms     -Failed
+********** 
+Syntax error in input: None
+None
+

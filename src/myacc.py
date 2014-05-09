@@ -154,7 +154,7 @@ def p_e_softdep(p):
     node = Node('~>', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
-# ~>
+# <~>
 def p_e_softnodep(p):
     'E : E SOFTNODEP E'
     _type = 'list'
