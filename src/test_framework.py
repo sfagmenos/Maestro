@@ -10,7 +10,7 @@ global output
 output= ""
 global failCount
 failCount = 1
-files=['my_file','comment','undeclared_job','single_run','multiple_run', 'multiple_declaration','multiple_declaration2', 'hard_dependency', 'circular_dependency', 'self_dependency']
+files=['my_file','comment','single_run','multiple_run', 'multiple_declaration','multiple_declaration2', 'hard_dependency', 'circular_dependency', 'self_dependency']
 #def parseErr(stderr):
 #	global failCount
 
@@ -31,7 +31,7 @@ def parseOut(stdout, filename):
 		print (Fore.RED + "Test Failed - Illegal token resulting in syntax error")
 		failCount = failCount + 1
 		with open ("tests/new_tests/log.txt", "a") as myfile:
-			myfile.write(filename+ "      -Failed"+"\n")
+			myfile.write(filename+ ".ms     -Failed"+"\n")
 			myfile.write("********** \n")
 			myfile.write(stdout+"\n")
 
@@ -39,7 +39,7 @@ def parseOut(stdout, filename):
 		failCount = failCount + 1
 		print (Fore.RED + "Test Failed - Syntax error in input")
 		with open ("tests/new_tests/log.txt", "a") as myfile:
-			myfile.write(filename+ "      -Failed"+"\n")
+			myfile.write(filename+ ".ms     -Failed"+"\n")
 			myfile.write("********** \n")
 			myfile.write(stdout+"\n")
 
@@ -47,9 +47,18 @@ def parseOut(stdout, filename):
 		failCount = failCount + 1
 		print (Fore.RED + "Test Failed - Undefined variable in input")
 		with open ("tests/new_tests/log.txt", "a") as myfile:
-			myfile.write(filename+ "      -Failed"+"\n")
+			myfile.write(filename+ ".ms     -Failed"+"\n")
 			myfile.write("********** \n")
 			myfile.write(stdout+"\n")
+
+	elif "circular" in stdout:
+		failCount = failCount + 1
+		print (Fore.RED + "Test Failed - Circular dependency in input")
+		with open ("tests/new_tests/log.txt", "a") as myfile:
+			myfile.write(filename+ ".ms    -Failed"+"\n")
+			myfile.write("********** \n")
+			myfile.write(stdout+"\n")
+
 
 	elif (data!="check"):
 		
