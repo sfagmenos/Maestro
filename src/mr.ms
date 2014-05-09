@@ -1,8 +1,7 @@
 #! maestro
 
-a = Job("ls", ".");
-b = Job("ls", "/");
+# a = Job("ls", ".");
 
-maps = map(a, "map.rb", 10);
+maps = map(["./1.txt", "./2.txt", "./3.txt"], "count.rb", 3);
 red = reduce(maps, "reduce.rb");
 run(maps, red);

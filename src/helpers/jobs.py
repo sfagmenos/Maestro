@@ -86,15 +86,17 @@ class Job():
 
     def compute_args(self):
         if self._deps_args:
-            self._arguments = self._deps_args(self._deps_jobs.stdout().split("\n"))
+            self._arguments = self._deps_args(sum([j.stdout().split("\n") \
+                            for j in self._deps_jobs], []))
 
     def run(self):
         '''this should do the remote execution of scripts'''
         # need error checkong of what Popen returns
         try:
-            self.compute_args
+            self.compute_args()
             args = [self._script]
             args += self._arguments
+            # print args
             s = subprocess.Popen(args, stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)
             self._stdout, self._stderr = s.communicate()

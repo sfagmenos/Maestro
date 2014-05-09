@@ -1,13 +1,16 @@
 import helpers.jobs as hj
 
+# recursive function to translate and execute the AST
 def execute(ast, sym_table):
     op = ast.operation
-    if ast.leaf:  # we have a leaf, just return the value associated
+    # if we have a leaf, just return the value associated
+    if ast.leaf:
         if op == 'id':
             return sym_table[ast.value]
         else:
             return [ast.value, ast._type]
 
+    # if it's not a leaf, we need to translate the op behavior and execute it
     if op == 'prgm':
         val = execute(ast.children[0], sym_table)
         ast.value = val[0]
@@ -51,16 +54,17 @@ def execute(ast, sym_table):
                 map_jobs.append([m, 'job'])
         elif prior[1] == 'list':
             for arg in prior[0]:
-                m = hj.Job(map_script_path, arg[0])
+                m = hj.Job(map_script_path, [arg[0]])
                 map_jobs.append([m, 'job'])
         ast.value = [mj[0] for mj in map_jobs]
         return [map_jobs, 'list']
     elif op == 'reduce':
         args = execute(ast.children[0], sym_table)[0]
-        priors = args[0][0]
+        priors = type_flatten([args[0]])
         reduce_script_path = args[1][0]
         m = hj.Job(reduce_script_path, deps_jobs=priors, \
-                deps_args=(lambda x: x[i]))
+                deps_args=(lambda x: x))
+        dep([m], priors)
         return [[[m, 'job']], 'list']
     elif op == 'list-loop':
         var = ast.children[1].value
