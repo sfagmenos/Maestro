@@ -4,12 +4,15 @@ Implementation of job queue
 import jobs
 import time
 import threading
+import signal
+import sys
 
 class JobQueue():
     def __init__(self):
         self.mutex = threading.Lock()
         self._Q = []
         self._Run = True
+        signal.signal(signal.SIGINT, self.signal_handler)
 
     def enqueue(self, job):
          self.mutex.acquire()
@@ -49,6 +52,11 @@ class JobQueue():
     def sort(self):
         sorted(self._Q, key=lambda x: x.soft_priority)
 
+    def signal_handler(signal, frame):
+        self._Run = False
+        self._Q = None
+        print "\nSee u soon :-)\nGoodBye!"
+        sys.exit(0)
 
 
 GlobalJobQueue = JobQueue() # construct global queue
