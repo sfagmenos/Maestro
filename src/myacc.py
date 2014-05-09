@@ -56,7 +56,7 @@ def p_func_call(p):
 
 def p_func_call_error(p):
     'E : ID LP error RP'
-    line = p.lineno(p[0]) # line number of error
+    line = p.lineno(0) # line number of error
     print "Syntax error in function call, line ", line
 
 # assign a variable:
