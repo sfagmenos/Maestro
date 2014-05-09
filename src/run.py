@@ -1,8 +1,11 @@
 import sys
 from maestro_cmd import Console
 from myacc import *
+import threading
+from helpers import jobqueue
 
 if __name__ == '__main__':
+    threading.Thread(target=jobqueue.GlobalJobQueue.poll_for_jobs).start()
     if len(sys.argv) == 1:
         console = Console(parser)  # while True:
         console.cmdloop()  # try:
@@ -18,3 +21,4 @@ if __name__ == '__main__':
         f.close()
     else:
         print "Usage: python myacc.py <file_name>"
+    jobqueue.GlobalJobQueue.stop()

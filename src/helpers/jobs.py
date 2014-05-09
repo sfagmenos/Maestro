@@ -84,13 +84,15 @@ class Job():
         # need error checkong of what Popen returns
         try:
             self.compute_args()
-            args = [self._script]
-            args += self._arguments
-            # print args
-            s = subprocess.Popen(args, stdout=subprocess.PIPE,
+            # execute command
+            pcommand = ['bash', self._script] + self._arguments
+            s = subprocess.Popen(pcommand, stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)
+
+            # get return values
             self._stdout, self._stderr = s.communicate()
             self._errno = s.returncode
+
             self._log()
         except Exception, error:
             print "Unhandled Exception:", error, "for job:", self._script,\
@@ -190,7 +192,8 @@ def add_dependencies(jobs, depend_on):
         job.add_dependency(depend_on)
 
 
-def run(JobsList, host='localhost', port='6379', channel='maestro_channel'):
+def run(JobsList, host='', port='', channel=''):
+#def run(JobsList, host='localhost', port='6379', channel='maestro_channel'):
     '''Enqueue jobs'''
     if isCyclic(depen_graph):
         print "Your jobs have circular dependencies"

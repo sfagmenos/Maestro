@@ -1,6 +1,7 @@
 '''
 Workers API
 '''
+import jobqueue
 import json
 import redis
 import subprocess
@@ -9,6 +10,10 @@ import  os
 class Worker():
     '''Constructor of class'''
     def __init__(self, host_port='', channel=''):
+        # stop job dispatching thread since it's a worker
+        #print "stop polling for jobs"
+        #jobqueue.GlobalJobQueue.stop()
+
         # get arguments
         try:
             self.host = host_port.split(':')[0]
