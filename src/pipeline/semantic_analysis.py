@@ -54,7 +54,12 @@ def analyse(ast):
     if ast.operation == "reduce":
         child_type = ast.children[0].children[0].children[0]._type 
         if child_type != "list":
-            print "Function reduce needs list as argument got " + child_type \
+            print "Function reduce needs list as first argument got " + child_type \
+                    + " at line " + str(ast.line)
+            return None
+        child_type = ast.children[0].children[1]._type
+        if child_type != "string":
+            print "Function reduce needs string as second argument got " + child_type \
                     + " at line " + str(ast.line)
             return None
         return "list"
