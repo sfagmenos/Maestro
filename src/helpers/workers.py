@@ -11,8 +11,8 @@ class worker():
     '''Constructor of class'''
     def __init__(self, host_port='', channel=''):
         # stop job dispatching thread since it's a worker
-        #print "stop polling for jobs"
-        #jobqueue.GlobalJobQueue.stop()
+        print "stop polling for jobs"
+        jobqueue.GlobalJobQueue.stop()
 
         # get arguments
         try:
