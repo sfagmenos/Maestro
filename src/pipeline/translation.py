@@ -34,7 +34,7 @@ def execute(ast, sym_table):
     elif op == 'service':
         args = execute(ast.children[0], sym_table)
         addr = args[0][0][0]
-        ast.value = hw.master(addr)
+        ast.value = hj.service(addr)
         return [ast.value, 'None']
     elif op == 'Wait':  # 1 int arg
         args = execute(ast.children[0], sym_table)
