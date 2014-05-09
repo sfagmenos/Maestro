@@ -2,4 +2,4 @@ all: runtests
 
 runtests:
 	echo "Running tests"
-	./run.sh
+	python test_framework.py all

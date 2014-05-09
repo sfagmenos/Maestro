@@ -10,7 +10,7 @@ global output
 output= ""
 global failCount
 failCount = 1
-files=['my_file','comment','undeclared_job','undeclared_job2','hard_dependency','multiple_declaration','multiple_declaration2','multiple_run', 'syntax_err']
+files=['my_file','comment','undeclared_job','undeclared_job2','hard_dependency','multiple_declaration','multiple_declaration2','multiple_run', 'syntax_err', 'circular_dependency', 'self_dependency']
 #def parseErr(stderr):
 #	global failCount
 
