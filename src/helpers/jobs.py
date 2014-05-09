@@ -85,7 +85,7 @@ class Job():
         try:
             self.compute_args()
             # execute command
-            pcommand = ['bash', self._script] + self._arguments
+            pcommand = [self._script] + self._arguments
             s = subprocess.Popen(pcommand, stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)
 
