@@ -34,8 +34,7 @@ def execute(ast, sym_table):
     elif op == 'master':
         args = execute(ast.children[0], sym_table)
         addr = args[0][0][0]
-        # ast.value =
-# TODO add call to function master(addr)
+        ast.value = hw.master(addr)
         return [ast.value, 'None']
     elif op == 'Wait':  # 1 int arg
         args = execute(ast.children[0], sym_table)

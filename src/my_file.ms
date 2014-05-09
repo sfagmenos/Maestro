@@ -1,9 +1,6 @@
 #!maestro
 // this is also a comment
 a = Job("./tmp/test.sh", "bla");
-<<<<<<< HEAD
-run(a);
-=======
 b = Job("./tmp/test.sh", "bla");
 run(a->b);
 
@@ -20,4 +17,3 @@ range(10).each(x) {
 }
 
 c+1;
->>>>>>> FETCH_HEAD

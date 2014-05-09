@@ -30,7 +30,8 @@ def p_stmt_list(p):
     p[0] = AST_obj(node)
 
 def p_stmt(p):
-    'STMT : E SC'
+    '''STMT : E SC
+            | SC'''
     p[0] = p[1]
 
 def p_stmt_error(p):
