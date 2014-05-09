@@ -162,6 +162,9 @@ def type_for_func(name):
         return 'list'
 
 def type_for_op(type1, type2, op):
+    if type1 == "job" or type2 == "job":
+        print "No mathematic operations for type jobs"
+        return None
     if type1 == type2:
         return type1
     elif op == '+':
