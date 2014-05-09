@@ -1,10 +1,21 @@
+assign = []
 def analyse(ast):
-    if not ast.children:
-        #in leaf
+    error = {'->':"dependency operator",
+            '<->':"non dependency operator",
+            '-':"minus operator",
+            '+':"plus operator"}
+    new = type(ast)
+    if new is str or new is list:
+        return str(new)
+    if ast.operation == "id":
+        if ast.value not in assign:
+            print "Variable " + ast.value + " not previously declared"
+            return None
         return ast._type
     #for being dynamic
     if ast.operation == "=":
-        return None
+        assign.append(ast.children[0])
+        return "assign"
     #if -> or <->
     if ast.operation == '<->' or ast.operation == '->':
         #find type of first child
@@ -15,11 +26,31 @@ def analyse(ast):
         if type1 == type2 and type1 == "job":
             return type1
         else:
-            #print "lala " + node.value
-            print "error"
+            print "Type error(sem) " + xstr(type1) + " " \
+                    + ast.operation + " " + xstr(type2)
             return None
+    if ast.operation == '-' or ast.operation == '/':
+        type1 = analyse(ast.children[0])
+        type2 = analyse(ast.children[1])
+        if type1 == type2 and type1 == "int":
+            return type1
+        else:
+            print "minus error"
+            return None
+    if ast.operation == "range":
+        child = ast.children[0].children
+        type1 = analyse(child)
+        if type1 != int:
+            print "Function range needs int as argument got " + type1
+            return None
+    #for leaf int, str,....
+    if not ast.children:
+        return ast._type
     for node in ast.children:
-        analyse(node)
+        typex = analyse(node)
+        if typex == None:
+            break
+    return typex
 
 
 def xstr(s):
@@ -29,11 +60,14 @@ def xstr(s):
 
 
 def traverse(ast, level=0):
+    if type(ast) is str:
+        print "\t" * level + ast
+        return
+#    if ast.operation == 'id':
+#        print "\t" * level + xstr(ast._type) + " " + xstr(ast.value)
     if ast.operation == "=":
         print "\t" * level + xstr(ast._type) + " " + xstr(ast.operation) \
                     + " " + xstr(ast.value) + " " + xstr(ast.leaf)
-        print "\t" * (level + 1) + ast.children[0]
-        return
     else:
         print "\t" * level + xstr(ast._type) + " " + xstr(ast.operation) \
                     + " " + xstr(ast.value) + " " + xstr(ast.leaf)

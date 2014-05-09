@@ -8,6 +8,7 @@
 import os
 import cmd
 import readline
+from myacc import *
 
 class Console(cmd.Cmd):
 
@@ -78,8 +79,10 @@ class Console(cmd.Cmd):
            In that case we execute the line as Python code.
         """
         try:
-            result = self.parser.parse(line)
+            result = pipeline(line)
+#            result = pipeline(line)
 #           exec(line) in self._locals, self._globals
+            
         except Exception, e:
             print e.__class__, ":", e
 

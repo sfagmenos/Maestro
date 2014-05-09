@@ -5,7 +5,6 @@ import pipeline.translation as t
 
 # Get the token map from the lexer
 from mlex import tokens
-from maestro_cmd import Console
 precedence = (
     ('left', 'ASSIGN'),
     ('left', 'ADDOP', 'DEP'),
@@ -34,11 +33,11 @@ def p_stmt(p):
 
 def p_stmt_error(p):
     'STMT : error'
-    line = p.lineno(p[1]) # line number of error
-    print "Syntax error in statement line " + line
+    #line = p.lineno(0) # line number of error
+    #print "Syntax error in statement line " + str(line)
 
 def p_stmt_block(p):
-    'STMTBLOCK : OCURL STMTLIST CCURL'
+    'STMTBLOCK : LC STMTLIST RC'
     p[0] = p[2]
 
 def p_list_loop(p):
@@ -57,7 +56,7 @@ def p_func_call(p):
 
 def p_func_call_error(p):
     'E : ID LP error RP'
-    line = p.lineno(p[0]) # line number of error
+    line = p.lineno(0) # line number of error
     print "Syntax error in function call, line ", line
 
 # assign a variable:
@@ -87,17 +86,25 @@ def p_math_op(p):
     '''E : E MULOP E
          | E ADDOP E'''
     _type = type_for_op(p[1].node._type, p[3].node._type, p[2])
+    if _type == None:
+        line = p.lineno(2)
+        print "Syntax error in line " + str(line)
+        raise SyntaxError
     node = Node(p[2], [p[1].node, p[3].node], _type)
     p[0] = AST_obj(node)
 
-# do we need that later?
-# please do not remove
-# def p_e_list(p):
-    # 'E : LI'
-    # p[0] = p[1]
-# def p_list(p):
-    # 'LI : LP LII RP'
-    # p[0] = p[2]
+# lists
+def p_e_list(p):
+    'E : LI'
+    p[0] = p[1]
+
+def p_list(p):
+    'LI : LB LII RB'
+    p[0] = p[2]
+    _type = 'list'
+    node = Node('list', [p[2].node], _type)
+    p[0] = AST_obj(node)
+
 # arguments of a function or inside of a list for later
 def p_list_inside_grow(p):
     'LII : LII COMMA E'
@@ -121,6 +128,7 @@ def p_e_nodep(p):
 # ->
 def p_e_dep(p):
     'E : E DEP E'
+    #print "DEP"
     _type = 'list'
     node = Node('->', [p[1].node, p[3].node], _type)
     p[0] = AST_obj(node)
@@ -133,7 +141,11 @@ def p_e_parenthesize(p):
 # that's a variable: fetch it in the symbol table
 def p_e_id(p):
     'E : ID'
-    _type = sym_table[p[1]][-1]
+    try:
+        _type = sym_table[p[1]][-1]
+    except:
+        print "Undefined variable " + p[1]
+        raise SyntaxError
     node = Node('id', [], _type, value=p[1], leaf=True)
     p[0] = AST_obj(node)
 
@@ -145,21 +157,27 @@ def p_error(p):
 def type_for_func(name):
     if name == 'Job' or name == 'Wait':
         return 'job'
-    elif name == 'run' or name == 'range':
+    elif name in ['run', 'range', 'map', 'reduce']:
         return 'list'
 
 def type_for_op(type1, type2, op):
+    if type1 == "job" or type2 == "job":
+        print "No mathematic operations for type jobs"
+        return None 
     if type1 == type2:
         return type1
     elif op == '+':
         return type_for_sum(type1, type2)
     else:
-        raise SyntaxError
+        return None
+#        raise SyntaxError
 
 def type_for_sum(type1, type2):
-    if (type1 == 'int' and type2 == 'string') or (type2 == 'int' and type1 == 'string'):
+    if (type1 == 'int' and type2 == 'string') \
+            or (type2 == 'int' and type1 == 'string'):
         return 'string'
-    raise SyntaxError
+    return None
+#    raise SyntaxError
 
 # Symbol table
 sym_table = {}  # map[symbol][value, type]
@@ -189,33 +207,16 @@ parser = yacc.yacc()
 
 # pipeline for execution
 def pipeline(code):
-    astree = parser.parse(code)
-    if astree == None:
+    try:
+        astree = parser.parse(code)
+        if astree == None:
+            return None
+        ast = astree.node
+    except:
         return None
-    ast = astree.node
     #sa.traverse(ast)
-    sa.analyse(ast)
+    sem = sa.analyse(ast)
+    if sem == None:
+        return "Semantic error. See above!"
     result = t.execute(ast, sym_table)
     return result
-
-if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        console = Console(parser)  # while True:
-        console.cmdloop()  # try:
-    elif len(sys.argv) == 2:
-        try:
-            f = open(sys.argv[1])
-        except IOError:
-            print 'cannot open', sys.argv[1]
-            sys.exit(-1)
-        # first = f.next()
-        # if first != "#!maestro\n":
-            # print "No maestro file specified!"
-            # sys.exit(-1)
-        prgm = f.read()
-        result = pipeline(prgm)
-        print result
-        f.close()
-    else:
-        print "Usage: python myacc.py <file_name>"
-
