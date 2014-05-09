@@ -9,7 +9,8 @@ def analyse(ast):
         return str(new)
     if ast.operation == "id":
         if ast.value not in assign:
-            print "Variable " + ast.value + " not previously declared"
+            print "Variable " + ast.value + " not previously declared\
+                     at line " + str(ast.line)
             return None
         return ast._type
     #for being dynamic
@@ -41,7 +42,8 @@ def analyse(ast):
         child = ast.children[0].children
         type1 = analyse(child)
         if type1 != int:
-            print "Function range needs int as argument got " + type1
+            print "Function range needs int as argument got " + type1 \
+                    + " at line " + str(ast.line)
             return None
     #for leaf int, str,....
     if not ast.children:
