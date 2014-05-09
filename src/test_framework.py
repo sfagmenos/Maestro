@@ -10,7 +10,7 @@ global output
 output= ""
 global failCount
 failCount = 1
-files=['my_file','comment','undeclared_job','undeclared_job2','hard_dependency','multiple_declaration','multiple_declaration2','multiple_run', 'syntax_err']
+files=['my_file','comment','undeclared_job','single_run','multiple_run', 'multiple_declaration','multiple_declaration2', 'hard_dependency', 'circular_dependency', 'self_dependency']
 #def parseErr(stderr):
 #	global failCount
 
@@ -31,7 +31,7 @@ def parseOut(stdout, filename):
 		print (Fore.RED + "Test Failed - Illegal token resulting in syntax error")
 		failCount = failCount + 1
 		with open ("tests/new_tests/log.txt", "a") as myfile:
-			myfile.write(filename+ "-Failed"+"\n")
+			myfile.write(filename+ "      -Failed"+"\n")
 			myfile.write("********** \n")
 			myfile.write(stdout+"\n")
 
@@ -39,7 +39,15 @@ def parseOut(stdout, filename):
 		failCount = failCount + 1
 		print (Fore.RED + "Test Failed - Syntax error in input")
 		with open ("tests/new_tests/log.txt", "a") as myfile:
-			myfile.write(filename+ "-Failed"+"\n")
+			myfile.write(filename+ "      -Failed"+"\n")
+			myfile.write("********** \n")
+			myfile.write(stdout+"\n")
+
+	elif "Undefined" in stdout:
+		failCount = failCount + 1
+		print (Fore.RED + "Test Failed - Undefined variable in input")
+		with open ("tests/new_tests/log.txt", "a") as myfile:
+			myfile.write(filename+ "      -Failed"+"\n")
 			myfile.write("********** \n")
 			myfile.write(stdout+"\n")
 
@@ -54,6 +62,7 @@ def parseOut(stdout, filename):
 			myfile.write(stdout+"\n")
 
 	
+
 	else:
 		print (Fore.GREEN + "Test Passed!")
 		with open ("tests/new_tests/log.txt", "a") as myfile:
@@ -61,7 +70,8 @@ def parseOut(stdout, filename):
 			myfile.write("********** \n")
 			myfile.write(stdout+"\n")
 
-	
+	with open ("TestsOutput/check.txt", "w") as myfile:
+			myfile.write(" ")
 
 if len(sys.argv)!= 2:
 	print "Wrong input. Usage: 'python test_bash.py <1,2,...>' or 'python test_bash.py all'"
@@ -74,7 +84,7 @@ elif sys.argv[1] == 'all':
 		output = str(i)
 
 		oldCount = failCount
-		cmd = 'python myacc.py tests/new_tests/'+files[i]+'.ms'
+		cmd = './maestro tests/new_tests/'+files[i]+'.ms'
 		p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
 		stdout, stderr = p.communicate()
 		print (Fore.BLUE + "-------------------------------")
@@ -103,7 +113,7 @@ else:
 	with open ("tests/new_tests/log.txt", "w") as myfile:
 			myfile.write("")
 	output = sys.argv[1]
-	cmd = 'python myacc.py tests/new_tests/'+sys.argv[1]+'.ms'
+	cmd = './maestro tests/new_tests/'+sys.argv[1]+'.ms'
 	p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
 	stdout, stderr = p.communicate()
 	#print "stdout is "+stdout
