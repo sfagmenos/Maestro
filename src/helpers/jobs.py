@@ -116,12 +116,8 @@ class Job():
                 self._stderr = response['stderr']
                 self._errno = response['errno']
                 break
-#        print "stdout:", self._stdout
-#        print "stderr:", self._stderr
-#        print "errno:", self._errno
 
-#        self._stdout, self._stderr = None, None # should be returned by redis
-#        self._errno = 0 #should be returned by redis
+        # log stderr, stdout, and errno
         self._log()
         return
        

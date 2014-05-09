@@ -48,6 +48,7 @@ class Worker():
                 print "Just executed a job"
 
     def execute(self, item):
+        '''function to run job localy and publish back ots output'''
         # decode request body
         request = pickle.loads(item['data'])
         

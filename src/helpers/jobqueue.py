@@ -5,10 +5,9 @@ import jobs
 import time
 import threading
 
-class JobQueue(threading.Thread):
+class JobQueue():
 
     def __init__(self):
-        threading.Thread.__init__(self)
         self.mutex = threading.Lock()
         self._Q = []
         self._Run = True
@@ -25,20 +24,25 @@ class JobQueue(threading.Thread):
     
     def stop(self):
         self._Run = False
-    
-    def run(self):
+
+    def execute(self, job):
+       if job.can_run():
+           print "Running job: \"%s\"" % job.script()
+           job.run_remotely('localhost', '6379', 'maestro_channel')
+#           (errno, stderr) = job.perror()
+#           if errno != 0:
+#               print "Error while executing Job: \"%s\"" % job.script()
+#               print stderr
+           self.dequeue(job)
+
+    def poll_for_jobs(self):
         '''Thread main loop'''
         while self._Run or self._Q:
+            # loop on a copy of the queue to avoid deadlocks 
             temp = list(self._Q)
             for job in temp:
                 if job.can_run():
-                    print "Running job: \"%s\"" % job.script()
-                    job.run_remotely('localhost', '6379', 'maestro_channel')
-                    (errno, stderr) = job.perror()
-                    if errno != 0:
-                        print "Error while executing Job: \"%s\"" % job.script()
-                        print stderr
-                    self.dequeue(job)
+                    threading.Thread(target=self.execute, args=[job]).start()
             time.sleep(0.5)
 
 
