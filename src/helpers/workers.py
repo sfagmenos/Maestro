@@ -43,19 +43,18 @@ class Worker():
         # start polling for messages
         print "Polling for messages:"
         for item in self.pubsub.listen(): 
-            if item['type'] == 'message' and item['channel'] == self.channel:
-                print item
-                self._action(item)
+            if item['type'] == 'message':# and item['channel'] == self.channel:
+                self.execute(item)
+                print "Just executed a job"
 
-    def _action(self, item):
-       
-        # decode msg body
-        msg = pickle.loads(item['data'])
+    def execute(self, item):
+        # decode request body
+        request = pickle.loads(item['data'])
         
         #parse message
-        job_key = msg['job_key']
-        arguments = msg['job_arguments'].split(' ')[:]
-        script_body = msg['script_body']
+        job_key = request['job_key']
+        arguments = request['job_arguments'].split(' ')[:]
+        script_body = request['script_body']
 
         # create temp file
         f = open("this_will_never_exist.sh", "w+")
@@ -72,16 +71,16 @@ class Worker():
 
         # remove temp file
         os.remove("this_will_never_exist.sh")
-        
 
+        # send back response to custom job channel
+        response = {'stdout': stdout,
+                     'stderr': stderr,
+                     'errno': errno}
         
-        print "arguments:\n", arguments
-        print "body:\n", script_body
-        print "stdout:", stdout
-        print "stderr:",stderr
-        print "errno:", errno
-        print "key:", job_key
-#
+        #print "response:", response
+        pickled = pickle.dumps(response)
+        self.connection_pool.publish(job_key, pickled)
+
 if __name__ == "__main__":
     w = Worker("localhost:6379")
     print w

@@ -96,18 +96,32 @@ class Job():
 
         # construct message. First line is the arguments,
         # following lines are the body of the script
-        msg = {'job_key': uuid.uuid1().hex,\
+        job_key = uuid.uuid1().hex
+        request = {'job_key': job_key,\
                      'job_arguments': ' '.join(arguments),\
                      'script_body': script_body}
         # encode
-        pickled = pickle.dumps(msg)
+        pickled = pickle.dumps(request)
 
         # publish message
         connection_pool.publish(channel, pickled)
+        
+        # get response in job specific channel
+        pubsub = connection_pool.pubsub()
+        pubsub.subscribe(job_key)
+        for item in pubsub.listen():
+            if item['type'] == 'message':
+                response = pickle.loads(item['data'])
+                self._stdout = response['stdout']
+                self._stderr = response['stderr']
+                self._errno = response['errno']
+                break
+#        print "stdout:", self._stdout
+#        print "stderr:", self._stderr
+#        print "errno:", self._errno
 
-        # get response
-        self._stdout, self._stderr = None, None # should be returned by redis
-        self._errno = 0 #should be returned by redis
+#        self._stdout, self._stderr = None, None # should be returned by redis
+#        self._errno = 0 #should be returned by redis
         self._log()
         return
        
