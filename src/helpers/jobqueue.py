@@ -49,3 +49,5 @@ class JobQueue():
 
 
 GlobalJobQueue = JobQueue() # construct global queue
+GlobalServiceHost = ''
+GlobalServicePort = ''

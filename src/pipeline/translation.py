@@ -31,10 +31,11 @@ def execute(ast, sym_table):
         addr = args[0][0][0]
         ast.value = hw.worker(addr)
         return [ast.value, 'None']
-    elif op == 'master':
+    elif op == 'service':
         args = execute(ast.children[0], sym_table)
         addr = args[0][0][0]
         # ast.value =
+        hj.service(addr)
 # TODO add call to function master(addr)
         return [ast.value, 'None']
     elif op == 'Wait':  # 1 int arg
