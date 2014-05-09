@@ -63,12 +63,16 @@ class worker():
         script_body = request['script_body']
 
         # create temp file
-        f = open("this_will_never_exist.sh", "w+")
+        f = open("./this_will_never_exist.sh", "w")
         f.write(script_body)
         f.close()
+        try:
+            os.chmod("./this_will_never_exist.sh", 0700)
+        except Exception, error:
+            print "Unhandled Exception:", error
 
         # execute command
-        pcommand = ['bash', 'this_will_never_exist.sh'] + arguments
+        pcommand = ['./this_will_never_exist.sh'] + arguments
         s = subprocess.Popen(pcommand, stdout=subprocess.PIPE, 
                                     stderr=subprocess.PIPE)
         # get return values
@@ -76,7 +80,7 @@ class worker():
         errno = s.returncode
 
         # remove temp file
-        os.remove("this_will_never_exist.sh")
+        os.remove("./this_will_never_exist.sh")
 
         # send back response to custom job channel
         response = {'stdout': stdout,
