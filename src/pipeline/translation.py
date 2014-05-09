@@ -25,8 +25,22 @@ def execute(ast, sym_table):
         args = [c[0] for c in children_exec[0]]
         ast.value = hj.Job(args[0], args[1:])
         return [ast.value, ast._type]
+    elif op == 'worker':
+        args = execute(ast.children[0], sym_table)
+        addr = args[0][0][0]
+        # ast.value =
+# TODO add call to function worker(addr)
+        return [ast.value, 'None']
+    elif op == 'master':
+        args = execute(ast.children[0], sym_table)
+        addr = args[0][0][0]
+        # ast.value =
+# TODO add call to function master(addr)
+        return [ast.value, 'None']
     elif op == 'Wait':  # 1 int arg
-        ast.value = hj.Wait(ast.children[0])
+        args = execute(ast.children[0], sym_table)
+        time = str(args[0][0][0])
+        ast.value = hj.Wait(time)
         return [ast.value, ast._type]
     elif op == 'run':
         children_exec = [execute(c, sym_table) for c in ast.children]
