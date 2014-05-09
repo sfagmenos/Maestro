@@ -2,7 +2,7 @@
 Implementation of semantic actions
 '''
 from networkx import DiGraph
-import pickle
+import json 
 import redis
 import jobqueue
 import subprocess
@@ -19,7 +19,9 @@ class Job():
     '''
     def __init__(self, script='', arguments=[]):
         self._dependencies = []
-#        self._workers = workers
+        self._host = ''
+        self._port = ''
+        self._channel = ''
         self._script = script
         self._arguments = arguments
         self._stderr = None
@@ -37,7 +39,11 @@ class Job():
             print "Unhandled Exxception:", error,\
                     " while creating log file for job:", self._script
         self.f.close()
-        #jobqueue.GlobalJobQueue.enqueue(self)
+    
+    def set_cluster(self, host, port, channel):
+        self._host = host
+        self._port = port
+        self._channel = channel
 
     def stdout(self):
         return self._stdout
@@ -59,7 +65,13 @@ class Job():
             self._dependencies.append(job)
             depen_graph.add_edge(self, job)
 
-    def run_localy(self):
+    def run(self):
+        if not self._host:
+            self._run_localy()
+        else:
+            self._run_remotely()
+
+    def _run_localy(self):
         '''run a job localy'''
         # need error checkong of what Popen returns
         try:
@@ -75,8 +87,11 @@ class Job():
                     "with arguments:", self._arguments
             return
 
-    def run_remotely(self, host, port, channel):
+    def _run_remotely(self):
         '''run a job remotelly'''
+        host = self._host
+        port = self._port
+        channel = self._channel
         try:
             connection_pool = redis.Redis(host, port)
         except Exception, error:
@@ -101,17 +116,16 @@ class Job():
                      'job_arguments': ' '.join(arguments),\
                      'script_body': script_body}
         # encode
-        pickled = pickle.dumps(request)
-
+        jrequest = json.dumps(request)
         # publish message
-        connection_pool.publish(channel, pickled)
+        connection_pool.publish(channel, jrequest)
         
         # get response in job specific channel
         pubsub = connection_pool.pubsub()
         pubsub.subscribe(job_key)
         for item in pubsub.listen():
             if item['type'] == 'message':
-                response = pickle.loads(item['data'])
+                response = json.loads(item['data'])
                 self._stdout = response['stdout']
                 self._stderr = response['stderr']
                 self._errno = response['errno']
@@ -166,7 +180,7 @@ def add_dependencies(jobs, depend_on):
         job.add_dependency(depend_on)
 
 
-def run(JobsList):
+def run(JobsList, host='localhost', port='6379', channel='maestro_channel'):
     '''Enqueue jobs'''
     if isCyclic(depen_graph):
         print "Your jobs have circular dependencies"
@@ -174,6 +188,7 @@ def run(JobsList):
 
     # print some stats so that user knows what's going on
     for job in JobsList:
+        job.set_cluster(host, port, channel)
         print "Job: \"%s\"" % job.script(),\
                     "has: %d" % len(job.dependencies()),\
                     "unresolved dependencies."

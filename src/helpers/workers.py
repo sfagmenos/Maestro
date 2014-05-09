@@ -1,7 +1,7 @@
 '''
 Workers API
 '''
-import pickle
+import json
 import redis
 import subprocess
 import  os
@@ -50,9 +50,9 @@ class Worker():
     def execute(self, item):
         '''function to run job localy and publish back ots output'''
         # decode request body
-        request = pickle.loads(item['data'])
+        request = json.loads(item['data'])
         
-        #parse message
+        #parse request
         job_key = request['job_key']
         arguments = request['job_arguments'].split(' ')[:]
         script_body = request['script_body']
@@ -79,8 +79,8 @@ class Worker():
                      'errno': errno}
         
         #print "response:", response
-        pickled = pickle.dumps(response)
-        self.connection_pool.publish(job_key, pickled)
+        jresponse = json.dumps(response)
+        self.connection_pool.publish(job_key, jresponse)
 
 if __name__ == "__main__":
     w = Worker("localhost:6379")

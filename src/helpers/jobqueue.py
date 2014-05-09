@@ -28,11 +28,13 @@ class JobQueue():
     def execute(self, job):
        if job.can_run():
            print "Running job: \"%s\"" % job.script()
-           job.run_remotely('localhost', '6379', 'maestro_channel')
-#           (errno, stderr) = job.perror()
-#           if errno != 0:
-#               print "Error while executing Job: \"%s\"" % job.script()
-#               print stderr
+           job.run()#('localhost', '6379', 'maestro_channel')
+           (errno, stderr) = job.perror()
+           if errno != 0:
+               print "Error while executing Job: \"%s\"" % job.script()
+               print stderr
+           else:
+               print job.stdout()
            self.dequeue(job)
 
     def poll_for_jobs(self):
@@ -46,4 +48,4 @@ class JobQueue():
             time.sleep(0.5)
 
 
-GlobalJobQueue = JobQueue() # construct global  queue
+GlobalJobQueue = JobQueue() # construct global queue
