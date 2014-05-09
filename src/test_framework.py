@@ -10,7 +10,7 @@ global output
 output= ""
 global failCount
 failCount = 1
-files=['my_file','comment','undeclared_job','undeclared_job2','hard_dependency','multiple_declaration','multiple_declaration2','multiple_run', 'syntax_err', 'circular_dependency', 'self_dependency']
+files=['my_file','comment','undeclared_job','single_run','multiple_run', 'multiple_declaration','multiple_declaration2', 'hard_dependency', 'circular_dependency', 'self_dependency']
 #def parseErr(stderr):
 #	global failCount
 
@@ -43,6 +43,14 @@ def parseOut(stdout, filename):
 			myfile.write("********** \n")
 			myfile.write(stdout+"\n")
 
+	elif "Undefined" in stdout:
+		failCount = failCount + 1
+		print (Fore.RED + "Test Failed - Undefined variable in input")
+		with open ("tests/new_tests/log.txt", "a") as myfile:
+			myfile.write(filename+ "      -Failed"+"\n")
+			myfile.write("********** \n")
+			myfile.write(stdout+"\n")
+
 	elif (data!="check"):
 		
 		print (Fore.RED + "Test Failed - Expected output not found at file")
@@ -54,6 +62,7 @@ def parseOut(stdout, filename):
 			myfile.write(stdout+"\n")
 
 	
+
 	else:
 		print (Fore.GREEN + "Test Passed!")
 		with open ("tests/new_tests/log.txt", "a") as myfile:
@@ -61,7 +70,8 @@ def parseOut(stdout, filename):
 			myfile.write("********** \n")
 			myfile.write(stdout+"\n")
 
-	
+	with open ("TestsOutput/check.txt", "w") as myfile:
+			myfile.write(" ")
 
 if len(sys.argv)!= 2:
 	print "Wrong input. Usage: 'python test_bash.py <1,2,...>' or 'python test_bash.py all'"
