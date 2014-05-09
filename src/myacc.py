@@ -5,7 +5,6 @@ import pipeline.translation as t
 
 # Get the token map from the lexer
 from mlex import tokens
-from maestro_cmd import Console
 precedence = (
     ('left', 'ASSIGN'),
     ('left', 'ADDOP', 'DEP'),
@@ -164,7 +163,7 @@ def type_for_func(name):
 def type_for_op(type1, type2, op):
     if type1 == "job" or type2 == "job":
         print "No mathematic operations for type jobs"
-        return None
+        return None 
     if type1 == type2:
         return type1
     elif op == '+':
@@ -221,25 +220,3 @@ def pipeline(code):
         return "Semantic error. See above!"
     result = t.execute(ast, sym_table)
     return result
-
-if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        console = Console(parser)  # while True:
-        console.cmdloop()  # try:
-    elif len(sys.argv) == 2:
-        try:
-            f = open(sys.argv[1])
-        except IOError:
-            print 'cannot open', sys.argv[1]
-            sys.exit(-1)
-        # first = f.next()
-        # if first != "#!maestro\n":
-            # print "No maestro file specified!"
-            # sys.exit(-1)
-        prgm = f.read()
-        result = pipeline(prgm)
-        print result
-        f.close()
-    else:
-        print "Usage: python myacc.py <file_name>"
-
