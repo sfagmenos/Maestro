@@ -63,6 +63,18 @@ def analyse(ast):
                     + " at line " + str(ast.line)
             return None
         return "list"
+    if ast.operation == "map":
+        child_type = ast.children[0].children[1]._type
+        if child_type != "int":
+            print "Function map needs int as first argument got " + child_type \
+                    + " at line " + str(ast.line)
+            return None
+        child_type = ast.children[0].children[0].children[1]._type
+        if child_type != "string":
+            print "Function map needs string as second argument got " + child_type \
+                    + " at line " + str(ast.line)
+            return None
+        return child_type
     #for leaf int, str,....
     if not ast.children:
         return ast._type
