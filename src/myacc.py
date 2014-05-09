@@ -133,7 +133,7 @@ def p_list_inside_orig(p):
 # <->
 def p_e_nodep(p):
     'E : E NODEP E'
-    line = p.lineno(1)
+    line = p.lineno(2)
     _type = 'list'
     node = Node('<->', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
@@ -142,7 +142,7 @@ def p_e_nodep(p):
 def p_e_dep(p):
     'E : E DEP E'
     _type = 'list'
-    line = p.lineno(1)
+    line = p.lineno(2)
     node = Node('->', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
@@ -150,7 +150,7 @@ def p_e_dep(p):
 def p_e_softpdep(p):
     'E : E SOFTPDEP E'
     _type = 'list'
-    line = p.lineno(1)
+    line = p.lineno(2)
     node = Node('~>', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
@@ -158,7 +158,7 @@ def p_e_softpdep(p):
 def p_e_softndep(p):
     'E : E SOFTNDEP E'
     _type = 'list'
-    line = p.lineno(1)
+    line = p.lineno(2)
     node = Node('~<', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
@@ -166,7 +166,7 @@ def p_e_softndep(p):
 def p_e_softnodep(p):
     'E : E SOFTNODEP E'
     _type = 'list'
-    line = p.lineno(1)
+    line = p.lineno(2)
     node = Node('<~>', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
