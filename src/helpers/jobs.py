@@ -191,9 +191,19 @@ def add_dependencies(jobs, depend_on):
     for job in jobs:
         job.add_dependency(depend_on)
 
+def service(host_port):
+    try:
+         jobqueue.GlobalServiceHost = host_port.split(":")[0]
+         jobqueue.GlobalServicePort = host_port.split(":")[1]
+    except Exception, error:
+        print "Unable to get service host and IP. Running locally."
+        jobqueue.GlobalServiceHost = ''
+        jobqueue.GlobalServicePort = ''
 
-def run(JobsList, host='', port='', channel=''):
-#def run(JobsList, host='localhost', port='6379', channel='maestro_channel'):
+def run(JobsList):
+    host = jobqueue.GlobalServiceHost
+    port = jobqueue.GlobalServicePort
+    channel = 'maestro_channel'
     '''Enqueue jobs'''
     if isCyclic(depen_graph):
         print "Your jobs have circular dependencies"

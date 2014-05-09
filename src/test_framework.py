@@ -10,7 +10,7 @@ global output
 output= ""
 global failCount
 failCount = 1
-files=['my_file','comment','single_run','multiple_run', 'multiple_declaration','multiple_declaration2', 'hard_dependency', 'circular_dependency', 'self_dependency']
+files=['my_file','comment','single_run','multiple_run', 'empty_run', 'multiple_declaration','multiple_declaration2', 'hard_dependency', 'circular_dependency', 'self_dependency', 'hard_dependency']
 #def parseErr(stderr):
 #	global failCount
 
@@ -103,10 +103,10 @@ elif sys.argv[1] == 'all':
 			#print (Fore.BLACK + stderr)
 		#parseErr(stderr)
 		if stdout:
-			print (Fore.BLACK + stdout)
+			print (Fore.YELLOW + stdout)
 			parseOut(stdout, files[i])
 		else:
-			print (Fore.BLACK + "Empty Output")
+			print (Fore.YELLOW + "Empty Output")
 			print ""
 		
 
@@ -134,7 +134,7 @@ else:
 		#print (Fore.BLACK + stderr)
 	#parseErr(stderr)
 	if stdout:
-		print (Fore.BLACK + stdout)
+		print (Fore.YELLOW + stdout)
 		parseOut(stdout, sys.argv[1])
 
 	else:
