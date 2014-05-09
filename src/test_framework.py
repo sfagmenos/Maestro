@@ -10,7 +10,7 @@ global output
 output= ""
 global failCount
 failCount = 1
-files=['my_file','comment','single_run','multiple_run', 'empty_run', 'multiple_declaration','multiple_declaration2', 'hard_dependency', 'circular_dependency', 'self_dependency', 'hard_dependency']
+files=['my_file','comment','single_run','multiple_run','multiple_declaration','multiple_declaration2', 'hard_dependency', 'circular_dependency', 'self_dependency', 'hard_dependency', 'mr_job', 'long_dependency']
 #def parseErr(stderr):
 #	global failCount
 
@@ -80,7 +80,7 @@ def parseOut(stdout, filename):
 			myfile.write(stdout+"\n")
 
 	with open ("TestsOutput/check.txt", "w") as myfile:
-			myfile.write(" ")
+		myfile.write(" ")
 
 if len(sys.argv)!= 2:
 	print "Wrong input. Usage: 'python test_bash.py <1,2,...>' or 'python test_bash.py all'"
@@ -127,12 +127,14 @@ else:
 	stdout, stderr = p.communicate()
 	#print "stdout is "+stdout
 	print (Fore.BLUE + "-------------------------------")
-	print "TEST "+sys.argv[1]
+	print "TEST "+sys.argv[1]+".ms"
 	print "-------------------------------"
 	print (Fore.BLACK + "")
 	#if stderr:
 		#print (Fore.BLACK + stderr)
 	#parseErr(stderr)
+	#print "error is "+errno
+	#print "/\/\/\/\/\/\/\/\/\/\/"
 	if stdout:
 		print (Fore.YELLOW + stdout)
 		parseOut(stdout, sys.argv[1])

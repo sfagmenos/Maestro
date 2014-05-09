@@ -35,12 +35,6 @@ Argument received: bla
 Argument received: foo
 
 
-empty_run.ms     -Failed
-********** 
-Syntax error in input: LexToken(RP,')',5,105)
-Syntax error in function call, line  5
-None
-
 multiple_declaration.ms   -Passed
 ********** 
 Job: "./tmp/test.sh" has: 0 unresolved dependencies.
@@ -55,7 +49,7 @@ Job: "./tmp/test.sh" has: 0 unresolved dependencies.
 Job: "./tmp/test.sh" has: 0 unresolved dependencies.
 None
 Running job: "./tmp/test.sh"
- Running job: "./tmp/test.sh"
+Running job: "./tmp/test.sh"
 Argument received: foo
 
 Argument received: foo
@@ -72,4 +66,9 @@ Argument received: foo
 Running job: "./tmp/test.sh"
 Argument received: bla
 
+
+circular_dependency.ms    -Failed
+********** 
+Your jobs have circular dependencies
+None
 

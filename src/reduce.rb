@@ -9,6 +9,7 @@ ARGV.each do |arg|
     count[k] += v
   end
 end
+File.open('TestsOutput/check.txt', 'w') { |file| file.write("check") }
 
 puts JSON.dump(count)
 File.open('final_count.txt', 'w') do |f|
