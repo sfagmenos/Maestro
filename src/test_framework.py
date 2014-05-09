@@ -31,7 +31,7 @@ def parseOut(stdout, filename):
 		print (Fore.RED + "Test Failed - Illegal token resulting in syntax error")
 		failCount = failCount + 1
 		with open ("tests/new_tests/log.txt", "a") as myfile:
-			myfile.write(filename+ "-Failed"+"\n")
+			myfile.write(filename+ "      -Failed"+"\n")
 			myfile.write("********** \n")
 			myfile.write(stdout+"\n")
 
@@ -39,7 +39,7 @@ def parseOut(stdout, filename):
 		failCount = failCount + 1
 		print (Fore.RED + "Test Failed - Syntax error in input")
 		with open ("tests/new_tests/log.txt", "a") as myfile:
-			myfile.write(filename+ "-Failed"+"\n")
+			myfile.write(filename+ "      -Failed"+"\n")
 			myfile.write("********** \n")
 			myfile.write(stdout+"\n")
 
@@ -74,7 +74,7 @@ elif sys.argv[1] == 'all':
 		output = str(i)
 
 		oldCount = failCount
-		cmd = 'python myacc.py tests/new_tests/'+files[i]+'.ms'
+		cmd = './maestro tests/new_tests/'+files[i]+'.ms'
 		p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
 		stdout, stderr = p.communicate()
 		print (Fore.BLUE + "-------------------------------")
@@ -103,7 +103,7 @@ else:
 	with open ("tests/new_tests/log.txt", "w") as myfile:
 			myfile.write("")
 	output = sys.argv[1]
-	cmd = 'python myacc.py tests/new_tests/'+sys.argv[1]+'.ms'
+	cmd = './maestro tests/new_tests/'+sys.argv[1]+'.ms'
 	p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
 	stdout, stderr = p.communicate()
 	#print "stdout is "+stdout
