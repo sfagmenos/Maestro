@@ -2,40 +2,16 @@
 Implementation of semantic actions
 '''
 from networkx import DiGraph
+import json 
+import redis
+import jobqueue
 import subprocess
 import time
+import uuid
 import os
 
 
-def isCyclicUtil(graph, vertex, visited, recstack):
-
-    if not visited[vertex]:
-        visited[vertex] = True
-        recstack[vertex] = True
-    for des in graph.successors(vertex):
-        if not visited[des] and isCyclicUtil(graph, des, visited, recstack):
-            return True
-        elif recstack[des]:
-            return True
-    recstack[vertex] = False
-    return False
-
-
-def isCyclic(graph):
-
-    visited = {}
-    recstack = {}
-    for node in graph.nodes():
-        visited[node] = False
-        recstack[node] = False
-    for node in graph.nodes():
-        if isCyclicUtil(graph, node, visited, recstack):
-            return True
-    return False
-
-
 depen_graph = DiGraph()
-
 
 class Job():
     '''Constructor of class should be supplied with job name and
@@ -43,7 +19,9 @@ class Job():
     '''
     def __init__(self, script='', arguments=[], deps_jobs=None, deps_args=None):
         self._dependencies = []
-#        self._workers = workers
+        self._host = ''
+        self._port = ''
+        self._channel = ''
         self._script = script
         self._arguments = arguments
         self._stderr = None
@@ -63,6 +41,11 @@ class Job():
             print "Unhandled Exxception:", error,\
                     " while creating log file for job:", self._script
         self.f.close()
+    
+    def set_cluster(self, host, port, channel):
+        self._host = host
+        self._port = port
+        self._channel = channel
 
     def stdout(self):
         return self._stdout
@@ -90,7 +73,14 @@ class Job():
                             for j in self._deps_jobs], []))
 
     def run(self):
-        '''this should do the remote execution of scripts'''
+        self.compute_args
+        if not self._host:
+            self._run_localy()
+        else:
+            self._run_remotely()
+
+    def _run_localy(self):
+        '''run a job localy'''
         # need error checkong of what Popen returns
         try:
             self.compute_args()
@@ -107,6 +97,54 @@ class Job():
                     "with arguments:", self._arguments
             return
 
+    def _run_remotely(self):
+        '''run a job remotelly'''
+        host = self._host
+        port = self._port
+        channel = self._channel
+        try:
+            connection_pool = redis.Redis(host, port)
+        except Exception, error:
+            print "Redis Error:", error
+            return
+
+        # read script and publish it to channel
+        try:
+            f = open(self._script, "r")
+            arguments = self._arguments
+            script_body = f.read()
+            f.close()
+        except Exception, error:
+            print "Unable to open script:", self._script
+            print "Exception:", error
+            return
+
+        # construct message. First line is the arguments,
+        # following lines are the body of the script
+        job_key = uuid.uuid1().hex
+        request = {'job_key': job_key,\
+                     'job_arguments': ' '.join(arguments),\
+                     'script_body': script_body}
+        # encode
+        jrequest = json.dumps(request)
+        # publish message
+        connection_pool.publish(channel, jrequest)
+        
+        # get response in job specific channel
+        pubsub = connection_pool.pubsub()
+        pubsub.subscribe(job_key)
+        for item in pubsub.listen():
+            if item['type'] == 'message':
+                response = json.loads(item['data'])
+                self._stdout = response['stdout']
+                self._stderr = response['stderr']
+                self._errno = response['errno']
+                break
+
+        # log stderr, stdout, and errno
+        self._log()
+        return
+       
     def can_run(self):
         '''check if dependencies are fullfilled.
         Current instrance can run only if all jobs from
@@ -147,52 +185,48 @@ class Wait(Job):
         pass
 
 
-class JobQueue:
-    '''Construct job queue as a list whose first element
-    are job names of jobs with zero dependencies,
-    second are job names of jobs with one dependency, etc.
-    '''
-    def __init__(self,  MaxDependencies=10):
-        self.Q = []
-        for _ in range(MaxDependencies):
-            self.Q.append([])
-
-    def enqueue(self, job, dependencies):
-        self.Q[dependencies] = job
-
-
 def add_dependencies(jobs, depend_on):
     for job in jobs:
         job.add_dependency(depend_on)
 
 
-def run(Queue):
-    '''Try to run job from queue'''
-    # suppose queue is constructed.
-    #
-    # e.g. Q = [[a,b],[c]], means that jobs with one
-    # dependency i.e., Q[0] = [a,b] should run before
-    # jobs with two dependencies, i.e., Q[1] = [c]
-    #
+def run(JobsList, host='localhost', port='6379', channel='maestro_channel'):
+    '''Enqueue jobs'''
     if isCyclic(depen_graph):
         print "Your jobs have circular dependencies"
         return False
+
     # print some stats so that user knows what's going on
-    print "Job-queue:", [job.script() for job in Queue]
-    print "----------"
-    for job in Queue:
+    for job in JobsList:
+        job.set_cluster(host, port, channel)
         print "Job: \"%s\"" % job.script(),\
-                "has: %d" % len(job.dependencies()),\
-                "unresolved dependencies."
-    print "----------"
-    while Queue:
-        for job in Queue:
-            if job.can_run():
-                print "Running job: \"%s\"" % job.script()
-                Queue.remove(job)
-                job.run()
-                (errno, stderr) = job.perror()
-                if errno != 0:
-                    print "Error while executing Job: \"%s\"" % job.script()
-                    print stderr
-        time.sleep(0.5)
+                    "has: %d" % len(job.dependencies()),\
+                    "unresolved dependencies."
+        jobqueue.GlobalJobQueue.enqueue(job)
+
+
+def isCyclicUtil(graph, vertex, visited, recstack):
+
+    if not visited[vertex]:
+        visited[vertex] = True
+        recstack[vertex] = True
+    for des in graph.successors(vertex):
+        if not visited[des] and isCyclicUtil(graph, des, visited, recstack):
+            return True
+        elif recstack[des]:
+            return True
+    recstack[vertex] = False
+    return False
+
+
+def isCyclic(graph):
+
+    visited = {}
+    recstack = {}
+    for node in graph.nodes():
+        visited[node] = False
+        recstack[node] = False
+    for node in graph.nodes():
+        if isCyclicUtil(graph, node, visited, recstack):
+            return True
+    return False
