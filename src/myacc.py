@@ -15,16 +15,18 @@ lines = 0
 
 def p_program(p):
     'PRGM : STMTLIST'
-    node = Node('prgm', [p[1].node])
+    line = p.lineno(1)
+    node = Node('prgm', [p[1].node], line=line)
     p[0] = AST_obj(node)
 
 def p_stmt_list(p):
     '''STMTLIST : STMTLIST STMT
                 | STMT'''
+    line = p.lineno(1)
     if len(p) == 2:
-        node = Node('stmt-list', [p[1].node])
+        node = Node('stmt-list', [p[1].node], line=line)
     else:
-        node = Node('stmt-list', [p[1].node, p[2].node])
+        node = Node('stmt-list', [p[1].node, p[2].node], line=line)
     p[0] = AST_obj(node)
 
 def p_stmt(p):
@@ -42,21 +44,23 @@ def p_stmt_block(p):
 
 def p_list_loop(p):
     'STMT : E EACH LP ID RP STMTBLOCK'
+    line = p.lineno(1)
     _type = 'list'
-    id_node = Node('id', [], 'mut', value=p[4], leaf=True)
-    node = Node('list-loop', [p[1].node, id_node, p[6].node], _type)
+    id_node = Node('id', [], 'mut', value=p[4], leaf=True, line=line)
+    node = Node('list-loop', [p[1].node, id_node, p[6].node], _type, line=line)
     p[0] = AST_obj(node)
 
 # LII is a comma separated list of Expressions
 def p_func_call(p):
     'E : ID LP LII RP'
+    line = p.lineno(1)
     _type = type_for_func(p[1])
-    node = Node(p[1], [p[3].node], _type)
+    node = Node(p[1], [p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
 def p_func_call_error(p):
     'E : ID LP error RP'
-    line = p.lineno(0) # line number of error
+    line = p.lineno(1) # line number of error
     print "Syntax error in function call, line ", line
 
 # assign a variable:
@@ -64,33 +68,37 @@ def p_func_call_error(p):
 # - the expresion gets the value for 1 liners
 def p_assign(p):
     'E : ID ASSIGN E'
+    line = p.lineno(1)
     _type = p[3].node._type
     sym_table[p[1]] = [None, _type]
-    node = Node('=', [p[1], p[3].node], _type)
+    node = Node('=', [p[1], p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
 # strings for Job names
 def p_e_str(p):
     'E : STR'
+    line = p.lineno(1)
     _type = 'string'
-    node = Node('str', [], _type, value=str(p[1][1:-1]), leaf=True)
+    node = Node('str', [], _type, value=str(p[1][1:-1]), leaf=True, line=line)
     p[0] = AST_obj(node)
 
 def p_e_int(p):
     'E : INT'
+    line = p.lineno(1)
     _type = 'int'
-    node = Node('int', [], _type, value=int(p[1]), leaf=True)
+    node = Node('int', [], _type, value=int(p[1]), leaf=True, line=line)
     p[0] = AST_obj(node)
 
 def p_math_op(p):
     '''E : E MULOP E
          | E ADDOP E'''
+    line = p.lineno(1)
     _type = type_for_op(p[1].node._type, p[3].node._type, p[2])
     if _type == None:
         line = p.lineno(2)
         print "Syntax error in line " + str(line)
         raise SyntaxError
-    node = Node(p[2], [p[1].node, p[3].node], _type)
+    node = Node(p[2], [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
 # lists
@@ -101,28 +109,32 @@ def p_e_list(p):
 def p_list(p):
     'LI : LB LII RB'
     p[0] = p[2]
+    line = p.lineno(1)
     _type = 'list'
-    node = Node('list', [p[2].node], _type)
+    node = Node('list', [p[2].node], _type, line=line)
     p[0] = AST_obj(node)
 
 # arguments of a function or inside of a list for later
 def p_list_inside_grow(p):
     'LII : LII COMMA E'
     _type = 'list'
-    node = Node('list-concat', [p[1].node, p[3].node], _type)
+    line = p.lineno(1)
+    node = Node('list-concat', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
 def p_list_inside_orig(p):
     'LII : E'
     _type = 'list'
-    node = Node('list-orig', [p[1].node], _type)
+    line = p.lineno(1)
+    node = Node('list-orig', [p[1].node], _type, line=line)
     p[0] = AST_obj(node)
 
 # <->
 def p_e_nodep(p):
     'E : E NODEP E'
+    line = p.lineno(1)
     _type = 'list'
-    node = Node('<->', [p[1].node, p[3].node], _type)
+    node = Node('<->', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
 # ->
@@ -130,7 +142,8 @@ def p_e_dep(p):
     'E : E DEP E'
     #print "DEP"
     _type = 'list'
-    node = Node('->', [p[1].node, p[3].node], _type)
+    line = p.lineno(1)
+    node = Node('->', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
 # ()
@@ -141,12 +154,13 @@ def p_e_parenthesize(p):
 # that's a variable: fetch it in the symbol table
 def p_e_id(p):
     'E : ID'
+    line = p.lineno(1)
     try:
         _type = sym_table[p[1]][-1]
     except:
-        print "Undefined variable " + p[1]
+        print "Undefined variable " + p[1] +" at line " + str(line)
         raise SyntaxError
-    node = Node('id', [], _type, value=p[1], leaf=True)
+    node = Node('id', [], _type, value=p[1], leaf=True, line=line)
     p[0] = AST_obj(node)
 
 # Error rule for syntax errors
@@ -185,7 +199,7 @@ sym_table = {}  # map[symbol][value, type]
 # AST node structure
 class Node:
     def __init__(self, operation, children=None,  \
-                       _type=None, value=None, leaf=False):
+                       _type=None, value=None, leaf=False, line=-1):
         self._type = _type
         self.operation = operation
         if children:
@@ -194,6 +208,7 @@ class Node:
             self.children = []
         self.leaf = leaf
         self.value = value
+        self.line = line
 
 # we add one layer of abstraction to be able to get values and syblings
 # on top of node
