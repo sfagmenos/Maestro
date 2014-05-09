@@ -6,14 +6,21 @@ import json
 import redis
 import subprocess
 import  os
+import signal
+import sys
+
+def signal_handler(signal, frame):
+    print "\nSee u soon :-)\nGoodBye!"
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
 
 class worker():
     '''Constructor of class'''
     def __init__(self, host_port='', channel=''):
         # stop job dispatching thread since it's a worker
-        print "stop polling for jobs"
         jobqueue.GlobalJobQueue.stop()
-
+        #signal.signal(signal.SIGINT, signal_handler)
         # get arguments
         try:
             self.host = host_port.split(':')[0]
