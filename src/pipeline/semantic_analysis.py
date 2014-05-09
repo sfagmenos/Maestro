@@ -23,7 +23,9 @@ def analyse(ast):
                 break
         return typex
     #if -> or <->
-    if ast.operation == '<->' or ast.operation == '->':
+    if ast.operation == '<->' or ast.operation == '->' \
+       or ast.operation == '<~>' or ast.operation == '~>' \
+        or ast.operation == '~<':
         #find type of first child
         type1 = analyse(ast.children[0])
         #find of second
@@ -33,7 +35,8 @@ def analyse(ast):
             return type1
         else:
             print "Type error(sem) " + xstr(type1) + " " \
-                    + ast.operation + " " + xstr(type2)
+                    + ast.operation + " " + xstr(type2) + \
+                    " at line " + str(ast.line)
             return None
     if ast.operation == '-' or ast.operation == '/':
         type1 = analyse(ast.children[0])
@@ -75,6 +78,13 @@ def analyse(ast):
                     + " at line " + str(ast.line)
             return None
         return child_type
+    if ast.operation == "Job":
+        leaf=[]
+        analyse_leafs(ast,leaf)
+        if sorted(leaf)[0] != sorted(leaf)[-1]:
+            print "Job argument not a string at line "+ str(ast.line)
+            return None
+        return ast._type
     #for leaf int, str,....
     if not ast.children:
         return ast._type
@@ -83,6 +93,14 @@ def analyse(ast):
         if typex == None:
             break
     return typex
+
+
+def analyse_leafs(node,leafs):
+    if node.leaf:
+        leafs.append(node._type)
+    else:
+        for n in node.children:
+            analyse_leafs(n,leafs)
 
 
 def xstr(s):
