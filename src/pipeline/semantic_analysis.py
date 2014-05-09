@@ -16,7 +16,12 @@ def analyse(ast):
     #for being dynamic
     if ast.operation == "=":
         assign.append(ast.children[0])
-        return "assign"
+        typex = "assign"
+        for node in ast.children:
+            typex = analyse(node)
+            if typex == None:
+                break
+        return typex
     #if -> or <->
     if ast.operation == '<->' or ast.operation == '->':
         #find type of first child
@@ -46,6 +51,13 @@ def analyse(ast):
                     + " at line " + str(ast.line)
             return None
         return type1
+    if ast.operation == "reduce":
+        child_type = ast.children[0].children[0].children[0]._type 
+        if child_type != "list":
+            print "Function reduce needs list as argument got " + child_type \
+                    + " at line " + str(ast.line)
+            return None
+        return "list"
     #for leaf int, str,....
     if not ast.children:
         return ast._type
