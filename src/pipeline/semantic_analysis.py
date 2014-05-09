@@ -39,12 +39,13 @@ def analyse(ast):
             print "minus error"
             return None
     if ast.operation == "range":
-        child = ast.children[0].children
+        child = ast.children[0].children[0]
         type1 = analyse(child)
-        if type1 != int:
+        if type1 != "int":
             print "Function range needs int as argument got " + type1 \
                     + " at line " + str(ast.line)
             return None
+        return type1
     #for leaf int, str,....
     if not ast.children:
         return ast._type
