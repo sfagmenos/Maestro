@@ -6,6 +6,8 @@ tokens = (
    'INT',
    'DEP',
    'NODEP',
+   'SOFTDEP',
+   'SOFTNODEP',
    'LP',
    'RP',
    'LB',
@@ -22,21 +24,23 @@ tokens = (
 )
 
 # Regular expression rules for simple tokens
-t_NODEP  = r'<->'
-t_LP     = r'\('
-t_RP     = r'\)'
-t_LB     = r'\['
-t_RB     = r'\]'
-t_LC     = r'{'
-t_RC     = r'}'
-t_ASSIGN = r'='
-t_STR    = r'"[^"]+"'
-t_SC     = r';'
-t_COMMA  = r','
-t_INT    = r'[0-9]+'
-t_ADDOP  = r'[+\-]'
-t_MULOP  = r'[/*%]'
-t_EACH   = r'\.each'
+t_NODEP     = r'<->'
+t_SOFTDEP   = r'~>'
+t_SOFTNODEP = r'<~>'
+t_LP        = r'\('
+t_RP        = r'\)'
+t_LB        = r'\['
+t_RB        = r'\]'
+t_LC        = r'{'
+t_RC        = r'}'
+t_ASSIGN    = r'         = '
+t_STR       = r'"[^"]+"'
+t_SC        = r';'
+t_COMMA     = r','
+t_INT       = r'[0-9]+'
+t_ADDOP     = r'[+\-]'
+t_MULOP     = r'[/*%]'
+t_EACH      = r'\.each'
 
 def t_DEP(t):
     r'->'

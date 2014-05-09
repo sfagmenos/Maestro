@@ -7,8 +7,8 @@ import pipeline.translation as t
 from mlex import tokens
 precedence = (
     ('left', 'ASSIGN'),
-    ('left', 'ADDOP', 'DEP'),
-    ('left', 'MULOP', 'NODEP'),
+    ('left', 'ADDOP', 'DEP', 'SOFTDEP'),
+    ('left', 'MULOP', 'NODEP', 'SOFTNODEP'),
 )
 
 lines = 0
@@ -141,10 +141,25 @@ def p_e_nodep(p):
 # ->
 def p_e_dep(p):
     'E : E DEP E'
-    #print "DEP"
     _type = 'list'
     line = p.lineno(1)
     node = Node('->', [p[1].node, p[3].node], _type, line=line)
+    p[0] = AST_obj(node)
+
+# ~>
+def p_e_softdep(p):
+    'E : E SOFTDEP E'
+    _type = 'list'
+    line = p.lineno(1)
+    node = Node('~>', [p[1].node, p[3].node], _type, line=line)
+    p[0] = AST_obj(node)
+
+# ~>
+def p_e_softnodep(p):
+    'E : E SOFTNODEP E'
+    _type = 'list'
+    line = p.lineno(1)
+    node = Node('<~>', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
 # ()

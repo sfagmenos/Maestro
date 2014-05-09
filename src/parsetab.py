@@ -5,7 +5,7 @@ _tabversion = '3.2'
 
 _lr_method = 'LALR'
 
-_lr_signature = '\xdfDZE\xb6\xfeI\x18\xa4\x87\x02\x82\xea\xfd\n\xa1'
+_lr_signature = 's\xe8\x17\x14D\xe5\xeb+\xf6\x19\x1a\xcb\x19\xa0\xbb\xb9'
     
 _lr_action_items = {'ADDOP':([3,4,7,9,10,20,21,25,26,27,28,30,32,35,37,38,39,],[-16,14,-12,-23,-13,14,14,-15,-14,-21,-20,-22,-17,14,14,-9,-10,]),'RB':([3,7,9,10,21,22,25,26,27,28,30,32,35,37,38,39,],[-16,-12,-23,-13,-19,32,-15,-14,-21,-20,-22,-17,-11,-18,-9,-10,]),'LB':([0,1,2,5,6,8,12,13,14,15,16,17,19,23,24,31,41,42,43,44,],[8,8,-3,8,-6,8,-5,-2,8,8,8,8,-4,8,8,8,-8,8,8,-7,]),'STR':([0,1,2,5,6,8,12,13,14,15,16,17,19,23,24,31,41,42,43,44,],[7,7,-3,7,-6,7,-5,-2,7,7,7,7,-4,7,7,7,-8,7,7,-7,]),'INT':([0,1,2,5,6,8,12,13,14,15,16,17,19,23,24,31,41,42,43,44,],[10,10,-3,10,-6,10,-5,-2,10,10,10,10,-4,10,10,10,-8,10,10,-7,]),'LC':([40,],[42,]),'RC':([2,6,12,13,19,41,43,44,],[-3,-6,-5,-2,-4,-8,44,-7,]),'ASSIGN':([9,],[24,]),'DEP':([3,4,7,9,10,20,21,25,26,27,28,30,32,35,37,38,39,],[-16,16,-12,-23,-13,16,16,-15,-14,-21,-20,-22,-17,16,16,-9,-10,]),'EACH':([3,4,7,9,10,25,26,27,28,30,32,35,38,39,],[-16,18,-12,-23,-13,-15,-14,-21,-20,-22,-17,-11,-9,-10,]),'COMMA':([3,7,9,10,21,22,25,26,27,28,30,32,33,35,37,38,39,],[-16,-12,-23,-13,-19,31,-15,-14,-21,-20,-22,-17,31,-11,-18,-9,-10,]),'LP':([0,1,2,5,6,8,9,12,13,14,15,16,17,18,19,23,24,31,41,42,43,44,],[5,5,-3,5,-6,5,23,-5,-2,5,5,5,5,29,-4,5,5,5,-8,5,5,-7,]),'error':([0,1,2,6,12,13,19,23,41,42,43,44,],[6,6,-3,-6,-5,-2,-4,34,-8,6,6,-7,]),'SC':([0,1,2,3,4,6,7,9,10,12,13,19,25,26,27,28,30,32,35,38,39,41,42,43,44,],[12,12,-3,-16,19,-6,-12,-23,-13,-5,-2,-4,-15,-14,-21,-20,-22,-17,-11,-9,-10,-8,12,12,-7,]),'RP':([3,7,9,10,20,21,25,26,27,28,30,32,33,34,35,36,37,38,39,],[-16,-12,-23,-13,30,-19,-15,-14,-21,-20,-22,-17,38,39,-11,40,-18,-9,-10,]),'NODEP':([3,4,7,9,10,20,21,25,26,27,28,30,32,35,37,38,39,],[-16,17,-12,-23,-13,17,17,17,-14,17,-20,-22,-17,17,17,-9,-10,]),'ID':([0,1,2,5,6,8,12,13,14,15,16,17,19,23,24,29,31,41,42,43,44,],[9,9,-3,9,-6,9,-5,-2,9,9,9,9,-4,9,9,36,9,-8,9,9,-7,]),'MULOP':([3,4,7,9,10,20,21,25,26,27,28,30,32,35,37,38,39,],[-16,15,-12,-23,-13,15,15,15,-14,15,-20,-22,-17,15,15,-9,-10,]),'$end':([1,2,6,11,12,13,19,41,44,],[-1,-3,-6,0,-5,-2,-4,-8,-7,]),}
 
@@ -27,26 +27,26 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> PRGM","S'",1,None,None,None),
   ('PRGM -> STMTLIST','PRGM',1,'p_program','/Users/mathias/plt/src/myacc.py',17),
-  ('STMTLIST -> STMTLIST STMT','STMTLIST',2,'p_stmt_list','/Users/mathias/plt/src/myacc.py',22),
-  ('STMTLIST -> STMT','STMTLIST',1,'p_stmt_list','/Users/mathias/plt/src/myacc.py',23),
-  ('STMT -> E SC','STMT',2,'p_stmt','/Users/mathias/plt/src/myacc.py',31),
-  ('STMT -> SC','STMT',1,'p_stmt','/Users/mathias/plt/src/myacc.py',32),
-  ('STMT -> error','STMT',1,'p_stmt_error','/Users/mathias/plt/src/myacc.py',36),
-  ('STMTBLOCK -> LC STMTLIST RC','STMTBLOCK',3,'p_stmt_block','/Users/mathias/plt/src/myacc.py',41),
-  ('STMT -> E EACH LP ID RP STMTBLOCK','STMT',6,'p_list_loop','/Users/mathias/plt/src/myacc.py',45),
-  ('E -> ID LP LII RP','E',4,'p_func_call','/Users/mathias/plt/src/myacc.py',53),
-  ('E -> ID LP error RP','E',4,'p_func_call_error','/Users/mathias/plt/src/myacc.py',59),
-  ('E -> ID ASSIGN E','E',3,'p_assign','/Users/mathias/plt/src/myacc.py',67),
-  ('E -> STR','E',1,'p_e_str','/Users/mathias/plt/src/myacc.py',75),
-  ('E -> INT','E',1,'p_e_int','/Users/mathias/plt/src/myacc.py',81),
-  ('E -> E MULOP E','E',3,'p_math_op','/Users/mathias/plt/src/myacc.py',87),
-  ('E -> E ADDOP E','E',3,'p_math_op','/Users/mathias/plt/src/myacc.py',88),
-  ('E -> LI','E',1,'p_e_list','/Users/mathias/plt/src/myacc.py',99),
-  ('LI -> LB LII RB','LI',3,'p_list','/Users/mathias/plt/src/myacc.py',103),
-  ('LII -> LII COMMA E','LII',3,'p_list_inside_grow','/Users/mathias/plt/src/myacc.py',111),
-  ('LII -> E','LII',1,'p_list_inside_orig','/Users/mathias/plt/src/myacc.py',117),
-  ('E -> E NODEP E','E',3,'p_e_nodep','/Users/mathias/plt/src/myacc.py',124),
-  ('E -> E DEP E','E',3,'p_e_dep','/Users/mathias/plt/src/myacc.py',131),
-  ('E -> LP E RP','E',3,'p_e_parenthesize','/Users/mathias/plt/src/myacc.py',139),
-  ('E -> ID','E',1,'p_e_id','/Users/mathias/plt/src/myacc.py',144),
+  ('STMTLIST -> STMTLIST STMT','STMTLIST',2,'p_stmt_list','/Users/mathias/plt/src/myacc.py',23),
+  ('STMTLIST -> STMT','STMTLIST',1,'p_stmt_list','/Users/mathias/plt/src/myacc.py',24),
+  ('STMT -> E SC','STMT',2,'p_stmt','/Users/mathias/plt/src/myacc.py',33),
+  ('STMT -> SC','STMT',1,'p_stmt','/Users/mathias/plt/src/myacc.py',34),
+  ('STMT -> error','STMT',1,'p_stmt_error','/Users/mathias/plt/src/myacc.py',38),
+  ('STMTBLOCK -> LC STMTLIST RC','STMTBLOCK',3,'p_stmt_block','/Users/mathias/plt/src/myacc.py',43),
+  ('STMT -> E EACH LP ID RP STMTBLOCK','STMT',6,'p_list_loop','/Users/mathias/plt/src/myacc.py',47),
+  ('E -> ID LP LII RP','E',4,'p_func_call','/Users/mathias/plt/src/myacc.py',56),
+  ('E -> ID LP error RP','E',4,'p_func_call_error','/Users/mathias/plt/src/myacc.py',63),
+  ('E -> ID ASSIGN E','E',3,'p_assign','/Users/mathias/plt/src/myacc.py',71),
+  ('E -> STR','E',1,'p_e_str','/Users/mathias/plt/src/myacc.py',80),
+  ('E -> INT','E',1,'p_e_int','/Users/mathias/plt/src/myacc.py',87),
+  ('E -> E MULOP E','E',3,'p_math_op','/Users/mathias/plt/src/myacc.py',94),
+  ('E -> E ADDOP E','E',3,'p_math_op','/Users/mathias/plt/src/myacc.py',95),
+  ('E -> LI','E',1,'p_e_list','/Users/mathias/plt/src/myacc.py',107),
+  ('LI -> LB LII RB','LI',3,'p_list','/Users/mathias/plt/src/myacc.py',111),
+  ('LII -> LII COMMA E','LII',3,'p_list_inside_grow','/Users/mathias/plt/src/myacc.py',120),
+  ('LII -> E','LII',1,'p_list_inside_orig','/Users/mathias/plt/src/myacc.py',127),
+  ('E -> E NODEP E','E',3,'p_e_nodep','/Users/mathias/plt/src/myacc.py',135),
+  ('E -> E DEP E','E',3,'p_e_dep','/Users/mathias/plt/src/myacc.py',143),
+  ('E -> LP E RP','E',3,'p_e_parenthesize','/Users/mathias/plt/src/myacc.py',152),
+  ('E -> ID','E',1,'p_e_id','/Users/mathias/plt/src/myacc.py',157),
 ]
