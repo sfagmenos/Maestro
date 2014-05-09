@@ -29,9 +29,7 @@ def execute(ast, sym_table):
     elif op == 'worker':
         args = execute(ast.children[0], sym_table)
         addr = args[0][0][0]
-        hw.worker(addr)
-        # ast.value =
-# TODO add call to function worker(addr)
+        ast.value = hw.worker(addr)
         return [ast.value, 'None']
     elif op == 'master':
         args = execute(ast.children[0], sym_table)
