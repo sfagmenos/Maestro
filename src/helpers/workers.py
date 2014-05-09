@@ -7,7 +7,7 @@ import redis
 import subprocess
 import  os
 
-class Worker():
+class worker():
     '''Constructor of class'''
     def __init__(self, host_port='', channel=''):
         # stop job dispatching thread since it's a worker
@@ -87,6 +87,6 @@ class Worker():
         jresponse = json.dumps(response)
         self.connection_pool.publish(job_key, jresponse)
 
-if __name__ == "__main__":
-    w = Worker("localhost:6379")
-    print w
+#if __name__ == "__main__":
+#    w = Worker("localhost:6379")
+#    print w

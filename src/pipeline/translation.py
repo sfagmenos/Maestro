@@ -1,4 +1,5 @@
 import helpers.jobs as hj
+import helpers.workers as hw
 
 # recursive function to translate and execute the AST
 def execute(ast, sym_table):
@@ -28,6 +29,7 @@ def execute(ast, sym_table):
     elif op == 'worker':
         args = execute(ast.children[0], sym_table)
         addr = args[0][0][0]
+        hw.worker(addr)
         # ast.value =
 # TODO add call to function worker(addr)
         return [ast.value, 'None']
