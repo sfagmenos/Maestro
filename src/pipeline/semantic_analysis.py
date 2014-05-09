@@ -4,6 +4,9 @@ def analyse(ast):
             '<->':"non dependency operator",
             '-':"minus operator",
             '+':"plus operator"}
+    new = type(ast)
+    if new is str or new is list:
+        return str(new)
     if ast.operation == "id":
         if ast.value not in assign:
             print "Variable " + ast.value + " not previously declared"
@@ -34,14 +37,20 @@ def analyse(ast):
         else:
             print "minus error"
             return None
+    if ast.operation == "range":
+        child = ast.children[0].children
+        type1 = analyse(child)
+        if type1 != int:
+            print "Function range needs int as argument got " + type1
+            return None
     #for leaf int, str,....
     if not ast.children:
         return ast._type
     for node in ast.children:
-        type = analyse(node)
-        if type == None:
+        typex = analyse(node)
+        if typex == None:
             break
-    return type
+    return typex
 
 
 def xstr(s):
@@ -51,11 +60,14 @@ def xstr(s):
 
 
 def traverse(ast, level=0):
+    if type(ast) is str:
+        print "\t" * level + ast
+        return
+#    if ast.operation == 'id':
+#        print "\t" * level + xstr(ast._type) + " " + xstr(ast.value)
     if ast.operation == "=":
         print "\t" * level + xstr(ast._type) + " " + xstr(ast.operation) \
                     + " " + xstr(ast.value) + " " + xstr(ast.leaf)
-        print "\t" * (level + 1) + ast.children[0]
-        return
     else:
         print "\t" * level + xstr(ast._type) + " " + xstr(ast.operation) \
                     + " " + xstr(ast.value) + " " + xstr(ast.leaf)
