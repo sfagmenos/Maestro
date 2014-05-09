@@ -4,9 +4,6 @@ def analyse(ast):
             '<->':"non dependency operator",
             '-':"minus operator",
             '+':"plus operator"}
-    #if not ast.children:
-        #in leaf
-    #    return ast._type
     if ast.operation == "id":
         if ast.value not in assign:
             print "Variable " + ast.value + " not previously declared"
@@ -37,6 +34,9 @@ def analyse(ast):
         else:
             print "minus error"
             return None
+    #for leaf int, str,....
+    if not ast.children:
+        return ast._type
     for node in ast.children:
         type = analyse(node)
         if type == None:
