@@ -1,25 +1,14 @@
 %\section{Introduction}
 %\label{sect:wintro}
 
-Frequently a user allocates a pool of machines in order to conduct experimental
-evaluation represented in the format of scripts. In a broad sense, an end-user
-operates on a pool of machines and allocates jobs represented in a scripting
-language.
-Our purpose is to build a declerative programming language, named \lang{},
-to provide users with the ability to express complex semantics for job
-distribution
-and scheduling.
-There are many scenarios where semantics are needed to express dependencies for
-job execution, such as:
-\begin{description}
-\item[Jobs can depend on each other:] User needs to create and run jobs $A$,
-$B$ in parallel, on a few workers. Only if both $A$ and $B$ succeed, job $C$
-is allowed to execute.
-%And then you want to run job $C$ on some
-%workers, only after both $A$ and $B$ succeeded.
-\item[Jobs can depend on external factors:] Job $A$ should execute after 6.00 PM
-and job $B$ should execute in machines with CPU-load less than 0.5.
-\end{description}
+Many computer science projects now involve runing programs on multiple machines, whether to collect data, run analysis, or parallelize computaton.
+At a high level, an end-user operates on a pool of machines and allocates jobs, usually represented in a scripting language.
+Our purpose is to build a declerative programming language, named \lang{}, for users to easily express units of computations (a.k.a. jobs) and their dependencies.
+The runtime then distributes the jobs and ensures an order that doesn't conflict with expressed dependencies.
+
+As an example, a researcher wants to run a measurement that is divided into 3 steps: populate a third party service, collect data from the service, and analyze the collected data.
+The data collection has to run an hour after population, but the analysis can start as soon as the data is collected.
+With \lang{}, we can express this in just a few lines, as shown in \ref{sect:ex}.
 
 Prior related work in this area includes the so-called infrastructure
 configuration management frameworks, some of the most popular being
@@ -29,13 +18,9 @@ infrastructure configuration dependencies. Our approach differs in that
 it provides end-users the ability to express dependencies related to
 job work-flows.
 
-The rest of our document is structured as follows. In section~\ref{sect:desg} we
-present the design of our language, in section~\ref{sect:spec} we underline
-specifications and main features of our language. In section~\ref{sect:tech} we
-describe the environment of our language, and then give an overview of what
-programs will look like in section~\ref{sect:ex}. In section~\ref{sect:conc} we
-give our concluding remarks.
-
+In the rest of the document, we first present a high level overview of the language.
+We then digg deaper with a tutorial and a reference manual.
+We finally explain the architecture and the process of building the language.
 
 \section{Language Category and Design}
 \label{sect:desg}
@@ -43,278 +28,27 @@ give our concluding remarks.
 \item[Declarative] The goal is to have a declarative language to run jobs
 (scripts) in a distributed way. The programmer only has to register workers and
 declare job dependencies; the language will schedule and run the jobs.
-\item[Callbacks \& lambdas] \lang{} supports before/after callbacks
-with a more imperative model to express any logic needed, and
-% \lang{} supports
-lambdas to make callbacks easier to write.
-\item[Strongly typed] \lang{} is strongly typed so that errors can be checked
-before jobs are sent. On top of the classic types it supports a job type.
-\item[Garbage collected] Memory is handled by the language with a simple
-garbage collector. Users should not have to manage their memory in a high
+\item[Dynamically typed] \lang{} is dynamically typed.
+On top of the classic types it supports a job type.
+\item[Garbage collected] Memory is handled by the language by piggy backing on
+Python's garbage collector. Users should not have to manage their memory in a high
 level domain specific language, where performance is not critical.
-\item[No exceptions] Error checking is handled on the spot. No exceptions
-will be thrown to avoid hard to debug situations from asynchronous callbacks.
-\item[Two return values] Functions return a value and an error, to make error
-checking easier and more compact, without throwing exceptions.
+\item[No exceptions] Error checking is handled at runtime, but errors cannot be rescued
+or bubbled up to avoid hard to debug situations from asynchronous callbacks.
 \item[Program structure] Programs are written as a sequence of function
 definitions and declarations stored in a file or a REPL command line
 interface.
 \end{description}
 
-\section{Language Specifications and Main Features}
-\label{sect:spec}
-
-\subsection*{Operators}
-In what follows we present tables demonstrating the operators supported by our
-language.%, along with some indicative example.
-
-
-\begin{table}[h]
-\begin{center}
-    \parbox{.45\linewidth}{
-        \begin{tabular}{| l | l |}
-        \hline
-        Operator & $a=4, b=2$ \\ \hline
-        $+$ &  $a + b$ gives 6 \\  \hline
-        $-$ &  $a - b$ gives 2  \\ \hline
-        $/$ &  $a~/~b$ gives gives 2 \\ \hline
-        $*$ &  $a~*~b$ gives 8  \\ \hline
-        $\%$ & $a~\%~b$ gives 0 \\ \hline
-        \end{tabular}
-        \caption{Arithmetic operators.}
-    }
-    \parbox{.45\linewidth}{
-        \begin{tabular}{| l | l |}
-        \hline
-        Operator & $a=4, b=2$ \\ \hline
-        $=$  &  $a = b$  $a$ has taken on the value of 2 \\ \hline
-        $+=$ &  $a += b$ is equivalent to a = a + b\\ \hline
-        $-=$ &  $a -= b$ is equivalent to a = a - b \\ \hline
-        $+=$ &  $a *= b$ is equivalent to a = a * b\\ \hline
-        $/=$ &  $a /= b$ is equivalent to a = a / b\\ \hline
-        \end{tabular}
-        \caption{Assignment operators.}
-    }
-\end{center}
-\end{table}
-
-\begin{table}[h]
-\begin{center}
-    \parbox{.4\linewidth}{
-        \begin{tabular}{| l | l |}
-        \hline
-        Operator & $a=4, b=2$ \\ \hline
-        $==$ & $a == b$ is not true \\ \hline
-        $!=$ & $a != b$ is true \\ \hline
-        $\textless$  & $a \textless b$ is false \\ \hline
-        $\textgreater$  & $a \textgreater b$ is true \\ \hline
-        $\textless=$ & $a \textless= b$ is not true \\ \hline
-        $\textgreater=$ & $a \textgreater= b$ is true \\ \hline
-        \end{tabular}
-        \caption{Comparison operators.}
-    }
-    \parbox{.4\linewidth}{
-        \begin{tabular}{| l | l |}
-        \hline
-        Operator & $a = true, b = false$ \\ \hline
-        and & a and b is false \\ \hline
-        or & a or b is true\\ \hline
-        not & not b is true \\ \hline
-        in & a in b is true \\ \hline
-        not in & a not in b is false\\ \hline
-        \end{tabular}
-        \caption{Logical operators}
-     }
-\end{center}
-\end{table}
-
-The order of supported operations
-is: (1) Exponentiation, (2) Multiplication, Division, Modulo, (3) Addition,
-Subtraction, (4) Comparison, (5) Assignment, (6) Membership, and (7) Logical.
-
-\subsection*{Datatypes}
-Variables have to be declared before use, and datatypes of
-variables are specified at declaration time. Variable names 
-begin with an alphabetic letter.
-
-\begin{description}
-\item [Job:] The Job type is a \lang{} specific type, equivalent to a struct
-with fields describing a Job to be run. The fields are: ``script'' for the
-name of the script implementing the job, ``workers'' for the number of workers
-to use (default is as many as possible), and ``priority'', an Int from 0 to 5,
-0 being the
-highest priority.
-Job variables are declared as:
-$Job~\textless var\textgreater = Job.new(~script=<String>,~workers=<Int>,~priority=<Int>)$
-
-\item [Int:] Integer variables are used to store integer values like 0, 7,
--1024, and support both signed and unsigned values. Integer variables are
-declared using the ``Int'' keyword as:
-$Int~\textless var\textgreater,~\textless var\textgreater, ...$
-%$Int \textlessvar\textgreater = \textlessvalue\textgreater$
-
-%$Int a, b, c$
-%$Int a = 234$
-
-\item [Float:] Floating point datatypes are used to store real values like
-1.03 or -23.56. Floating Point variables are declared using the ``Float''
-keyword as:
-$Float~\textless  var\textgreater,~\textless  var\textgreater, ...$
-%$Float \textlessvar\textgreater = \textlessvalue\textgreater$
-
-%Float a, b, c
-%Float a = 23.78
-
-
-\item [Bool:] Boolean datatypes are used to store one of two possible values:
-True or False. Boolean variables are declared using the ``Bool'' keyword as
-$Bool~\textless  var\textgreater,~\textless  var\textgreater, ...$
-%$Bool \textlessvar\textgreater = [\textlessTrue\textgreater OR \textlessFalse\textgreater]$
-%
-%$Bool a, b, c$
-%$Bool a = True$
-
-
-
-\item [String:] String datatypes represent a sequence of characters. String
-variables are declared using the ``String'' keyword, and string values are 
-declared within single quotation marks.
-String variables are declared as:
-$String~\textless var\textgreater,~\textless  var\textgreater, ...$
-%$String \textlessvar\textgreater = ' \textlessvalue\textgreater '$
-
-%$String a, b, c$
-%$String a = 'test'$
-
-\item [List:]
-List type is a container that holds objects of the same type in a given order.
-The list type implements a sequence, and also allows the user to add/remove
-objects from this sequence.
-
-Lists are created as:
-$L = type[\textless expr \textgreater,~\textless expr \textgreater, ...]$
-, e.g., $L = int[23,~45,~2]$.
-
-An item of a list can be accessed using the list index, starting from 0.
-$Item = L [ \textless index\textgreater]$, e.g., $Item = L [0]$.
-
-\iffalse
-\item [Dictionary:]
-The dictionary type is an associative array that holds
-a pair of items, called a key-value pair. Keys in the dictionary have to be
-unique.
-
-Dictionaries are created as:
-$Dict = \{ \textless key \textgreater :  \textless val\textgreater,  \textless key \textgreater : \textless val \textgreater, ...\}$, e.g.,
-$Dict = \{ 'Bob' : '1974', 'alice' : '1987'\}$.
-
-A value in a dictionary can be accessed using its corresponding key.
-$Val = Dict [ \textless key\textgreater]$, e.g., $Val = Dict ['Bob']$.
-\fi
-\end{description}
-
-\subsection*{Dependencies}
-Dependencies between programs are specified using single arrows $\longrightarrow$ ,
-whereas bidirectional arrows $\longleftrightarrow$ indicate that programs should be run in parallel.
-This provides a straightforward job dependency expression, in the spirit of Python's
-list comprehensions. We give some indicative examples:
-%For grouping parentheses can be used.
-\begin{lstlisting}
-Example 1: Job B depends on Job A: 
-program_a --> program_b
-
-Example 2: Jobs A, B, C must run in parallel: 
-program_a <-->  program_b <--> program_c
-
-Example 3: Jobs A, B parallel, Job C dependent: 
-(program_a <--> program_b ) <--> program_c
-\end{lstlisting}
-
-\subsection*{Functions and lambdas}
-Functions return a value and an error, and are created with the func
-keyword. Lambdas are supported if no function name is given.
-\begin{lstlisting}
-func name(type arg1, type arg2) (return_type name, error_type err)
-{
-    //code here
-    name = "my return object"
-    err = nil  # or the error
-    return
-}
-\end{lstlisting}
-
-\subsection*{Conditional Statements and Errors}
-\begin{description}
-\item [Error checking:] If accepts a pre-statement that is executed (like the
-first statement of a for loop)
-
-Example:
-$if (\_, err~=~execute\_job(j1);~ err~ !=~ nil) {}$
-\end{description}
-
-
-%
-%if {}
-%else\_if {}
-%else{}
-%
-%if {}
-%else{}
-%
-%
-\subsection*{Loops}
-\begin{description}
-\item [For loop:] For loop is designed to iterate a fixed number of times.
-For loop is declared as:
-
-For $\textless var \textgreater~in~[\textless initialization \textgreater : \textless increment \textgreater: \textless termination \textgreater]~\{\textless statements \textgreater\}$.
-
-%Example:
-%$For i IN [ 1 : 2 : 10] loops as 1, 3, 5, 7 and 9.$
-
-\item [While loop:] while loop simply repeats the $\textless  statements\textgreater$ as long
-as the $\textless  condition\textgreater$ is true. While loop is declared as:
-$While (\textless  condition\textgreater)~\{\textless  statement\textgreater\}$.
-
-%Example:
-%$int x = 5
-%while ( x \textless 10 )
-%{
-%    print "Hello World"
-%    x++
-%}$
-
-%This program prints Hello World as long as the value of the variable x is less than 10. Therefore, it loops 5 times.
-
-\item [Do-While loop:] Do-While loop behaves like a While loop, except that $\textless condition\textgreater$.
-is evaluated after the execution of $\textless  statement\textgreater$ instead of before.
-%Guarantee 
-%at least one execution of $\textless statement \textgreater$, even if $\textless condition \textgreater$ is never true. 
-Do-While loop is declared as:
-$Do\{\textless  statement\textgreater\}~While(\textless condition\textgreater)$
-\end{description}
-
-
-\subsection*{Comments}
-Comments are also handled in a pythonic way, using a single pound sign ``\#'' for
-one-line comments, and double pound signs ``\#\#'' to indicate start and end of block comments.
-
-%Example:
-%\# this is a comment
-%
-%\#\#
-%	this is a block comment\\
-%	this is a block comment
-%\#\#
-
 \section{Language Environment}
 \label{sect:tech}
 The language environment has three major characteristics:
 \begin{description}
-\item[Workers list] The user shouldn't have to manage his workers after
+\item[Workers Pub/Sub] The user shouldn't have to manage his workers after
 they are launched; he only needs to call a very basic program
 to register his workers. \lang{} will then transparently assign jobs to workers
-and manage dependencies.
+and manage dependencies. Jobs are assigned through a Publish/Subscribe system
+based on Redis.
 \item[Job queue] Under the hood, jobs are stored in a priority queue. When a
 worker becomes available, \lang{} will search the job queue in order of highest
 priority first until it finds a job with all dependencies fulfilled. This job
@@ -326,39 +60,24 @@ even need to open a text editor.
 
 \section{Examples}
 \label{sect:ex}
-Example 1: Create and run 2 jobs $A$ and $B$ in parallel, on a few
-workers. Then, you want to run job $C$ on some workers, only after both $A$
-and $B$ succeeded.
+Example 1: Create and run 2 jobs $A$ and $B$ in parallel.
+Then run job $C$, only after both $A$ and $B$ succeeded.
 \begin{lstlisting}
-a = Job(script="abc.pl")    // job scripts
-b = Job("xRay.rb")
-c = Job("telesphorus.py")
-run((a <-> b) -> c)
+a = Job("print.pl", "Hello, ");    // job scripts
+b = Job("print.rb", "world!");
+c = Job("yay.py");
+run((a <-> b) -> c);
 \end{lstlisting}
-Example 2: Make a measurement that is divided into 3 steps: populate, collect
-data, and analyze.
+Example 2: Make a measurement that is divided into 3 steps: populate (send 100 emails), collect
+data (1 hour after population step), and analyze the data.
 \begin{lstlisting}
-func an_hour_after(Job j) {
-  return func () {
-    j.finish_time && j.finish_time - Time.now > Time.hour(1)
-  }
+populate_scripts = []
+range(100).each(i) {
+  p = Job("send_email_number.rb", i);
+  populate_scripts = populate_scripts + [p];
 }
-
-Job old_b = nil
-for i in range(0,10) {
-  a = Job.new(script='send_email_batch.rb', workers=1)
-  b = Job.new(script='collect_data.rb', workers=1)
-  b.add_func_dependency( an_hour_after(a) )
-  Job c = Job.new(script='analyze.py')
-  run(old_b -> a -> b -> c)
-  old_b = b
-}
+b = Job("collect_data.rb");
+Job c = Job("analyze.py");
+run(a -> Wait(3600) -> b -> c);
 \end{lstlisting}
 
-\section{Conclusion}
-\label{sect:conc}
-In this white paper we present an introductory description of \lang{}, a
-language intended to help users describe and orchestrate jobs based on a-priory
-known dependencies. In the future, during the evolution of our project, there
-may be additional functionality implemented, but the core specifications of
-\lang{} will remain as is.
