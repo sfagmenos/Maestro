@@ -1,11 +1,21 @@
 \section{Development}
 Our interpreter was developed under a Unix-based environment, specifically Debian, Ubuntu and MacOS.
 Every member used their favorite text editor. Mainly vim and sublime. We used Github to host our
-repository. As version control system we used Git. We did not used any issue tracking tool as 
+repository. As version control system we used Git. Also some of us used tig for terminal access git in
+text mode. We did not used any issue tracking tool as 
 our main development was done synchronous with all members being in the same room.
 
-We used Python 2.7.3 and the Python-Lex-Yacc (PLY) to create and test our language. A generic makefile
-was created for the purpose of running all tests at once. As our interpreter
+We used Python 2.7.3 and the Python-Lex-Yacc (PLY) to create and test our language. A generic Makefile
+was created for the purpose of running all tests at once. Most of our examples are bash scripts.
+For more sophisticated scripts such as map-reduce, we used ruby.
+
+Our interpreter can take a file as argument. Also a REPL is started if no argument
+is specified by the user.
 
 \section{Runtime Environment}
-Describe the run-time environment for the compiler.
+Our interpreter has 2 running options. Both of them does not require any change in user environment.
+Our interpreter needs is a pc that can connect to the internet and the ability to spawn threads. For 
+distributed run also needs a redis server for publishing messages with a master and a worker. Both of them can be also 
+be done in localhost.
+For creating a master user must specify \textit{service(IP:PORT)}. For worker he must
+specify \textit{worker(IP:PORT)}.
