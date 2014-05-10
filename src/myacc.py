@@ -97,15 +97,17 @@ def p_math_op(p):
     _type = type_for_op(p[1].node._type, p[3].node._type, p[2])
     if _type == None:
         line = p.lineno(2)
-        print "Syntax error in line " + str(line)
+        print "Wrong type for mathematical operator in line " + str(line)
         raise SyntaxError
     node = Node(p[2], [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
+
 
 # lists
 def p_e_list(p):
     'E : LI'
     p[0] = p[1]
+
 
 def p_list(p):
     'LI : LB LII RB'
@@ -198,17 +200,21 @@ def type_for_func(name):
     elif name in ['run', 'range', 'map', 'reduce']:
         return 'list'
 
+
 def type_for_op(type1, type2, op):
     if type1 == "job" or type2 == "job":
         print "No mathematic operations for type jobs"
-        return None 
-    if type1 == type2:
-        return type1
-    elif op == '+':
+        return None
+    if op == '+':
         return type_for_sum(type1, type2)
+    elif type1 != 'int' or type2 != 'int':
+        return None
+    elif type1 == type2:
+        return type1
     else:
         return None
 #        raise SyntaxError
+
 
 def type_for_sum(type1, type2):
     if (type1 == 'int' and type2 == 'string') \
