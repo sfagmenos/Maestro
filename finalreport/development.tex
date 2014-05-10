@@ -23,8 +23,10 @@ At the end small changes are needed for the distributed functionality.
 What our interpreter needs is a pc that can connect to the internet and the ability to spawn threads. 
 Many packages from python are needed such as
 \textit{ 
+\begin{itemize}
 \item pip install redis
 \item pip install colorama
+\end{itemize}
 }
 Our user does not need to have a redis server running. A machine on the internet that has redis server
 will be used as a master(channel). User only wants the ip of the machine and the port redis is listening.
