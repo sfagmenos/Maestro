@@ -54,7 +54,7 @@ class worker():
             return
 
         # start polling for messages
-        print "Polling for messages:"
+        print "Polling for messages"
         for item in self.pubsub.listen(): 
             if item['type'] == 'message':
                 self.execute(item)
@@ -89,8 +89,11 @@ class worker():
         pcommand = ['./this_will_never_exist.sh'] + arguments
         s = subprocess.Popen(pcommand, stdout=subprocess.PIPE, 
                                     stderr=subprocess.PIPE)
+        # print what you executed
 
-        print "Just executed job:", script_name
+        print "Just executed job:", script_name,\
+                 "with arguments:", arguments
+
         # get return values
         stdout, stderr = s.communicate()
         errno = s.returncode
@@ -108,9 +111,10 @@ class worker():
 
 
 def getexternalip():
+    '''This function returns the external IP of the machine.
+    Subscribers are registered in Redis channel with their
+    external IP, which is used to identify them when jobs
+    are dispatched
+    '''
     ip = urllib.urlopen('http://www.biranchi.com/ip.php').read()
     return ip[3:]
-
-#if __name__ == "__main__":
-#    w = Worker("localhost:6379")
-#    print w
