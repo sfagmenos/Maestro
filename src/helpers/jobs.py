@@ -75,7 +75,7 @@ class Job():
                             for j in self._deps_jobs], []))
 
     def run(self):
-        self.compute_args
+        self.compute_args()
         if not self._host:
             self._run_localy()
         else:
@@ -85,7 +85,6 @@ class Job():
         '''run a job localy'''
         # need error checkong of what Popen returns
         try:
-            self.compute_args()
             # execute command
             pcommand = [self._script] + self._arguments
             os.chmod(self._script, 0766)
