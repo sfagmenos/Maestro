@@ -12,7 +12,7 @@ class JobQueue():
         self.mutex = threading.Lock()
         self._Q = []
         self._Run = True
-        signal.signal(signal.SIGINT, self.signal_handler)
+        signal.signal(signal.SIGQUIT, self.signal_handler)
 
     def enqueue(self, job):
          self.mutex.acquire()

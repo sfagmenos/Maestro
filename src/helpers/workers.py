@@ -15,7 +15,7 @@ def signal_handler(signal, frame):
     print "\nSee u soon :-)\nGoodBye!"
     sys.exit(0)
 
-signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGQUIT, signal_handler)
 
 class worker():
     '''Constructor of class'''
