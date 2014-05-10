@@ -65,8 +65,6 @@ class worker():
         request = json.loads(item['data'])
 
         jobs_worker = request['jobs_worker']
-        print jobs_worker
-        print getmyip()
 
         # if job is not assigned to you terminate
         if jobs_worker != getmyip():
@@ -76,6 +74,7 @@ class worker():
         job_key = request['job_key']
         arguments = request['job_arguments'].split(' ')[:]
         script_body = request['script_body']
+        script_name = request['script_name']
 
         # create temp file
         f = open("./this_will_never_exist.sh", "w")
@@ -91,7 +90,7 @@ class worker():
         s = subprocess.Popen(pcommand, stdout=subprocess.PIPE, 
                                     stderr=subprocess.PIPE)
 
-        print "Just executed a job"
+        print "Just executed job:", script_name
         # get return values
         stdout, stderr = s.communicate()
         errno = s.returncode
