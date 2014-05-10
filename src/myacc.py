@@ -230,9 +230,7 @@ def type_for_op(type1, type2, op):
         return None
     if op == '+':
         return type_for_sum(type1, type2)
-    elif type1 != 'int' or type2 != 'int':
-        return None
-    elif type1 == type2:
+    elif type1 == type2 == 'int':
         return type1
     else:
         return None
@@ -243,6 +241,8 @@ def type_for_sum(type1, type2):
     if (type1 == 'int' and type2 == 'string') \
             or (type2 == 'int' and type1 == 'string'):
         return 'string'
+    if type1 == type2 == 'int':
+        return type1
     return None
 #    raise SyntaxError
 
