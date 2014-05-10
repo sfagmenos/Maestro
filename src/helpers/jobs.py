@@ -88,10 +88,9 @@ class Job():
             self.compute_args()
             # execute command
             pcommand = [self._script] + self._arguments
-            os.chmod(self._script, 0700)
+            os.chmod(self._script, 0766)
             s = subprocess.Popen(pcommand, stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)
-
             # get return values
             self._stdout, self._stderr = s.communicate()
             self._errno = s.returncode
@@ -133,6 +132,12 @@ class Job():
         for item in connection_pool.client_list():
             if item['cmd'] == 'subscribe':
                 workers.append(item['addr'].split(':')[0])
+
+        # if no listen workers end
+        # posible bug here
+        if not workers:
+            print "NO WORKERS"
+            return
         jobsworker =  random.choice(list(set(workers)))
 
 

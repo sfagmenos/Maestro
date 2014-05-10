@@ -28,16 +28,14 @@ class JobQueue():
         self._Run = False
 
     def execute(self, job):
-        if job.can_run():
-            print "Running job: \"%s\"" % job.script()
-            job.run()
-            (errno, stderr) = job.perror()
-            if errno != 0:
-                print "Error while executing Job: \"%s\"" % job.script()
-                print stderr
-            else:
-                print job.stdout()
-            self.dequeue(job)
+        print "Running job: \"%s\"" % job.script()
+        job.run()
+        (errno, stderr) = job.perror()
+        if errno != 0:
+            print "Error while executing Job: \"%s\"" % job.script()
+            print stderr
+        else:
+            print job.stdout()
 
     def poll_for_jobs(self):
         '''Thread main loop'''
@@ -47,6 +45,7 @@ class JobQueue():
             for job in temp:
                 if job.can_run():
                     threading.Thread(target=self.execute, args=[job]).start()
+                    self.dequeue(job)
             time.sleep(0.5)
 
     def sort(self):

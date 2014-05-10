@@ -1,7 +1,7 @@
 '''
 Workers API
 '''
-import socket
+import urllib
 import jobqueue
 import json
 import redis
@@ -67,7 +67,7 @@ class worker():
         jobs_worker = request['jobs_worker']
 
         # if job is not assigned to you terminate
-        if jobs_worker != getmyip():
+        if jobs_worker != getexternalip():
             return
 
         #parse request
@@ -81,7 +81,7 @@ class worker():
         f.write(script_body)
         f.close()
         try:
-            os.chmod("./this_will_never_exist.sh", 0700)
+            os.chmod("./this_will_never_exist.sh", 0766)
         except Exception, error:
             print "Unhandled Exception:", error
 
@@ -107,10 +107,10 @@ class worker():
         self.connection_pool.publish(job_key, jresponse)
 
 
-def getmyip():
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.connect(('google.com', 0))
-    return s.getsockname()[0]
+def getexternalip():
+    ip = urllib.urlopen('http://www.biranchi.com/ip.php').read()
+    return ip[3:]
+
 #if __name__ == "__main__":
 #    w = Worker("localhost:6379")
 #    print w
