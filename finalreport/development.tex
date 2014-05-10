@@ -4,20 +4,41 @@ Every member used their favorite text editor. Mainly vim and sublime. We used Gi
 repository. As version control system we used Git. Also some of us used tig for terminal access git in
 text mode. We did not used any issue tracking tool as 
 our main development was done synchronous with all members being in the same room.
+Our presentation was created, edited and distributed with Google Drive.
+
 
 We used Python 2.7.3 and the Python-Lex-Yacc (PLY) to create and test our language. A generic Makefile
 was created for the purpose of running all tests at once. Most of our examples are bash scripts.
 For more sophisticated scripts such as map-reduce, we used ruby.
 
+
 Our interpreter can take a file as argument. Also a REPL is started if no argument
 is specified by the user.
 
 \section{Runtime Environment}
-Our interpreter has 2 running options. Both of them does not require any change in user environment.
-Our interpreter needs is a pc that can connect to the internet and the ability to spawn threads. 
-
-For distributed run also needs a redis server for publishing messages with a master and a worker. Both of them can be also 
-be done in localhost.
+One of our main goals of maestro is to distribute jobs and test them in computers with different
+architecture, different operating systems and many more. Because of this our environment should have
+a small number or even none environment dependencies. In favor of this our interpreter has 2 running options. 
+At the end small changes are needed for the distributed functionality.
+What our interpreter needs is a pc that can connect to the internet and the ability to spawn threads. 
+Many packages from python are needed such as
+\textit{ 
+\item pip install redis
+\item pip install colorama
+}
+Our user does not need to have a redis server running. A machine on the internet that has redis server
+will be used as a master(channel). User only wants the ip of the machine and the port redis is listening.
+Otherwise he can run it locally with no environment change.
+\subsection{Local}
+When run locally our interpreter is creating processes to run jobs.
+No changes needed in the environment.
+\subsection{Distributed}
+For distributed run also needs a redis server for publishing messages with a master and a worker. 
+Both of them can be also be done in localhost.
 For creating a master user must specify \textit{service(IP:PORT)}. For worker he must
 specify \textit{worker(IP:PORT)}. Both of these examples are handled by our interpreter.
-The 
+
+
+
+
+ 
