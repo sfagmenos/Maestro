@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'JSON'
+require 'json'
 
 count = Hash.new(0)
 ARGF.read.strip.split(/\s+/).each do |w|
