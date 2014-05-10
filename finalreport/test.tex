@@ -1,11 +1,7 @@
 \section{Methodology}
-For our testing we do not rely on any existing Python unit-testing framework.
-Instead, we have developed a customized testing engine for our project.
-Our engine, encapsulated in the \textit{Tests} folder, comprises several Python
-files, each of which corresponds to a Maestro test that checks both the
-robustness of the compiler (i.e. its ability to identify and parse tokens),
-and the final output of the program.
-In what follows we presented a sample unit test.
+We do not rely on any existing Python unit-test framework for our testing purposes. Instead, we have developed a customized testing engine for our project. The engine, encapsulated by the Tests folder, comprises of several Python files. Each file consists of a test written in Maestro that checks both the robustness of the compiler (i.e. its ability to identify and parse tokens), and the final output of the program. 
+
+Presented below is a sample unit test.
 
 \begin{center}
 \begin{verbatim}
@@ -14,42 +10,21 @@ master("0.0.0.0:6379");
 # check what happens when a job is run without being declared
 a = Job('print.py', 'foo');
 c = Job('print.py' 'bar');
-a-> c
-run(a, b, c);  # Job b is not declared
+run(a -> b -> c);  # Job b is not declared
 \end{verbatim}
 \end{center}
 
-% this test does not seem to check successful creation?
-%This test first checks if jobs ``a'' and ``c'' are successfully created.
+The test first checks if two Jobs are created successfully. The file \textit{print.py} is a Python program that writes the argument passed to it to a file \textit{check.txt}. Once executed, Job \textit{a} must run the argument \textit{foo} through the program \textit{print.py}. Similarly, Job \textit{b} must run the argument \textit{bar} through \textit{print.py}. 
+Once the two Jobs have been created successfully, we attempt to pass an undeclared Job to the \textit{run} method, which executes a single Job or a list of Jobs in the given order. In this case, we check to see if the Maestro compiler identifies undeclared Job \textit{b} as an error and handles it elegantly. Once the test completes execution, we check the expected output against the output that was piped to \textit{check.txt} to confirm success or failure. 
 
-<<<<<<< HEAD
 We have a total of 15 testcases in our engine that test Maestro's  overall performance in different steps.
-=======
-In the above test, the file \textit{print.py} is a Python program that writes
-its argument to the file \textit{check.txt}. Once executed, Job ``a'' will
-pass the argument \textit{foo} to the program \textit{print.py}. Similarly,
-Job ``b'' will
-pass the argument \textit{bar} to the program \textit{print.py}.
-Once the two Jobs are successfully created, we attempt to pass an undeclared
-Job ``b'' to the ``run'' method, which executes a single Job or a list of Jobs
-according to their dependencies. With the above test, we check if
-Maestro compiler identifies undeclared Job ``b'' and produces a diagnostic
-error. Once the test completes execution, we check the expected output against
-the output that was written to \textit{check.txt}, in order to evaluate success
-or failure. In our engine, we have 75 testcases in total which helped us test
-Maestro in different development stages.
->>>>>>> FETCH_HEAD
 
 \section{Relevant Files and Descriptions}
 
 \textbf{testframework.py}
 \newline
-\indent This is the main framework file. It can execute all Maestro test-cases
-or individual ones, depending on how it is called.
-\newline
-\textit{python testframework.py all} executes all test cases in the
-\textit{Tests} folder. Replacing \textit{all} with the name of a specific test
-may be used to execute tests individually.
+\indent This is the main framework file. It can execute all Maestro test-cases or individual ones, depending on how it is called. 
+\newline \textit{python testframework.py all} executes all test cases in the \textit{Tests} folder. Replacing \textit{all} with the test-name will execute individual tests. 
 \newline
 \newline
 \textbf{run.sh}
@@ -59,8 +34,7 @@ may be used to execute tests individually.
 \newline
 \textbf{Tests\textbackslash print.py}
 \newline
-\indent This program is run by every Job created in our test cases. It writes
-the argument that it receives into file \textit{check.txt}.
+\indent This program is run by every Job created in our test cases. It writes the argument that it receives into file \textit{check.txt}. 
 \newline
 \newline
 \textbf{Tests\textbackslash}
@@ -69,70 +43,59 @@ the argument that it receives into file \textit{check.txt}.
 \newpage
 \noindent\textbf{TestsOutput\textbackslash check.txt}
 \newline
-\indent The check file to which \textit{print.py} writes its output.
-We compare the contents of the file against the expected output to determine
-success or failure of a given Job.
+\indent The checkfile to which \textit{print.py} writes its output. We compare the contents of the file against the expected output to determine success or failure of a given Job.
 \newline
 \newline
 
 \section{Selected Test Cases}
 \begin{enumerate}
 
-\item This test checks the behavior of Maestro in presence of a circular
-dependency.
+\item This test checks the performance of Maestro in presence of a circular dependency. 
 \begin{verbatim}
 #!maestro
-
-a = Job("./tmp/test.sh", "bla");
-b = Job("./tmp/test.sh", "foo");
-c = Job("./tmp/test.sh", "chk");
-
-run(a->b->c->a); //there is a circular dependency here
+#master("0.0.0.0:6379")
+# check hard circular dependencies with strings
+a = Job("print.py", "cheer")
+b = Job("print.py", "us")
+c = Job("print.py" "on")
+run(a -> b -> c -> a)
 \end{verbatim}
-Here job ``a'' depends on job ``b'', job ``b'' depends on job ``c'', and job
-``c'' in-turn depends on job ``a''.
+Here job \textit{a} depends on \textit{b}, \textit{b} depends on \textit{c} and job \textit{c} in-turn depends on job \textit{a}.
 
-\item This test checks the behavior of Maestro on self dependencies.
+\item This test checks the performance of Maestro on self dependencies.
 \begin{verbatim}
 #!maestro
-
-a = Job("./tmp/test.sh", "bla");
-b= Job("./tmp/test.sh", "bla");
-
-run(a->a); //self-dependency
+#master("0.0.0.0:6379")
+# check what happens when jobs depend on themselves
+a = Job('print.py', 'foo')
+run(a -> a -> a)
 \end{verbatim}
-Here job \textit{a} depends on itself.
 \newpage
-<<<<<<< HEAD
-\noindent \item This test checks Maestro's response to an instance of imbalanced parenthesis.
-=======
-\noindent \item This test check the behavior of Maestro on nested loops.
->>>>>>> FETCH_HEAD
+\noindent \item This test check the performance of Maestro on nested loops.
 \begin{verbatim}
 #!maestro
+#master("0.0.0.0:6379")
+# check use of the operator *
+c = 5
+d = 8
+range(d).each(var){
+	range(c).each(varr){
+		a = Job('print.py', var*varr)
+		run(a)
+	}
 
-a = Job("./tmp/test.sh", "bla");
-b= Job("./tmp/test.sh", "foo"; //Imbalanced parenthesis
-c = Job("./tmp/test.sh", "bla");
-
-run(a);
+}
 \end{verbatim}
 
-<<<<<<< HEAD
-\item This test case checks what happens when we provide a Map-Reduce job to maestro.
-=======
-\item This test case checks what happens when we just run wait expressions in
-circular.
->>>>>>> FETCH_HEAD
+\item This test case checks what happens when we just run wait expressions in circular.
 \begin{verbatim}
-#! maestro
-
-a = Job("./cut.rb", "./all.txt", "3");
-
-maps = map(a, "./count.rb", 3);
-red = reduce(maps, "./reduce.rb");
-
-run(a, maps, red);
+#!maestro
+#master("0.0.0.0:6379")
+# check what happens when we just run wait expressions in circular?
+a = Job('print.py', 'cool')
+b = Job('print.py', 'it')
+c = Job('print.py', 'now')
+run(wait(10) ~> wait(10) ~> c ~> wait(10))
 \end{verbatim}
 
 \end{enumerate}
