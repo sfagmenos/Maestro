@@ -330,10 +330,10 @@ Example 1: Create and run 2 jobs $A$ and $B$ in parallel, on a few
 workers. Then, you want to run job $C$ on some workers, only after both $A$
 and $B$ succeeded.
 \begin{lstlisting}
-Job a = Job.new(script="abc.pl", workers=5)    /* job scripts */
-Job b = Job.new(script="xRay.rb", workers=3)
-Job c = Job.new("telesphorus.py")
-run((a <--> b) --> c)
+a = Job(script="abc.pl")    // job scripts
+b = Job("xRay.rb")
+c = Job("telesphorus.py")
+run((a <-> b) -> c)
 \end{lstlisting}
 Example 2: Make a measurement that is divided into 3 steps: populate, collect
 data, and analyze.
@@ -350,7 +350,7 @@ for i in range(0,10) {
   b = Job.new(script='collect_data.rb', workers=1)
   b.add_func_dependency( an_hour_after(a) )
   Job c = Job.new(script='analyze.py')
-  run(old_b --> a --> b --> c)
+  run(old_b -> a -> b -> c)
   old_b = b
 }
 \end{lstlisting}
