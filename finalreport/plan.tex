@@ -1,5 +1,5 @@
-The first important decision we had to make as soon as we formed
-our team was what language we are going to implement in the context of
+The first important decision we had to make, as soon as we formed
+our team, was what language we are going to implement in the context of
 ``Programming Languages and Translators'' and whether it will be Domain
 Specific or not. Having decided that we are going to implementva Domain
 Specific Language, we met at the second week of the semester and brainstormed
@@ -26,87 +26,39 @@ sometimes scheduled extra meetings when deadlines were due (language whitepaper,
 manual, and tutorial). Apart from meetings, when additional communication was
 necessary we exchanged daily e-mails to sync during evolution stage.
 
-\section{Development}
+\section{Development (tools)}
 For our development the single most important tool was GIT, a distributed
 version control system. Multiple GIT branches were created during the semester
 to keep track of our project. They included branches for source code
-subversion (e.g., tests, translation, and \lang{} backend) as well as
+subversioning (e.g., tests, translation, and \lang{} backend) as well as
 branches for written manuscripts (e.g., whitepaper, tutorial,  and LRM).
-For more details refer to Section~\ref{sec:deve}.
-
-\section{Implementation Style Sheet}
-A five member team is relatively easy to interact and work in a continuous
-integration fashion; yet, it is of essential importance to ensure good
-abstraction of responsibilities so that the members of the team can work
-concurrently and make progress that is easy to integrate while development
-evolves. We did not set any restriction related to what text editor or
-operating system  should be used while writing code, but we make sure that
-we write readable python code. Also, we tried to make partial commits of
-code snippets with meaningful commit messages. The source code and all written
-manuscripts of our project live under the private Columbia github repository.
+For more details refer to Section~\ref{sect:development}.
 
 \section{Testing}
 To make sure that the entire workflow smooth and to avoid bugs we created a
 custom testing suit, built in python. Our testing environment is thoroughly
-described in Section~\ref{sec:test}.
+described in Section~\ref{sect:test}
+
 
 \section{Responsibilities}
-In Table~\ref{tab:resp} we summarize responsibilities of each team member.
-\begin{table}[!h]
-{
- \begin{center}
+\begin{center}
     \begin{tabular}{ | l || l |}
-    \hline
-    \textbf{Team Member} & \textbf{Responsibility} \\
-    \hline
     \hline
     V. Atlidakis & Backend Redis-based distributed communication protocol.\\ \hline
     M. Lecuyer & ... \\ \hline
-    G. Koloventzos & ... \\ \hline
-    Y. Lu & ...  \\ \hline
-    A. Swaminathan  &  ... \\ \hline
+    G. Koloventzos & ... \\
+    Y. Lu & ...  \\
+    A. Swaminathan  &  ... \\
     \hline
     \end{tabular}
-    \caption{\textbf{Responsibilities.}}
-    \label{tab:resp}
- \end{center}
-}
-\end{table}
+\end{center}
 
-\section{Project Milestones}
-In Table~\ref{tab:milestones}  we summarize project milestones and the date
-each was fulfilled.
+\section{Implementation Style Sheet}
 
-\begin{table}[!h]
-{
- \begin{center}
-    \begin{tabular}{ | l || l |}
-    \hline
-    \textbf{Date} & \textbf{Milestone}\\
-    \hline
-    \hline
-    Feb 24 &  Language whitepaper\\ \hline
-    Mar 26 &  Language reference manual and tutorial\\ \hline
-    Mar 30 &  Compiler Front End (lexer and parser)\\ \hline
-    Mar 30 &  Basic language kernel (without semantic actions)\\ \hline
-    Mar 30 &  Hello World (locally)\\ \hline
-    Apr 15 &  Initial test suite \\ \hline
-    May 7 &  Semantics \& type checking complete \\ \hline
-    May 8 &  Additional language features \\ \hline
-    May 8 &  Backend redis-based distributed communication protocol.\\ \hline
-    May 10 &  Final report\\ \hline
-    May 11 &  Presentation\\ \hline
-    \hline
-    \end{tabular}
-    \caption{\textbf{Project milestones.}}
-    \label{tab:milestones}
- \end{center}
-}
-\end{table}
+\section{Timeline}
 
 
 \section{Project Log}
-In Figure~\ref{fig:projectlog.pdf}, we present a small project log.
-For a detail project log refer to Section~\ref{sect:appendix}.
-
-
+Here we have nly the logs of our maestro branch. In this branch waa
+were all the magic happened.
+\verbatiminput{log.txt}
