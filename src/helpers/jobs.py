@@ -8,6 +8,7 @@ import jobqueue
 import subprocess
 import time
 import uuid
+import random
 import os
 
 
@@ -135,14 +136,20 @@ class Job():
         poll_request = {'job_key': job_key}
         # encode
         jrequest = json.dumps(poll_request)
+        print "sendinf poll_request"
         # publish message
         connection_pool.publish(channel, jrequest)
+
+        worker_keys = []
         for item in pubsub.listen():
             if item['type'] == 'message':
                 poll_response = json.loads(item['data'])
-                worker_key = poll_response['worker_key']
-                break
+                worker_keys.append(poll_response['worker_key'])
         # now you know which worker should execute the work
+        print "receive poll responses"
+
+        # pick a random worker
+        worker_key = random.choice(worker_keys)
 
         request = {'job_key': job_key,\
                      'worker_key': worker_key,\
@@ -150,6 +157,8 @@ class Job():
                      'script_body': script_body}
         # encode
         jrequest = json.dumps(request)
+
+        print "sending request"
         # publish message
         connection_pool.publish(channel, jrequest)
 

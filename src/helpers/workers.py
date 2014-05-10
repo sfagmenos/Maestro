@@ -65,10 +65,13 @@ class worker():
         poll_request = json.loads(item['data'])
         job_key = poll_request['job_key']
 
+        print "receive poll request"
         # send poll response
         poll_response = {'worker_key': self.worker_key}
         # encode
         jresponse = json.dumps(poll_response)
+
+        print "publish worker id"
         # publish worker id
         self.connection_pool.publish(job_key, jresponse)
 
@@ -76,6 +79,7 @@ class worker():
             if item['type'] == 'message':
                 break
 
+        print "read request"
         # decode request body
         request = json.loads(item['data'])
         worker_key = request['worker_key']
@@ -114,7 +118,7 @@ class worker():
                      'stderr': stderr,
                      'errno': errno}
         
-        #print "response:", response
+        print "sending response"
         jresponse = json.dumps(response)
         self.connection_pool.publish(job_key, jresponse)
 
