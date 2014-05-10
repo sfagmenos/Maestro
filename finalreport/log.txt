@@ -1,0 +1,451 @@
+* 31eefb3 - (HEAD, origin/maestro, maestro) with right order for deps (5 hours ago)
+| Mathias Lecuyer;
+* af24c50 - Handle exception at server to keep it running after bad executions (8 hours ago)
+| Vaggelis Atlidakis;
+* b131a1b - print args of script executing; some doc (8 hours ago)
+| Vaggelis Atlidakis;
+* ad963ef - Clean ups (10 hours ago)
+| arunswaminathan;
+* 9ebae86 - Added tests. All green. (10 hours ago)
+| arunswaminathan;
+* ffde30b - BugFix: compute_args  fix (17 hours ago)
+| Vaggelis Atlidakis;
+* 5fd30b6 - BugFix: When worker runs behind router get external IP (17 hours ago)
+| Vaggelis Atlidakis;
+* 3b4f5d4 - F)(&(*^^*% JSON to json (18 hours ago)
+| Georgios Koloventzos;
+* f24a3ba - fix for mathematical operators (18 hours ago)
+| Georgios Koloventzos;
+* 25c0d5c - change SIGINT into SIGQUIT to be compatible with the REPL (20 hours ago)
+| Vaggelis Atlidakis;
+* 90d666e - refactor jobs: check active subscribers and associate  with one (21 hours ago)
+| Vaggelis Atlidakis;
+* 5fda9b6 - Worker prints the name of script if executes (21 hours ago)
+| Vaggelis Atlidakis;
+* 2347e11 - clean-up worker (21 hours ago)
+| Vaggelis Atlidakis;
+* f170f61 - refactor worker:  if job not for your IP do nothing (21 hours ago)
+| Vaggelis Atlidakis;
+* 4da4def - some beautifications for pep8 semantic analysis (23 hours ago)
+| Georgios Koloventzos;
+* 06ebd3f - some beautifications for pep8 mlex file (23 hours ago)
+| Georgios Koloventzos;
+* 4edc3da - some beautifications for pep8 (23 hours ago)
+| Georgios Koloventzos;
+* 1de694e - add semantic for all mathematical functions; some beautifications for pep8 (23 hours ago)
+| Georgios Koloventzos;
+* 70fe65a - refactor to avoid print checks (23 hours ago)
+| Vaggelis Atlidakis;
+* c5a0480 - Add support so that each job is executed by one worker (23 hours ago)
+| Vaggelis Atlidakis;
+* 2b786f8 - Minor fixes (24 hours ago)
+| arunswaminathan;
+* d0677d3 - Job arguments type checking (24 hours ago)
+| Georgios Koloventzos;
+* f58aca6 - fix for line in dependancy (24 hours ago)
+| Georgios Koloventzos;
+* 36b4d8b - Fixes for MR tests (26 hours ago)
+| arunswaminathan;
+* 948b086 - small syntax fix for import (26 hours ago)
+| Vaggelis Atlidakis;
+* e4de7f7 - adding handler for job dispatching killing (26 hours ago)
+| Vaggelis Atlidakis;
+* 1d8b5ba - soft deps (26 hours ago)
+| Mathias Lecuyer;
+* 8ae6653 - soft deps (26 hours ago)
+| Mathias Lecuyer;
+* 88e3547 - Adding handler for worker shut-down (27 hours ago)
+| Vaggelis Atlidakis;
+* 08bb7d9 - semantic analysis for map second and third argument (27 hours ago)
+| Georgios Koloventzos;
+*   6f5ca7d - start to support soft deps (27 hours ago)
+|\  Mathias Lecuyer;
+| * 5e27c42 - Basic test scripts (27 hours ago)
+| | arunswaminathan;
+| * ce05880 - Adding service host:port support (27 hours ago)
+| | Vaggelis Atlidakis;
+* | 820f849 - start to support soft deps (27 hours ago)
+| | Mathias Lecuyer;
+* | de7c2ae - start to support soft deps (27 hours ago)
+| | Mathias Lecuyer;
+* | 9a209ca - misc (27 hours ago)
+| | Mathias Lecuyer;
+* | a1b1aef - added a requirements file for dependencies (27 hours ago)
+|/  Mathias Lecuyer;
+* 758bed6 - semantic for second argument of reduce (27 hours ago)
+| Georgios Koloventzos;
+* 4aa5766 - semantic for first argument of reduce (27 hours ago)
+| Georgios Koloventzos;
+* 277df12 - Updating tests (27 hours ago)
+| arunswaminathan;
+* 42bf751 - Kill GlobalQueue; if runtime of a worker only redis matters (28 hours ago)
+| Vaggelis Atlidakis;
+* 9d3d151 - BugFix: temp script file must have execute permissions (28 hours ago)
+| Vaggelis Atlidakis;
+*   00db440 - Merge branch 'maestro' of github.com:MatLecu/plt into maestro (28 hours ago)
+|\  Vaggelis Atlidakis;
+| * fb25ec0 - bug fix (28 hours ago)
+| | arunswaminathan;
+| * a2d283c - Dependencies test (28 hours ago)
+| | arunswaminathan;
+| * df49039 - fix for the range argument (28 hours ago)
+| | Georgios Koloventzos;
+| * 58de994 - changed execution path to ./maestro (28 hours ago)
+| | arunswaminathan;
+* | 70de0e0 - BugFix: execute scripts other than bash (28 hours ago)
+|/  Vaggelis Atlidakis;
+* 49bf14b - adding line in error messages (29 hours ago)
+| Georgios Koloventzos;
+* 9a24ae0 - adding lines in nodes for error messages (29 hours ago)
+| Georgios Koloventzos;
+*   ac6821c - Merge branch 'maestro' of https://github.com/MatLecu/plt into maestro (29 hours ago)
+|\  arunswaminathan;
+| * 8731719 - return right val for worker (29 hours ago)
+| | Mathias Lecuyer;
+| * 706521c - Invoking worker constructor from pipeline (30 hours ago)
+| | Vaggelis Atlidakis;
+| * 72039ce - Updating backend (30 hours ago)
+| | Vaggelis Atlidakis;
+| * 6f2a291 - Merging stuff (30 hours ago)
+| | Vaggelis Atlidakis;
+| * b2f9a7e - with master and worker skeleton (30 hours ago)
+| | Mathias Lecuyer;
+| * 5dcc74b - adding range semantics and more detailed parsing of tree (30 hours ago)
+| | Georgios Koloventzos;
+| * 294fa5e - minor fix im myacc (30 hours ago)
+| | Georgios Koloventzos;
+| * a50e0ae - scripts for map red with jobs (30 hours ago)
+| | Mathias Lecuyer;
+| * be11ad5 - map reduce with cut job (30 hours ago)
+| | Mathias Lecuyer;
+| * d824368 - map reduce from list (32 hours ago)
+| | Mathias Lecuyer;
+| * 317ae64 - map reduce from list (32 hours ago)
+| | Mathias Lecuyer;
+| * 2f5b535 - adding an if for leafs (int, string) (32 hours ago)
+| | Georgios Koloventzos;
+| * 4a73bf1 - changing importing files for repl to work (33 hours ago)
+| | Georgios Koloventzos;
+| * a822edc - no math operations for type job (2 days ago)
+| | Georgios Koloventzos;
+| * a53f0f6 - undefined variables (2 days ago)
+| | Georgios Koloventzos;
+| * c35de06 - removing print (2 days ago)
+| | Georgios Koloventzos;
+| * 3477cf9 - having the variables in a list (2 days ago)
+| | Georgios Koloventzos;
+| * 4328ef6 - map reduce (2 days ago)
+| | matlecu;
+| * 9295ff3 - map reduce (2 days ago)
+| | matlecu;
+| * a089bc5 - small fix on job deps args (2 days ago)
+| | matlecu;
+| * 00aaadd - small fix on job deps args (2 days ago)
+| | matlecu;
+| * 2a0eb61 - small fix on job deps args (2 days ago)
+| | matlecu;
+| * 736e0f7 - small change in jobs for map reduce (2 days ago)
+| | matlecu;
+| * 5428d33 - big refactor to get types at runtime (2 days ago)
+| | matlecu;
+| * 444022d - with list creation (2 days ago)
+| | matlecu;
+| * d2c9b7d - with list creation (2 days ago)
+| | matlecu;
+| * 8d146fa - fixed the list issue (2 days ago)
+| | matlecu;
+| * 2284352 - stuff (2 days ago)
+| | matlecu;
+| *   c27681a - Merge branch 'maestro' of https://github.com/MatLecu/plt into maestro (2 days ago)
+| |\  ren;
+| | * dea9ff0 - adding some more for the semantic analysis (2 days ago)
+| | | Georgios Koloventzos;
+| | * bb45641 - error changes for operator (2 days ago)
+| | | Georgios Koloventzos;
+| | * fc39109 - Fix annoying list-flattening related bug (2 days ago)
+| | | Vaggelis Atlidakis;
+| | * c1b373e - removed stupid prints (2 days ago)
+| | | matlecu;
+| | * f48cbdd - fixed embeded list problem in run (2 days ago)
+| | | matlecu;
+| | * 778c213 - with minus bug fixed (2 days ago)
+| | | matlecu;
+| * | 6d65531 - some mapreduce stuff (2 days ago)
+| |/  ren;
+* | 9d3b421 - Updates tests and framework (29 hours ago)
+|/  arunswaminathan;
+* f0a979d - loops on lists :) (3 days ago)
+| matlecu;
+* ec3a384 - changing tests (3 days ago)
+| Georgios Koloventzos;
+* 4a7f2b6 - adding semantic for -> and <-> (3 days ago)
+| Georgios Koloventzos;
+* b237a91 - adding more checks (3 days ago)
+| Georgios Koloventzos;
+* 661209b - Print some stats while running jobs (3 days ago)
+| Vaggelis Atlidakis;
+* 03e9f7e - with / % (3 days ago)
+| matlecu;
+* e3a1c96 - with - (3 days ago)
+| matlecu;
+* 7c1b68f - added + operators (3 days ago)
+| matlecu;
+* 81269e0 - Expose Wait constructor for fake objects (3 days ago)
+| Vaggelis Atlidakis;
+* d86b83c - changing tests (3 days ago)
+| Georgios Koloventzos;
+* 73e8eae - Log files under cwd (3 days ago)
+| Vaggelis Atlidakis;
+* a3d9e3e - Remove finalreport folder from this branch (3 days ago)
+| Vaggelis Atlidakis;
+* 3172fe1 - BugFix: In job construct and run. Arguments are now properly passed (3 days ago)
+| Vaggelis Atlidakis;
+* 773264d - join is in string library not in list (3 days ago)
+| Georgios Koloventzos;
+* 2af9584 - no prints (3 days ago)
+| matlecu;
+* 1581c9b - striped strings (3 days ago)
+| matlecu;
+* e93aca8 - stuff (3 days ago)
+| matlecu;
+* 5fe4356 - a simple test file (3 days ago)
+| Georgios Koloventzos;
+* 49c5c84 - some fixes (3 days ago)
+| matlecu;
+* 68835af - more functions (3 days ago)
+| matlecu;
+*   f07d56d - Merge branch 'maestro' of github.com:MatLecu/plt into maestro (3 days ago)
+|\  Vaggelis Atlidakis;
+| * 4c837bc - added comma (3 days ago)
+| | matlecu;
+| *   63842c3 - stuff (3 days ago)
+| |\  matlecu;
+| * | 66cc0b3 - misc (3 days ago)
+| | | matlecu;
+* | | b212555 - put back networkx import, mistakenly removed (3 days ago)
+| |/  Vaggelis Atlidakis;
+|/|   
+* | 6b465a3 - Adding suport for log files (3 days ago)
+|/  Vaggelis Atlidakis;
+* 802230d - with ast and translation, huge refactor (3 days ago)
+| matlecu;
+* 806ac72 - Added checks to correctness of executed job (3 days ago)
+| arunswaminathan;
+* 1b5cb6f - Edited to write output to CheckFile (3 days ago)
+| arunswaminathan;
+* 384fb02 - Check file (3 days ago)
+| arunswaminathan;
+* cd9da27 - with job type (3 days ago)
+| matlecu;
+* a11566c - with job type (3 days ago)
+| matlecu;
+* 79ccace - (before_mat) adding some semantic checks (3 days ago)
+| Georgios Koloventzos;
+* 8f43c14 - adding swap in gitignore (3 days ago)
+| Georgios Koloventzos;
+* f5fc281 - changing the job initialization (3 days ago)
+| Georgios Koloventzos;
+* 79afc6b - ast with nodes (3 days ago)
+| matlecu;
+* 9be7503 - real prgn and struct for semantic analysis and translation (3 days ago)
+| matlecu;
+* eecbc24 - real prgn and struct for semantic analysis and translation (3 days ago)
+| matlecu;
+* a624554 - added notion of a program (3 days ago)
+| matlecu;
+* 61b115f - added comments (3 days ago)
+| matlecu;
+* 22153e9 - Structure and more for final report (4 days ago)
+| Vaggelis Atlidakis;
+* 41f9bb0 - started error checking (4 days ago)
+| matlecu;
+* 7b7e7d2 - bin for calling maestro (4 days ago)
+| matlecu;
+* fbbbb6b - refactor (4 days ago)
+| matlecu;
+* d3f129e - cannot create job inside run anymore (4 days ago)
+| Georgios Koloventzos;
+* fff6393 - adding some output (4 days ago)
+| Georgios Koloventzos;
+* 1028e2e - Bug fix (5 days ago)
+| arunswaminathan;
+* 6236dc3 - Add Makefile (2 weeks ago)
+| Vaggelis Atlidakis;
+* df5695e - BugFix: Exit main upon Exception (3 weeks ago)
+| Vaggelis Atlidakis;
+* 848a332 - Changes to headers (4 weeks ago)
+| arunswaminathan;
+* afd5566 - Bash script for test framework (4 weeks ago)
+| arunswaminathan;
+* cb16ffc - Test framework (4 weeks ago)
+| arunswaminathan;
+* f281c92 - minors (4 weeks ago)
+| arunswaminathan;
+* 633a705 - minor edit (4 weeks ago)
+| arunswaminathan;
+*   40e3fc6 - merged (4 weeks ago)
+|\  matlecu;
+| * b47784e - some unix cleanup (5 weeks ago)
+| | ren;
+* | 466c5f7 - fixed on the fly run bug (4 weeks ago)
+|/  matlecu;
+* fcea84c - AST, still value on the fly too, with a few bugs when calling the backend functions (5 weeks ago)
+| matlecu;
+*   5852477 - AST in work, doesn't work yet (5 weeks ago)
+|\  matlecu;
+| * 8862105 - adding example for circular dependencies (5 weeks ago)
+| | Georgios Koloventzos;
+| * ca2cc84 - adding the circular dependencies (5 weeks ago)
+| | Georgios Koloventzos;
+| * b632296 - pep8 for the jobs.py (5 weeks ago)
+| | Georgios Koloventzos;
+| * 577df19 - adding a smple for finding cycles in a graph (5 weeks ago)
+| | Georgios Koloventzos;
+| * 2876568 - addintion to skip the blank lines (5 weeks ago)
+| | Georgios Koloventzos;
+| * 5359ddf - revised file handling (6 weeks ago)
+| | Georgios Koloventzos;
+| * 2d1b47f - Revert "Temporary workaround for the bug we encounter with the TA - This is too buggy we need to see it again" (6 weeks ago)
+| | Georgios Koloventzos;
+| * 6261910 - Temporary workaround for the bug we encounter with the TA (6 weeks ago)
+| | Vaggelis Atlidakis;
+| * 14bdbbd - pep8 for myacc.py (6 weeks ago)
+| | Vaggelis Atlidakis;
+| * b3edf77 - adding file parsing (6 weeks ago)
+| | Georgios Koloventzos;
+| * 50e62ae - adding demo file (6 weeks ago)
+| | Georgios Koloventzos;
+| * 982d532 - new command line I have found on the net (6 weeks ago)
+| | Georgios Koloventzos;
+| * aa25b20 - Remove diagnostic messages; code is good to go for now (6 weeks ago)
+| | Vaggelis Atlidakis;
+| * d246527 - Add a bash demo script (6 weeks ago)
+| | Vaggelis Atlidakis;
+| * 67956e8 - Add "+x" to ruby script (6 weeks ago)
+| | Vaggelis Atlidakis;
+| * 8f8a00b - Do not use this commit. It partialy fixes a bug (6 weeks ago)
+| | Vaggelis Atlidakis;
+* | 607867f - begin AST (5 weeks ago)
+|/  matlecu;
+* 38cba97 - test script (6 weeks ago)
+| matlecu;
+* 402c68b - Paramiko instead of rsh; Arun will have this task (7 weeks ago)
+| Vaggelis Atlidakis;
+* 30f3b15 - changing the name of the job (7 weeks ago)
+| Georgios Koloventzos;
+* 5500054 - Update jobs.py (7 weeks ago)
+| arunswaminathan;
+* c0eeb67 - added some comments to explain (8 weeks ago)
+| matlecu;
+* e0c8903 - basic parser working with embeded action, AST structure reeady but not needed/used (8 weeks ago)
+| matlecu;
+* 6fa1513 - fixed a typo (8 weeks ago)
+| matlecu;
+* bf5e9f0 - setup.py should not be at the src folder (8 weeks ago)
+| Vaggelis Atlidakis;
+* 6580926 - Minor update - clean up of helpers (8 weeks ago)
+| Vaggelis Atlidakis;
+* 35adc72 - misc (8 weeks ago)
+| matlecu;
+* bbecf0c - parser parses pretty much all the logic, no AST yet (8 weeks ago)
+| matlecu;
+* 2bca7b1 - adding testscripts (8 weeks ago)
+| ren;
+* 1eb6361 - Restucture of directory and adding some tests (8 weeks ago)
+| Vaggelis Atlidakis;
+* 1752d49 - Adding Queue class (8 weeks ago)
+| Vaggelis Atlidakis;
+* 04f9d77 - Initial commit of semantic actions implementation (8 weeks ago)
+| Vaggelis Atlidakis;
+* 4ab8d61 - first version of lexer and parser (9 weeks ago)
+| matlecu;
+* ffaf1ce - examples, job type and some fixes (3 months ago)
+| matlecu;
+* e0bfae6 - removing names from sections (3 months ago)
+| Georgios Koloventzos;
+* f4a6ac2 - adding the bibliography extension to gitignore (3 months ago)
+| Georgios Koloventzos;
+* bc55965 - changing lang from def to newcommand http://dabacon.org/pontiff/?p=6101 (3 months ago)
+| Georgios Koloventzos;
+* a8b279e - Revise and recreate Whitepaper (3 months ago)
+| Vaggelis Atlidakis;
+* 0d3848f - small edits (3 months ago)
+| Yiren;
+* 739ed77 - Update Specs.tex (3 months ago)
+| arunswaminathan;
+* c776e9b - rest of operators (3 months ago)
+| Yiren;
+* 6e6971a - depend (3 months ago)
+| Yiren;
+* 4477313 - table (3 months ago)
+| Yiren;
+* 29093f2 - Update Specs.tex (3 months ago)
+| arunswaminathan;
+* 84eaca3 - dependencies (3 months ago)
+| Yiren;
+* f152a30 - Update Specs.tex (3 months ago)
+| arunswaminathan;
+* 4511d4b - Update Specs.tex (3 months ago)
+| arunswaminathan;
+* 9c8a557 - Update Specs.tex (3 months ago)
+| arunswaminathan;
+* 2199b20 - Update intro with related work (3 months ago)
+| Vaggelis atlidakis;
+* 0154dba - typos and use of \lang, temps coherency (3 months ago)
+| matlecu;
+* eca35db - small fix that made it crash (3 months ago)
+| matlecu;
+* 2ab53a4 - added error checking (3 months ago)
+| matlecu;
+* 7c42695 - env and design (3 months ago)
+| matlecu;
+* f11d17d - Assignment update: Language Environment to Mathias instead of George (3 months ago)
+| Vaggelis atlidakis;
+* 0393d8d - Reformat whitepaper and assign sections to team (3 months ago)
+| Vaggelis atlidakis;
+* 8687f1f - Update intro (3 months ago)
+| Vaggelis atlidakis;
+* c7bb22c - Update template and partially write Introduction (3 months ago)
+| Vaggelis atlidakis;
+* ea4f843 - Update whitepaper structure (3 months ago)
+| Vaggelis Atlidakis;
+*   3cbbb73 - Merge branch 'master' of https://github.com/MatLecu/plt (3 months ago)
+|\  ren;
+| * ba163ad - Change job allocation example; give a small puppet-like scenario (3 months ago)
+| | Vaggelis Atlidakis;
+* | 0032e6b - committing whitepaper template (3 months ago)
+|/  ren;
+* 35913e2 - adding my examples (3 months ago)
+| ren;
+* 1fb7c08 - Added description (3 months ago)
+| arunswaminathan;
+* a9ab2b3 - Added description (3 months ago)
+| arunswaminathan;
+* 420ca3c - Similar scheduling language (3 months ago)
+| Georgios Koloventzos;
+* 1452dd0 - Adding my ideas to job distribution and some more to scheduling (3 months ago)
+| Georgios Koloventzos;
+* a90a5f9 - Adding the functions of scedule (3 months ago)
+| sfagmenos;
+* d679b2f - Add examples: Job allocation, Recipies from ingredients. (3 months ago)
+| Vaggelis atlidakis;
+* 0fb5881 - Ingredients to recipes example (3 months ago)
+| arunswaminathan;
+* d96944c - Adding some for the schedule (3 months ago)
+| sfagmenos;
+* f00571e - Update README.md (3 months ago)
+| Mathias;
+* c0852e9 - fix for code display (3 months ago)
+| mathias;
+* 4c5172a - 2 examples (3 months ago)
+| mathias;
+* 2037faa - Add txt file to demostrate coding samples (3 months ago)
+| Vaggelis atlidakis;
+* 3f0ecec - probabilistic stuff (3 months ago)
+| ren;
+* f47261b - comment on initial ideas (3 months ago)
+| Vaggelis atlidakis;
+* c2ad1a9 - Update README.md (3 months ago)
+| sfagmenos;
+* 7791bed - Create README.md (3 months ago)
+  Mathias;
