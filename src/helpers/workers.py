@@ -57,7 +57,13 @@ class worker():
         print "Polling for messages"
         for item in self.pubsub.listen(): 
             if item['type'] == 'message':
-                self.execute(item)
+                # if exception keep up the server. The client may
+                # get a bad response, but the server must survive
+                try:
+                    self.execute(item)
+                except Exception, error:
+                    print  "Unhandled Exception:", error
+                    continue
 
     def execute(self, item):
         '''function to run job localy and publish back its output'''
