@@ -8,6 +8,7 @@ import subprocess
 import  os
 import signal
 import sys
+import uuid
 
 def signal_handler(signal, frame):
     print "\nSee u soon :-)\nGoodBye!"
@@ -18,9 +19,8 @@ signal.signal(signal.SIGINT, signal_handler)
 class worker():
     '''Constructor of class'''
     def __init__(self, host_port='', channel=''):
-        # stop job dispatching thread since it's a worker
         jobqueue.GlobalJobQueue.stop()
-        #signal.signal(signal.SIGINT, signal_handler)
+        self.worker_key = job_key = uuid.uuid1().hex
         # get arguments
         try:
             self.host = host_port.split(':')[0]
@@ -60,9 +60,29 @@ class worker():
                 print "Just executed a job"
 
     def execute(self, item):
-        '''function to run job localy and publish back ots output'''
+        '''function to run job localy and publish back its output'''
+        # decode poll request
+        poll_request = json.loads(item['data'])
+        job_key = poll_request['job_key']
+
+        # send poll response
+        poll_response = {'worker_key': self.worker_key}
+        # encode
+        jresponse = json.dumps(poll_response)
+        # publish worker id
+        self.connection_pool.publish(job_key, jresponse)
+
+        for item in self.pubsub.listen():
+            if item['type'] == 'message':
+                break
+
         # decode request body
         request = json.loads(item['data'])
+        worker_key = request['worker_key']
+
+        # if job is not assigned to you terminate
+        if worker_key != self.worker_key:
+            return
         
         #parse request
         job_key = request['job_key']

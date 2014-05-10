@@ -126,17 +126,34 @@ class Job():
         # construct message. First line is the arguments,
         # following lines are the body of the script
         job_key = uuid.uuid1().hex
+
+        # get response in job specific channel
+        pubsub = connection_pool.pubsub()
+        pubsub.subscribe(job_key)
+
+        # send poll request
+        poll_request = {'job_key': job_key}
+        # encode
+        jrequest = json.dumps(poll_request)
+        # publish message
+        connection_pool.publish(channel, jrequest)
+        for item in pubsub.listen():
+            if item['type'] == 'message':
+                poll_response = json.loads(item['data'])
+                worker_key = poll_response['worker_key']
+                break
+        # now you know which worker should execute the work
+
         request = {'job_key': job_key,\
+                     'worker_key': worker_key,\
                      'job_arguments': ' '.join(arguments),\
                      'script_body': script_body}
         # encode
         jrequest = json.dumps(request)
         # publish message
         connection_pool.publish(channel, jrequest)
+
         
-        # get response in job specific channel
-        pubsub = connection_pool.pubsub()
-        pubsub.subscribe(job_key)
         for item in pubsub.listen():
             if item['type'] == 'message':
                 response = json.loads(item['data'])
