@@ -13,10 +13,28 @@
 Being a part of the team that built Maestro has been my first experience with working on a large-scale project. I learned a lot about how to work with a team and deliver code on time.
 One of the biggest takeaways for me is my knowledge of the intrinsics of compilers. I had to dive into the nitty-gritty of what I, as a developer, had taken for granted for most of my coding lifetime. Being able to understand \textit{why} a compiler does what it does, \textit{how} it does it and understanding how all of its parts come together to make a robust piece of software is of the utmost importance.
 \item \textbf{Yiren Lu} \newline
+As much as modularity was emphasized in the instructions for the project, I realized how difficult this is to implement in practice: chunking up the compiler in such a way that every person can work independently (as opposed to conditioned on someone else finishing their part) is practically an exercise in gerrymandering. This was doubly hard in this instance, because the components of a compiler come together more or less linearly - lexer, parser, ast, semantic analysis. You can't do the semantic analysis without the AST; you can't test nontrivial programs without the semantic analysis. Some of these problems probably could have been avoided if we had a skeleton compiler working front to back, early on in the semester - Mathias was actually very good about putting the lexer and parser together before spring break - but some minor bugs turned out to take longer than expected to fix. Something to remember for next time.
 
+\item \textbf{Vaggelis Atlidakis}
+
+\item \textbf{Mathias Lecuyer}
+
+\item \textbf{Georgios Koloventzos}
 
 \end{enumerate}
 \section{Advice for future teams (written by the entire team)}
-...
+Two main pieces of advice that we would give to future teams: 1) Pick your language carefully and 2) Integrate continuously. When we were brainstorming project ideas, a couple of different ones were bandied around and we were very organized (probably the most organized ever) about listing their pros and cons. We were each assigned to do research and write sample programs for how we envisioned the language we came up with. Some other ideas that eventually weren't voted in were a probabilistic programming language as well as a language for creating recipes out of input food ingredients. After some discussion, we eventually picked Maestro.
+
+We were lucky because Maestro turned out to be the right scope - it was organized around a central demand - being able to run jobs potentially in parallel or with dependences - so basically all aspects of the language bent to that imperative. It was also cleverly turing-complete. Since Maestro is a programming language to organize and run other programs, it can technically run any program that those programs can run.
+
+The second piece of advice derives from something we did less well. It is tempting to say that we're done with 2/3 of the project when 2/3 of the pieces have been completed. But until all these pieces have been integrated, we've essentially done very little. Integration is the biggest challenge, and it gets harder the longer you wait to do it, not only because there are more pieces, but because it's harder to parallelize the work (other team members are more and more out of the loop). The optimal way to integrate is constantly. 
+    
 \section{Suggestions}
-Suggestions for the instructor on what topics to keep, drop, or add in future courses (written by the entire team)
+Each of us had different thoughts on which components of the class should be kept and tossed out, but here are a few that we were consistent on:
+
+\begin{enumerate}
+\item More referencing back and forth to the initial compiler diagram. Some of us often felt lost in the nitty gritty. For instance, it took until reviewing for the final exam to really realize the significance of Ershov numbers, and where they fit into the bigger picture.
+\item Go more in depth in the first introduction to lambda calculus. Some of us had never taken the computer science theory course here (or had previously been exposed to lambda calculus but only superficially). For instance, beta reductions require that you replace all free instances of the variable in \emph{the expression}. But the variables that are free in the expression turn out to be bound in the abstraction. This was a source of confusion. 
+\item If you're short on time, you can probably cut some of the arithmetic and boolean lambda calculus in the last lecture. There was too much to motivate properly, so many of us ended up trying to memorize the lambda abstractions for true and false, which undermines the spirit of lambda calculus in the first place.
+\item We enjoyed the guest lectures. They were amusing and different and should be kept.
+\end{enumerate} 
