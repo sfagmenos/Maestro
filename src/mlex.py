@@ -44,19 +44,23 @@ t_ADDOP     = r'[+\-]'
 t_MULOP     = r'[/*%]'
 t_EACH      = r'\.each'
 
+
 def t_DEP(t):
     r'->'
     return t
+
 
 # A regular expression rule with some action code
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_\d]*'
     return t
 
+
 # remove comments
 def t_COMMENT(t):
     r'(//|\#).*'
     pass
+
 
 # Define a rule so we can track line numbers
 def t_newline(t):
@@ -66,6 +70,7 @@ def t_newline(t):
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
 
+
 # Error handling rule
 def t_error(t):
     print "Illegal character '%s'" % t.value[0]
@@ -73,4 +78,3 @@ def t_error(t):
 
 # Build the lexer
 lexer = lex.lex()
-
