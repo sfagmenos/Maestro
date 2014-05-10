@@ -53,49 +53,52 @@ We have a total of 15 testcases in our engine that test Maestro's  overall perfo
 \item This test checks the performance of Maestro in presence of a circular dependency. 
 \begin{verbatim}
 #!maestro
-#master("0.0.0.0:6379")
-# check hard circular dependencies with strings
-a = Job("print.py", "cheer")
-b = Job("print.py", "us")
-c = Job("print.py" "on")
-run(a -> b -> c -> a)
+
+a = Job("./tmp/test.sh", "bla");
+b = Job("./tmp/test.sh", "foo");
+c = Job("./tmp/test.sh", "chk");
+
+run(a->b->c->a); //there is a circular dependency here
 \end{verbatim}
 Here job \textit{a} depends on \textit{b}, \textit{b} depends on \textit{c} and job \textit{c} in-turn depends on job \textit{a}.
 
 \item This test checks the performance of Maestro on self dependencies.
+
 \begin{verbatim}
 #!maestro
-#master("0.0.0.0:6379")
-# check what happens when jobs depend on themselves
-a = Job('print.py', 'foo')
-run(a -> a -> a)
+
+a = Job("./tmp/test.sh", "bla");
+b= Job("./tmp/test.sh", "bla");
+
+run(a->a); //self-dependency
 \end{verbatim}
+
+Here job \textit{a} depends on itself.
 \newpage
-\noindent \item This test check the performance of Maestro on nested loops.
+\noindent \item This test checks Maestro's response to an instance of imbalanced parenthesis.
+
 \begin{verbatim}
 #!maestro
-#master("0.0.0.0:6379")
-# check use of the operator *
-c = 5
-d = 8
-range(d).each(var){
-	range(c).each(varr){
-		a = Job('print.py', var*varr)
-		run(a)
-	}
 
-}
+a = Job("./tmp/test.sh", "bla");
+b= Job("./tmp/test.sh", "foo"; //Imbalanced parenthesis
+c = Job("./tmp/test.sh", "bla");
+
+run(a);
 \end{verbatim}
 
-\item This test case checks what happens when we just run wait expressions in circular.
+\item This test case checks what happens when we provide a Map-Reduce job to maestro.
+
 \begin{verbatim}
-#!maestro
-#master("0.0.0.0:6379")
-# check what happens when we just run wait expressions in circular?
-a = Job('print.py', 'cool')
-b = Job('print.py', 'it')
-c = Job('print.py', 'now')
-run(wait(10) ~> wait(10) ~> c ~> wait(10))
+#! maestro
+
+a = Job("./cut.rb", "./all.txt", "3");
+
+maps = map(a, "./count.rb", 3);
+red = reduce(maps, "./reduce.rb");
+
+run(a, maps, red);
 \end{verbatim}
 
 \end{enumerate}
+
