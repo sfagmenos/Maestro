@@ -9,8 +9,9 @@ init()
 global output
 output= ""
 global failCount
-failCount = 1
-files=['my_file','comment','single_run','multiple_run','multiple_declaration','multiple_declaration2', 'hard_dependency', 'circular_dependency', 'self_dependency', 'hard_dependency', 'mr_job', 'long_dependency']
+failCount = 0
+files=['syntax_err','imbalanced_parenthesis','undeclared_job', 'undeclared_dependency','my_file','single_run','multiple_run','multiple_declaration','multiple_declaration2', 'hard_dependency', 'hard_dependency2', 'circular_dependency', 'self_dependency', 'long_dependency','mr_job']
+flag=['circular_dependency','self_dependency','syntax_err','imbalanced_parenthesis','undeclared_job','undeclared_dependency']
 #def parseErr(stderr):
 #	global failCount
 
@@ -27,7 +28,7 @@ def parseOut(stdout, filename):
 		data=myfile.read().replace('\n', '')
 		
 		
-	if "Illegal" in stdout:
+	if "Illegal" in stdout and flag.count(filename)==0:
 		print (Fore.RED + "Test Failed - Illegal token resulting in syntax error")
 		failCount = failCount + 1
 		with open ("tests/new_tests/log.txt", "a") as myfile:
@@ -35,7 +36,7 @@ def parseOut(stdout, filename):
 			myfile.write("********** \n")
 			myfile.write(stdout+"\n")
 
-	elif "Syntax error" in stdout:
+	elif "Syntax error" in stdout and flag.count(filename)==0:
 		failCount = failCount + 1
 		print (Fore.RED + "Test Failed - Syntax error in input")
 		with open ("tests/new_tests/log.txt", "a") as myfile:
@@ -43,7 +44,7 @@ def parseOut(stdout, filename):
 			myfile.write("********** \n")
 			myfile.write(stdout+"\n")
 
-	elif "Undefined" in stdout:
+	elif "Undefined" in stdout and flag.count(filename)==0:
 		failCount = failCount + 1
 		print (Fore.RED + "Test Failed - Undefined variable in input")
 		with open ("tests/new_tests/log.txt", "a") as myfile:
@@ -51,7 +52,7 @@ def parseOut(stdout, filename):
 			myfile.write("********** \n")
 			myfile.write(stdout+"\n")
 
-	elif "circular" in stdout:
+	elif "circular" in stdout and flag.count(filename)==0:
 		failCount = failCount + 1
 		print (Fore.RED + "Test Failed - Circular dependency in input")
 		with open ("tests/new_tests/log.txt", "a") as myfile:
@@ -60,8 +61,8 @@ def parseOut(stdout, filename):
 			myfile.write(stdout+"\n")
 
 
-	elif (data!="check"):
-		
+	elif (data!="check") and flag.count(filename)==0:
+		failCount=failCount+1
 		print (Fore.RED + "Test Failed - Expected output not found at file")
 		print "**************************"
 		print (Fore.BLACK+ "Expected Output: check"+" \nOutput read at file: "+ data)
@@ -88,11 +89,11 @@ if len(sys.argv)!= 2:
 elif sys.argv[1] == 'all':
 	with open ("tests/new_tests/log.txt", "w") as myfile:
 			myfile.write("")
-	for i in range(0,8):
+	for i in range(0,15):
 
 		output = str(i)
 
-		oldCount = failCount
+		#oldCount = failCount
 		cmd = './maestro tests/new_tests/'+files[i]+'.ms'
 		p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
 		stdout, stderr = p.communicate()
@@ -108,10 +109,15 @@ elif sys.argv[1] == 'all':
 		else:
 			print (Fore.YELLOW + "Empty Output")
 			print ""
-		
+	
+	print (Fore.BLUE+"-------------------------------------------------------------------------------")
+	print (Fore.GREEN+"\n****************************")
+	print ("Tests Passed: "+str(15-failCount)+" / 15")
+	print ("Check log for test details")
+	print ("****************************")	
 
 		#if failCount-oldCount == 2:
-			failCount = failCount - 1
+			#failCount = failCount - 1
 
 	#failCount = failCount - 1
 	#passCount = 77 - failCount
@@ -134,7 +140,6 @@ else:
 		#print (Fore.BLACK + stderr)
 	#parseErr(stderr)
 	#print "error is "+errno
-	#print "/\/\/\/\/\/\/\/\/\/\/"
 	if stdout:
 		print (Fore.YELLOW + stdout)
 		parseOut(stdout, sys.argv[1])
@@ -142,4 +147,6 @@ else:
 	else:
 		print (Fore.BLACK + "Empty Output")
 		print ""
+
+
 	
