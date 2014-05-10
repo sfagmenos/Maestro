@@ -58,7 +58,6 @@ class worker():
         for item in self.pubsub.listen(): 
             if item['type'] == 'message':
                 self.execute(item)
-                print "Just executed a job"
 
     def execute(self, item):
         '''function to run job localy and publish back its output'''
@@ -66,6 +65,8 @@ class worker():
         request = json.loads(item['data'])
 
         jobs_worker = request['jobs_worker']
+        print jobs_worker
+        print getmyip()
 
         # if job is not assigned to you terminate
         if jobs_worker != getmyip():
@@ -89,6 +90,8 @@ class worker():
         pcommand = ['./this_will_never_exist.sh'] + arguments
         s = subprocess.Popen(pcommand, stdout=subprocess.PIPE, 
                                     stderr=subprocess.PIPE)
+
+        print "Just executed a job"
         # get return values
         stdout, stderr = s.communicate()
         errno = s.returncode
@@ -101,7 +104,6 @@ class worker():
                      'stderr': stderr,
                      'errno': errno}
         
-        print "sending response"
         jresponse = json.dumps(response)
         self.connection_pool.publish(job_key, jresponse)
 
