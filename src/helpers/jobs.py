@@ -128,41 +128,29 @@ class Job():
         # following lines are the body of the script
         job_key = uuid.uuid1().hex
 
-        # get response in job specific channel
-        pubsub = connection_pool.pubsub()
-        pubsub.subscribe(job_key)
+        # get current subscribers
+        workers = []
+        for item in connection_pool.client_list():
+            if item['cmd'] == 'subscribe':
+                workers.append(item['addr'].split(':')[0])
+        jobsworker =  random.choice(list(set(workers)))
 
-        # send poll request
-        poll_request = {'job_key': job_key}
-        # encode
-        jrequest = json.dumps(poll_request)
-        print "sendinf poll_request"
-        # publish message
-        connection_pool.publish(channel, jrequest)
-
-        worker_keys = []
-        for item in pubsub.listen():
-            if item['type'] == 'message':
-                poll_response = json.loads(item['data'])
-                worker_keys.append(poll_response['worker_key'])
-        # now you know which worker should execute the work
-        print "receive poll responses"
-
-        # pick a random worker
-        worker_key = random.choice(worker_keys)
 
         request = {'job_key': job_key,\
-                     'worker_key': worker_key,\
+                     'jobs_worker': jobsworker,\
                      'job_arguments': ' '.join(arguments),\
+                     'script_name': self._script,\
                      'script_body': script_body}
         # encode
         jrequest = json.dumps(request)
 
-        print "sending request"
         # publish message
         connection_pool.publish(channel, jrequest)
 
-        
+        # get response in job specific channel
+        pubsub = connection_pool.pubsub()
+        pubsub.subscribe(job_key)
+
         for item in pubsub.listen():
             if item['type'] == 'message':
                 response = json.loads(item['data'])
