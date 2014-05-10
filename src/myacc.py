@@ -13,11 +13,13 @@ precedence = (
 
 lines = 0
 
+
 def p_program(p):
     'PRGM : STMTLIST'
     line = p.lineno(1)
     node = Node('prgm', [p[1].node], line=line)
     p[0] = AST_obj(node)
+
 
 def p_stmt_list(p):
     '''STMTLIST : STMTLIST STMT
@@ -29,19 +31,23 @@ def p_stmt_list(p):
         node = Node('stmt-list', [p[1].node, p[2].node], line=line)
     p[0] = AST_obj(node)
 
+
 def p_stmt(p):
     '''STMT : E SC
             | SC'''
     p[0] = p[1]
+
 
 def p_stmt_error(p):
     'STMT : error'
     #line = p.lineno(0) # line number of error
     #print "Syntax error in statement line " + str(line)
 
+
 def p_stmt_block(p):
     'STMTBLOCK : LC STMTLIST RC'
     p[0] = p[2]
+
 
 def p_list_loop(p):
     'STMT : E EACH LP ID RP STMTBLOCK'
@@ -51,6 +57,7 @@ def p_list_loop(p):
     node = Node('list-loop', [p[1].node, id_node, p[6].node], _type, line=line)
     p[0] = AST_obj(node)
 
+
 # LII is a comma separated list of Expressions
 def p_func_call(p):
     'E : ID LP LII RP'
@@ -59,10 +66,12 @@ def p_func_call(p):
     node = Node(p[1], [p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
+
 def p_func_call_error(p):
     'E : ID LP error RP'
-    line = p.lineno(1) # line number of error
+    line = p.lineno(1)  # line number of error
     print "Syntax error in function call, line ", line
+
 
 # assign a variable:
 # - put the name in the sym_table
@@ -75,6 +84,7 @@ def p_assign(p):
     node = Node('=', [p[1], p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
+
 # strings for Job names
 def p_e_str(p):
     'E : STR'
@@ -83,12 +93,14 @@ def p_e_str(p):
     node = Node('str', [], _type, value=str(p[1][1:-1]), leaf=True, line=line)
     p[0] = AST_obj(node)
 
+
 def p_e_int(p):
     'E : INT'
     line = p.lineno(1)
     _type = 'int'
     node = Node('int', [], _type, value=int(p[1]), leaf=True, line=line)
     p[0] = AST_obj(node)
+
 
 def p_math_op(p):
     '''E : E MULOP E
@@ -117,6 +129,7 @@ def p_list(p):
     node = Node('list', [p[2].node], _type, line=line)
     p[0] = AST_obj(node)
 
+
 # arguments of a function or inside of a list for later
 def p_list_inside_grow(p):
     'LII : LII COMMA E'
@@ -125,12 +138,14 @@ def p_list_inside_grow(p):
     node = Node('list-concat', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
+
 def p_list_inside_orig(p):
     'LII : E'
     _type = 'list'
     line = p.lineno(1)
     node = Node('list-orig', [p[1].node], _type, line=line)
     p[0] = AST_obj(node)
+
 
 # <->
 def p_e_nodep(p):
@@ -140,6 +155,7 @@ def p_e_nodep(p):
     node = Node('<->', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
+
 # ->
 def p_e_dep(p):
     'E : E DEP E'
@@ -147,6 +163,7 @@ def p_e_dep(p):
     line = p.lineno(2)
     node = Node('->', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
+
 
 # ~>
 def p_e_softpdep(p):
@@ -156,6 +173,7 @@ def p_e_softpdep(p):
     node = Node('~>', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
+
 # ~>
 def p_e_softndep(p):
     'E : E SOFTNDEP E'
@@ -163,6 +181,7 @@ def p_e_softndep(p):
     line = p.lineno(2)
     node = Node('~<', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
+
 
 # <~>
 def p_e_softnodep(p):
@@ -172,10 +191,12 @@ def p_e_softnodep(p):
     node = Node('<~>', [p[1].node, p[3].node], _type, line=line)
     p[0] = AST_obj(node)
 
+
 # ()
 def p_e_parenthesize(p):
     'E : LP E RP'
     p[0] = p[2]
+
 
 # that's a variable: fetch it in the symbol table
 def p_e_id(p):
@@ -184,14 +205,16 @@ def p_e_id(p):
     try:
         _type = sym_table[p[1]][-1]
     except:
-        print "Undefined variable " + p[1] +" at line " + str(line)
+        print "Undefined variable " + p[1] + " at line " + str(line)
         raise SyntaxError
     node = Node('id', [], _type, value=p[1], leaf=True, line=line)
     p[0] = AST_obj(node)
 
+
 # Error rule for syntax errors
 def p_error(p):
     print "Syntax error in input: " + str(p)
+
 
 #type helpers
 def type_for_func(name):
@@ -226,6 +249,7 @@ def type_for_sum(type1, type2):
 # Symbol table
 sym_table = {}  # map[symbol][value, type]
 
+
 # AST node structure
 class Node:
     def __init__(self, operation, children=None,  \
@@ -240,6 +264,7 @@ class Node:
         self.value = value
         self.line = line
 
+
 # we add one layer of abstraction to be able to get values and syblings
 # on top of node
 class AST_obj:
@@ -249,6 +274,7 @@ class AST_obj:
 
 # Build the parser
 parser = yacc.yacc()
+
 
 # pipeline for execution
 def pipeline(code):
