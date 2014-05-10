@@ -26,7 +26,7 @@ sometimes scheduled extra meetings when deadlines were due (language whitepaper,
 manual, and tutorial). Apart from meetings, when additional communication was
 necessary we exchanged daily e-mails to sync during evolution stage.
 
-\section{Development (tools)}
+\section{Development}
 For our development the single most important tool was GIT, a distributed
 version control system. Multiple GIT branches were created during the semester
 to keep track of our project. They included branches for source code
@@ -34,11 +34,21 @@ subversion (e.g., tests, translation, and \lang{} backend) as well as
 branches for written manuscripts (e.g., whitepaper, tutorial,  and LRM).
 For more details refer to Section~\ref{sec:deve}.
 
+\section{Implementation Style Sheet}
+A five member team is relatively easy to interact and work in a continuous
+integration fashion; yet, it is of essential importance to ensure good
+abstraction of responsibilities so that the members of the team can work
+concurrently and make progress that is easy to integrate while development
+evolves. We did not set any restriction related to what text editor or
+operating system  should be used while writing code, but we make sure that
+we write readable python code. Also, we tried to make partial commits of
+code snippets with meaningful commit messages. The source code and all written
+manuscripts of our project live under the private Columbia github repository.
+
 \section{Testing}
 To make sure that the entire workflow smooth and to avoid bugs we created a
 custom testing suit, built in python. Our testing environment is thoroughly
 described in Section~\ref{sec:test}.
-
 
 \section{Responsibilities}
 In Table~\ref{tab:resp} we summarize responsibilities of each team member.
@@ -62,10 +72,6 @@ In Table~\ref{tab:resp} we summarize responsibilities of each team member.
  \end{center}
 }
 \end{table}
-
-\section{Implementation Style Sheet}
-
-
 
 \section{Project Milestones}
 In Table~\ref{tab:milestones}  we summarize project milestones and the date
