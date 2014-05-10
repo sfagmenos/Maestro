@@ -109,15 +109,15 @@ def execute(ast, sym_table):
         return [[[j, 'job'] for j in ast.value], 'list']
     elif op == '->':
         children_exec = [type_flatten([execute(c, sym_table)]) for c in ast.children]
-        ast.value = dep(children_exec[0], children_exec[1])
+        ast.value = dep(children_exec[1], children_exec[0])
         return [[[j, 'job'] for j in ast.value], 'list']
     elif op == '~>':
         children_exec = [type_flatten([execute(c, sym_table)]) for c in ast.children]
-        ast.value = softpdep(children_exec[0], children_exec[1])
+        ast.value = softpdep(children_exec[1], children_exec[0])
         return [[[j, 'job'] for j in ast.value], 'list']
     elif op == '~<':
         children_exec = [type_flatten([execute(c, sym_table)]) for c in ast.children]
-        ast.value = softndep(children_exec[0], children_exec[1])
+        ast.value = softndep(children_exec[1], children_exec[0])
         return [[[j, 'job'] for j in ast.value], 'list']
     elif op == '<~>':
         children_exec = [type_flatten([execute(c, sym_table)]) for c in ast.children]
