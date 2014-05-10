@@ -39,9 +39,5 @@ No changes needed in the environment.
 For distributed run also needs a redis server for publishing messages with a master and a worker. 
 Both of them can be also be done in localhost.
 For creating a master user must specify \textit{service(IP:PORT)}. For worker he must
-specify \textit{worker(IP:PORT)}. Both of these examples are handled by our interpreter.
-
-
-
-
- 
+specify \textit{worker(IP:PORT)}. Both of these functions are handled by our interpreter
+to connect to channel to publish jobs(service) or start a worker to consume jobs(worker).
