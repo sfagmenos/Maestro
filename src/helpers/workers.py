@@ -1,6 +1,7 @@
 '''
 Workers API
 '''
+import socket
 import jobqueue
 import json
 import redis
@@ -55,39 +56,21 @@ class worker():
         # start polling for messages
         print "Polling for messages:"
         for item in self.pubsub.listen(): 
-            if item['type'] == 'message':# and item['channel'] == self.channel:
+            if item['type'] == 'message':
                 self.execute(item)
                 print "Just executed a job"
 
     def execute(self, item):
         '''function to run job localy and publish back its output'''
-        # decode poll request
-        poll_request = json.loads(item['data'])
-        job_key = poll_request['job_key']
-
-        print "receive poll request"
-        # send poll response
-        poll_response = {'worker_key': self.worker_key}
-        # encode
-        jresponse = json.dumps(poll_response)
-
-        print "publish worker id"
-        # publish worker id
-        self.connection_pool.publish(job_key, jresponse)
-
-        for item in self.pubsub.listen():
-            if item['type'] == 'message':
-                break
-
-        print "read request"
-        # decode request body
+       # decode request body
         request = json.loads(item['data'])
-        worker_key = request['worker_key']
+
+        jobs_worker = request['jobs_worker']
 
         # if job is not assigned to you terminate
-        if worker_key != self.worker_key:
+        if jobs_worker != getmyip():
             return
-        
+
         #parse request
         job_key = request['job_key']
         arguments = request['job_arguments'].split(' ')[:]
@@ -122,6 +105,11 @@ class worker():
         jresponse = json.dumps(response)
         self.connection_pool.publish(job_key, jresponse)
 
+
+def getmyip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(('google.com', 0))
+    return s.getsockname()[0]
 #if __name__ == "__main__":
 #    w = Worker("localhost:6379")
 #    print w
