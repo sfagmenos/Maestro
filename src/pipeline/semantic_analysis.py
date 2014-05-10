@@ -1,9 +1,11 @@
 assign = []
+
+
 def analyse(ast):
-    error = {'->':"dependency operator",
-            '<->':"non dependency operator",
-            '-':"minus operator",
-            '+':"plus operator"}
+    error = {'->': "dependency operator",
+            '<->': "non dependency operator",
+            '-': "minus operator",
+            '+': "plus operator"}
     new = type(ast)
     if new is str or new is list:
         return str(new)
@@ -55,34 +57,34 @@ def analyse(ast):
             return None
         return type1
     if ast.operation == "reduce":
-        child_type = ast.children[0].children[0].children[0]._type 
+        child_type = ast.children[0].children[0].children[0]._type
         if child_type != "list":
-            print "Function reduce needs list as first argument got " + child_type \
-                    + " at line " + str(ast.line)
+            print "Function reduce needs list as first argument got " + \
+                    child_type + " at line " + str(ast.line)
             return None
         child_type = ast.children[0].children[1]._type
         if child_type != "string":
-            print "Function reduce needs string as second argument got " + child_type \
-                    + " at line " + str(ast.line)
+            print "Function reduce needs string as second argument got " + \
+                    child_type + " at line " + str(ast.line)
             return None
         return "list"
     if ast.operation == "map":
         child_type = ast.children[0].children[1]._type
         if child_type != "int":
-            print "Function map needs int as first argument got " + child_type \
+            print "Function map needs int as first argument got " + child_type\
                     + " at line " + str(ast.line)
             return None
         child_type = ast.children[0].children[0].children[1]._type
         if child_type != "string":
-            print "Function map needs string as second argument got " + child_type \
-                    + " at line " + str(ast.line)
+            print "Function map needs string as second argument got " + \
+                    child_type + " at line " + str(ast.line)
             return None
         return child_type
     if ast.operation == "Job":
-        leaf=[]
-        analyse_leafs(ast,leaf)
+        leaf = []
+        analyse_leafs(ast, leaf)
         if sorted(leaf)[0] != sorted(leaf)[-1]:
-            print "Job argument not a string at line "+ str(ast.line)
+            print "Job argument not a string at line " + str(ast.line)
             return None
         return ast._type
     #for leaf int, str,....
@@ -95,12 +97,12 @@ def analyse(ast):
     return typex
 
 
-def analyse_leafs(node,leafs):
+def analyse_leafs(node, leafs):
     if node.leaf:
         leafs.append(node._type)
     else:
         for n in node.children:
-            analyse_leafs(n,leafs)
+            analyse_leafs(n, leafs)
 
 
 def xstr(s):
