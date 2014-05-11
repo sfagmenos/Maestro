@@ -23,12 +23,9 @@ clean:
 	rm -f *.log
 
 bib:	$(FILE).tex
-	latex $(FILE)
+	pdflatex $(FILE)
+	pdflatex $(FILE)
 	bibtex $(FILE)
-	latex $(FILE)
-	latex $(FILE)
-	dvips $(FILE).dvi -o $(FILE).ps
-	rm $(FILE).dvi $(FILE).log $(FILE).blg
 
 p:	
 	lpr -P$(PRINTER) $(FILE).ps; 
