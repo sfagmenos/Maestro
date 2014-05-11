@@ -1,0 +1,44 @@
+* 31eefb3 - (HEAD, origin/maestro, maestro) with right order for deps (5 hours ago)
+| Mathias Lecuyer;
+* b131a1b - print args of script executing; some doc (8 hours ago)
+| Vaggelis Atlidakis;
+* ad963ef - Clean ups (10 hours ago)
+| arunswaminathan;
+* ffde30b - BugFix: compute_args  fix (17 hours ago)
+| Vaggelis Atlidakis;
+* 5fd30b6 - BugFix: When worker runs behind router get external IP (17 hours ago)
+| Vaggelis Atlidakis;
+* f24a3ba - fix for mathematical operators (18 hours ago)
+| Georgios Koloventzos;
+* 25c0d5c - change SIGINT into SIGQUIT to be compatible with the REPL (20 hours ago)
+| Vaggelis Atlidakis;
+* 90d666e - refactor jobs: check active subscribers and associate  with one (21 hours ago)
+| Vaggelis Atlidakis;
+* 5fda9b6 - Worker prints the name of script if executes (21 hours ago)
+| Vaggelis Atlidakis;
+* 2347e11 - clean-up worker (21 hours ago)
+| Vaggelis Atlidakis;
+* f170f61 - refactor worker:  if job not for your IP do nothing (21 hours ago)
+| Vaggelis Atlidakis;
+* 4da4def - some beautifications for pep8 semantic analysis (23 hours ago)
+| Georgios Koloventzos;
+* 06ebd3f - some beautifications for pep8 mlex file (23 hours ago)
+| Georgios Koloventzos;
+* 4edc3da - some beautifications for pep8 (23 hours ago)
+| Georgios Koloventzos;
+* 1de694e - add semantic for all mathematical functions; some beautifications for pep8 (23 hours ago)
+| Georgios Koloventzos;
+* 70fe65a - refactor to avoid print checks (23 hours ago)
+| Vaggelis Atlidakis;
+* c5a0480 - Add support so that each job is executed by one worker (23 hours ago)
+| Vaggelis Atlidakis;
+* 2b786f8 - Minor fixes (24 hours ago)
+| arunswaminathan;
+* d0677d3 - Job arguments type checking (24 hours ago)
+| Georgios Koloventzos;
+* f58aca6 - fix for line in dependancy (24 hours ago)
+| Georgios Koloventzos;
+* 36b4d8b - Fixes for MR tests (26 hours ago)
+| arunswaminathan;
+* 948b086 - small syntax fix for import (26 hours ago)
+| Vaggelis Atlidakis;
