@@ -2,3 +2,4 @@ This a sample
 test text with
 just some
 sentences.
+We want to check if map reduce works.

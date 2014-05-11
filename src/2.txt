@@ -6,3 +6,6 @@ couple
 of
 sentences
 .
+map reduce
+should
+work
