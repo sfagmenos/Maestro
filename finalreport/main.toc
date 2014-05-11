@@ -1,79 +1,86 @@
-\contentsline {chapter}{\numberline {1}Introduction}{4}{chapter.1}
-\contentsline {section}{\numberline {1.1}Language Category and Design}{5}{section.1.1}
-\contentsline {section}{\numberline {1.2}Language Environment}{5}{section.1.2}
-\contentsline {section}{\numberline {1.3}Examples}{6}{section.1.3}
-\contentsline {chapter}{\numberline {2}Language Tutorial}{7}{chapter.2}
-\contentsline {section}{\numberline {2.1}General Instructions}{7}{section.2.1}
-\contentsline {section}{\numberline {2.2}Sample Programs}{12}{section.2.2}
-\contentsline {section}{\numberline {2.3}Conclusion}{16}{section.2.3}
-\contentsline {chapter}{\numberline {3}Language Reference Manual}{17}{chapter.3}
-\contentsline {section}{\numberline {3.1}Lexical conventions}{17}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}Whitespace}{17}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}Comments}{17}{subsection.3.1.2}
-\contentsline {subsection}{\numberline {3.1.3}Identifiers}{18}{subsection.3.1.3}
-\contentsline {subsection}{\numberline {3.1.4}Keywords}{18}{subsection.3.1.4}
-\contentsline {subsection}{\numberline {3.1.5}Reserved Identifiers}{18}{subsection.3.1.5}
-\contentsline {section}{\numberline {3.2}Types}{18}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Basic Types}{18}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Derived Types}{18}{subsection.3.2.2}
-\contentsline {section}{\numberline {3.3}Scope}{19}{section.3.3}
-\contentsline {section}{\numberline {3.4}Errors}{19}{section.3.4}
-\contentsline {section}{\numberline {3.5}Expressions}{19}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Identifier}{19}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Parenthesized expression}{19}{subsection.3.5.2}
-\contentsline {subsection}{\numberline {3.5.3}Function call}{20}{subsection.3.5.3}
-\contentsline {subsubsection}{Built in functions}{20}{section*.22}
-\contentsline {subsection}{\numberline {3.5.4}Lists}{21}{subsection.3.5.4}
-\contentsline {subsection}{\numberline {3.5.5}Operators in expressions}{21}{subsection.3.5.5}
-\contentsline {subsection}{\numberline {3.5.6}Operators}{22}{subsection.3.5.6}
-\contentsline {subsection}{\numberline {3.5.7}Operators description}{22}{subsection.3.5.7}
-\contentsline {section}{\numberline {3.6}Assignments}{24}{section.3.6}
-\contentsline {section}{\numberline {3.7}Statements}{24}{section.3.7}
-\contentsline {subsection}{\numberline {3.7.1}statement}{25}{subsection.3.7.1}
-\contentsline {subsection}{\numberline {3.7.2}statement-list}{25}{subsection.3.7.2}
-\contentsline {subsection}{\numberline {3.7.3}each statement}{25}{subsection.3.7.3}
-\contentsline {subsection}{\numberline {3.7.4}Program definition}{25}{subsection.3.7.4}
-\contentsline {subsection}{\numberline {3.7.5}REPL}{26}{subsection.3.7.5}
-\contentsline {section}{\numberline {3.8}Grammar}{26}{section.3.8}
-\contentsline {chapter}{\numberline {4}Project Plan}{28}{chapter.4}
-\contentsline {section}{\numberline {4.1}Specifications}{28}{section.4.1}
-\contentsline {section}{\numberline {4.2}Meetings and Communication}{29}{section.4.2}
-\contentsline {section}{\numberline {4.3}Development}{29}{section.4.3}
-\contentsline {section}{\numberline {4.4}Implementation Style Sheet}{29}{section.4.4}
-\contentsline {section}{\numberline {4.5}Testing}{30}{section.4.5}
-\contentsline {section}{\numberline {4.6}Responsibilities}{30}{section.4.6}
-\contentsline {section}{\numberline {4.7}Project Milestones}{30}{section.4.7}
-\contentsline {section}{\numberline {4.8}Project Log}{30}{section.4.8}
-\contentsline {chapter}{\numberline {5}Language Evolution}{32}{chapter.5}
-\contentsline {section}{\numberline {5.1}}{32}{section.5.1}
-\contentsline {section}{\numberline {5.2}Compiler tools}{33}{section.5.2}
-\contentsline {section}{\numberline {5.3}Consistency}{33}{section.5.3}
-\contentsline {chapter}{\numberline {6}Translator Architecture}{34}{chapter.6}
-\contentsline {section}{\numberline {6.1}Architecture}{34}{section.6.1}
-\contentsline {section}{\numberline {6.2}Interfaces}{35}{section.6.2}
-\contentsline {paragraph}{AST}{35}{section*.23}
-\contentsline {paragraph}{API}{35}{section*.24}
-\contentsline {section}{\numberline {6.3}Modules}{35}{section.6.3}
-\contentsline {paragraph}{Lexer}{35}{section*.25}
-\contentsline {paragraph}{Syntax Analyser}{35}{section*.26}
-\contentsline {paragraph}{Semantic Analyser}{35}{section*.27}
-\contentsline {paragraph}{Translator}{35}{section*.28}
-\contentsline {paragraph}{Backend}{36}{section*.29}
-\contentsline {paragraph}{Testing}{36}{section*.30}
-\contentsline {section}{\numberline {6.4}Organisation}{37}{section.6.4}
-\contentsline {chapter}{\numberline {7}Development and Run-time Environment}{38}{chapter.7}
-\contentsline {section}{\numberline {7.1}Development}{38}{section.7.1}
-\contentsline {section}{\numberline {7.2}Runtime Environment}{39}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}Local}{39}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {7.2.2}Distributed}{39}{subsection.7.2.2}
-\contentsline {chapter}{\numberline {8}Test Plan}{40}{chapter.8}
-\contentsline {section}{\numberline {8.1}Methodology}{40}{section.8.1}
-\contentsline {section}{\numberline {8.2}Relevant Files and Descriptions}{41}{section.8.2}
-\contentsline {section}{\numberline {8.3}Selected Test Cases}{42}{section.8.3}
-\contentsline {chapter}{\numberline {9}Conclusions}{44}{chapter.9}
-\contentsline {section}{\numberline {9.1}Lessons learned as a team (to be written by the entire team)}{44}{section.9.1}
-\contentsline {section}{\numberline {9.2}Lessons learned by each team member (written by each team member)}{45}{section.9.2}
-\contentsline {section}{\numberline {9.3}Advice for future teams (written by the entire team)}{47}{section.9.3}
-\contentsline {section}{\numberline {9.4}Suggestions}{48}{section.9.4}
-\contentsline {chapter}{\numberline {10}Appendix}{49}{chapter.10}
-\contentsline {section}{\numberline {10.1}GIT log}{49}{section.10.1}
+\contentsline {chapter}{Contents}{1}{section*.1}
+\contentsline {chapter}{\chapternumberline {1}Introduction}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}Language Category and Design}{6}{section.1.1}
+\contentsline {section}{\numberline {1.2}Language Environment}{6}{section.1.2}
+\contentsline {section}{\numberline {1.3}Examples}{7}{section.1.3}
+\contentsline {chapter}{\chapternumberline {2}Language Tutorial}{9}{chapter.2}
+\contentsline {section}{\numberline {2.1}General Instructions}{9}{section.2.1}
+\contentsline {section}{\numberline {2.2}Sample Programs}{14}{section.2.2}
+\contentsline {section}{\numberline {2.3}Conclusion}{18}{section.2.3}
+\contentsline {chapter}{\chapternumberline {3}Language Reference Manual}{19}{chapter.3}
+\contentsline {section}{\numberline {3.1}Lexical conventions}{19}{section.3.1}
+\contentsline {subsection}{Whitespace}{19}{section*.22}
+\contentsline {subsection}{Comments}{19}{section*.23}
+\contentsline {subsection}{Identifiers}{20}{section*.24}
+\contentsline {subsection}{Keywords}{20}{section*.25}
+\contentsline {subsection}{Reserved Identifiers}{20}{section*.26}
+\contentsline {section}{\numberline {3.2}Types}{20}{section.3.2}
+\contentsline {subsection}{Basic Types}{20}{section*.27}
+\contentsline {subsection}{Derived Types}{20}{section*.28}
+\contentsline {section}{\numberline {3.3}Scope}{21}{section.3.3}
+\contentsline {section}{\numberline {3.4}Errors}{21}{section.3.4}
+\contentsline {section}{\numberline {3.5}Expressions}{21}{section.3.5}
+\contentsline {subsection}{Identifier}{21}{section*.29}
+\contentsline {subsection}{Parenthesized expression}{21}{section*.30}
+\contentsline {subsection}{Function call}{22}{section*.31}
+\contentsline {subsubsection}{Built in functions}{22}{section*.32}
+\contentsline {subsection}{Lists}{23}{section*.33}
+\contentsline {subsection}{Operators in expressions}{23}{section*.34}
+\contentsline {subsection}{Operators}{24}{section*.35}
+\contentsline {subsection}{Operators description}{24}{section*.36}
+\contentsline {section}{\numberline {3.6}Assignments}{26}{section.3.6}
+\contentsline {section}{\numberline {3.7}Statements}{26}{section.3.7}
+\contentsline {subsection}{statement}{27}{section*.37}
+\contentsline {subsection}{statement-list}{27}{section*.38}
+\contentsline {subsection}{each statement}{27}{section*.39}
+\contentsline {subsection}{Program definition}{27}{section*.40}
+\contentsline {subsection}{REPL}{28}{section*.41}
+\contentsline {section}{\numberline {3.8}Grammar}{28}{section.3.8}
+\contentsline {chapter}{\chapternumberline {4}Project Plan}{31}{chapter.4}
+\precistoctext {By Vaggelis, project manager.}
+\contentsline {section}{\numberline {4.1}Specifications}{31}{section.4.1}
+\contentsline {section}{\numberline {4.2}Meetings and Communication}{32}{section.4.2}
+\contentsline {section}{\numberline {4.3}Development}{32}{section.4.3}
+\contentsline {section}{\numberline {4.4}Implementation Style Sheet}{32}{section.4.4}
+\contentsline {section}{\numberline {4.5}Testing}{33}{section.4.5}
+\contentsline {section}{\numberline {4.6}Responsibilities}{33}{section.4.6}
+\contentsline {section}{\numberline {4.7}Project Milestones}{33}{section.4.7}
+\contentsline {section}{\numberline {4.8}Project Log}{33}{section.4.8}
+\contentsline {chapter}{\chapternumberline {5}Language Evolution}{35}{chapter.5}
+\precistoctext {By Mathias and Yiren, language gurus.}
+\contentsline {section}{\numberline {5.1}Look and Feel}{35}{section.5.1}
+\contentsline {section}{\numberline {5.2}Implementation and Tools}{35}{section.5.2}
+\contentsline {section}{\numberline {5.3}Added Features}{36}{section.5.3}
+\contentsline {section}{\numberline {5.4}Dropped Features}{36}{section.5.4}
+\contentsline {chapter}{\chapternumberline {6}Translator Architecture}{39}{chapter.6}
+\precistoctext {By Mathias, system architect.}
+\contentsline {section}{\numberline {6.1}Architecture}{39}{section.6.1}
+\contentsline {section}{\numberline {6.2}Interfaces}{39}{section.6.2}
+\contentsline {paragraph}{AST}{39}{section*.42}
+\contentsline {paragraph}{API}{39}{section*.43}
+\contentsline {section}{\numberline {6.3}Modules}{40}{section.6.3}
+\contentsline {paragraph}{Lexer}{40}{section*.44}
+\contentsline {paragraph}{Syntax Analyser}{40}{section*.45}
+\contentsline {paragraph}{Semantic Analyser}{40}{section*.46}
+\contentsline {paragraph}{Translator}{40}{section*.47}
+\contentsline {paragraph}{Backend}{41}{section*.48}
+\contentsline {paragraph}{Testing}{41}{section*.49}
+\contentsline {section}{\numberline {6.4}Organisation}{42}{section.6.4}
+\contentsline {chapter}{\chapternumberline {7}Development and Run-time Environment}{43}{chapter.7}
+\precistoctext {By Georgios, system integrator.}
+\contentsline {section}{\numberline {7.1}Development}{43}{section.7.1}
+\contentsline {section}{\numberline {7.2}Runtime Environment}{44}{section.7.2}
+\contentsline {subsection}{Local}{44}{section*.50}
+\contentsline {subsection}{Distributed}{44}{section*.51}
+\contentsline {chapter}{\chapternumberline {8}Test Plan}{45}{chapter.8}
+\precistoctext {By Arun and Yiren, testers.}
+\contentsline {section}{\numberline {8.1}Methodology}{45}{section.8.1}
+\contentsline {section}{\numberline {8.2}Relevant Files and Descriptions}{46}{section.8.2}
+\contentsline {section}{\numberline {8.3}Selected Test Cases}{47}{section.8.3}
+\contentsline {chapter}{\chapternumberline {9}Conclusions}{49}{chapter.9}
+\contentsline {section}{\numberline {9.1}Lessons learned as a team (to be written by the entire team)}{49}{section.9.1}
+\contentsline {section}{\numberline {9.2}Lessons learned by each team member (written by each team member)}{50}{section.9.2}
+\contentsline {section}{\numberline {9.3}Advice for future teams (written by the entire team)}{52}{section.9.3}
+\contentsline {section}{\numberline {9.4}Suggestions}{53}{section.9.4}
+\contentsline {chapter}{\chapternumberline {10}Appendix}{55}{chapter.10}
+\contentsline {section}{\numberline {10.1}GIT log}{55}{section.10.1}

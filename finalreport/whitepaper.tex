@@ -3,10 +3,10 @@
 
 Many computer science projects now involve runing programs on multiple machines, whether to collect data, run analysis, or parallelize computaton.
 At a high level, an end-user operates on a pool of machines and allocates jobs, usually represented in a scripting language.
-Our purpose is to build a declerative programming language, named \lang{}, for users to easily express units of computations (a.k.a. jobs) and their dependencies.
+Our purpose is to build a declarative programming language, named \lang{}, for users to easily express units of computations (a.k.a. jobs) and their dependencies.
 The runtime then distributes the jobs and ensures an order that doesn't conflict with expressed dependencies.
 
-As an example, a researcher wants to run a measurement that is divided into 3 steps: populate a third party service, collect data from the service, and analyze the collected data.
+As an example, a researcher wants to run an experiment that is divided into 3 steps: populate a third party service, collect data from the service, and analyze the collected data.
 The data collection has to run an hour after population, but the analysis can start as soon as the data is collected.
 With \lang{}, we can express this in just a few lines, as shown in \ref{sect:ex}.
 
@@ -19,24 +19,22 @@ it provides end-users the ability to express dependencies related to
 job work-flows.
 
 In the rest of the document, we first present a high level overview of the language.
-We then digg deaper with a tutorial and a reference manual.
+We then dig deeper with a tutorial and a reference manual.
 We finally explain the architecture and the process of building the language.
 
 \section{Language Category and Design}
 \label{sect:desg}
 \begin{description}
-\item[Declarative] The goal is to have a declarative language to run jobs
+\item[Declarative] The goal is to produce a declarative language to run jobs
 (scripts) in a distributed way. The programmer only has to register workers and
 declare job dependencies; the language will schedule and run the jobs.
 \item[Dynamically typed] \lang{} is dynamically typed.
 On top of the classic types it supports a job type.
-\item[Garbage collected] Memory is handled by the language by piggy backing on
-Python's garbage collector. Users should not have to manage their memory in a high
-level domain specific language, where performance is not critical.
-\item[No exceptions] Error checking is handled at runtime, but errors cannot be rescued
-or bubbled up to avoid hard to debug situations from asynchronous callbacks.
+\item[Garbage collected] Memory is handled by piggy-backing on
+Python's garbage collector. Users should not have to manage their memory in a high level, domain-specific language, where performance is not critical.
+\item[No exceptions] Error checking is handled at runtime, but errors cannot be rescued or bubbled up to avoid hard to debug situations from asynchronous callbacks.
 \item[Program structure] Programs are written as a sequence of function
-definitions and declarations stored in a file or a REPL command line
+definitions and declarations are stored in a file or a REPL command line
 interface.
 \end{description}
 
@@ -54,14 +52,13 @@ worker becomes available, \lang{} will search the job queue in order of highest
 priority first until it finds a job with all dependencies fulfilled. This job
 will be assigned to the available worker.
 \item[Interpreter and REPL] \lang{} is interpreted and has a REPL to be able to
-quickly try things out and iterate. For really basic job launching, users shouldn't
-even need to open a text editor.
+quickly try things out and iterate. For really basic job launching, users shouldn't even need to open a text editor.
 \end{description}
 
 \section{Examples}
 \label{sect:ex}
 Example 1: Create and run 2 jobs $A$ and $B$ in parallel.
-Then run job $C$, only after both $A$ and $B$ succeeded.
+Then run job $C$, only after both $A$ and $B$ have succeeded.
 \begin{lstlisting}
 a = Job("print.pl", "Hello, ");    // job scripts
 b = Job("print.rb", "world!");
