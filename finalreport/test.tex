@@ -1,6 +1,6 @@
 \section{Methodology}
 \label{sec:test}
-We do not rely on any existing Python unit-test framework for our testing purposes. Instead, we have developed a customized testing engine for our project. The engine, encapsulated by the Tests folder, comprises of several Python files. Each file consists of a test written in Maestro that checks both the robustness of the compiler (i.e. its ability to identify and parse tokens), and the final output of the program. 
+We did not rely on any existing Python unit-test frameworks for our testing purposes. Instead, we developed a customized testing engine for our project. The engine, described in the tests section, consists of several Python files. Each file contains a test written in Maestro that checks both the robustness of the compiler (i.e. its ability to identify and parse tokens), and the final output of the program. 
 
 Presented below is a sample unit test.
 
@@ -51,7 +51,7 @@ We have a total of 15 testcases in our engine that test Maestro's  overall perfo
 \section{Selected Test Cases}
 \begin{enumerate}
 
-\item This test checks the performance of Maestro in presence of a circular dependency. 
+\item This test checks the performance of Maestro when presented with circular dependencies. 
 \begin{verbatim}
 #!maestro
 
@@ -76,7 +76,7 @@ run(a->a); //self-dependency
 
 Here job \textit{a} depends on itself.
 \newpage
-\noindent \item This test checks Maestro's response to an instance of imbalanced parenthesis.
+\noindent \item This test checks Maestro's response to an instance of imbalanced parentheses.
 
 \begin{verbatim}
 #!maestro
@@ -88,7 +88,7 @@ c = Job("./tmp/test.sh", "bla");
 run(a);
 \end{verbatim}
 
-\item This test case checks what happens when we provide a Map-Reduce job to maestro.
+\item This test case checks what happens when we provide a Map-Reduce job to Maestro.
 
 \begin{verbatim}
 #! maestro
