@@ -1,23 +1,63 @@
 \section{Architecture}
+Maestro is organised as a pipeline that processes the program and its input from a file, or from a REPL, and interprets the code. Figure \ref{fig:archi} give a high level overview of Maestro's architecture.
+In the next sections, we present the interfaces between the different parts of our interpreter, and then describe each module.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=15cm]{figures/archi.pdf}
   \caption{Maestro Architecture}
+\label{fig:archi}
 \end{figure}
 
 \subsection{Interfaces}
+The two main interfaces are the AST and the API that we will describe in turn.
+
+\paragraph{AST}
+
+The AST is produced by the syntax analyser.
+It is a tree with each node having children, or a value if it is a leaf.
+The node also comprise the type of the expression it represents.
+It is used by the syntax analyser and the translator.
+
+\paragraph{API}
+
+The API is exposed by the backend, and gives Maestro specific features to the translator.
+It exposes a Job object, central to our language, and functions to set dependencies and add Jobs
+to the run queue.
 
 \subsection{Modules}
-Describe the interfaces between the modules.\\
 
-State which modules were written by which team members.
+\paragraph{Lexer}
 
-\paragraph{Lexer (Mathias)}:
-\paragraph{Syntax Analyser (Mathias)}:
-\paragraph{Semantic Analyser (Georgios)}:
-\paragraph{Translator (Mathias)}:
-\paragraph{Backend (V. Atlidakis)} \newline
+The lexer takes the program or the REPL lines, and produces tokens for the syntax analyser.
+Comments are discarded by the lexer directly.
+
+The Lexer was written by Mathias with PLY.
+
+\paragraph{Syntax Analyser}
+
+The Syntax Analysers contains the grammar for Maestro, and uses the lexer's output to produce the AST using bottom-up parsing and an S-attribute SDD.
+
+The Syntax Analyser was written with PLY. Mathias wrote the grammar and SDD and Georgios handled error recovery.
+
+\paragraph{Semantic Analyser}
+
+The Semantic Analyser walks the AST to verify type compatibility and that variables are declared before being accessed.
+
+The Semantic Analyser was written by Geargios.
+
+\paragraph{Translator}
+
+The translator translates the AST into python and executes it.
+It is coded as the recursive function that keeps track of computed values and types.
+It makes extensive use of the backend API for Job creation and management, and leverages python expressiveness to implement complex features like map/reduce and dynamic code dependencies.
+
+The translator was written by Mathias.
+
+\paragraph{Backend}
+
+The Backend exposes Maestro specific abstraction and handles the Job scheduling and distribution.
+Because it is fairly large and pretty cool, but doesn't have its own section, we descibe it in more length here.
 To support \lang{}'s job scheduling and dispatching for remote execution, we
 built a distributed communication protocol whose main components are: (i)
 a local job queue which in unique per runtime environment, (ii) a Redis
@@ -35,10 +75,22 @@ specific redis channel. When the runtime Daemon receives the output of the
 dispatched job via the job-specific channel, it prints its stdout and also
 saves it in a log file under current working directory.
 
-\paragraph{Testing (Arun and Yiren)}:
+Most of the Backend code was written by Vaggelis. Georgios and Mathias added some glue and small features.
 
-\section{Orgnaisation}
-The hard thing with a multi-person project with many interacting parts is to figure out a way to all work in parallel.
-We also wanted an early "hello world"...
+\paragraph{Testing}:
+Testing is a key part of any complex software system.
+This is why it was assigned two persons.
+Our testing framework will be described in details in a later chapter.
 
-To best achieve these objectives, 
+The testing frameworks and most of the tests were written by Arun and Yiren, and integrated from informal tests used by developers of new features.
+
+
+\subsection{Organisation}
+The hard thing with a multi-person project with many parts depending on each other is to figure out a way to all work in parallel.
+Even if we didn't always succeed, we took several steps to maximize parallelism.
+First, we had an early "hello world" program working by implementing a basic lexer and semantic analyser and a basic backend.
+We did not produced an AST and called backend functions directly, but having an end to end program helped a lot to think about more advanced features we wanted.
+
+We then added the production of an AST from the lexical analyser, while still computing values on the fly to keep being able to run programs.
+This allowed us to add semantic analysis, and work on the translator that traverses the AST to translate the program to python and execute it.
+When we finally switched to a translator, adding features from the backend like remote Jobs was much easier.
