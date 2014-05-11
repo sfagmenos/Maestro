@@ -1,10 +1,10 @@
 \section{Development}
 \label{sec:deve}
-Our interpreter was developed under a Unix-based environment, specifically Debian, Ubuntu and MacOS.
-Every member used their favorite text editor. Mainly vim and sublime. We used Github to host our
-repository. As version control system we used Git. Also some of us used tig for terminal access git in
-text mode. We did not used any issue tracking tool as 
-our main development was done synchronous with all members being in the same room.
+Our interpreter was developed in a Unix-based environment, specifically Debian, Ubuntu and MacOS.
+Each member used their favorite text editor, including Vim, Sublime, and Emacs.  We used Github to host our
+repository. As version control system we used Git. Some of us used tig for terminal access to git in
+text mode. We did not used any issue tracking tools as 
+our main development was done in sync with all members in the same room.
 Our presentation was created, edited and distributed with Google Drive.
 
 
@@ -13,31 +13,23 @@ was created for the purpose of running all tests at once. Most of our examples a
 For more sophisticated scripts such as map-reduce, we used ruby.
 
 
-Our interpreter can take a file as argument. Also a REPL is started if no argument
+Our interpreter can take a file as argument. A REPL is started if no argument
 is specified by the user.
 
 \section{Runtime Environment}
-One of our main goals of maestro is to distribute jobs and test them in computers with different
-architecture, different operating systems and many more. Because of this our environment should have
-a small number or even none environment dependencies. In favor of this our interpreter has 2 running options. 
-At the end small changes are needed for the distributed functionality.
-What our interpreter needs is a pc that can connect to the internet and the ability to spawn threads. 
-Many packages from python are needed such as
+One of the main goals of maestro was to distribute jobs and test them in computers with different
+architectures and operating systems, so we wanted it to have as few environment dependencies as possible. Towards that end, our interpreter has 2 running options. 
+For distributed functionality, there are a couple of configuration issues to first take care of: firstly, our interpreter needs a PC that can connect to the internet and can spawn threads. 
+Secondly, download the following packages from Python.
 \textit{ 
 \begin{itemize}
 \item pip install redis
 \item pip install colorama
 \end{itemize}
 }
-Our user does not need to have a redis server running. A machine on the internet that has redis server
-will be used as a master(channel). User only wants the ip of the machine and the port redis is listening.
-Otherwise he can run it locally with no environment change.
+Our user does not require an active redis server. An online machine with the redis server installed will be used as a master channel. The user only needs to retrieve the ip of the machine and the redis port that is listening. 
 \subsection{Local}
-When run locally our interpreter is creating processes to run jobs.
-No changes needed in the environment.
+When run locally our interpreter creates processes to run jobs.
+No changes are needed in the environment.
 \subsection{Distributed}
-For distributed run also needs a redis server for publishing messages with a master and a worker. 
-Both of them can be also be done in localhost.
-For creating a master user must specify \textit{service(IP:PORT)}. For worker he must
-specify \textit{worker(IP:PORT)}. Both of these functions are handled by our interpreter
-to connect to channel to publish jobs(service) or start a worker to consume jobs(worker).
+For a distributed run the user must launch a master and a worker in redis in localhost. To create a master the user can specify \textit{service(IP:PORT)}. and for a worker he can specify \textit{worker(IP:PORT)}. Both of these functions are handled by our interpreter.

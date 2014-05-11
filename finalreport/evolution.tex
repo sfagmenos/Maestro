@@ -1,12 +1,12 @@
 \section{Look and Feel}
 The goal of the language was clear from the very beginning - Maestro was designed to make it easy to schedule jobs, with dependencies between them, or in parallel, locally, or over the network.
 With that in mind, we were mostly able to hem to the original specifications in the whitepaper.
-In order to get an idea of the uses cases we had in head and the semantics we wanted, we all wrote three to five programs in maestro.
+In order to get an idea of the uses cases we had in mind and the semantics we wanted, we all wrote three to five programs in maestro.
 Great ideas came out of this exercise, like our dependencies operators.
 
 \section{Implementation and  Tools}
 There were, however, some changes and feature additions. Originally, the team had decided to do the project in C. C became Python when it became clear that Maestro would be used primarily as a scripting language. We thus decided to implement an interpreter instead of a compiler.
-We also wanted to use python higher level libraries to implement network operations, distributed map/reduce, and dynamic dependencies between Jobs with lambdas.
+We also chose Python because we wanted to use some of its higher level libraries to implement network operations, distributed map/reduce, and dynamic dependencies between Jobs with lambdas.
 We thus decided to use PLY to implement Maestro's frontend.
 
 Redis came into the picture when we started to distribute jobs on remote workers.
@@ -14,8 +14,8 @@ Fortunately it was compatible with the architecture, since it had always been on
 We use the python Redis package to interface with the Pub/Sub feature of redis.
 
 \section{Added Features}
-The first big feature we changed is the way we do recursion in Maestro. We were planing classic for and while loops, but realized we were always looping over lists.
-We thus changed for the each syntax like in Ruby that is more compact and enjoyable.
+The first big feature we changed is the way we do recursion in Maestro. We were planning classic for and while loops, but realized we were always looping over lists.
+We thus changed the for loops to the each syntax. This is similar to how loops are handled in Ruby and is much more compact and enjoyable.
 
 Another feature that we introduced late is map/reduce. When thinking about the use cases (after we had a basic "Hello World" working), most of them involved complex processing and dependencies, and where a bit verbose or even too hard to express because we needed to wait on other jobs' outputs.
 We thus introduced a map/reduce abstraction, which allows us to keep our asynchronous model, but still use the output of previous jobs.
