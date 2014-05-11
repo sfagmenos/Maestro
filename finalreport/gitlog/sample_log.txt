@@ -1,44 +1,1119 @@
-* 31eefb3 - (HEAD, origin/maestro, maestro) with right order for deps (5 hours ago)
-| Mathias Lecuyer;
-* b131a1b - print args of script executing; some doc (8 hours ago)
-| Vaggelis Atlidakis;
-* ad963ef - Clean ups (10 hours ago)
-| arunswaminathan;
-* ffde30b - BugFix: compute_args  fix (17 hours ago)
-| Vaggelis Atlidakis;
-* 5fd30b6 - BugFix: When worker runs behind router get external IP (17 hours ago)
-| Vaggelis Atlidakis;
-* f24a3ba - fix for mathematical operators (18 hours ago)
-| Georgios Koloventzos;
-* 25c0d5c - change SIGINT into SIGQUIT to be compatible with the REPL (20 hours ago)
-| Vaggelis Atlidakis;
-* 90d666e - refactor jobs: check active subscribers and associate  with one (21 hours ago)
-| Vaggelis Atlidakis;
-* 5fda9b6 - Worker prints the name of script if executes (21 hours ago)
-| Vaggelis Atlidakis;
-* 2347e11 - clean-up worker (21 hours ago)
-| Vaggelis Atlidakis;
-* f170f61 - refactor worker:  if job not for your IP do nothing (21 hours ago)
-| Vaggelis Atlidakis;
-* 4da4def - some beautifications for pep8 semantic analysis (23 hours ago)
-| Georgios Koloventzos;
-* 06ebd3f - some beautifications for pep8 mlex file (23 hours ago)
-| Georgios Koloventzos;
-* 4edc3da - some beautifications for pep8 (23 hours ago)
-| Georgios Koloventzos;
-* 1de694e - add semantic for all mathematical functions; some beautifications for pep8 (23 hours ago)
-| Georgios Koloventzos;
-* 70fe65a - refactor to avoid print checks (23 hours ago)
-| Vaggelis Atlidakis;
-* c5a0480 - Add support so that each job is executed by one worker (23 hours ago)
-| Vaggelis Atlidakis;
-* 2b786f8 - Minor fixes (24 hours ago)
-| arunswaminathan;
-* d0677d3 - Job arguments type checking (24 hours ago)
-| Georgios Koloventzos;
-* f58aca6 - fix for line in dependancy (24 hours ago)
-| Georgios Koloventzos;
-* 36b4d8b - Fixes for MR tests (26 hours ago)
-| arunswaminathan;
-* 948b086 - small syntax fix for import (26 hours ago)
-| Vaggelis Atlidakis;
+* commit 31eefb3
+| Author: Mathias Lecuyer <mathias@lecuyer.me>
+| Date:   6 hours ago
+|
+|     with right order for deps
+|
+* commit af24c50
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   9 hours ago
+|
+|     Handle exception at server to keep it running after bad executions
+|
+* commit b131a1b
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   10 hours ago
+|
+|     print args of script executing; some doc
+|
+* commit ad963ef
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   11 hours ago
+|
+|     Clean ups
+|
+* commit 9ebae86
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   12 hours ago
+|
+|     Added tests. All green.
+|
+* commit ffde30b
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   18 hours ago
+|
+|     BugFix: compute_args  fix
+|
+* commit 5fd30b6
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   19 hours ago
+|
+|     BugFix: When worker runs behind router get external IP
+|
+* commit 3b4f5d4
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   20 hours ago
+|
+|     F)(&(*^^*% JSON to json
+|
+* commit f24a3ba
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   20 hours ago
+|
+|     fix for mathematical operators
+|
+* commit 25c0d5c
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   22 hours ago
+|
+|     change SIGINT into SIGQUIT to be compatible with the REPL
+|
+* commit 90d666e
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   22 hours ago
+|
+|     refactor jobs: check active subscribers and associate  with one
+|
+* commit 5fda9b6
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   23 hours ago
+|
+|     Worker prints the name of script if executes
+|
+* commit 2347e11
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   23 hours ago
+|
+|     clean-up worker
+|
+* commit f170f61
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   23 hours ago
+|
+|     refactor worker:  if job not for your IP do nothing
+|
+* commit 4da4def
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   24 hours ago
+|
+|     some beautifications for pep8 semantic analysis
+|
+* commit 06ebd3f
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   24 hours ago
+|
+|     some beautifications for pep8 mlex file
+|
+* commit 4edc3da
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   24 hours ago
+|
+|     some beautifications for pep8
+|
+* commit 1de694e
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   24 hours ago
+|
+|     add semantic for all mathematical functions; some beautifications for pep8
+|
+* commit 70fe65a
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   25 hours ago
+|
+|     refactor to avoid print checks
+|
+* commit c5a0480
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   25 hours ago
+|
+|     Add support so that each job is executed by one worker
+|
+* commit 2b786f8
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   25 hours ago
+|
+|     Minor fixes
+|
+|     Tests that are SUPPOSED to fail are still printed as a fail. Working on
+|     it.
+|
+* commit d0677d3
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   26 hours ago
+|
+|     Job arguments type checking
+|
+* commit f58aca6
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   26 hours ago
+|
+|     fix for line in dependancy
+|
+* commit 36b4d8b
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   28 hours ago
+|
+|     Fixes for MR tests
+|
+* commit 948b086
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   28 hours ago
+|
+|     small syntax fix for import
+|
+* commit e4de7f7
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   28 hours ago
+|
+|     adding handler for job dispatching killing
+|
+* commit 1d8b5ba
+| Author: Mathias Lecuyer <mathias@lecuyer.me>
+| Date:   28 hours ago
+|
+|     soft deps
+|
+* commit 8ae6653
+| Author: Mathias Lecuyer <mathias@lecuyer.me>
+| Date:   28 hours ago
+|
+|     soft deps
+|
+* commit 88e3547
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   28 hours ago
+|
+|     Adding handler for worker shut-down
+|
+* commit 08bb7d9
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   28 hours ago
+|
+|     semantic analysis for map second and third argument
+|
+*   commit 6f5ca7d
+|\  Merge: 820f849 5e27c42
+| | Author: Mathias Lecuyer <mathias@lecuyer.me>
+| | Date:   29 hours ago
+| |
+| |     start to support soft deps
+| |
+| * commit 5e27c42
+| | Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| | Date:   29 hours ago
+| |
+| |     Basic test scripts
+| |
+| * commit ce05880
+| | Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| | Date:   29 hours ago
+| |
+| |     Adding service host:port support
+| |
+* | commit 820f849
+| | Author: Mathias Lecuyer <mathias@lecuyer.me>
+| | Date:   29 hours ago
+| |
+| |     start to support soft deps
+| |
+* | commit de7c2ae
+| | Author: Mathias Lecuyer <mathias@lecuyer.me>
+| | Date:   29 hours ago
+| |
+| |     start to support soft deps
+| |
+* | commit 9a209ca
+| | Author: Mathias Lecuyer <mathias@lecuyer.me>
+| | Date:   30 hours ago
+| |
+| |     misc
+| |
+* | commit a1b1aef
+|/  Author: Mathias Lecuyer <mathias@lecuyer.me>
+|   Date:   30 hours ago
+|
+|       added a requirements file for dependencies
+|
+* commit 758bed6
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   29 hours ago
+|
+|     semantic for second argument of reduce
+|
+* commit 4aa5766
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   29 hours ago
+|
+|     semantic for first argument of reduce
+|
+* commit 277df12
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   29 hours ago
+|
+|     Updating tests
+|
+* commit 42bf751
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   29 hours ago
+|
+|     Kill GlobalQueue; if runtime of a worker only redis matters
+|
+* commit 9d3d151
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   29 hours ago
+|
+|     BugFix: temp script file must have execute permissions
+|
+*   commit 00db440
+|\  Merge: 70de0e0 fb25ec0
+| | Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| | Date:   29 hours ago
+| |
+| |     Merge branch 'maestro' of github.com:Mathias Lecuyer/plt into maestro
+| |
+| * commit fb25ec0
+| | Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| | Date:   29 hours ago
+| |
+| |     bug fix
+| |
+| * commit a2d283c
+| | Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| | Date:   30 hours ago
+| |
+| |     Dependencies test
+| |
+| * commit df49039
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   30 hours ago
+| |
+| |     fix for the range argument
+| |
+| * commit 58de994
+| | Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| | Date:   30 hours ago
+| |
+| |     changed execution path to ./maestro
+| |
+* | commit 70de0e0
+|/  Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+|   Date:   29 hours ago
+|
+|       BugFix: execute scripts other than bash
+|
+* commit 49bf14b
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   30 hours ago
+|
+|     adding line in error messages
+|
+* commit 9a24ae0
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   30 hours ago
+|
+|     adding lines in nodes for error messages
+|
+*   commit ac6821c
+|\  Merge: 9d3b421 8731719
+| | Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| | Date:   30 hours ago
+| |
+| |     Merge branch 'maestro' of https://github.com/Mathias Lecuyer/plt into maestro
+| |
+| |     Conflicts:
+| |     	src/my_file.ms
+| |
+| * commit 8731719
+| | Author: Mathias Lecuyer <mathias@lecuyer.me>
+| | Date:   30 hours ago
+| |
+| |     return right val for worker
+| |
+| * commit 706521c
+| | Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| | Date:   31 hours ago
+| |
+| |     Invoking worker constructor from pipeline
+| |
+| * commit 72039ce
+| | Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| | Date:   32 hours ago
+| |
+| |     Updating backend
+| |
+| * commit 6f2a291
+| | Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| | Date:   33 hours ago
+| |
+| |     Merging stuff
+| |
+| * commit b2f9a7e
+| | Author: Mathias Lecuyer <mathias@lecuyer.me>
+| | Date:   32 hours ago
+| |
+| |     with master and worker skeleton
+| |
+| * commit 5dcc74b
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   32 hours ago
+| |
+| |     adding range semantics and more detailed parsing of tree
+| |
+| * commit 294fa5e
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   32 hours ago
+| |
+| |     minor fix im myacc
+| |
+| * commit a50e0ae
+| | Author: Mathias Lecuyer <mathias@lecuyer.me>
+| | Date:   32 hours ago
+| |
+| |     scripts for map red with jobs
+| |
+| * commit be11ad5
+| | Author: Mathias Lecuyer <mathias@lecuyer.me>
+| | Date:   32 hours ago
+| |
+| |     map reduce with cut job
+| |
+| * commit d824368
+| | Author: Mathias Lecuyer <mathias@lecuyer.me>
+| | Date:   33 hours ago
+| |
+| |     map reduce from list
+| |
+| * commit 317ae64
+| | Author: Mathias Lecuyer <mathias@lecuyer.me>
+| | Date:   33 hours ago
+| |
+| |     map reduce from list
+| |
+| * commit 2f5b535
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   34 hours ago
+| |
+| |     adding an if for leafs (int, string)
+| |
+| * commit 4a73bf1
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   34 hours ago
+| |
+| |     changing importing files for repl to work
+| |
+| * commit a822edc
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   2 days ago
+| |
+| |     no math operations for type job
+| |
+| * commit a53f0f6
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   2 days ago
+| |
+| |     undefined variables
+| |
+| * commit c35de06
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   2 days ago
+| |
+| |     removing print
+| |
+| * commit 3477cf9
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   2 days ago
+| |
+| |     having the variables in a list
+| |
+| * commit 4328ef6
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   2 days ago
+| |
+| |     map reduce
+| |
+| * commit 9295ff3
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   2 days ago
+| |
+| |     map reduce
+| |
+| * commit a089bc5
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   2 days ago
+| |
+| |     small fix on job deps args
+| |
+| * commit 00aaadd
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   2 days ago
+| |
+| |     small fix on job deps args
+| |
+| * commit 2a0eb61
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   2 days ago
+| |
+| |     small fix on job deps args
+| |
+| * commit 736e0f7
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   2 days ago
+| |
+| |     small change in jobs for map reduce
+| |
+| * commit 5428d33
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   2 days ago
+| |
+| |     big refactor to get types at runtime
+| |
+| * commit 444022d
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   2 days ago
+| |
+| |     with list creation
+| |
+| * commit d2c9b7d
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   2 days ago
+| |
+| |     with list creation
+| |
+| * commit 8d146fa
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   2 days ago
+| |
+| |     fixed the list issue
+| |
+| * commit 2284352
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   2 days ago
+| |
+| |     stuff
+| |
+| *   commit c27681a
+| |\  Merge: 6d65531 dea9ff0
+| | | Author: ren <ren@ren-K55A.(none)>
+| | | Date:   2 days ago
+| | |
+| | |     Merge branch 'maestro' of https://github.com/Mathias Lecuyer/plt into maestro
+| | |
+| | * commit dea9ff0
+| | | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | | Date:   2 days ago
+| | |
+| | |     adding some more for the semantic analysis
+| | |
+| | * commit bb45641
+| | | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | | Date:   2 days ago
+| | |
+| | |     error changes for operator
+| | |
+| | * commit fc39109
+| | | Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| | | Date:   2 days ago
+| | |
+| | |     Fix annoying list-flattening related bug
+| | |
+| | * commit c1b373e
+| | | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | | Date:   2 days ago
+| | |
+| | |     removed stupid prints
+| | |
+| | * commit f48cbdd
+| | | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | | Date:   2 days ago
+| | |
+| | |     fixed embeded list problem in run
+| | |
+| | * commit 778c213
+| | | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | | Date:   2 days ago
+| | |
+| | |     with minus bug fixed
+| | |
+| * | commit 6d65531
+| |/  Author: ren <ren@ren-K55A.(none)>
+| |   Date:   2 days ago
+| |
+| |       some mapreduce stuff
+| |
+* | commit 9d3b421
+|/  Author: arunswaminathan <arun-swaminathan@hotmail.com>
+|   Date:   30 hours ago
+|
+|       Updates tests and framework
+|
+* commit f0a979d
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     loops on lists :)
+|
+* commit ec3a384
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   3 days ago
+|
+|     changing tests
+|
+* commit 4a7f2b6
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   3 days ago
+|
+|     adding semantic for -> and <->
+|
+* commit b237a91
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   3 days ago
+|
+|     adding more checks
+|
+* commit 661209b
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   3 days ago
+|
+|     Print some stats while running jobs
+|
+* commit 03e9f7e
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     with / %
+|
+* commit e3a1c96
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     with -
+|
+* commit 7c1b68f
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     added + operators
+|
+* commit 81269e0
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   3 days ago
+|
+|     Expose Wait constructor for fake objects
+|
+|     It must be called with an integer value. Currently, it doesn't work
+|     because the translation file invoke it with wrong arg type.
+|
+* commit d86b83c
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   3 days ago
+|
+|     changing tests
+|
+* commit 73e8eae
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   3 days ago
+|
+|     Log files under cwd
+|
+* commit a3d9e3e
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   3 days ago
+|
+|     Remove finalreport folder from this branch
+|
+* commit 3172fe1
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   3 days ago
+|
+|     BugFix: In job construct and run. Arguments are now properly passed
+|
+* commit 773264d
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   3 days ago
+|
+|     join is in string library not in list
+|
+* commit 2af9584
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     no prints
+|
+* commit 1581c9b
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     striped strings
+|
+* commit e93aca8
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     stuff
+|
+* commit 5fe4356
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   3 days ago
+|
+|     a simple test file
+|
+* commit 49c5c84
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     some fixes
+|
+* commit 68835af
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     more functions
+|
+*   commit f07d56d
+|\  Merge: b212555 4c837bc
+| | Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| | Date:   3 days ago
+| |
+| |     Merge branch 'maestro' of github.com:Mathias Lecuyer/plt into maestro
+| |
+| * commit 4c837bc
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   3 days ago
+| |
+| |     added comma
+| |
+| *   commit 63842c3
+| |\  Merge: 66cc0b3 6b465a3
+| | | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | | Date:   3 days ago
+| | |
+| | |     stuff
+| | |
+| * | commit 66cc0b3
+| | | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | | Date:   3 days ago
+| | |
+| | |     misc
+| | |
+* | | commit b212555
+| |/  Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+|/|   Date:   3 days ago
+| |
+| |       put back networkx import, mistakenly removed
+| |
+* | commit 6b465a3
+|/  Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+|   Date:   3 days ago
+|
+|       Adding suport for log files
+|
+* commit 802230d
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     with ast and translation, huge refactor
+|
+* commit 806ac72
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   3 days ago
+|
+|     Added checks to correctness of executed job
+|
+|     Read output from CheckFile after job execution and compare to expected
+|     output
+|
+* commit 1b5cb6f
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   3 days ago
+|
+|     Edited to write output to CheckFile
+|
+* commit 384fb02
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   3 days ago
+|
+|     Check file
+|
+|     File for checking correctness of job
+|
+* commit cd9da27
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     with job type
+|
+* commit a11566c
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     with job type
+|
+* commit 79ccace
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   3 days ago
+|
+|     adding some semantic checks
+|
+* commit 8f43c14
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   3 days ago
+|
+|     adding swap in gitignore
+|
+* commit f5fc281
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   3 days ago
+|
+|     changing the job initialization
+|
+* commit 79afc6b
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     ast with nodes
+|
+* commit 9be7503
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     real prgn and struct for semantic analysis and translation
+|
+* commit eecbc24
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     real prgn and struct for semantic analysis and translation
+|
+* commit a624554
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     added notion of a program
+|
+* commit 61b115f
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   3 days ago
+|
+|     added comments
+|
+* commit 22153e9
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   4 days ago
+|
+|     Structure and more for final report
+|
+* commit 41f9bb0
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   4 days ago
+|
+|     started error checking
+|
+* commit 7b7e7d2
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   4 days ago
+|
+|     bin for calling maestro
+|
+* commit fbbbb6b
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   4 days ago
+|
+|     refactor
+|
+* commit d3f129e
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   4 days ago
+|
+|     cannot create job inside run anymore
+|
+* commit fff6393
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   4 days ago
+|
+|     adding some output
+|
+* commit 1028e2e
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   5 days ago
+|
+|     Bug fix
+|
+* commit 6236dc3
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   2 weeks ago
+|
+|     Add Makefile
+|
+|     Just type make to run all tests
+|
+* commit df5695e
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   3 weeks ago
+|
+|     BugFix: Exit main upon Exception
+|
+* commit 848a332
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   4 weeks ago
+|
+|     Changes to headers
+|
+* commit afd5566
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   4 weeks ago
+|
+|     Bash script for test framework
+|
+|     Do not edit.
+|
+* commit cb16ffc
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   4 weeks ago
+|
+|     Test framework
+|
+|     Skeleton ready. Work in progress.
+|
+* commit f281c92
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   4 weeks ago
+|
+|     minors
+|
+* commit 633a705
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   4 weeks ago
+|
+|     minor edit
+|
+*   commit 40e3fc6
+|\  Merge: 466c5f7 b47784e
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   5 weeks ago
+| |
+| |     merged
+| |
+| * commit b47784e
+| | Author: ren <ren@ren-K55A.(none)>
+| | Date:   5 weeks ago
+| |
+| |     some unix cleanup
+| |
+* | commit 466c5f7
+|/  Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+|   Date:   5 weeks ago
+|
+|       fixed on the fly run bug
+|
+* commit fcea84c
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   5 weeks ago
+|
+|     AST, still value on the fly too, with a few bugs when calling the backend functions
+|
+*   commit 5852477
+|\  Merge: 607867f 8862105
+| | Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| | Date:   5 weeks ago
+| |
+| |     AST in work, doesn't work yet
+| |
+| * commit 8862105
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   5 weeks ago
+| |
+| |     adding example for circular dependencies
+| |
+| * commit ca2cc84
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   5 weeks ago
+| |
+| |     adding the circular dependencies
+| |
+| * commit b632296
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   5 weeks ago
+| |
+| |     pep8 for the jobs.py
+| |
+| * commit 577df19
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   5 weeks ago
+| |
+| |     adding a smple for finding cycles in a graph
+| |
+| * commit 2876568
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   5 weeks ago
+| |
+| |     addintion to skip the blank lines
+| |
+| * commit 5359ddf
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   6 weeks ago
+| |
+| |     revised file handling
+| |
+| * commit 2d1b47f
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   6 weeks ago
+| |
+| |     Revert "Temporary workaround for the bug we encounter with the TA - This is too buggy we need to see it again"
+| |
+| |     This reverts commit 6261910c13af4b3b67def69e46cf32daddb26248.
+| |
+| * commit 6261910
+| | Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| | Date:   6 weeks ago
+| |
+| |     Temporary workaround for the bug we encounter with the TA
+| |
+| * commit 14bdbbd
+| | Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| | Date:   6 weeks ago
+| |
+| |     pep8 for myacc.py
+| |
+| * commit b3edf77
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   6 weeks ago
+| |
+| |     adding file parsing
+| |
+| * commit 50e62ae
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   6 weeks ago
+| |
+| |     adding demo file
+| |
+| * commit 982d532
+| | Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| | Date:   6 weeks ago
+| |
+| |     new command line I have found on the net
+| |
+| * commit aa25b20
+| | Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| | Date:   6 weeks ago
+| |
+| |     Remove diagnostic messages; code is good to go for now
+| |
+| * commit d246527
+| | Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| | Date:   6 weeks ago
+| |
+| |     Add a bash demo script
+| |
+| * commit 67956e8
+| | Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| | Date:   6 weeks ago
+| |
+| |     Add "+x" to ruby script
+| |
+| * commit 8f8a00b
+| | Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| | Date:   6 weeks ago
+| |
+| |     Do not use this commit. It partialy fixes a bug
+| |
+* | commit 607867f
+|/  Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+|   Date:   5 weeks ago
+|
+|       begin AST
+|
+* commit 38cba97
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   6 weeks ago
+|
+|     test script
+|
+* commit 402c68b
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   7 weeks ago
+|
+|     Paramiko instead of rsh; Arun will have this task
+|
+* commit 30f3b15
+| Author: Georgios Koloventzos <g.koloventzos@gmail.com>
+| Date:   7 weeks ago
+|
+|     changing the name of the job
+|
+* commit 5500054
+| Author: arunswaminathan <arun-swaminathan@hotmail.com>
+| Date:   7 weeks ago
+|
+|     Update jobs.py
+|
+|     Changed subprocess Popen to run on remote shell (rsh) with local IP address and return stdout, stderr and error code to class variables.
+|
+* commit c0eeb67
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   8 weeks ago
+|
+|     added some comments to explain
+|
+* commit e0c8903
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   8 weeks ago
+|
+|     basic parser working with embeded action, AST structure reeady but not needed/used
+|
+* commit 6fa1513
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   8 weeks ago
+|
+|     fixed a typo
+|
+* commit bf5e9f0
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   8 weeks ago
+|
+|     setup.py should not be at the src folder
+|
+* commit 6580926
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   8 weeks ago
+|
+|     Minor update - clean up of helpers
+|
+* commit 35adc72
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   8 weeks ago
+|
+|     misc
+|
+* commit bbecf0c
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   8 weeks ago
+|
+|     parser parses pretty much all the logic, no AST yet
+|
+* commit 2bca7b1
+| Author: ren <ren@ren-K55A.(none)>
+| Date:   8 weeks ago
+|
+|     adding testscripts
+|
+* commit 1eb6361
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   8 weeks ago
+|
+|     Restucture of directory and adding some tests
+|
+* commit 1752d49
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   8 weeks ago
+|
+|     Adding Queue class
+|
+|     The idea is that whebever run is invoked, a  class queue
+|     is created and job names specified in run are enqueued there.
+|     The jobs dedicated to run are previously constructed, thus
+|     we only need to add their dependencies, before enqueue them.
+|
+* commit 04f9d77
+| Author: Vaggelis Atlidakis <vatlidak@cs.columbia.edu>
+| Date:   8 weeks ago
+|
+|     Initial commit of semantic actions implementation
+|
+|     TO DO:
+|     add some test
+|
+* commit 4ab8d61
+| Author: Mathias Lecuyer <mathias.lecuyer@gmail.com>
+| Date:   9 weeks ago
+|
+|     first version of lexer and parser
