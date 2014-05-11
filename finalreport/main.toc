@@ -73,7 +73,7 @@
 \contentsline {chapter}{\numberline {9}Conclusions}{43}{chapter.9}
 \contentsline {section}{\numberline {9.1}Lessons learned as a team (to be written by the entire team)}{43}{section.9.1}
 \contentsline {section}{\numberline {9.2}Lessons learned by each team member (written by each team member)}{44}{section.9.2}
-\contentsline {section}{\numberline {9.3}Advice for future teams (written by the entire team)}{45}{section.9.3}
-\contentsline {section}{\numberline {9.4}Suggestions}{46}{section.9.4}
+\contentsline {section}{\numberline {9.3}Advice for future teams (written by the entire team)}{46}{section.9.3}
+\contentsline {section}{\numberline {9.4}Suggestions}{47}{section.9.4}
 \contentsline {chapter}{\numberline {10}Appendix}{48}{chapter.10}
 \contentsline {section}{\numberline {10.1}GIT log}{48}{section.10.1}
