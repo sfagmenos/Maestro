@@ -38,41 +38,41 @@
 \contentsline {chapter}{\numberline {4}Project Plan (project Manager)}{28}{chapter.4}
 \contentsline {section}{\numberline {4.1}Specifications}{28}{section.4.1}
 \contentsline {section}{\numberline {4.2}Meetings and Communication}{29}{section.4.2}
-\contentsline {section}{\numberline {4.3}Development}{29}{section.4.3}
-\contentsline {section}{\numberline {4.4}Implementation Style Sheet}{29}{section.4.4}
-\contentsline {section}{\numberline {4.5}Testing}{30}{section.4.5}
-\contentsline {section}{\numberline {4.6}Responsibilities}{30}{section.4.6}
-\contentsline {section}{\numberline {4.7}Project Milestones}{30}{section.4.7}
+\contentsline {section}{\numberline {4.3}Development (tools)}{29}{section.4.3}
+\contentsline {section}{\numberline {4.4}Testing}{29}{section.4.4}
+\contentsline {section}{\numberline {4.5}Responsibilities}{30}{section.4.5}
+\contentsline {section}{\numberline {4.6}Implementation Style Sheet}{30}{section.4.6}
+\contentsline {section}{\numberline {4.7}Timeline}{30}{section.4.7}
 \contentsline {section}{\numberline {4.8}Project Log}{30}{section.4.8}
-\contentsline {chapter}{\numberline {5}Language Evolution (language gury)}{32}{chapter.5}
-\contentsline {section}{\numberline {5.1}Compiler tools}{32}{section.5.1}
-\contentsline {section}{\numberline {5.2}Libraries}{32}{section.5.2}
-\contentsline {section}{\numberline {5.3}Consistency}{32}{section.5.3}
-\contentsline {chapter}{\numberline {6}Translator Architecture (system architect)}{33}{chapter.6}
-\contentsline {section}{\numberline {6.1}Architecture}{33}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}Interfaces}{34}{subsection.6.1.1}
-\contentsline {subsection}{\numberline {6.1.2}Modules}{34}{subsection.6.1.2}
-\contentsline {paragraph}{Lexer (Mathias)}{34}{section*.23}
-\contentsline {paragraph}{Syntax Analyser (Mathias)}{34}{section*.24}
-\contentsline {paragraph}{Semantic Analyser (Georgios)}{34}{section*.25}
-\contentsline {paragraph}{Translator (Mathias)}{34}{section*.26}
-\contentsline {paragraph}{Backend (Vaggelis)}{34}{section*.27}
-\contentsline {paragraph}{Testing (Arun and Yiren)}{34}{section*.28}
-\contentsline {section}{\numberline {6.2}Orgnaisation}{34}{section.6.2}
-\contentsline {chapter}{\numberline {7}Development and Run-time Environment (system integrator)}{35}{chapter.7}
-\contentsline {section}{\numberline {7.1}Development}{35}{section.7.1}
-\contentsline {section}{\numberline {7.2}Runtime Environment}{36}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}Local}{36}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {7.2.2}Distributed}{36}{subsection.7.2.2}
-\contentsline {chapter}{\numberline {8}Test Plan (to be written by the system tester)}{37}{chapter.8}
-\contentsline {section}{\numberline {8.1}Methodology}{37}{section.8.1}
-\contentsline {section}{\numberline {8.2}Relevant Files and Descriptions}{38}{section.8.2}
-\contentsline {section}{\numberline {8.3}Selected Test Cases}{39}{section.8.3}
-\contentsline {chapter}{\numberline {9}Conclusions (to be written by the entire team)}{41}{chapter.9}
-\contentsline {section}{\numberline {9.1}Lessons learned as a team (to be written by the entire team)}{41}{section.9.1}
-\contentsline {section}{\numberline {9.2}Lessons learned by each team member (written by each team member)}{42}{section.9.2}
-\contentsline {section}{\numberline {9.3}Advice for future teams (written by the entire team)}{43}{section.9.3}
-\contentsline {section}{\numberline {9.4}Suggestions}{44}{section.9.4}
-\contentsline {chapter}{\numberline {10}Appendix}{45}{chapter.10}
-\contentsline {section}{\numberline {10.1}Complete GIT log}{45}{section.10.1}
-\contentsline {section}{\numberline {10.2}Source Code}{45}{section.10.2}
+\contentsline {chapter}{\numberline {5}Language Evolution (language gury)}{47}{chapter.5}
+\contentsline {section}{\numberline {5.1}Compiler tools}{47}{section.5.1}
+\contentsline {section}{\numberline {5.2}Libraries}{47}{section.5.2}
+\contentsline {section}{\numberline {5.3}Consistency}{47}{section.5.3}
+\contentsline {chapter}{\numberline {6}Translator Architecture (system architect)}{48}{chapter.6}
+\contentsline {section}{\numberline {6.1}Architecture}{48}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Interfaces}{49}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}Modules}{49}{subsection.6.1.2}
+\contentsline {paragraph}{Lexer (Mathias)}{49}{section*.23}
+\contentsline {paragraph}{Syntax Analyser (Mathias)}{49}{section*.24}
+\contentsline {paragraph}{Semantic Analyser (Georgios)}{49}{section*.25}
+\contentsline {paragraph}{Translator (Mathias)}{49}{section*.26}
+\contentsline {paragraph}{Backend (Vaggelis)}{49}{section*.27}
+\contentsline {paragraph}{Testing (Arun and Yiren)}{49}{section*.28}
+\contentsline {section}{\numberline {6.2}Orgnaisation}{49}{section.6.2}
+\contentsline {chapter}{\numberline {7}Development and Run-time Environment (system integrator)}{50}{chapter.7}
+\contentsline {section}{\numberline {7.1}Development}{50}{section.7.1}
+\contentsline {section}{\numberline {7.2}Runtime Environment}{51}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}Local}{51}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}Distributed}{51}{subsection.7.2.2}
+\contentsline {chapter}{\numberline {8}Test Plan (to be written by the system tester)}{52}{chapter.8}
+\contentsline {section}{\numberline {8.1}Methodology}{52}{section.8.1}
+\contentsline {section}{\numberline {8.2}Relevant Files and Descriptions}{53}{section.8.2}
+\contentsline {section}{\numberline {8.3}Selected Test Cases}{54}{section.8.3}
+\contentsline {chapter}{\numberline {9}Conclusions (to be written by the entire team)}{56}{chapter.9}
+\contentsline {section}{\numberline {9.1}Lessons learned as a team (to be written by the entire team)}{56}{section.9.1}
+\contentsline {section}{\numberline {9.2}Lessons learned by each team member (written by each team member)}{57}{section.9.2}
+\contentsline {section}{\numberline {9.3}Advice for future teams (written by the entire team)}{58}{section.9.3}
+\contentsline {section}{\numberline {9.4}Suggestions}{59}{section.9.4}
+\contentsline {chapter}{\numberline {10}Appendix}{61}{chapter.10}
+\contentsline {section}{\numberline {10.1}Complete GIT log}{61}{section.10.1}
+\contentsline {section}{\numberline {10.2}Source Code}{61}{section.10.2}

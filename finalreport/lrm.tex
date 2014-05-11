@@ -16,7 +16,7 @@ space is required to separate identifiers from each other, and certain
 operators.
 
 \subsection{Comments}
-Comments are denoted by ``\#'' and represent a comment that ends with the end of
+Comments are denoted by ``\#'' or ``//'' and represent a comment that ends with the end of
 the current line.
 
 \subsection{Identifiers}
@@ -39,7 +39,6 @@ Maestro is dynamically typed and doesn't allow users to create new types.
    encapsulates the path of the program and exposes outputs and errors.
   \item[Int] Ints are signed integers of arbitrary size.
   \item[String] Strings are delimited by " and have to be on one line.
-  \item[Boolean] Boolean encapsulates true or false.
 \end{description}
 
 \subsection{Derived Types}
@@ -108,20 +107,19 @@ map reduce run Job\\
     be execute on that channel. It doesn't return anything and crashes if redis doesn't
     answer.
     %%%%%%%%%%%%%%%%%%%%%%%
-  \item[master(string)] This function is used to declare
+  \item[service(string)] This function is used to declare
     the IP:PORT (denoted by the string argument) on which the redis server will listens.
-    From now on, the master will publish jobs that need to run on the job channel of the redis
+    From now on, the service will publish jobs that need to run on the job channel of the redis
     for a worker to execute. It doesn't return anything and crashed if the redis doesn't
     answer.
   \item[range(int)] Returns a list of ints from 0 to int-1.
-  \item[map(list, string)] the first list is a list of jobs that will run first, and their
-    stdout will be concatenated. For every line in the concatenated stdout, map will create
-    a Job with the string argument and the stdout line as an argument. It returns the list
+  \item[map(Job / list, string, int)] the first argument is a job that will run first. For every line in its stdout, map will create
+    a Job with the string argument and the stdout line as an argument, up to ``int'' Jobs.
+    If a list of strings is passed instead, these strings will be passed as arguments. It returns the list
     of created Jobs. This call is asynchronous.
   \item[reduce(list, string)] the first list is a list of jobs that will run first (usually the
     output of a map). String is the path to the reduce program. There will be one Job
-    created with that program, with arguments that are the output from the previous reduce and
-    the output of the next Job from the list. The first reduce will have nil as its first argument.
+    created with that program, with arguments that are the output from the Jobs in the list.
   \item[run(list)] run takes an arbitrary number of comma separated lists of Jobs
     and runs them. If they have dependencies, these dependencies will run first.
 \end{description}
@@ -143,7 +141,7 @@ Lists are created with the brackets notation. E.g. $list = [a, b, c, ...]$
 Operators are left associative and have the following precedences (same line
 means same precedence, lower line means higher precedence):\\
 $\texttt{-> => \textasciitilde> \textasciitilde<}$\\
-$\texttt{+ - <-> \textasciitilde}$\\
+$\texttt{+ - <-> <\textasciitilde>}$\\
 $\texttt{/ * \%}$
 
 \subsection{Operators description}
@@ -207,7 +205,7 @@ It returns a list of Jobs that is the concatenation of both lists.\\
 A soft dependency is a priority indication: if more than one Job can run, Maestro will run the
 one with higher priority, but there is no order guarantee, as opposed to when using dependencies.
 
-\item[\textasciitilde] \hfil \\
+\item[<\textasciitilde>] \hfil \\
 The soft parallel operator (\textasciitilde) requires both expressions to be lists of Jobs.\\
 The call is asynchronous and no priorities are changed. It is a visual way to
 concatenate lists of Jobs.\\
@@ -249,11 +247,15 @@ Most statement are expression statements which have the form:
 The each statement is a basic loop, and can be called on the Jobs type.
 \begin{description}
   \item[]statement: \hfill \\
-    expression .each ( identifier ) { statement-list }
+    expression .each ( identifier ) statement-block
 \end{description}
 The first expression has to evaluate to a list type. The identifier is the name
 of a variable (global scope like all variables) that will be assigned each
 element of the list before running the statement list.
+\begin{description}
+  \item[]statement-block: \hfill \\
+    \{ statement-list \}
+\end{description}
 
 \subsection{Program definition}
 A program consists of a list of statements evaluated from left to right.\\
@@ -332,4 +334,9 @@ In the REPL, inputs are read and evaluated every time the user hits enter.\\
 \begin{description}
   \item[]statement: \hfill \\
     expression .each ( identifier ) { statement-list }
+\end{description}
+
+\begin{description}
+  \item[]statement-block: \hfill \\
+    \{ statement-list \}
 \end{description}
