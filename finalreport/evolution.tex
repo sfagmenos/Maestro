@@ -1,17 +1,27 @@
-motivate section:
-Describe how the language evolved during the implementation and what steps
-were used to try to maintain the good attributes of the original language proposal.
+\section{}
+The goal of the language was clear from the very beginning - Maestro was designed to make it easy to schedule jobs, with dependencies between them, or in parallel, locally, or over the network.
+With that in mind, we were mostly able to hem to the original specifications in the whitepaper.
+In order to get an idea of the uses cases we had in head and the semantics we wanted, we all wrote three to five programs in maestro.
+Great ideas came out of this exercise, like our dependencies operators.
 
-\section{Compiler tools}
-Describe the compiler tools used to create the compiler components.
+There were, however, some changes and feature additions. Originally, the team had decided to do the project in C. C became Python when it became clear that Maestro would be used primarily as a scripting language. We thus decided to implement an interpreter instead of a compiler.
+We also wanted to use python higher level libraries to implement network operations, distributed map/reduce, and dynamic dependencies betweem Jobs with lambdas.
 
-\section{Libraries}
-Describe what unusual libraries are used in the compiler.
+Redis came into the picture when 
+
 
 \section{Consistency}
-Describe what steps were taken to keep the LRM and the compiler consistent.
+The language reference manual and the
 
 
 
-type overloading for map and +
 
+
+
+
+
+
+
+
+
+type overloading for + and map

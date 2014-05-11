@@ -9,7 +9,7 @@ In the next sections, we present the interfaces between the different parts of o
 \label{fig:archi}
 \end{figure}
 
-\subsection{Interfaces}
+\section{Interfaces}
 The two main interfaces are the AST and the API that we will describe in turn.
 
 \paragraph{AST}
@@ -25,7 +25,7 @@ The API is exposed by the backend, and gives Maestro specific features to the tr
 It exposes a Job object, central to our language, and functions to set dependencies and add Jobs
 to the run queue.
 
-\subsection{Modules}
+\section{Modules}
 
 \paragraph{Lexer}
 
@@ -85,7 +85,7 @@ Our testing framework will be described in details in a later chapter.
 The testing frameworks and most of the tests were written by Arun and Yiren, and integrated from informal tests used by developers of new features.
 
 
-\subsection{Organisation}
+\section{Organisation}
 The hard thing with a multi-person project with many parts depending on each other is to figure out a way to all work in parallel.
 Even if we didn't always succeed, we took several steps to maximize parallelism.
 First, we had an early "hello world" program working by implementing a basic lexer and semantic analyser and a basic backend.

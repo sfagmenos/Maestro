@@ -45,35 +45,35 @@
 \contentsline {section}{\numberline {4.7}Project Milestones}{30}{section.4.7}
 \contentsline {section}{\numberline {4.8}Project Log}{30}{section.4.8}
 \contentsline {chapter}{\numberline {5}Language Evolution}{32}{chapter.5}
-\contentsline {section}{\numberline {5.1}Compiler tools}{32}{section.5.1}
-\contentsline {section}{\numberline {5.2}Libraries}{32}{section.5.2}
-\contentsline {section}{\numberline {5.3}Consistency}{32}{section.5.3}
-\contentsline {chapter}{\numberline {6}Translator Architecture}{33}{chapter.6}
-\contentsline {section}{\numberline {6.1}Architecture}{33}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}Interfaces}{34}{subsection.6.1.1}
-\contentsline {paragraph}{AST}{34}{section*.23}
-\contentsline {paragraph}{API}{34}{section*.24}
-\contentsline {subsection}{\numberline {6.1.2}Modules}{34}{subsection.6.1.2}
-\contentsline {paragraph}{Lexer}{34}{section*.25}
-\contentsline {paragraph}{Syntax Analyser}{34}{section*.26}
-\contentsline {paragraph}{Semantic Analyser}{34}{section*.27}
-\contentsline {paragraph}{Translator}{34}{section*.28}
-\contentsline {paragraph}{Backend}{35}{section*.29}
-\contentsline {paragraph}{Testing}{35}{section*.30}
-\contentsline {subsection}{\numberline {6.1.3}Organisation}{36}{subsection.6.1.3}
-\contentsline {chapter}{\numberline {7}Development and Run-time Environment}{37}{chapter.7}
-\contentsline {section}{\numberline {7.1}Development}{37}{section.7.1}
-\contentsline {section}{\numberline {7.2}Runtime Environment}{38}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}Local}{38}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {7.2.2}Distributed}{38}{subsection.7.2.2}
-\contentsline {chapter}{\numberline {8}Test Plan}{39}{chapter.8}
-\contentsline {section}{\numberline {8.1}Methodology}{39}{section.8.1}
-\contentsline {section}{\numberline {8.2}Relevant Files and Descriptions}{40}{section.8.2}
-\contentsline {section}{\numberline {8.3}Selected Test Cases}{41}{section.8.3}
-\contentsline {chapter}{\numberline {9}Conclusions}{43}{chapter.9}
-\contentsline {section}{\numberline {9.1}Lessons learned as a team (to be written by the entire team)}{43}{section.9.1}
-\contentsline {section}{\numberline {9.2}Lessons learned by each team member (written by each team member)}{44}{section.9.2}
-\contentsline {section}{\numberline {9.3}Advice for future teams (written by the entire team)}{46}{section.9.3}
-\contentsline {section}{\numberline {9.4}Suggestions}{47}{section.9.4}
-\contentsline {chapter}{\numberline {10}Appendix}{48}{chapter.10}
-\contentsline {section}{\numberline {10.1}GIT log}{48}{section.10.1}
+\contentsline {section}{\numberline {5.1}}{32}{section.5.1}
+\contentsline {section}{\numberline {5.2}Compiler tools}{33}{section.5.2}
+\contentsline {section}{\numberline {5.3}Consistency}{33}{section.5.3}
+\contentsline {chapter}{\numberline {6}Translator Architecture}{34}{chapter.6}
+\contentsline {section}{\numberline {6.1}Architecture}{34}{section.6.1}
+\contentsline {section}{\numberline {6.2}Interfaces}{35}{section.6.2}
+\contentsline {paragraph}{AST}{35}{section*.23}
+\contentsline {paragraph}{API}{35}{section*.24}
+\contentsline {section}{\numberline {6.3}Modules}{35}{section.6.3}
+\contentsline {paragraph}{Lexer}{35}{section*.25}
+\contentsline {paragraph}{Syntax Analyser}{35}{section*.26}
+\contentsline {paragraph}{Semantic Analyser}{35}{section*.27}
+\contentsline {paragraph}{Translator}{35}{section*.28}
+\contentsline {paragraph}{Backend}{36}{section*.29}
+\contentsline {paragraph}{Testing}{36}{section*.30}
+\contentsline {section}{\numberline {6.4}Organisation}{37}{section.6.4}
+\contentsline {chapter}{\numberline {7}Development and Run-time Environment}{38}{chapter.7}
+\contentsline {section}{\numberline {7.1}Development}{38}{section.7.1}
+\contentsline {section}{\numberline {7.2}Runtime Environment}{39}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}Local}{39}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}Distributed}{39}{subsection.7.2.2}
+\contentsline {chapter}{\numberline {8}Test Plan}{40}{chapter.8}
+\contentsline {section}{\numberline {8.1}Methodology}{40}{section.8.1}
+\contentsline {section}{\numberline {8.2}Relevant Files and Descriptions}{41}{section.8.2}
+\contentsline {section}{\numberline {8.3}Selected Test Cases}{42}{section.8.3}
+\contentsline {chapter}{\numberline {9}Conclusions}{44}{chapter.9}
+\contentsline {section}{\numberline {9.1}Lessons learned as a team (to be written by the entire team)}{44}{section.9.1}
+\contentsline {section}{\numberline {9.2}Lessons learned by each team member (written by each team member)}{45}{section.9.2}
+\contentsline {section}{\numberline {9.3}Advice for future teams (written by the entire team)}{47}{section.9.3}
+\contentsline {section}{\numberline {9.4}Suggestions}{48}{section.9.4}
+\contentsline {chapter}{\numberline {10}Appendix}{49}{chapter.10}
+\contentsline {section}{\numberline {10.1}GIT log}{49}{section.10.1}
