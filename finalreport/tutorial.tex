@@ -6,11 +6,9 @@
 %operates on a pool of machines and allocates jobs represented in a scripting
 %language. \lang{} is a programming language which provides user the ability
 %to express powerful semantics related to job distribution and scheduling.
-The purpose of this tutorial is to demonstrate features and functionality
-supported by \lang{}. We, also,  provide exemplary programs to explain how
-\lang{} should be used to create jobs, describe dependencies amongst jobs, and
-execute jobs on workers. Our examples include a simple ``Hello World'' program as
-well as more complex programs which cover \lang{}'s functionality in detail.
+The purpose of this tutorial is to demonstrate features and functionality supported by \lang{}.
+We also provide examples to explain how \lang{} should be used to create jobs, describe dependencies amongst jobs, and execute jobs on workers.
+Our examples include a simple ``Hello World'' program as well as more complex programs which cover \lang{}'s functionality in detail.
 
 
 \section{General Instructions}
@@ -18,14 +16,10 @@ well as more complex programs which cover \lang{}'s functionality in detail.
 
 \subsection*{Define Workers in \lang{}}
 %Refine later
-In the first version of \lang{}, we will use a Redis~\cite{redis} server to
-implement. To add a worker to the workers' pool, the only thing one has to do
-is run the following Maestro program: worker("0.0.0.0") (replace 0.0.0.0 by
-the IP of the Redis server).\\
-This will subscribe the worker to a job channel in Redis, where all Jobs will
-be published for execution when a master runs the run command.\\
-The master calls master("0.0.0.0") (replace 0.0.0.0 by the IP of the Redis server)
-at the beginning of its program.
+We use a Redis~\cite{redis} server to manage workers and disctribute jobs remotely.
+To add a worker to the workers' pool, the only thing one has to do is run the following Maestro program: ``worker("0.0.0.0:6379");'' (replace 0.0.0.0:6379 by the IP and port of the Redis server).
+This will subscribe the worker to a job channel in Redis, where all Jobs will be published for execution when a master calls the run command.\\
+The master calls ``sercive("0.0.0.0:6379");'' (replace 0.0.0.0:6379 by the IP and port of the Redis server) at the beginning of its program.
 
 \subsection*{Variables and Expressions in \lang{}}
 In \lang{} variables are reserved memory locations which store values.
@@ -51,7 +45,6 @@ Example:
 a = 10;
 x = "john";
 path = "/afs/columbia.edu/users/phd/username/my_script.sh";
-p = true;
 \end{Verbatim}
 
 The above code snippet demonstrates the following assignments:
@@ -67,9 +60,9 @@ Job variable.\\
 \\
 Example:
 \begin{Verbatim}[numbers=left]
-a = Job ("abc.rb");
+a = Job ("abc.rb", "my_arg");
 \end{Verbatim}
-In this case variable ``a'' is assigned a job related to script ``abc.rb'' 
+In this case variable ``a'' is assigned a job related to script ``abc.rb'', and ``my\_arg'' and argument that will be passed to ``abc.rb'' when it is called.
 
 \subsection*{each}
 
@@ -96,35 +89,30 @@ vals.each(var){
 \end{Verbatim}
 
 In the above code snippet, Job ``a'' is instantiated and executed three times
-with different arguments each time.
-
+with different arguments.
 
 
 \subsection*{Operators in \lang{}}
 
-\lang{} language supports left associative operators with special meaning:
-operators $->$ and $<->$ for concurrency. 
-Also operators $\sim$, $\sim<$ and $\sim>$ for job dependencies.
+\lang{} language supports left associative operators with special meaning: operators $->$ and $<->$ for concurrency.
+Also operators $<\sim>$, $\sim<$ and $\sim>$ for job dependencies.
 \subsubsection*{Asynchronous operator $(->)$}
-To allow user to define that 2 processes must run one after another
-we implement the asynchronous operator $(->)$. By using asynchronous operator,
-the user specifies that the process at right of the arrow can start as soon as
-the process on the left-hand side of the arrow terminates successfully.
+To allow user to define that 2 processes must run one after another we implement the dependency operator $(->)$.
+This operator specifies that the process at right of the arrow can start as soon as the process on the left-hand side of the arrow terminates successfully, but not before it finishes.
 \subsubsection*{Concurrent operator $(<->)$}
-Unlike the asynchronous operator, concurrent operator $(<->)$ denotes that 2 jobs can
+Unlike the asynchronous operator, the concurrent operator $(<->)$ denotes that 2 jobs can
 run in parallel. Failure of the one does not preclude the other.
-\subsubsection*{Equal dependency operator ($\sim$)}
-Equal dependency operator ($\sim$) states that two jobs may run concurrently if
-there are enough resources.
-\subsubsection*{Pre dependency operator ($\sim>$)}
-Pre dependency operator ($\sim>$) states that the job on its left may run
-before the job on its right.
+\subsubsection*{Equal dependency operator ($<\sim>$)}
+The equal priority operator ($<\sim>$) states that two jobs have the same priority.
+\subsubsection*{Higher priority operator ($\sim>$)}
+The Higher Priority operator ($\sim>$) states that the job on its left should run
+before the job on its right if they can both run. This is a best effort guaranty, not a strong one.
 \subsubsection*{Post dependency operator ($\sim<$)}
 Post dependency operator ($\sim<$) states that the job on its left should run
-after the job on its right.
+after the job on its right. This is a best effort guaranty, not a strong one.
 
-\subsection*{Classes and Functions in \lang{}}
-\subsubsection*{Class $Job(string <name>,~ string <script\_path>,~arg1,~arg2, ...,~argN)$}
+\subsection*{Jobs and Functions in \lang{}}
+\subsubsection*{$Job(string <name>,~ string <script\_path>,~arg1,~arg2, ...,~argN);$}
 Construction of a $Job$ type requires the following variables:
 \begin{itemize}
 \item $name$ which is the name of the job.
@@ -150,27 +138,16 @@ Job ``c'' is assigned the execution of script ``telesphorus.py'' with arguments 
 \subsubsection*{\lang{} Functions}
 
 This section we present core functions of \lang{}.
-\subsubsection*{$run($\textit{expr}$)$}
+\subsubsection*{$run($\textit{expr}$);$}
 \textit{run} function has one argument, which is an expression related to jobs.
-\textit{expr} can be jobs:
+\textit{expr} is a comma separated list of Job of list of Job types. The denpendency operator
+returns a list of Jobs.
 \begin{Verbatim}[numbers=left]
 a = Job(script="abc.pl", "10");
 b = Job(script="xRay.rb", "mailbox");
 c = Job("telesphorus.py", "android_logs");
-run(a,b,c);
+run(a, b -> c);
 \end{Verbatim}
-
-or a ``hard'' dependency among jobs:
-\begin{Verbatim}[numbers=left]
-a = Job(script="abc.pl", "10");
-b = Job(script="xRay.rb", "mailbox");
-run(a->b);
-\end{Verbatim}
-\subsubsection*{$run\_local($\textit{expr}$)$}
-This is a local version of the ``run'' function.
-With ``run\_local'' function jobs may run locally for testing purposes before
-user launches a program remotely with ``run''.
-
 
 \section{Sample Programs}
 \label{sect:samples}
@@ -211,7 +188,7 @@ worker("0.0.0.0:6379");
 \end{Verbatim}
 The Maetro program can be:
 \begin{Verbatim}[numbers=left]
-master("0.0.0.0:6379");
+service("0.0.0.0:6379");
 a = Job("print.rb", "Hello");
 b = Job("print.rb", "World");
 c = Job("print.rb", "!");
@@ -246,12 +223,12 @@ distribute batch processes.\\
 
 \subsection*{Example Program 3:}
 \begin{Verbatim}[numbers=left,commandchars=\\\{\}]
-master("0.0.0.0:6379");
+service("0.0.0.0:6379");
 a = Job("abc.pl");
 b = Job("xRay.rb");
 c = Job("telesphorus.py");
 d = Job("nimbledriod.py");
-((a\mytilde>(b\mytilde c))\mytilde<d);
+((a\mytilde>(b <\mytilde> c))\mytilde<d);
 run((a,b,c,d);
 \end{Verbatim}
 
@@ -259,7 +236,7 @@ This example demonstrates {\em soft} dependencies in \lang{}.\\
 `Soft' dependencies must be all in one line. Operators
 are left associative but we use parentheses in order to help
 the user understand how `soft' dependencies work. Line 5 is where all the
-magic happens. First, $(b\sim c)$ means that jobs `b' and `c' can run 
+magic happens. First, $(b <\sim> c)$ means that jobs `b' and `c' can run 
 synchronously if there are enough resources. Second,
 $(a\sim>expr)$ means that job `a' should run before \textit{expr}. 
 Finally, $(expr\sim<d)$ means that job `d' should run before \textit{expr}.\\
@@ -267,7 +244,7 @@ Finally, $(expr\sim<d)$ means that job `d' should run before \textit{expr}.\\
 
 \subsection*{Example Program 4:}
 \begin{Verbatim}[numbers=left,commandchars=\\\{\}]
-master("0.0.0.0:6379")
+service("0.0.0.0:6379");
 list = [];
 range(100).each(i) \{
   a = Job("send_email.pl", "" + i, "test@maestro.com");
@@ -275,7 +252,7 @@ range(100).each(i) \{
 \}
 b = Job("collect_data.rb");
 list -> Wait(3600) -> b;
-run(b);
+run(list, b);
 \end{Verbatim}
 
 This examples shows how to schedule many instances of the same Job with different
@@ -292,28 +269,26 @@ and after an one-hour wait.
 \subsection*{Example Program 5:}
 \begin{Verbatim}[numbers=left,commandchars=\\\{\}]
 master("0.0.0.0:6379");
-a = Job("split.rb", "/tmp/big_file_name.data");
-maps = map(a, "map.rb");
-red = reduce(maps, "reduce.rb");
-run(red);
+a = Job("split.rb", "/tmp/big_file_name.data", "10");  # split file in 10
+maps = map(a, "map.rb", 10);  # run 10 map.rb jobs
+red = reduce(maps, "reduce.rb");  # reduce the results
+run(a, maps, red);
 \end{Verbatim}
 
 This example shows how to use the map/reduce built in functions to distribute data
-analysis of a big file. This assumes that all workers have access to the file (e.g.
-distributed file system), or that split.rb can scp the pieces of the file in the workers.
-Then map will create one Job per output line of split.rb. This Job will be the map.rb
+analysis of a big file. This assumes that all workers have access to the file (e.g. over a
+ Network File System), or that split.rb can scp the pieces of the file in the workers.
+Then map will create 10 Jobs and have them run on the outputs of split.rb. These Jobs will be the map.rb
 script and have as argument one line of split output. Reduce will then create one Job
-with the reduce.rb program, with its arguments being the output of the previous
-reduce and the output of the next Job from the list. The first reduce will have
-nil as first argument.\\
+with the reduce.rb program, with its arguments being the outputs of the previous
+maps.\\
 Let us assume the big file contains words, and we want to count the number of appearances for
 each different word:
 \begin{itemize}
   \item split.rb can split the big file in chunks and output the name of each chunk.
   \item map.rb can take a file path, and return a dictionary with the words as keys
     and an int for the value, in the JSON format.
-  \item reduce.rb can take 2 arguments as JSON strings and parse them. If the first is
-    empty, it means it is the initialization and we create an empty dictionary. Then it
+  \item reduce.rb can take n arguments as JSON strings and parse them. Then it
     merges the dictionaries and returns the merged in JSON.
 \end{itemize}
 
