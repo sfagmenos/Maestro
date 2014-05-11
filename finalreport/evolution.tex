@@ -19,17 +19,17 @@ We thus changed the for loops to the each syntax. This is similar to how loops a
 
 Another feature that we introduced late is map/reduce. When thinking about the use cases (after we had a basic "Hello World" working), most of them involved complex processing and dependencies, and where a bit verbose or even too hard to express because we needed to wait on other jobs' outputs.
 We thus introduced a map/reduce abstraction, which allows us to keep our asynchronous model, but still use the output of previous jobs.
-This is really adapted to remote job distribution and execution, and fits perfectly in maestro.
+This is really adapted to remote job distribution and execution, and fits perfectly into Maestro.
 
-We also added overloading for + and map functions: the behavior change depending on the type of the arguments.
-We didn't think about it beforehand, but when we hit the problem it was a natural extension.
+We also added overloading for + and map functions: the behavior changes depending on the type of the arguments.
+We didn't think of it beforehand, but when we hit the problem it was a natural extension.
 
-A last unexpected improvement we added was nice console outputs of the job queue and state of dependencies.
-The language reference manual and the tutorial were updated with the languages when we changed features.
+A last unexpected improvement we added was nice console outputs of the job queue and the state of dependencies.
+The language reference manual and the tutorial were updated as we changed features.
 
 \section{Dropped Features}
 
-We are really happy we implemented the job distribution feature.There still are some features on our "would be great to have list":
+There still are some features on our "would be great to have list":
 We wanted to add more error handling features, functions and lambdas for dependency callbacks, and scoping for variables.
-We believe our architecture can support it, but we chose to focus on rmote job execution.
+We believe our architecture can support it, but we chose to focus on remote job execution.
 
