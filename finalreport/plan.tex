@@ -1,52 +1,27 @@
-The first important decision we had to make as soon as we formed
-our team was what language we are going to implement in the context of
-``Programming Languages and Translators'' and whether it will be Domain
-Specific or not. Having decided that we are going to implementva Domain
-Specific Language, we met at the second week of the semester and brainstormed
-about different domains of interesting problems to provide a language for.
-For each suggested language we wrote sample programs to evaluate which will be
-the most fruitful to implement. At the third week of the semester, we concluded
-that we will implement \lang{} language and assign roles to team members.
+Our first important decision as a team was what language we were going to implement and whether it would be domain-specific. We took a look at the examples from previous years and found that the most compelling ones did not attempt to replace general purpose languages like C/C++, but rather addressed quotidian concerns. So upon deciding on a domain-specific language, we met in the second week and began brainstorming problems that could be reasonably and competently solved in a class project. Some of our ideas included a probabilistic programming language that would make it easy to specify joint and conditional distributions, as well as a food-recipe language akin to What2Wear. We each wrote sample programs, did research, and presented our ideas. At the third week, we decided that we would implement \lang{} and assigned roles to each team member. 
 
 \section{Specifications}
-The next step was to define core specifications of \lang{} language in order to
-be able to build a small running kernel of it. Once we had a basic kernel up
-and running, we met with our mentor Junde Huang to demonstrate our progress
-and get his feedback. Afterwards, we wrote our Language Reference Manual and
-Tutorial, and start working on implementation of core features.
-%Once we had full understanding of the procedure involved in building a compiler
-%we implement a small kernel of
+Our next step was defining core specifications of the \lang{} and getting a small kernel up and running. This eventually occurred sometime between the whitepaper and spring break, at which point we met with our mentor, Junde Huang. Junde had some good advice for organizing work flow. He also proposed adding a graphics unit to the language (which was ambitious and cool but did not eventually happen).
+
+After spring break, we wrote our language reference manual and tutorial and started working on an implementation of additional features.
 
 \section{Meetings and Communication}
-During the semester we tried to meet weekly at least once to evaluate progress
-on our project. The main purpose of our meetings was to ensure the each team
-member has a full understanding of what she/he is expected to do, and also has a
-clear picture of what other members are responsible for. Also, we
-sometimes scheduled extra meetings when deadlines were due (language whitepaper,
-manual, and tutorial). Apart from meetings, when additional communication was
-necessary we exchanged daily e-mails to sync during evolution stage.
+During the semester we tried to meet weekly. The main purpose of our meetings was to ensure the each team member had a full understanding of what she/he was expected to do, and also full understanding of what other members were responsible for. Deadlines on deliverables called for extra scheduled meetings, and we also communicated through emails.
 
 \section{Development}
 For our development the single most important tool was GIT, a distributed
 version control system. Multiple GIT branches were created during the semester
 to keep track of our project. They included branches for source code
-subversion (e.g., tests, translation, and \lang{} backend) as well as
+subversion (e.g., tests, translation, and the \lang{} backend) as well as
 branches for written manuscripts (e.g., whitepaper, tutorial,  and LRM).
 For more details refer to Section~\ref{sec:deve}.
 
 \section{Implementation Style Sheet}
-A five member team is relatively easy to interact and work in a continuous
-integration fashion; yet, it is of essential importance to ensure good
-abstraction of responsibilities so that the members of the team can work
-concurrently and make progress that is easy to integrate while development
-evolves. We did not set any restriction related to what text editor or
-operating system  should be used while writing code, but we make sure that
-we write readable python code. Also, we tried to make partial commits of
-code snippets with meaningful commit messages. The source code and all written
-manuscripts of our project live under the private Columbia github repository.
+A five member team is relatively easy to manage and integrate relative to corporate settings, yet we discovered that good abstraction of responsibilities is essential: this allows the members of the team to work concurrently and make progress independently as the development evolved.  We did not set any restrictions on text editors or operating systems, but did ask of each other readable, commented python code. We also asked that partial commits of
+code snippets come with meaningful commit messages. The source code and all written manuscripts of our project live under the private Columbia github repository.
 
 \section{Testing}
-To make sure that the entire workflow smooth and to avoid bugs we created a
+To make sure that the entire workflow was smooth and to avoid bugs, we created a
 custom testing suit, built in python. Our testing environment is thoroughly
 described in Section~\ref{sec:test}.
 
@@ -63,7 +38,7 @@ In Table~\ref{tab:resp} we summarize responsibilities of each team member.
     V. Atlidakis & Backend Redis-based distributed communication protocol.\\ \hline
     M. Lecuyer & Lexical \& Syntax analysis, SDD to produce the AST, and translator. \\ \hline
     G. Koloventzos & Semantic analysis. \\ \hline
-    Y. Lu & ...  \\ \hline
+    Y. Lu & Test suite and language syntax \\ \hline
     A. Swaminathan  & Test suite and plan \\ \hline
     \hline
     \end{tabular}
@@ -106,4 +81,4 @@ each was fulfilled.
 
 \section{Project Log}
 In Section~\ref{sect:appen} we present a sample snapshot of some recent git
-commits at maetro branch that was used as our master source code branch.
+commits at the maestro branch that was used as our master source code branch.
