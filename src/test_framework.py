@@ -10,8 +10,13 @@ global output
 output= ""
 global failCount
 failCount = 0
-files=['syntax_err','imbalanced_parenthesis','undeclared_job', 'undeclared_dependency','my_file','single_run','multiple_run','multiple_declaration','multiple_declaration2', 'hard_dependency', 'hard_dependency2', 'circular_dependency', 'self_dependency', 'long_dependency','mr_job']
-flag=['circular_dependency','self_dependency','syntax_err','imbalanced_parenthesis','undeclared_job','undeclared_dependency']
+files=['syntax_err','imbalanced_parenthesis','undeclared_job',
+       'undeclared_dependency','my_file','single_run','multiple_run',
+       'multiple_declaration','multiple_declaration2', 'hard_dependency',
+       'hard_dependency2', 'circular_dependency', 'self_dependency',
+       'long_dependency','mr_job']
+flag=['circular_dependency','self_dependency','syntax_err',
+      'imbalanced_parenthesis','undeclared_job','undeclared_dependency']
 #def parseErr(stderr):
 #	global failCount
 
@@ -65,7 +70,7 @@ def parseOut(stdout, filename):
 		failCount=failCount+1
 		print (Fore.RED + "Test Failed - Expected output not found at file")
 		print "**************************"
-		print (Fore.BLACK+ "Expected Output: check"+" \nOutput read at file: "+ data)
+		print Fore.BLACK + "Expected Output: check"+" \nOutput read at file: " + data
 		print "\n"
 		with open ("tests/new_tests/log.txt", "a") as myfile:
 			myfile.write(filename+ ".ms   -Failed"+"\n")

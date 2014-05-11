@@ -33,16 +33,19 @@ class Console(cmd.Cmd):
 
     def do_help(self, args):
         """Get help on commands
-           'help' or '?' with no arguments prints a list of commands for which help is available
-           'help <command>' or '? <command>' gives help on <command>
+           'help' or '?' with no arguments prints a list of commands for which
+           help is available 'help <command>' or
+           '? <command>' gives help on <command>
         """
-        ## The only reason to define this method is for the help text in the doc string
+        ## The only reason to define this method is for the help text in the
+        ## doc string
         cmd.Cmd.do_help(self, args)
 
     ## Override methods in Cmd object ##
     def preloop(self):
         """Initialization before prompting user for commands.
-           Despite the claims in the Cmd documentaion, Cmd.preloop() is not a stub.
+           Despite the claims in the Cmd documentaion, Cmd.preloop()
+           is not a stub.
         """
         cmd.Cmd.preloop(self)   ## sets up command completion
         self._hist    = []      ## No history yet
@@ -51,7 +54,8 @@ class Console(cmd.Cmd):
 
     def postloop(self):
         """Take care of any unfinished business.
-           Despite the claims in the Cmd documentaion, Cmd.postloop() is not a stub.
+           Despite the claims in the Cmd documentaion,
+           Cmd.postloop() is not a stub.
         """
         cmd.Cmd.postloop(self)   ## Clean up command completion
         print "Exiting..."
@@ -65,7 +69,8 @@ class Console(cmd.Cmd):
         return line
 
     def postcmd(self, stop, line):
-        """If you want to stop the console, return something that evaluates to true.
+        """If you want to stop the console, return something that evaluates
+        to true.
            If you want to do some post command processing, do it here.
         """
         return stop
@@ -82,7 +87,7 @@ class Console(cmd.Cmd):
             result = pipeline(line)
 #            result = pipeline(line)
 #           exec(line) in self._locals, self._globals
-            
+
         except Exception, e:
             print e.__class__, ":", e
 
