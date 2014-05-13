@@ -1,0 +1,13 @@
+*.aux
+*.dvi
+*.log
+*.ps
+*.aux
+*.dvi
+*.out
+*.pdf
+*.ps
+*.bbl
+*.pyc
+*egg-info*
+*.sw*
